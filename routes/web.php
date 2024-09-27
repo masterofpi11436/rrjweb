@@ -23,6 +23,3 @@ Route::get('/phone-directories/{id}/edit', [PhoneDirectoryController::class, 'ed
 
 // Update route: Handle PUT/PATCH request to update the entry
 Route::put('/phone-directories/{id}', [PhoneDirectoryController::class, 'update'])->name('PhoneDirectory.update');
-
-// Destroy route: Handle DELETE request to remove an entry
-Route::delete('/phone-directories/{id}', [PhoneDirectoryController::class, 'destroy'])->name('PhoneDirectory.destroy');

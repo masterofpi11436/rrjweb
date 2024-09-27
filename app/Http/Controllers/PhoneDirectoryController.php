@@ -35,13 +35,4 @@ class PhoneDirectoryController extends Controller
         // This will load the create Blade view
         return view('PhoneDirectory.create');
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        $phoneDirectory = PhoneDirectory::findOrFail($id);
-        return view('PhoneDirectory.edit', compact('phoneDirectory'));
-    }
 }
