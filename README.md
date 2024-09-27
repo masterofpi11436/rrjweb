@@ -12,5 +12,8 @@ https://localhost/phpmyadmin
 php artisan migrate or php artisan migrate:refresh
 php artisan db:seed or php artisan migrate:refresh --seed
 
+Run on other computer in network:
+php artisan serve --host=128.168.123.75 --port=8000
+
 # Phone Directory
 Lists all the extensions with some outside vendors
