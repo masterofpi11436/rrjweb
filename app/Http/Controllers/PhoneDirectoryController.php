@@ -35,4 +35,14 @@ class PhoneDirectoryController extends Controller
         // This will load the create Blade view
         return view('PhoneDirectory.create');
     }
+
+    public function edit($id)
+    {
+        // Retrieve the record by its ID
+        $phoneDirectory = PhoneDirectory::findOrFail($id);
+
+        // Pass the retrieved record to the Blade view
+        return view('PhoneDirectory.edit', ['phoneDirectory' => $phoneDirectory]);
+    }
+
 }
