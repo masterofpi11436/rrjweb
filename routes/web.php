@@ -12,7 +12,7 @@ Route::get('/', function () {
 // Index route: Display a list of phone directories
 Route::get('/phone-directories', [PhoneDirectoryController::class, 'index'])->name('PhoneDirectory.index');
 
-// Create route: Show a form to create a new phone directory entry
+// Create route: Show a form to create a new phone directory entry using Livewire
 Route::get('/phone-directories/create', [PhoneDirectoryController::class, 'create'])->name('PhoneDirectory.create');
 
 // Store route: Handle POST request to store a new entry

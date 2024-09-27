@@ -1,8 +1,7 @@
 <div>
-    <!-- Use wire:model.live to immediately sync the input with the search term -->
-    <input type="text" wire:model.live="search" placeholder="Search directory..." class="form-control">
 
-    <!-- Suggestions list -->
+    <input type="text" wire:model.live="search" placeholder="Search directory..." class="form-control">
+    
     <table>
         <thead>
             <tr>

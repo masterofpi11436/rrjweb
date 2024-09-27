@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class PhoneDirectory extends Model
 {
     use HasFactory;
+
+    protected $fillable = ['name', 'title', 'section', 'extension'];
 }

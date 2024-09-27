@@ -29,21 +29,11 @@ class PhoneDirectoryController extends Controller
 
         return view('PhoneDirectory.index', ['extensions' => $extensions, 'search' => $search]);
     }
-
-    /**
-     * Show the form for creating a new resource.
-     */
+    
     public function create()
     {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
+        // This will load the create Blade view
+        return view('PhoneDirectory.create');
     }
 
     /**

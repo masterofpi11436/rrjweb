@@ -6,7 +6,10 @@
 
 @section('content')
 
-<!-- Include the updated Livewire search component -->
+<!-- Button to navigate to the Create page -->
+<a href="{{ route('PhoneDirectory.create') }}">Create New Entry</a>
+
+<!-- Livewire search component -->
 @livewire('phone-directory-search')
 
 @endsection
