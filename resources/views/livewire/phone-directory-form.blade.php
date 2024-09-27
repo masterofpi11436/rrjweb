@@ -1,5 +1,4 @@
 <form wire:submit.prevent="submitForm">
-
     <div>
         <label for="name">Name:</label>
         <input id="name" type="text" wire:model.live="name">

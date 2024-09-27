@@ -18,9 +18,6 @@ Route::get('/phone-directories/create', [PhoneDirectoryController::class, 'creat
 // Store route: Handle POST request to store a new entry
 Route::post('/phone-directories', [PhoneDirectoryController::class, 'store'])->name('PhoneDirectory.store');
 
-// Show route: Display a single phone directory entry
-Route::get('/phone-directories/{id}', [PhoneDirectoryController::class, 'show'])->name('PhoneDirectory.show');
-
 // Edit route: Show a form to edit an existing entry
 Route::get('/phone-directories/{id}/edit', [PhoneDirectoryController::class, 'edit'])->name('PhoneDirectory.edit');
 

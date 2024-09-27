@@ -22,4 +22,13 @@ class PhoneDirectorySearch extends Component
                                 ->get(),
         ]);
     }
+
+        // Method to delete a record
+    public function delete($id)
+    {
+        $phoneDirectory = PhoneDirectory::findOrFail($id);
+        $phoneDirectory->delete();
+
+        session()->flash('message', 'Record deleted successfully!');
+    }
 }
