@@ -5,11 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/dark.css">
     <title>@yield('title', 'RRJ Web Applications')</title>
+    @livewireStyles
 </head>
 <body>
 
     <h1>@yield('heading')</h1>
 
     @yield('content')
+
+    @livewireScripts
 </body>
 </html>
