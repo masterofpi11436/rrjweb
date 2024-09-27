@@ -7,11 +7,13 @@ use App\Models\PhoneDirectory;
 
 class PhoneDirectoryForm extends Component
 {
+    // Fields
     public $name;
     public $title;
     public $section;
     public $extension;
 
+    // Field Rules
     protected $rules = [
         'name' => 'required|min:3',
         'title' => 'required|min:3|max:255',
@@ -19,11 +21,13 @@ class PhoneDirectoryForm extends Component
         'extension' => 'required|numeric|digits_between:3,10',
     ];
 
+    // Required for live validation
     public function updated($propertyName)
     {
         $this->validateOnly($propertyName);
     }
 
+    // Submit the form and redirect to the index page
     public function submitForm()
     {
         $validatedData = $this->validate();
@@ -32,13 +36,11 @@ class PhoneDirectoryForm extends Component
         // Reset the form after submission
         $this->reset(['name', 'title', 'section', 'extension']);
 
+        // Flash Message
+        session()->flash('message', 'Contact added successfully!');
+
         // Redirect to the index page
         return redirect()->route('PhoneDirectory.index');
-    }
-
-    public function render()
-    {
-        return view('livewire.phone-directory-form');
     }
 }
 

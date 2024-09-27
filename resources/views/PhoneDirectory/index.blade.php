@@ -4,9 +4,15 @@
 
 @section('heading', 'Phone Directory')
 
+@if (session()->has('message'))
+    <div>
+        {{ session('message') }}
+    </div>
+@endif
+
 @section('content')
 
-<!-- Button to navigate to the Create page -->
+<!-- Link to navigate to the Create page -->
 <a href="{{ route('PhoneDirectory.create') }}">Create New Entry</a>
 
 <!-- Livewire search component -->
