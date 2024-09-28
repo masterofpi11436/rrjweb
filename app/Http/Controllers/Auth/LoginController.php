@@ -24,7 +24,7 @@ class LoginController extends Controller
         // Attempt to authenticate the user
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
             // If successful, redirect to the intended page or a default page
-            return redirect()->intended('/admin/dashboard');
+            return redirect()->intended('/phone-directories');
         }
 
         // If login fails, redirect back with an error message
