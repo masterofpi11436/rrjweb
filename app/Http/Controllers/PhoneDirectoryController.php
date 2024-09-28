@@ -29,6 +29,27 @@ class PhoneDirectoryController extends Controller
 
         return view('PhoneDirectory.index', ['extensions' => $extensions, 'search' => $search]);
     }
+
+        /**
+     * Display a listing of the resource.
+     */
+    public function indexAll(Request $request)
+    {
+        $search = $request->input('search');
+
+        if ($search) {
+            $extensions = PhoneDirectory::where('name', 'like', '%' . $search . '%')
+                                        ->orWhere('title', 'like', '%' . $search . '%')
+                                        ->orWhere('section', 'like', '%' . $search . '%')
+                                        ->orWhere('extension', 'like', '%' . $search . '%')
+                                        ->orderBy('section')
+                                        ->get();
+        } else {
+            $extensions = PhoneDirectory::orderBy('section')->get();
+        }
+
+        return view('PhoneDirectory.indexAll', ['extensions' => $extensions, 'search' => $search]);
+    }
     
     public function create()
     {
