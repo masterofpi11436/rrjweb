@@ -14,6 +14,6 @@ class PhoneDirectorySeeder extends Seeder
      */
     public function run(): void
     {
-        PhoneDirectory::factory()->count(250)->create();
+        PhoneDirectory::factory()->count(25)->create();
     }
 }
