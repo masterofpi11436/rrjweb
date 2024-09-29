@@ -4,6 +4,8 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+use App\Models\Directory\PhoneDirectory;
+
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\PhoneDirectory>
  */
@@ -17,10 +19,10 @@ class PhoneDirectoryFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->name, // Generates a random name
-            'title' => $this->faker->jobTitle, // Generates a random job title
-            'section' => $this->faker->randomElement(['HR', 'IT', 'Finance', 'Marketing', 'Sales']), // Random section from predefined list
-            'extension' => $this->faker->numerify('####'), // Generates a random 4-digit extension
+            'name' => $this->faker->name(),
+            'title' => $this->faker->jobTitle(),
+            'section' => $this->faker->word(), // You can customize this for specific section names
+            'extension' => $this->faker->numerify('####'),
         ];
     }
 }

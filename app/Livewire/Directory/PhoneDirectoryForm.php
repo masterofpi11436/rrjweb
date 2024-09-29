@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Livewire\Directory;
 
 use Livewire\Component;
-use App\Models\PhoneDirectory;
+use App\Models\Directory\PhoneDirectory;
 
 class PhoneDirectoryForm extends Component
 {
@@ -15,9 +15,9 @@ class PhoneDirectoryForm extends Component
 
     // Field Rules
     protected $rules = [
-        'name' => 'required|min:3|max:255',
-        'title' => 'required|max:255',
-        'section' => 'required|min:3|max:255',
+        'name' => 'max:255',
+        'title' => 'max:255',
+        'section' => 'max:255',
         'extension' => 'required|numeric|digits_between:4,10',
     ];
 
@@ -60,6 +60,12 @@ class PhoneDirectoryForm extends Component
         $this->reset(['name', 'title', 'section', 'extension']);
         
         // Redirect to index
-        return redirect()->route('PhoneDirectory.index');
+        return redirect()->route('Directory.PhoneDirectory.index');
     }
+
+    public function render()
+    {
+        return view('Directory.livewire.phone-directory-form');
+    }
+
 }

@@ -6,6 +6,8 @@ use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
+use App\Models\Directory\PhoneDirectory;
+
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -20,6 +22,6 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        $this->call(PhoneDirectorySeeder::class);
+        PhoneDirectory::factory()->count(25)->create();
     }
 }

@@ -6,8 +6,8 @@
 
 @section('content')
 
-<a href="{{ route('PhoneDirectory.index') }}">Back</a>
+<a href="{{ route('Directory.PhoneDirectory.index') }}">Back</a>
 
-@livewire('phone-directory-form')
+@livewire('directory.phone-directory-form')
 
 @endsection

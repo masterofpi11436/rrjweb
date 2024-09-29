@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-use App\Models\PhoneDirectory;
+use App\Models\Directory\PhoneDirectory;
 
 class PhoneDirectorySeeder extends Seeder
 {
@@ -14,6 +14,6 @@ class PhoneDirectorySeeder extends Seeder
      */
     public function run(): void
     {
-        PhoneDirectory::factory()->count(25)->create();
+        PhoneDirectory:factory()->count(25)->create();
     }
 }
