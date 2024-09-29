@@ -222,17 +222,17 @@ tbody tr:nth-child(even) {
 
 ::-webkit-scrollbar {
   height: 10px;
-  width: 10px;
+  width: 30px;
 }
 
 ::-webkit-scrollbar-track {
   background: #161f27;
-  border-radius: 6px;
+  border-radius: 15px;
 }
 
 ::-webkit-scrollbar-thumb {
   background: #324759;
-  border-radius: 6px;
+  border-radius: 15px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
