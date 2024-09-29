@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.phone-directory')
 
 @section('title', 'Edit Current Directory Entry')
 
