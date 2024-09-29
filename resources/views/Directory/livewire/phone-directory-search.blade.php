@@ -6,11 +6,39 @@
         <table>
             <thead>
                 <tr>
-                    <th>Name</th>
-                    <th>Title</th>
-                    <th>Section</th>
-                    <th>Extension</th>
-                    <th>Edit</th>
+                    <th>
+                        <a href="#" wire:click.prevent="sortBy('name')">
+                            Name
+                            @if ($sortColumn === 'name')
+                                @if ($sortDirection === 'asc') ▲ @else ▼ @endif
+                            @endif
+                        </a>
+                    </th>
+                    <th>
+                        <a href="#" wire:click.prevent="sortBy('title')">
+                            Title
+                            @if ($sortColumn === 'title')
+                                @if ($sortDirection === 'asc') ▲ @else ▼ @endif
+                            @endif
+                        </a>
+                    </th>
+                    <th>
+                        <a href="#" wire:click.prevent="sortBy('section')">
+                            Section
+                            @if ($sortColumn === 'section')
+                                @if ($sortDirection === 'asc') ▲ @else ▼ @endif
+                            @endif
+                        </a>
+                    </th>
+                    <th>
+                        <a href="#" wire:click.prevent="sortBy('extension')">
+                            Extension
+                            @if ($sortColumn === 'extension')
+                                @if ($sortDirection === 'asc') ▲ @else ▼ @endif
+                            @endif
+                        </a>
+                    </th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>

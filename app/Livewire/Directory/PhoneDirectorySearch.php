@@ -9,6 +9,20 @@ use App\Models\Directory\PhoneDirectory;
 class PhoneDirectorySearch extends Component
 {
     public $search = ''; // Search term
+    public $sortColumn = 'section'; // Default sort column
+    public $sortDirection = 'asc'; // Default sort direction
+
+    public function sortBy($column)
+    {
+        if ($this->sortColumn === $column) {
+            // If the column is already being sorted, reverse the direction
+            $this->sortDirection = $this->sortDirection === 'asc' ? 'desc' : 'asc';
+        } else {
+            // Otherwise, set the new column and reset direction to ascending
+            $this->sortColumn = $column;
+            $this->sortDirection = 'asc';
+        }
+    }
 
     public function render()
     {
@@ -18,7 +32,7 @@ class PhoneDirectorySearch extends Component
                                 ->orWhere('title', 'like', '%' . $this->search . '%')
                                 ->orWhere('section', 'like', '%' . $this->search . '%')
                                 ->orWhere('extension', 'like', '%' . $this->search . '%')
-                                ->orderBy('section')
+                                ->orderBy($this->sortColumn, $this->sortDirection)
                                 ->get(),
         ]);
     }
