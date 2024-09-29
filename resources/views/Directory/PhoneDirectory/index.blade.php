@@ -13,7 +13,7 @@
 @section('content')
 
 <!-- Link to navigate to the Create page -->
-<a href="{{ route('Directory.PhoneDirectory.create') }}">Create New Entry</a>
+<a href="{{ route('Directory.PhoneDirectory.create') }}" class="create-link">Create New Entry</a>
 
 <!-- Livewire search component -->
 @livewire('directory.phone-directory-search')

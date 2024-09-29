@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- <script src="https://cdn.tailwindcss.com"></script> -->
-    <link id="theme-link" rel="stylesheet" href="{{ asset('css/water-dark.css') }}">    
+    <link id="theme-link" rel="stylesheet" href="{{ asset('css/water-dark.css') }}">
+    <link id="theme-link" rel="stylesheet" href="{{ asset('css/phone-directory/styles.css') }}">
     <title>@yield('title', 'RRJ Web Applications')</title>
     @livewireStyles
 </head>
@@ -12,7 +13,16 @@
 
     <h1>@yield('heading')</h1>
 
-    <button id="theme-toggle">Switch Theme</button>
+    <div class="theme-toggle">
+        <!-- The toggle switch -->
+        <label class="switch">
+            <input type="checkbox" id="theme-toggle">
+            <span class="slider round"></span>
+        </label>
+
+        <!-- The label for the theme toggle -->
+        <span class="theme-label">Light/Dark Theme</span>
+    </div>
 
     @yield('content')
 
