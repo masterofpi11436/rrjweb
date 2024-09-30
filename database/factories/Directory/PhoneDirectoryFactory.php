@@ -1,13 +1,12 @@
 <?php
 
-namespace Database\Factories;
+namespace Database\Factories\Directory;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-
 use App\Models\Directory\PhoneDirectory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\PhoneDirectory>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Directory\PhoneDirectory>
  */
 class PhoneDirectoryFactory extends Factory
 {
@@ -21,7 +20,7 @@ class PhoneDirectoryFactory extends Factory
         return [
             'name' => $this->faker->name(),
             'title' => $this->faker->jobTitle(),
-            'section' => $this->faker->word(), // You can customize this for specific section names
+            'section' => $this->faker->word(), // Customize this for specific section names
             'extension' => $this->faker->numerify('####'),
         ];
     }

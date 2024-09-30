@@ -6,7 +6,9 @@ use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
+// Required Models
 use App\Models\Directory\PhoneDirectory;
+use App\Models\Tablet\InmateTablet;
 
 class DatabaseSeeder extends Seeder
 {
@@ -23,5 +25,6 @@ class DatabaseSeeder extends Seeder
         // ]);
 
         PhoneDirectory::factory()->count(25)->create();
+        InmateTablet::factory()->count(50)->create();
     }
 }

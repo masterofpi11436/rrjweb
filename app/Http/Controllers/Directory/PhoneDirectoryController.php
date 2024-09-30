@@ -12,27 +12,23 @@ use App\Models\Directory\PhoneDirectory;
 
 class PhoneDirectoryController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index(Request $request)
-    {
-        $extensions = $this->searchDirectory($request);
 
-        return view('Directory.PhoneDirectory.index', [
-            'extensions' => $extensions,
-            'search' => $request->input('search'),
-        ]);
-    }
-
-    /**
-     * Display a listing of the resource.
-     */
+    // Unprotected route for everyone to view directory and search entries
     public function indexAll(Request $request)
     {
         $extensions = $this->searchDirectory($request);
 
         return view('Directory.PhoneDirectory.indexAll', [
+            'extensions' => $extensions,
+            'search' => $request->input('search'),
+        ]);
+    }
+
+    public function index(Request $request)
+    {
+        $extensions = $this->searchDirectory($request);
+
+        return view('Directory.PhoneDirectory.index', [
             'extensions' => $extensions,
             'search' => $request->input('search'),
         ]);

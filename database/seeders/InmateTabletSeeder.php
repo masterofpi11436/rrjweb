@@ -8,13 +8,13 @@ use Illuminate\Database\Seeder;
 // Required Models
 use App\Models\Directory\PhoneDirectory;
 
-class PhoneDirectorySeeder extends Seeder
+class InmateTabletSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        PhoneDirectory::factory()->count(25)->create();
+        InmateTablet::factory()->count(25)->create();
     }
 }
