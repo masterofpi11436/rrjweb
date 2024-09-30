@@ -5,7 +5,8 @@
 @section('heading', 'Inmate Tablet Management')
 
 @if (session()->has('message'))
-    <div>
+    <div  class="flash-message">
+        <button class="close-btn" onclick="this.parentElement.style.display='none';">&times;</button>
         {{ session('message') }}
     </div>
 @endif

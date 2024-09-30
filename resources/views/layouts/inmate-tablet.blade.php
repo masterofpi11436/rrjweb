@@ -29,5 +29,6 @@
     @livewireScripts
 
     <script src="{{ asset('javascript/theme-switcher.js') }}"></script>
+    <script src="{{ asset('js/flash-message-expiry.js') }}"></script>
 </body>
 </html>

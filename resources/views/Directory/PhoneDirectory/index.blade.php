@@ -4,9 +4,11 @@
 
 @section('heading', 'Phone Directory')
 
-@if (session()->has('message'))
-    <div>
-        {{ session('message') }}
+<!-- Flash Message -->
+@if (session()->has('create-edit-message'))
+        <div id="flash-message" class="flash-message">
+        <button class="close-btn" onclick="this.parentElement.style.display='none';">&times;</button>
+        {{ session('create-edit-message') }}
     </div>
 @endif
 

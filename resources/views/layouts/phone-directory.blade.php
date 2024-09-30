@@ -30,5 +30,6 @@
     @livewireScripts
 
     <script src="{{ asset('javascript/theme-switcher.js') }}"></script>
+    <script src="{{ asset('javascript/flash-message-expiry.js') }}"></script>
 </body>
 </html>

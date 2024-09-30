@@ -12,6 +12,8 @@ class PhoneDirectorySearch extends Component
     public $search = ''; // Default search term
     public $sortColumn = 'section'; // Default sort column
     public $sortDirection = 'asc'; // Default sort direction
+    public $confirmingDelete = false;
+    public $deleteId;
 
     public function sortBy($column)
     {
@@ -38,12 +40,19 @@ class PhoneDirectorySearch extends Component
         ]);
     }
 
-    // Method to delete a record
-    public function delete($id)
+    // Trigger delete confirmation
+    public function confirmDelete($id)
     {
-        $phoneDirectory = PhoneDirectory::findOrFail($id);
-        $phoneDirectory->delete();
+        $this->deleteId = $id;
+        $this->confirmingDelete = true;
+    }
 
-        session()->flash('message', 'Record deleted successfully!');
+    // Delete record after confirmation
+    public function deleteConfirmed()
+    {
+        PhoneDirectory::findOrFail($this->deleteId)->delete();
+        session()->flash('delete-message', 'Record deleted successfully!');
+
+        $this->confirmingDelete = false;
     }
 }

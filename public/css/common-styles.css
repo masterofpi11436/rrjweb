@@ -66,4 +66,96 @@
     border-radius: 50%;
 }
 
-/*********************************************************************/
+/*********************************************************************************/
+/* Flash message */
+.flash-message {
+    position: fixed; /* Ensure it's positioned relative to the viewport */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Center it on the screen */
+    background-color: rgba(0, 128, 0, 0.5); /* Green with transparency */
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    width: 300px;
+    z-index: 9999; /* High z-index to stay on top */
+    pointer-events: none; /* Prevent interaction with underlying elements */
+}
+
+.flash-message .close-btn {
+    position: absolute;
+    top: 5px; /* Adjusts the position slightly down */
+    right: 5px; /* Adjusts the position slightly to the left */
+    background-color: transparent; /* No background color */
+    color: rgb(255, 255, 255); /* Dark green color for the X */
+    border: 2px solid rgb(0, 181, 0); /* Dark green border */
+    border-radius: 50%; /* Makes the button round */
+    cursor: pointer;
+    width: 20px; /* Small size */
+    height: 20px; /* Small size */
+    padding: 0;
+    font-size: 14px; /* Smaller X */
+    display: flex; /* Use flex to center the X */
+    justify-content: center;
+    align-items: center;
+    pointer-events: all; /* Enable clicking on the close button */
+    line-height: 0; /* Fix line height so the X stays centered */
+}
+
+.flash-message .close-btn:hover {
+    color: green; /* Lighter green on hover */
+    border-color: green; /* Change border color on hover */
+}
+
+/*********************************************************************************/
+/* Delete Confirmation */
+.confirmation-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent background */
+    color: rgb(120, 120, 120);
+    padding: 2px;
+    border-radius: 1px;
+    text-align: center;
+    width: 300px;
+    z-index: 1000;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+}
+
+.modal-content {
+    background-color: white;
+    color: black;
+    padding: 20px;
+    border-radius: 1px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.btn-confirm {
+    background-color: red;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.btn-confirm:hover {
+    background-color: darkred;
+}
+
+.btn-cancel {
+    background-color: gray;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-cancel:hover {
+    background-color: darkgray;
+}
