@@ -1,6 +1,6 @@
 <div>
 
-    <input type="text" wire:model.live="search" placeholder="Search directory..." class="form-control">
+    <input type="text" wire:model.live="search" placeholder="Search directory...">
 
     @if ($suggestions->isNotEmpty())
         <table>
@@ -50,7 +50,7 @@
                         <td>{{ $suggestion->extension }}</td>
                         <td>
                             <a href="{{ route('Directory.PhoneDirectory.edit', $suggestion->id) }}">Edit</a>/
-                            <a href="#" wire:click.prevent="delete({{ $suggestion->id }})" class="text-danger">Delete</a>
+                            <a href="#" wire:click.prevent="delete({{ $suggestion->id }})">Delete</a>
                         </td>
                     </tr>
                 @endforeach

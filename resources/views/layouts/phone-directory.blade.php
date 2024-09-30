@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="{{ asset('css/water-dark.css') }}" id="theme-link" >
     <link rel="stylesheet" href="{{ asset('css/common-styles.css') }}">
     <link rel="stylesheet" href="{{ asset('css/phone-directory/styles.css') }}">
-    <title>@yield('title', 'RRJ Web Applications')</title>
+    <title>@yield('title', 'RRJ Web Applications')</title> <!-- Default title -->
     @livewireStyles
 </head>
 <body>

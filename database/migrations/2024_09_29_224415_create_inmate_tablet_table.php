@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('first_name');
             $table->string('middle_name')->nullable();
             $table->date('date_tablet_found')->nullable();
-            $table->boolean('101_incident_report_filed')->default(false);
+            $table->boolean('is_101_incident_report_filed')->default(false);
             $table->boolean('is_filed_by_inmate_accounts')->default(false);
             $table->boolean('is_charged_by_inmate_accounts')->default(false);
             $table->boolean('is_payed')->default(false);

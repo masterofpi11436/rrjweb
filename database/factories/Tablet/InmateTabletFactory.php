@@ -25,7 +25,7 @@ class InmateTabletFactory extends Factory
             'first_name' => $this->faker->firstName,
             'middle_name' => $this->faker->optional()->lastName,
             'date_tablet_found' => $this->faker->optional()->date(),
-            '101_incident_report_filed' => $this->faker->boolean,
+            'is_101_incident_report_filed' => $this->faker->boolean,
             'is_filed_by_inmate_accounts' => $this->faker->boolean,
             'is_charged_by_inmate_accounts' => $this->faker->boolean,
             'is_payed' => $this->faker->boolean,

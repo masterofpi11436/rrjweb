@@ -2,13 +2,14 @@
 
 namespace App\Livewire\Directory;
 
-use Livewire\Attributes\Url;
 use Livewire\Component;
+
+// Required Models
 use App\Models\Directory\PhoneDirectory;
 
 class PhoneDirectorySearch extends Component
 {
-    public $search = ''; // Search term
+    public $search = ''; // Default search term
     public $sortColumn = 'section'; // Default sort column
     public $sortDirection = 'asc'; // Default sort direction
 
@@ -29,15 +30,15 @@ class PhoneDirectorySearch extends Component
         // Search for matching records
         return view('Directory.livewire.phone-directory-search', [
             'suggestions' => PhoneDirectory::where('name', 'like', '%' . $this->search . '%')
-                                ->orWhere('title', 'like', '%' . $this->search . '%')
-                                ->orWhere('section', 'like', '%' . $this->search . '%')
-                                ->orWhere('extension', 'like', '%' . $this->search . '%')
-                                ->orderBy($this->sortColumn, $this->sortDirection)
-                                ->get(),
+                                           ->orWhere('title', 'like', '%' . $this->search . '%')
+                                           ->orWhere('section', 'like', '%' . $this->search . '%')
+                                           ->orWhere('extension', 'like', '%' . $this->search . '%')
+                                           ->orderBy($this->sortColumn, $this->sortDirection)
+                                           ->get(),
         ]);
     }
 
-        // Method to delete a record
+    // Method to delete a record
     public function delete($id)
     {
         $phoneDirectory = PhoneDirectory::findOrFail($id);
