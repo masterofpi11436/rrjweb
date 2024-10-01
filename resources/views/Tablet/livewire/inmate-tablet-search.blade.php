@@ -114,7 +114,7 @@
                                 <!-- Custom Confirmation Modal -->
                                 <div id="custom-confirmation-modal-{{ $suggestion->id }}" class="confirmation-modal" style="display: none;">
                                     <div class="modal-content">
-                                        <p>Are you sure you want to delete this extension?</p>
+                                        <p>Are you sure you want to delete this record?</p>
                                         <button class="btn-confirm" onclick="deleteRecord({{ $suggestion->id }});">Yes, Delete</button>
                                         <button class="btn-cancel" onclick="hideModal({{ $suggestion->id }});">Cancel</button>
                                     </div>

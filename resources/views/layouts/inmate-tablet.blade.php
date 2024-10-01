@@ -22,6 +22,8 @@
         <span class="theme-label">Light/Dark Theme</span>
     </div>
 
+    <a href="#" id="back-to-top" class="back-to-top">⬆️ Back to Top</a>
+
     @yield('content')
 
     @livewireScripts
@@ -29,5 +31,6 @@
     <script src="{{ asset('javascript/theme-switcher.js') }}"></script>
     <script src="{{ asset('javascript/flash-message-expiry.js') }}"></script>
     <script src="{{ asset('javascript/delete-confirmation.js') }}"></script>
+    <script src="{{ asset('javascript/back-to-top.js') }}"></script>
 </body>
 </html>
