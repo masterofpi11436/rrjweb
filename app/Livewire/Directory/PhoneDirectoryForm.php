@@ -20,7 +20,7 @@ class PhoneDirectoryForm extends Component
         'name' => 'max:255',
         'title' => 'max:255',
         'section' => 'max:255',
-        'extension' => 'required|numeric|digits_between:4,10',
+        'extension' => 'required|min:4',
     ];
 
     // Method to load existing data if editing
