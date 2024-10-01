@@ -51,11 +51,11 @@ class PhoneDirectoryForm extends Component
             // Update existing entry
             $phoneDirectory = PhoneDirectory::findOrFail($this->phoneDirectoryId);
             $phoneDirectory->update($validatedData);
-            session()->flash('create-edit-message', 'Contact updated successfully!');
+            session()->flash('create-edit-delete-message', 'Contact updated successfully!');
         } else {
             // Create new entry
             PhoneDirectory::create($validatedData);
-            session()->flash('create-edit-message', 'Contact added successfully!');
+            session()->flash('create-edit-delete-message', 'Contact added successfully!');
         }
 
         // Reset form fields

@@ -27,6 +27,10 @@ Route::prefix('phone-directory')->group(function () {
     // Edit route: Show a form to edit an existing entry
     Route::get('/{id}/edit', [PhoneDirectoryController::class, 'edit'])
         ->name('Directory.PhoneDirectory.edit');
+    
+    Route::delete('/{id}', [PhoneDirectoryController::class, 'destroy'])
+        ->name('Directory.PhoneDirectory.destroy');
+
 });
 
 // Administrative routes for inmate tablets

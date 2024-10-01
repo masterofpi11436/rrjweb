@@ -63,4 +63,17 @@ class PhoneDirectoryController extends Controller
         // Pass the retrieved record to the Blade view
         return view('Directory.PhoneDirectory.edit', ['phoneDirectory' => $phoneDirectory]);
     }
+
+    public function destroy($id)
+    {
+        // Find the record and delete it
+        $phoneDirectory = PhoneDirectory::findOrFail($id);
+        $phoneDirectory->delete();
+
+        // Flash message for successful deletion
+        session()->flash('create-edit-delete-message', 'Record deleted successfully!');
+
+        // Redirect to the same page or wherever needed
+        return redirect()->back();
+    }
 }

@@ -39,20 +39,4 @@ class PhoneDirectorySearch extends Component
                                            ->get(),
         ]);
     }
-
-    // Trigger delete confirmation
-    public function confirmDelete($id)
-    {
-        $this->deleteId = $id;
-        $this->confirmingDelete = true;
-    }
-
-    // Delete record after confirmation
-    public function deleteConfirmed()
-    {
-        PhoneDirectory::findOrFail($this->deleteId)->delete();
-        session()->flash('delete-message', 'Record deleted successfully!');
-
-        $this->confirmingDelete = false;
-    }
 }

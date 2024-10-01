@@ -15,12 +15,10 @@
     <h1>@yield('heading')</h1>
 
     <div class="theme-toggle">
-        <!-- The toggle switch -->
         <label class="switch">
             <input type="checkbox" id="theme-toggle">
             <span class="slider round"></span>
         </label>
-
         <!-- The label for the theme toggle -->
         <span class="theme-label">Light/Dark Theme</span>
     </div>
@@ -31,5 +29,6 @@
 
     <script src="{{ asset('javascript/theme-switcher.js') }}"></script>
     <script src="{{ asset('javascript/flash-message-expiry.js') }}"></script>
+    <script src="{{ asset('javascript/delete-confirmation.js') }}"></script>
 </body>
 </html>

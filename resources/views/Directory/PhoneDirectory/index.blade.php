@@ -5,10 +5,10 @@
 @section('heading', 'Phone Directory')
 
 <!-- Flash Message -->
-@if (session()->has('create-edit-message'))
+@if (session()->has('create-edit-delete-message'))
         <div id="flash-message" class="flash-message">
         <button class="close-btn" onclick="this.parentElement.style.display='none';">&times;</button>
-        {{ session('create-edit-message') }}
+        {{ session('create-edit-delete-message') }}
     </div>
 @endif
 
