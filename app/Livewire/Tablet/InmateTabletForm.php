@@ -48,16 +48,10 @@ class InmateTabletForm extends Component
             $this->notes = $inmateRecord->notes;
         } else {
             // Creating a new record - set defaults
-            $this->inmate_number = '';
-            $this->last_name = '';
-            $this->first_name = '';
-            $this->middle_name = '';
-            $this->date_tablet_found = null;
             $this->is_101_incident_report_filed = false; // Set to false by default
             $this->is_filed_by_inmate_accounts = false;   // Set to false by default
             $this->is_charged_by_inmate_accounts = false; // Set to false by default
             $this->is_payed = false;                      // Set to false by default
-            $this->notes = '';
         }
     }
 
@@ -71,12 +65,6 @@ class InmateTabletForm extends Component
     public function submitForm()
     {
         $validateOnly = $this->validate();
-    
-        // Ensure checkboxes are properly handled
-        $validateOnly['is_101_incident_report_filed']   = $this->is_101_incident_report_filed ?? false;
-        $validateOnly['is_filed_by_inmate_accounts']    = $this->is_filed_by_inmate_accounts ?? false;
-        $validateOnly['is_charged_by_inmate_accounts']  = $this->is_charged_by_inmate_accounts ?? false;
-        $validateOnly['is_payed']                       = $this->is_payed ?? false;
     
         if ($this->inmateTabletId) {
             $inmate_record = InmateTablet::findOrFail($this->inmateTabletId);
