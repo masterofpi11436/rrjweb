@@ -2,14 +2,6 @@
 
     <input type="text" wire:model.live="search" placeholder="Search directory...">
 
-    <!-- Flash Message -->
-    @if (session()->has('delete-message'))
-        <div id="flash-message" class="flash-message">
-            <button class="close-btn" onclick="this.parentElement.style.display='none';">&times;</button>
-            {{ session('delete-message') }}
-        </div>
-    @endif
-
     @if ($suggestions->isNotEmpty())
         <table>
             <thead>
@@ -65,7 +57,6 @@
                                     @csrf
                                     @method('DELETE')
                                 </form>
-
                                 <!-- Custom Confirmation Modal -->
                                 <div id="custom-confirmation-modal-{{ $suggestion->id }}" class="confirmation-modal" style="display: none;">
                                     <div class="modal-content">

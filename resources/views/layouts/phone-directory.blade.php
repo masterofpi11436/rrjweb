@@ -14,12 +14,12 @@
 
     <h1>@yield('heading')</h1>
 
+    <!-- Light/Dark Toggle Swith -->
     <div class="theme-toggle">
         <label class="switch">
             <input type="checkbox" id="theme-toggle">
             <span class="slider round"></span>
         </label>
-        <!-- The label for the theme toggle -->
         <span class="theme-label">Light/Dark Theme</span>
     </div>
 
