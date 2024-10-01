@@ -49,11 +49,11 @@
                         <td>{{ $suggestion->section }}</td>
                         <td>{{ $suggestion->extension }}</td>
                         <td>
-                            <a href="{{ route('Directory.PhoneDirectory.edit', $suggestion->id) }}">Edit</a>/
+                            <a href="{{ route('phone.edit', $suggestion->id) }}">Edit</a>/
                             <div>
-                                <!-- Delete button -->
+                                <!-- Delete link -->
                                 <a href="#" onclick="event.preventDefault(); confirmDelete({{ $suggestion->id }});">Delete</a>
-                                <form id="delete-form-{{ $suggestion->id }}" action="{{ route('Directory.PhoneDirectory.destroy', $suggestion->id) }}" method="POST" style="display: none;">
+                                <form id="delete-form-{{ $suggestion->id }}" action="{{ route('phone.destroy', $suggestion->id) }}" method="POST" style="display: none;">
                                     @csrf
                                     @method('DELETE')
                                 </form>

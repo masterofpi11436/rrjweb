@@ -97,12 +97,30 @@
                         <td>{{ $suggestion->first_name }}</td>
                         <td>{{ $suggestion->middle_name }}</td>
                         <td>{{ $suggestion->date_tablet_found }}</td>
-                        <td>{{ $suggestion->is_101_incident_report_filed }}</td>
-                        <td>{{ $suggestion->is_filed_by_inmate_accounts }}</td>
-                        <td>{{ $suggestion->is_charged_by_inmate_accounts }}</td>
-                        <td>{{ $suggestion->is_payed }}</td>
+                        <td>{{ $suggestion->is_101_incident_report_filed ? 'Yes' : 'No' }}</td>
+                        <td>{{ $suggestion->is_filed_by_inmate_accounts ? 'Yes' : 'No' }}</td>
+                        <td>{{ $suggestion->is_charged_by_inmate_accounts ? 'Yes' : 'No' }}</td>
+                        <td>{{ $suggestion->is_payed ? 'Yes' : 'No' }}</td>
                         <td>{{ $suggestion->notes }}</td>
-                        <td>Edit/Delete</td>
+                        <td>
+                            <a href="{{ route('tablet.edit', $suggestion->id) }}">Edit</a>/
+                            <div>
+                                <!-- Delete link -->
+                                <a href="#" onclick="event.preventDefault(); confirmDelete({{ $suggestion->id }});">Delete</a>
+                                <form id="delete-form-{{ $suggestion->id }}" action="{{ route('tablet.destroy', $suggestion->id) }}" method="POST" style="display: none;">
+                                    @csrf
+                                    @method('DELETE')
+                                </form>
+                                <!-- Custom Confirmation Modal -->
+                                <div id="custom-confirmation-modal-{{ $suggestion->id }}" class="confirmation-modal" style="display: none;">
+                                    <div class="modal-content">
+                                        <p>Are you sure you want to delete this extension?</p>
+                                        <button class="btn-confirm" onclick="deleteRecord({{ $suggestion->id }});">Yes, Delete</button>
+                                        <button class="btn-cancel" onclick="hideModal({{ $suggestion->id }});">Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
                     </tr>
                 @endforeach
             </tbody>

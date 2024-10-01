@@ -62,7 +62,7 @@ class PhoneDirectoryForm extends Component
         $this->reset(['name', 'title', 'section', 'extension']);
         
         // Redirect to index
-        return redirect()->route('Directory.PhoneDirectory.index');
+        return redirect()->route('phone.dashboard');
     }
 
     public function render()

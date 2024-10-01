@@ -24,11 +24,11 @@ class PhoneDirectoryController extends Controller
         ]);
     }
 
-    public function index(Request $request)
+    public function dashboard(Request $request)
     {
         $extensions = $this->searchDirectory($request);
 
-        return view('Directory.PhoneDirectory.index', [
+        return view('Directory.PhoneDirectory.dashboard', [
             'extensions' => $extensions,
             'search' => $request->input('search'),
         ]);

@@ -1,3 +1,11 @@
+/* Create Record Link */
+.create-link {
+    float: right;
+    margin: 10px;
+}
+
+/*********************************************************************************/
+
 /* Reusable Theme Toggle Component */
 .theme-toggle {
     display: inline-flex;

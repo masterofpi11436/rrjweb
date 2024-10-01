@@ -6,7 +6,7 @@
 
 @section('content')
 
-<a href="{{ route('Directory.PhoneDirectory.index') }}">Back</a>
+<a href="{{ route('phone.dashboard') }}">Back</a>
 
 @livewire('directory.phone-directory-form', ['id' => $phoneDirectory->id])
 

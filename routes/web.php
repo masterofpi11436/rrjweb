@@ -5,46 +5,53 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Directory\PhoneDirectoryController;
 use App\Http\Controllers\Tablet\InmateTabletController;
 
+$phoneClass = PhoneDirectoryController::class;
+$tabletClass = InmateTabletController::class;
+
 Route::get('/', function () {
-    return redirect('/inmate-tablet/index');
+    return redirect('/tablet/dashboard');
 });
 
 // Index All route: Public list of phone directory for all users
-Route::get('/phone-directory/all', [PhoneDirectoryController::class, 'indexAll'])
-        ->name('Directory.PhoneDirectory.indexAll');
+Route::get('/phone-directory/all', [$phoneClass, 'indexAll']);
 
 // Administrative routes for phone directory
-Route::prefix('phone-directory')->group(function () {
+Route::prefix('phone')->group(function () use ($phoneClass){
     
     // Index route: Phone directory dashboard
-    Route::get('/index', [PhoneDirectoryController::class, 'index'])
-        ->name('Directory.PhoneDirectory.index');
+    Route::get('/dashboard', [$phoneClass, 'dashboard'])
+        ->name('phone.dashboard');
 
     // Create route: Show a form to create a new phone directory entry
-    Route::get('/create', [PhoneDirectoryController::class, 'create'])
-        ->name('Directory.PhoneDirectory.create');
+    Route::get('/create', [$phoneClass, 'create'])
+        ->name('phone.create');
 
     // Edit route: Show a form to edit an existing entry
-    Route::get('/{id}/edit', [PhoneDirectoryController::class, 'edit'])
-        ->name('Directory.PhoneDirectory.edit');
+    Route::get('/{id}/edit', [$phoneClass, 'edit'])
+        ->name('phone.edit');
     
-    Route::delete('/{id}', [PhoneDirectoryController::class, 'destroy'])
-        ->name('Directory.PhoneDirectory.destroy');
+    // Destroy route: Delete an existing record
+    Route::delete('/{id}', [$phoneClass, 'destroy'])
+        ->name('phone.destroy');
 
 });
 
 // Administrative routes for inmate tablets
-Route::prefix('inmate-tablet')->group(function () {
+Route::prefix('tablet')->group(function () use ($tabletClass){
 
     // Index route: Inmate tablet dashboard
-    Route::get('/index', [InmateTabletController::class, 'index'])
-        ->name('Tablet.InmateTablet.index');
+    Route::get('/dashboard', [$tabletClass, 'dashboard'])
+        ->name('tablet.dashboard');
 
-    // Create route: Create a new entry
-    Route::get('/create', [InmateTabletController::class, 'create'])
-        ->name('Tablet.InmateTablet.create');
+    // Create route: Create a new record
+    Route::get('/create', [$tabletClass, 'create'])
+        ->name('tablet.create');
 
-    // Edit route: Edit an existing entry
-    Route::get('/{id}/edit', [InmateTabletController::class, 'edit'])
-        ->name('Tablet.InmateTablet.edit');
+    // Edit route: Edit an existing record
+    Route::get('/{id}/edit', [$tabletClass, 'edit'])
+        ->name('tablet.edit');
+    
+    // Destroy route: Delete an existing record
+    Route::delete('/{id}', [$tabletClass, 'destroy'])
+        ->name('tablet.destroy');
 });
