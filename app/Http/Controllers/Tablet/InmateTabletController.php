@@ -23,8 +23,8 @@ class InmateTabletController extends Controller
                                     ->orderBy('created_at')
                                     ->get();
         }
-        return view('Tablet.InmateTablet.index', ['tablets' => $tablets,
-                                                  'search' => $request->input('search')]);
+        return view('Tablet.InmateTablet.dashboard', ['tablets' => $tablets,
+                                                      'search' => $request->input('search')]);
     }
 
     public function create()

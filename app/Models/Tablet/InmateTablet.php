@@ -11,6 +11,6 @@ class InmateTablet extends Model
 
     protected $table = 'inmate_tablet';
 
-    protected $fillable = ['inmate_number', 'last_name', 'first_name', 'middle_name', 'date_tablet_found', '101_incident_report_filed',
+    protected $fillable = ['inmate_number', 'last_name', 'first_name', 'middle_name', 'date_tablet_found', 'is_101_incident_report_filed',
                            'is_filed_by_inmate_accounts', 'is_charged_by_inmate_accounts', 'is_payed', 'notes'];
 }

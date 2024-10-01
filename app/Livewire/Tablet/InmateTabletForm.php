@@ -13,37 +13,51 @@ class InmateTabletForm extends Component
     public $inmateTabletId;
 
     // Fields
-    public $inmateNumber, $lastName, $firstName, $middleName, 
-           $dateTabletFound, $is101IncidentReportFiled, $isFiledByInmateAccounts, 
-           $isChargedByInmateAccounts, $isPayed, $notes;
+    public $inmate_number, $last_name, $first_name, $middle_name, 
+           $date_tablet_found, $is_101_incident_report_filed, $is_filed_by_inmate_accounts, 
+           $is_charged_by_inmate_accounts, $is_payed, $notes;
     
     protected $rules = [
-        'inmateNumber' => 'required|min:5|max:255',
-        'lastName' => 'required|max:255',
-        'firstName' => 'required|max:255',
-        'middleName' => 'nullable|max:255',
-        'dateTabletFound' => 'nullable',
-        'is101IncidentReportFiled' => 'nullable|boolean',
-        'isFiledByInmateAccounts' => 'nullable|boolean',
-        'isChargedByInmateAccounts' => 'nullable|boolean',
-        'isPayed' => 'nullable|boolean',
+        'inmate_number' => 'required|numeric|digits_between:5,11',
+        'last_name' => 'required|max:255',
+        'first_name' => 'required|max:255',
+        'middle_name' => 'nullable|max:255',
+        'date_tablet_found' => 'nullable',
+        'is_101_incident_report_filed' => 'boolean',
+        'is_filed_by_inmate_accounts' => 'boolean',
+        'is_charged_by_inmate_accounts' => 'boolean',
+        'is_payed' => 'boolean',
         'notes' => 'nullable'
     ];
 
     public function mount($id = null)
     {
         if ($id) {
+            // Editing an existing record
             $inmateRecord = InmateTablet::findOrFail($id);
-            $this->inmateNumber = $inmateRecord->inmate_number;
-            $this->lastName = $inmateRecord->last_name;
-            $this->firstName = $inmateRecord->first_name;
-            $this->middleName = $inmateRecord->middle_name;
-            $this->dateTabletFound = $inmateRecord->date_tablet_found;
-            $this->is101IncidentReportFiled = $inmateRecord->is_101_incident_report_filed;
-            $this->isFiledByInmateAccounts = $inmateRecord->is_filed_by_inmate_accounts;
-            $this->isChargedByInmateAccounts = $inmateRecord->is_charged_by_inmate_accounts;
-            $this->isPayed = $inmateRecord->is_payed;
+            $this->inmateTabletId = $inmateRecord->id;
+            $this->inmate_number = $inmateRecord->inmate_number;
+            $this->last_name = $inmateRecord->last_name;
+            $this->first_name = $inmateRecord->first_name;
+            $this->middle_name = $inmateRecord->middle_name;
+            $this->date_tablet_found = $inmateRecord->date_tablet_found;
+            $this->is_101_incident_report_filed = (bool) $inmateRecord->is_101_incident_report_filed ?? false;
+            $this->is_filed_by_inmate_accounts = (bool) $inmateRecord->is_filed_by_inmate_accounts ?? false;
+            $this->is_charged_by_inmate_accounts = (bool) $inmateRecord->is_charged_by_inmate_accounts ?? false;
+            $this->is_payed = (bool) $inmateRecord->is_payed ?? false;
             $this->notes = $inmateRecord->notes;
+        } else {
+            // Creating a new record - set defaults
+            $this->inmate_number = '';
+            $this->last_name = '';
+            $this->first_name = '';
+            $this->middle_name = '';
+            $this->date_tablet_found = null;
+            $this->is_101_incident_report_filed = false; // Set to false by default
+            $this->is_filed_by_inmate_accounts = false;   // Set to false by default
+            $this->is_charged_by_inmate_accounts = false; // Set to false by default
+            $this->is_payed = false;                      // Set to false by default
+            $this->notes = '';
         }
     }
 
@@ -56,33 +70,38 @@ class InmateTabletForm extends Component
     // Handle form submission for both create and update
     public function submitForm()
     {
-        $validatedData = $this->validate();
-
+        $validateOnly = $this->validate();
+    
+        // Ensure checkboxes are properly handled
+        $validateOnly['is_101_incident_report_filed']   = $this->is_101_incident_report_filed ?? false;
+        $validateOnly['is_filed_by_inmate_accounts']    = $this->is_filed_by_inmate_accounts ?? false;
+        $validateOnly['is_charged_by_inmate_accounts']  = $this->is_charged_by_inmate_accounts ?? false;
+        $validateOnly['is_payed']                       = $this->is_payed ?? false;
+    
         if ($this->inmateTabletId) {
-            // Update existing entry
-            $inmateRecord = InmateTablet::findOrFail($this->inmateTabletId);
-            $inmateRecord->update($validatedData);
-            session()->flash('message', 'Inmate tablet status updated successfully!');
+            $inmate_record = InmateTablet::findOrFail($this->inmateTabletId);
+            $inmate_record->update($validateOnly);
+            session()->flash('create-edit-delete-message', 'Inmate tablet status updated successfully!');
         } else {
-            // Create new entry
-            InmateTablet::create($validatedData);
-            session()->flash('message', 'Inmate tablet status added successfully!');
+            InmateTablet::create($validateOnly);
+            session()->flash('create-edit-delete-message', 'Inmate tablet status added successfully!');
         }
-
+    
         // Reset form fields
-        $this->reset(['inmateNumber',
-                      'lastName',
-                      'firstName',
-                      'middleName',
-                      'dateTabletFound',
-                      'is101IncidentReportFiled',
-                      'isFiledByInmateAccounts',
-                      'isChargedByInmateAccounts',
-                      'isPayed',
-                      'notes']);
-        
-        // Redirect index
-        return redirect()->route('Tablet.InmateTablet.index');
+        $this->reset([
+            'inmate_number',
+            'last_name',
+            'first_name',
+            'middle_name',
+            'date_tablet_found',
+            'is_101_incident_report_filed',
+            'is_filed_by_inmate_accounts',
+            'is_charged_by_inmate_accounts',
+            'is_payed',
+            'notes'
+        ]);
+    
+        return redirect()->route('tablet.dashboard');
     }
 
     public function render()

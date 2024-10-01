@@ -36,9 +36,27 @@
     </div>
 
     <div>
-        <label for="is_101_incident_report_filed">Is the 101 Incident Report Filed?</label>
-        <input id="is_101_incident_report_filed" type="checkbox" wire:model.live="is_101_incident_report_filed">
-        @error('is_101_incident_report_filed') <span>{{ $message }}</span> @enderror
+        <label for="is_filed_by_inmate_accounts">Filed by Inmate Accounts?</label>
+        <input id="is_filed_by_inmate_accounts" type="checkbox" wire:model.live="is_filed_by_inmate_accounts">
+        @error('is_filed_by_inmate_accounts') <span>{{ $message }}</span> @enderror
+    </div>
+
+    <div>
+        <label for="is_charged_by_inmate_accounts">Charged by Inmate Accounts?</label>
+        <input id="is_charged_by_inmate_accounts" type="checkbox" wire:model.live="is_charged_by_inmate_accounts">
+        @error('is_charged_by_inmate_accounts') <span>{{ $message }}</span> @enderror
+    </div>
+
+    <div>
+        <label for="is_payed">Has the Inmate Paid?</label>
+        <input id="is_payed" type="checkbox" wire:model.live="is_payed">
+        @error('is_payed') <span>{{ $message }}</span> @enderror
+    </div>
+
+    <div>
+        <label for="notes">Notes</label>
+        <textarea id="notes" wire:model.live="notes"></textarea>
+        @error('notes') <span>{{ $message }}</span> @enderror
     </div>
  
     <div>
