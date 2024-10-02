@@ -2,10 +2,12 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\LoginController;
 use App\Http\Controllers\Directory\PhoneDirectoryController;
 use App\Http\Controllers\Tablet\InmateTabletController;
 use App\Http\Controllers\Administrator\AdministratorController;
 
+$loginClass = LoginController::class;
 $phoneClass = PhoneDirectoryController::class;
 $tabletClass = InmateTabletController::class;
 $adminClass = AdministratorController::class;
@@ -13,6 +15,11 @@ $adminClass = AdministratorController::class;
 Route::get('/', function () {
     return redirect('/admin/dashboard');
 });
+
+// Login Routes
+Route::get('/{app}/login', [LoginController::class, 'showLoginForm'])->name('login');
+Route::post('/{app}/login', [LoginController::class, 'login']);
+Route::post('/{app}/logout', [LoginController::class, 'logout'])->name('logout');
 
 // Dashboard Route: Applications and Users Administrative dashboard
 Route::get('/admin/dashboard', [$adminClass, 'dashboard']);
