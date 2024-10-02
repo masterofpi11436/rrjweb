@@ -7,9 +7,13 @@
 @section('content')
 
 <!-- Link to navigate to the Phone Directory App -->
-<a href="{{ route('phone.dashboard') }}">Phone Directory</a>
+<form action="{{ route('phone.dashboard') }}">
+    <button>Phone Directory</button>
+</form>
 
 <!-- Link to navigate to the Inmate Tablet App -->
-<a href="{{ route('tablet.dashboard') }}">Inmate Tablets</a>
+<form action="{{ route('tablet.dashboard') }}">
+    <button>Inmate Tablets</button>
+</form>
 
 @endsection

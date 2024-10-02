@@ -1,17 +1,25 @@
-/* Create Record Link */
-.create-link {
-    float: right;
-    margin: 10px;
+/*********************************************************************************/
+
+/* Center and style the header */
+.header {
+    display: flex; /* To align items horizontally */
+    justify-content: flex-start; /* Aligns everything to the left */
+    justify-content: space-between; /* Puts space between title and toggle */
+    align-items: center; /* Vertically aligns items */
+    padding-bottom: 50px;
 }
 
-/*********************************************************************************/
+/* H1 inside the header */
+.header h1 {
+    font-size: 2.5rem;
+    margin: 0;
+}
 
 /* Reusable Theme Toggle Component */
 .theme-toggle {
     display: inline-flex;
     align-items: center;
-    float: right; /* Positions the toggle to the right */
-    margin-top: 10px;
+    margin-left: auto; /* Ensures it stays on the right */
 }
 
 /* The label for the switch */
@@ -20,11 +28,11 @@
     font-size: 16px;
 }
 
-/* The switch container (with reduced size) */
+/* The switch container */
 .theme-toggle .switch {
     position: relative;
-    width: 40px; /* Adjust the width as needed */
-    height: 24px; /* Adjust the height as needed */
+    width: 40px;
+    height: 24px;
 }
 
 /* Hide the default checkbox */
@@ -75,6 +83,16 @@
 }
 
 /*********************************************************************************/
+
+/* Create Record Link */
+.create-link {
+    float: right;
+    margin: 10px;
+}
+
+
+/*********************************************************************************/
+
 /* Flash message */
 .flash-message {
     position: fixed; /* Ensure it's positioned relative to the viewport */
@@ -117,6 +135,7 @@
 }
 
 /*********************************************************************************/
+
 /* Delete Confirmation */
 .confirmation-modal {
     position: fixed;
@@ -169,6 +188,7 @@
 }
 
 /*********************************************************************************/
+
 /* Back to Top */
 .back-to-top {
     position: fixed;

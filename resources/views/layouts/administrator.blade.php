@@ -11,16 +11,19 @@
 </head>
 <body>
 
-    <h1>@yield('heading')</h1>
+    <!-- Header Section with Theme Toggle -->
+    <header class="header">
+        <h1>@yield('heading', 'Admin Dashboard')</h1> <!-- Default Heading -->
 
-    <!-- Light/Dark Toggle Swith -->
-    <div class="theme-toggle">
-        <label class="switch">
-            <input type="checkbox" id="theme-toggle">
-            <span class="slider round"></span>
-        </label>
-        <span class="theme-label">Light/Dark Theme</span>
-    </div>
+        <!-- Theme Toggle Inside Header -->
+        <div class="theme-toggle">
+            <label class="switch">
+                <input type="checkbox" id="theme-toggle">
+                <span class="slider round"></span>
+            </label>
+            <span class="theme-label">Light/Dark Theme</span>
+        </div>
+    </header>
 
     <a href="#" id="back-to-top" class="back-to-top">⬆️ Back to Top</a>
 
