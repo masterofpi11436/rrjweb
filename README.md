@@ -17,3 +17,7 @@ php artisan serve --host=128.168.123.75 --port=8000
 
 # Phone Directory
 Lists all the extensions with some outside vendors
+
+# Inmate Tablet
+Lists the inmates that are not allowed to have a tablet. This information is used in conjuction with the 
+list of inmates on the mailroom app to sort through the mail.
