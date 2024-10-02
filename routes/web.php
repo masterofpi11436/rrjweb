@@ -4,15 +4,20 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Directory\PhoneDirectoryController;
 use App\Http\Controllers\Tablet\InmateTabletController;
+use App\Http\Controllers\Administrator\AdministratorController;
 
 $phoneClass = PhoneDirectoryController::class;
 $tabletClass = InmateTabletController::class;
+$adminClass = AdministratorController::class;
 
 Route::get('/', function () {
-    return redirect('/tablet/dashboard');
+    return redirect('/admin/dashboard');
 });
 
-// Index All route: Public list of phone directory for all users
+// Dashboard Route: Applications and Users Administrative dashboard
+Route::get('/admin/dashboard', [$adminClass, 'dashboard']);
+
+// IndexAll route: Public list of phone directory for all users
 Route::get('/phone-directory/all', [$phoneClass, 'indexAll']);
 
 // Administrative routes for phone directory
