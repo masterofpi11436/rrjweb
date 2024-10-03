@@ -14,6 +14,10 @@ class LoginController extends Controller
     public function showLoginForm($app)
     {
         $view = "Login.{$app}-login";
+
+        if (!view()->exists($view)) {
+            abort(404);
+        }
         return view($view);
     }
 
@@ -23,7 +27,6 @@ class LoginController extends Controller
         $credentials = $request->only('email', 'password');
 
         if (Auth::attempt($credentials)) {
-            // Redirect based on application
             return $this->redirectAfterLogin($app);
         }
 

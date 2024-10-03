@@ -7,6 +7,8 @@ use App\Http\Controllers\Directory\PhoneDirectoryController;
 use App\Http\Controllers\Tablet\InmateTabletController;
 use App\Http\Controllers\Administrator\AdministratorController;
 
+use App\Http\Middleware\CheckUserRole;
+
 $loginClass = LoginController::class;
 $phoneClass = PhoneDirectoryController::class;
 $tabletClass = InmateTabletController::class;
@@ -30,7 +32,7 @@ Route::get('/admin/dashboard', [$adminClass, 'dashboard'])
 Route::get('/phone-directory/all', [$phoneClass, 'indexAll']);
 
 // Administrative routes for phone directory
-Route::prefix('phone')->middleware(['auth', 'checkUserRole:1'])->group(function () use ($phoneClass){
+Route::prefix('phone')->middleware(['auth', 'checkUserRole:1,2'])->group(function () use ($phoneClass){
     
     // Index route: Phone directory dashboard
     Route::get('/dashboard', [$phoneClass, 'dashboard'])
@@ -51,7 +53,7 @@ Route::prefix('phone')->middleware(['auth', 'checkUserRole:1'])->group(function 
 });
 
 // Administrative routes for inmate tablets
-Route::prefix('tablet')->middleware(['auth', 'checkUserRole:1'])->group(function () use ($tabletClass){
+Route::prefix('tablet')->middleware(['auth', 'checkUserRole:1,3'])->group(function () use ($tabletClass){
 
     // Index route: Inmate tablet dashboard
     Route::get('/dashboard', [$tabletClass, 'dashboard'])
