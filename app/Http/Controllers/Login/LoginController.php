@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Login;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 // Base Controller
 use App\Http\Controllers\Controller;
@@ -12,7 +13,7 @@ class LoginController extends Controller
     // Show login form
     public function showLoginForm($app)
     {
-        $view = "auth.{$app}-login";
+        $view = "Login.{$app}-login";
         return view($view);
     }
 
@@ -34,16 +35,17 @@ class LoginController extends Controller
     // Redirect after login
     protected function redirectAfterLogin($app)
     {
-        switch ($app) {
-            case 'admin':
-                return redirect()->route('admin.dashboard');
-            case 'phone':
-                return redirect()->route('phone.dashboard');
-            case 'tablet':
-                return redirect()->route('tablet.dashboard');
-            default:
-                return redirect('/');
-        }
+            // Create a map of applications to their corresponding routes
+        $routes = [
+            'admin'  => 'admin.dashboard',
+            'phone'  => 'phone.dashboard',
+            'tablet' => 'tablet.dashboard',
+        ];
+
+        // Check if the app exists in the map and redirect to the corresponding route
+        return isset($routes[$app])
+            ? redirect()->route($routes[$app])
+            : redirect('/'); // Fallback in case the app is not found
     }
 
     // Handle logout

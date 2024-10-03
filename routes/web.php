@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers\LoginController;
+use App\Http\Controllers\Login\LoginController;
 use App\Http\Controllers\Directory\PhoneDirectoryController;
 use App\Http\Controllers\Tablet\InmateTabletController;
 use App\Http\Controllers\Administrator\AdministratorController;
@@ -13,22 +13,24 @@ $tabletClass = InmateTabletController::class;
 $adminClass = AdministratorController::class;
 
 Route::get('/', function () {
-    return redirect('/admin/dashboard');
+    return redirect()->route('login', ['app' => 'admin']);
 });
 
 // Login Routes
-Route::get('/{app}/login', [LoginController::class, 'showLoginForm'])->name('login');
-Route::post('/{app}/login', [LoginController::class, 'login']);
-Route::post('/{app}/logout', [LoginController::class, 'logout'])->name('logout');
+Route::get('/{app}/login', [$loginClass, 'showLoginForm'])->name('login');
+Route::post('/{app}/login', [$loginClass, 'login']);
+Route::post('/{app}/logout', [$loginClass, 'logout'])->name('logout');
 
 // Dashboard Route: Applications and Users Administrative dashboard
-Route::get('/admin/dashboard', [$adminClass, 'dashboard']);
+Route::get('/admin/dashboard', [$adminClass, 'dashboard'])
+    ->middleware(['auth', 'checkUserRole:1'])
+    ->name('admin.dashboard');
 
 // IndexAll route: Public list of phone directory for all users
 Route::get('/phone-directory/all', [$phoneClass, 'indexAll']);
 
 // Administrative routes for phone directory
-Route::prefix('phone')->group(function () use ($phoneClass){
+Route::prefix('phone')->middleware(['auth', 'checkUserRole:1'])->group(function () use ($phoneClass){
     
     // Index route: Phone directory dashboard
     Route::get('/dashboard', [$phoneClass, 'dashboard'])
@@ -49,7 +51,7 @@ Route::prefix('phone')->group(function () use ($phoneClass){
 });
 
 // Administrative routes for inmate tablets
-Route::prefix('tablet')->group(function () use ($tabletClass){
+Route::prefix('tablet')->middleware(['auth', 'checkUserRole:1'])->group(function () use ($tabletClass){
 
     // Index route: Inmate tablet dashboard
     Route::get('/dashboard', [$tabletClass, 'dashboard'])
