@@ -7,67 +7,57 @@ use App\Http\Controllers\Directory\PhoneDirectoryController;
 use App\Http\Controllers\Tablet\InmateTabletController;
 use App\Http\Controllers\Administrator\AdministratorController;
 
-use App\Http\Middleware\CheckUserRole;
-
+// Shorthand classes
 $loginClass = LoginController::class;
 $phoneClass = PhoneDirectoryController::class;
 $tabletClass = InmateTabletController::class;
 $adminClass = AdministratorController::class;
 
-Route::get('/', function () {
-    return redirect()->route('login', ['app' => 'admin']);
-});
+Route::get('/admin/login', function () {
+    return view('Login.admin-login');
+})->name('admin.login');
 
-// Login Routes
-Route::get('/{app}/login', [$loginClass, 'showLoginForm'])->name('login');
-Route::post('/{app}/login', [$loginClass, 'login']);
-Route::post('/{app}/logout', [$loginClass, 'logout'])->name('logout');
-
-// Dashboard Route: Applications and Users Administrative dashboard
+// Admin Dashboard Route
 Route::get('/admin/dashboard', [$adminClass, 'dashboard'])
-    ->middleware(['auth', 'checkUserRole:1'])
+    ->middleware(['auth', 'user.authorization:Administrator'])
     ->name('admin.dashboard');
 
-// IndexAll route: Public list of phone directory for all users
-Route::get('/phone-directory/all', [$phoneClass, 'indexAll']);
+// Phone Directory Routes
+Route::prefix('phone')->group(function () use ($phoneClass) {
 
-// Administrative routes for phone directory
-Route::prefix('phone')->middleware(['auth', 'checkUserRole:1,2'])->group(function () use ($phoneClass){
-    
-    // Index route: Phone directory dashboard
     Route::get('/dashboard', [$phoneClass, 'dashboard'])
+        ->middleware(['auth', 'user.authorization:Manager'])
         ->name('phone.dashboard');
 
-    // Create route: Show a form to create a new phone directory entry
     Route::get('/create', [$phoneClass, 'create'])
+        ->middleware(['auth', 'user.authorization:Manager'])
         ->name('phone.create');
 
-    // Edit route: Show a form to edit an existing entry
     Route::get('/{id}/edit', [$phoneClass, 'edit'])
+        ->middleware(['auth', 'user.authorization:Manager'])
         ->name('phone.edit');
-    
-    // Destroy route: Delete an existing record
-    Route::delete('/{id}', [$phoneClass, 'destroy'])
-        ->name('phone.destroy');
 
+    Route::delete('/{id}', [$phoneClass, 'destroy'])
+        ->middleware(['auth', 'user.authorization:Manager'])
+        ->name('phone.destroy');
 });
 
-// Administrative routes for inmate tablets
-Route::prefix('tablet')->middleware(['auth', 'checkUserRole:1,3'])->group(function () use ($tabletClass){
+// Tablet Management Routes
+Route::prefix('tablet')->group(function () use ($tabletClass) {
 
-    // Index route: Inmate tablet dashboard
     Route::get('/dashboard', [$tabletClass, 'dashboard'])
+        ->middleware(['auth', 'user.authorization:Supervisor'])
         ->name('tablet.dashboard');
 
-    // Create route: Create a new record
     Route::get('/create', [$tabletClass, 'create'])
+        ->middleware(['auth', 'user.authorization:Supervisor'])
         ->name('tablet.create');
 
-    // Edit route: Edit an existing record
     Route::get('/{id}/edit', [$tabletClass, 'edit'])
+        ->middleware(['auth', 'user.authorization:Supervisor'])
         ->name('tablet.edit');
-    
-    // Destroy route: Delete an existing record
+
     Route::delete('/{id}', [$tabletClass, 'destroy'])
+        ->middleware(['auth', 'user.authorization:Supervisor'])
         ->name('tablet.destroy');
 });

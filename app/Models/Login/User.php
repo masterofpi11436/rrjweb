@@ -41,17 +41,17 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
+    // Relationship to applications via the pivot table user_application_role
     public function applications()
     {
         return $this->belongsToMany(Application::class, 'user_application_role')
-                    ->using(UserApplicationRole::class)
                     ->withPivot('role_id'); // Ensure 'role_id' is loaded from the pivot
     }
 
+    // Relationship to roles via the pivot table user_application_role
     public function roles()
     {
         return $this->belongsToMany(Role::class, 'user_application_role')
-                    ->using(UserApplicationRole::class)
                     ->withPivot('application_id');
     }
 }

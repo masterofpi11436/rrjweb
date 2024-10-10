@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Role extends Model
 {
     use HasFactory;
-    
+
     protected $fillable = ['name', 'description'];
 
     public function users()
@@ -23,10 +23,5 @@ class Role extends Model
         return $this->belongsToMany(Application::class, 'user_application_role')
                     ->using(UserApplicationRole::class)
                     ->withPivot('user_id');
-    }
-
-    public function permissions()
-    {
-        return $this->belongsToMany(Permission::class, 'role_permissions');
     }
 }
