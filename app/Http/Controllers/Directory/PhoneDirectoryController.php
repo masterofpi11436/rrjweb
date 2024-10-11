@@ -24,6 +24,7 @@ class PhoneDirectoryController extends Controller
         ]);
     }
 
+    // Dashbaord for the Phone Directory manager
     public function dashboard(Request $request)
     {
         $extensions = $this->searchDirectory($request);
@@ -34,6 +35,7 @@ class PhoneDirectoryController extends Controller
         ]);
     }
 
+    // Perform search by name, title, section, or extension.
     private function searchDirectory (Request $request)
     {
         $search = $request->input('search');
@@ -49,7 +51,7 @@ class PhoneDirectoryController extends Controller
 
         return PhoneDirectory::orderBy('section')->get();
     }
-    
+
     public function create()
     {
         return view('Directory.PhoneDirectory.create');
