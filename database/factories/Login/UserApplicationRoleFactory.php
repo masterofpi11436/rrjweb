@@ -2,12 +2,15 @@
 
 namespace Database\Factories\Login;
 
+use App\Models\Login\Role;
+use App\Models\Login\User;
+use App\Models\Login\Application;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Model>
  */
-class RoleFactory extends Factory
+class UserApplicationRoleFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,9 +20,9 @@ class RoleFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->word,
-            'app_name' => $this->faker->company,
-            'description' => $this->faker->sentence,
+            'user_id' => User::factory(),  // Reference a user
+            'application_id' => Application::factory(),  // Reference an application
+            'role_id' => Role::factory(),  // Reference a role
             'created_at' => now(),
             'updated_at' => now(),
         ];

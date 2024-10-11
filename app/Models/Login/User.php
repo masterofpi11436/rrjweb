@@ -2,56 +2,34 @@
 
 namespace App\Models\Login;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Model;
 
-class User extends Authenticatable
+class User extends Model
 {
     use HasFactory, Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
     protected $fillable = [
-        'last_name',
-        'first_name',
-        'email',
-        'password',
+        'first_name', 'last_name', 'email', 'password',
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
     protected $hidden = [
-        'password',
+        'password', 'remember_token',
     ];
 
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array<string, string>
-     */
-    protected $casts = [
-        'password' => 'hashed',
-    ];
-
-    // Relationship to applications via the pivot table user_application_role
-    public function applications()
-    {
-        return $this->belongsToMany(Application::class, 'user_application_role')
-                    ->withPivot('role_id'); // Ensure 'role_id' is loaded from the pivot
-    }
-
-    // Relationship to roles via the pivot table user_application_role
     public function roles()
     {
         return $this->belongsToMany(Role::class, 'user_application_role')
-                    ->withPivot('application_id');
+            ->withPivot('application_id')
+            ->withTimestamps();
+    }
+
+    public function applications()
+    {
+        return $this->belongsToMany(Application::class, 'user_application_role')
+            ->withPivot('role_id')
+            ->withTimestamps();
     }
 }

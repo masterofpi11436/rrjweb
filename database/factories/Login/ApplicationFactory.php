@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Model>
  */
-class RoleFactory extends Factory
+class ApplicationFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -18,7 +18,6 @@ class RoleFactory extends Factory
     {
         return [
             'name' => $this->faker->word,
-            'app_name' => $this->faker->company,
             'description' => $this->faker->sentence,
             'created_at' => now(),
             'updated_at' => now(),

@@ -16,7 +16,7 @@ Run on other computer in network:
 php artisan serve --host=128.168.123.75 --port=8000
 
 # Admin Dashboard
-Dashboard for the IT administrator to manage users and applications
+Dashboard for the IT administrator to manage all users and all applications
 
 # Phone Directory
 Lists all the extensions with some outside vendors

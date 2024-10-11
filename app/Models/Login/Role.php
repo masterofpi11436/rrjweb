@@ -9,19 +9,21 @@ class Role extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'description'];
+    protected $fillable = [
+        'name', 'app_name', 'description',
+    ];
 
     public function users()
     {
         return $this->belongsToMany(User::class, 'user_application_role')
-                    ->using(UserApplicationRole::class)
-                    ->withPivot('application_id');
+            ->withPivot('application_id')
+            ->withTimestamps();
     }
 
     public function applications()
     {
         return $this->belongsToMany(Application::class, 'user_application_role')
-                    ->using(UserApplicationRole::class)
-                    ->withPivot('user_id');
+            ->withPivot('user_id')
+            ->withTimestamps();
     }
 }
