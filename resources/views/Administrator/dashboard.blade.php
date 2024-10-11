@@ -6,6 +6,11 @@
 
 @section('content')
 
+<!-- Link to manage users -->
+<form action="{{ route('admin.index') }}">
+    <button>Application Users</button>
+</form>
+
 <!-- Link to navigate to the Phone Directory App -->
 <form action="{{ route('phone.dashboard') }}">
     <button>Phone Directory</button>

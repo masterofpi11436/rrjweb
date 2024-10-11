@@ -12,8 +12,25 @@ $tabletClass = InmateTabletController::class;
 $adminClass = AdministratorController::class;
 
 // Admin Dashboard Route
-Route::get('/admin/dashboard', [$adminClass, 'dashboard'])
-    ->name('admin.dashboard');
+
+
+Route::prefix('admin')->group(function () use ($adminClass) {
+
+    Route::get('/dashboard', [$adminClass, 'dashboard'])
+        ->name('admin.dashboard');
+
+    Route::get('/index', [$adminClass, 'index'])
+        ->name('admin.index');
+
+    Route::get('/create', [$adminClass, 'create'])
+        ->name('admin.create');
+
+    Route::get('/{id}/edit', [$adminClass, 'edit'])
+        ->name('admin.edit');
+
+    Route::delete('/{id}', [$adminClass, 'destroy'])
+        ->name('admin.destroy');
+});
 
 // Phone Directory Routes
 Route::prefix('phone')->group(function () use ($phoneClass) {
