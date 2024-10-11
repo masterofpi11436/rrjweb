@@ -1,23 +1,25 @@
 @extends('layouts.administrator')
 
-@section('title', 'Manage Users')
+@section('title', 'User Dashboard')
 
-@section('heading', 'User Management')
+@section('heading', 'Manage Users')
 
 @section('content')
+<!-- Search form -->
+<form method="GET" action="{{ route('admin.index') }}">
+    <input type="text" name="search" value="{{ request()->input('search') }}" placeholder="Search users...">
+    <button type="submit">Search</button>
+</form>
 
-<!-- Link to create a new user -->
-<a href="">Add New User</a>
-
-<!-- User List Table -->
-<table>
+<!-- User List -->
+<table class="table table-bordered table-striped">
     <thead>
         <tr>
             <th>First Name</th>
             <th>Last Name</th>
             <th>Email</th>
-            <th>Applications</th>
-            <th>Roles</th>
+            <th>Application(s)</th>
+            <th>Role</th>
             <th>Actions</th>
         </tr>
     </thead>
@@ -32,26 +34,22 @@
                         <div>{{ $application->name }}</div>
                     @endforeach
                 </td>
+                <td>{{ $user->roles->pluck('name')->join(', ') }}</td>
                 <td>
-                    @foreach($user->applications as $application)
-                        <div>{{ $user->roles->where('pivot.application_id', $application->id)->first()->name ?? 'No Role' }}</div>
-                    @endforeach
-                </td>
-                <td>
-                    <!-- Edit button -->
-                    <a href="">Edit</a>
+                    <!-- Edit and Delete buttons -->
+                    <a href="" class="btn btn-warning">Edit</a>
 
-                    <!-- Delete form -->
-                    <form action="" method="POST">
+                    <form action="" method="POST" style="display:inline-block;">
                         @csrf
                         @method('DELETE')
-                        <button type="submit">Delete</button>
+                        <button type="submit" class="btn btn-danger"
+                                onclick="return confirm('Are you sure you want to delete this user?');">Delete</button>
                     </form>
                 </td>
             </tr>
         @empty
             <tr>
-                <td colspan="6">No users found.</td>
+                <td colspan="5">No users found.</td>
             </tr>
         @endforelse
     </tbody>
