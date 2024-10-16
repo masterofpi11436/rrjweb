@@ -12,7 +12,9 @@ $tabletClass = InmateTabletController::class;
 $adminClass = AdministratorController::class;
 
 // Admin Dashboard Route
-
+Route::get('/', function () {
+    return redirect()->route('admin.dashboard');
+});
 
 Route::prefix('admin')->group(function () use ($adminClass) {
 
