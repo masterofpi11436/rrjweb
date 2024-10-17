@@ -25,4 +25,9 @@ class AdministratorController extends Controller
     {
         return view('Administrator.Users.create');
     }
+
+    public function edit($id)
+    {
+        return view('Administrator.Users.edit', ['userId' => $id]);
+    }
 }
