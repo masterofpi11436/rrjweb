@@ -40,12 +40,12 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($suggestions as $suggestion)
+                @foreach ($suggestions as $phone)
                     <tr>
-                        <td>{{ $suggestion->name }}</td>
-                        <td>{{ $suggestion->title }}</td>
-                        <td>{{ $suggestion->section }}</td>
-                        <td>{{ $suggestion->extension }}</td>
+                        <td>{{ $phone->name }}</td>
+                        <td>{{ $phone->title }}</td>
+                        <td>{{ $phone->section }}</td>
+                        <td>{{ $phone->extension }}</td>
                     </tr>
                 @endforeach
             </tbody>

@@ -90,33 +90,33 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($suggestions as $suggestion)
+                @foreach ($suggestions as $tablet)
                     <tr>
-                        <td>{{ $suggestion->inmate_number }}</td>
-                        <td>{{ $suggestion->last_name }}</td>
-                        <td>{{ $suggestion->first_name }}</td>
-                        <td>{{ $suggestion->middle_name }}</td>
-                        <td>{{ $suggestion->date_tablet_found }}</td>
-                        <td>{{ $suggestion->is_101_incident_report_filed ? 'Yes' : 'No' }}</td>
-                        <td>{{ $suggestion->is_filed_by_inmate_accounts ? 'Yes' : 'No' }}</td>
-                        <td>{{ $suggestion->is_charged_by_inmate_accounts ? 'Yes' : 'No' }}</td>
-                        <td>{{ $suggestion->is_payed ? 'Yes' : 'No' }}</td>
-                        <td>{{ $suggestion->notes }}</td>
+                        <td>{{ $tablet->inmate_number }}</td>
+                        <td>{{ $tablet->last_name }}</td>
+                        <td>{{ $tablet->first_name }}</td>
+                        <td>{{ $tablet->middle_name }}</td>
+                        <td>{{ $tablet->date_tablet_found }}</td>
+                        <td>{{ $tablet->is_101_incident_report_filed ? 'Yes' : 'No' }}</td>
+                        <td>{{ $tablet->is_filed_by_inmate_accounts ? 'Yes' : 'No' }}</td>
+                        <td>{{ $tablet->is_charged_by_inmate_accounts ? 'Yes' : 'No' }}</td>
+                        <td>{{ $tablet->is_payed ? 'Yes' : 'No' }}</td>
+                        <td>{{ $tablet->notes }}</td>
                         <td>
-                            <a href="{{ route('tablet.edit', $suggestion->id) }}">Edit</a>/
+                            <a href="{{ route('tablet.edit', $tablet->id) }}">Edit</a>/
                             <div>
                                 <!-- Delete link -->
-                                <a href="#" onclick="event.preventDefault(); confirmDelete({{ $suggestion->id }});">Delete</a>
-                                <form id="delete-form-{{ $suggestion->id }}" action="{{ route('tablet.destroy', $suggestion->id) }}" method="POST" style="display: none;">
+                                <a href="#" onclick="event.preventDefault(); confirmDelete({{ $tablet->id }});">Delete</a>
+                                <form id="delete-form-{{ $tablet->id }}" action="{{ route('tablet.destroy', $tablet->id) }}" method="POST" style="display: none;">
                                     @csrf
                                     @method('DELETE')
                                 </form>
                                 <!-- Custom Confirmation Modal -->
-                                <div id="custom-confirmation-modal-{{ $suggestion->id }}" class="confirmation-modal" style="display: none;">
+                                <div id="custom-confirmation-modal-{{ $tablet->id }}" class="confirmation-modal" style="display: none;">
                                     <div class="modal-content">
                                         <p>Are you sure you want to delete this record?</p>
-                                        <button class="btn-confirm" onclick="deleteRecord({{ $suggestion->id }});">Yes, Delete</button>
-                                        <button class="btn-cancel" onclick="hideModal({{ $suggestion->id }});">Cancel</button>
+                                        <button class="btn-confirm" onclick="deleteRecord({{ $tablet->id }});">Yes, Delete</button>
+                                        <button class="btn-cancel" onclick="hideModal({{ $tablet->id }});">Cancel</button>
                                     </div>
                                 </div>
                             </div>

@@ -42,27 +42,27 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($suggestions as $suggestion)
+                @foreach ($suggestions as $phone)
                     <tr>
-                        <td>{{ $suggestion->name }}</td>
-                        <td>{{ $suggestion->title }}</td>
-                        <td>{{ $suggestion->section }}</td>
-                        <td>{{ $suggestion->extension }}</td>
+                        <td>{{ $phone->name }}</td>
+                        <td>{{ $phone->title }}</td>
+                        <td>{{ $phone->section }}</td>
+                        <td>{{ $phone->extension }}</td>
                         <td>
-                            <a href="{{ route('phone.edit', $suggestion->id) }}">Edit</a>/
+                            <a href="{{ route('phone.edit', $phone->id) }}">Edit</a>/
                             <div>
                                 <!-- Delete link -->
-                                <a href="#" onclick="event.preventDefault(); confirmDelete({{ $suggestion->id }});">Delete</a>
-                                <form id="delete-form-{{ $suggestion->id }}" action="{{ route('phone.destroy', $suggestion->id) }}" method="POST" style="display: none;">
+                                <a href="#" onclick="event.preventDefault(); confirmDelete({{ $phone->id }});">Delete</a>
+                                <form id="delete-form-{{ $phone->id }}" action="{{ route('phone.destroy', $phone->id) }}" method="POST" style="display: none;">
                                     @csrf
                                     @method('DELETE')
                                 </form>
                                 <!-- Custom Confirmation Modal -->
-                                <div id="custom-confirmation-modal-{{ $suggestion->id }}" class="confirmation-modal" style="display: none;">
+                                <div id="custom-confirmation-modal-{{ $phone->id }}" class="confirmation-modal" style="display: none;">
                                     <div class="modal-content">
                                         <p>Are you sure you want to delete this extension?</p>
-                                        <button class="btn-confirm" onclick="deleteRecord({{ $suggestion->id }});">Yes, Delete</button>
-                                        <button class="btn-cancel" onclick="hideModal({{ $suggestion->id }});">Cancel</button>
+                                        <button class="btn-confirm" onclick="deleteRecord({{ $phone->id }});">Yes, Delete</button>
+                                        <button class="btn-cancel" onclick="hideModal({{ $phone->id }});">Cancel</button>
                                     </div>
                                 </div>
                             </div>
