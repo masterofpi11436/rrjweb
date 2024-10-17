@@ -54,7 +54,7 @@ class DatabaseSeeder extends Seeder
         }
 
         // Create additional random users
-        User::factory(10)->create();
+        // User::factory(10)->create();
 
         // Creating real applications
         $realApplications = [
@@ -68,7 +68,7 @@ class DatabaseSeeder extends Seeder
         }
 
         // Create additional random applications
-        Application::factory(3)->create();
+        // Application::factory(3)->create();
 
         // Creating real roles
         $realRoles = [
@@ -82,7 +82,7 @@ class DatabaseSeeder extends Seeder
         }
 
         // Create additional random roles
-        Role::factory(5)->create();
+        // Role::factory(5)->create();
 
         // Get the users and roles for assignments
         $mark = User::where('email', 'masterofpi11436@gmail.com')->first();
@@ -133,7 +133,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         // Create additional random user-application-role assignments
-        UserApplicationRole::factory(20)->create();
+        // UserApplicationRole::factory(20)->create();
 
         // Populate random data for applications
         PhoneDirectory::factory()->count(25)->create();
