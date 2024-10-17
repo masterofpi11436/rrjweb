@@ -19,4 +19,10 @@ class AdministratorController extends Controller
     {
         return view('Administrator.Users.index');
     }
+
+    // Create new entry
+    public function create()
+    {
+        return view('Administrator.Users.create');
+    }
 }
