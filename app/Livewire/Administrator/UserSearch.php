@@ -28,8 +28,8 @@ class UserSearch extends Component
     // Render method for livewire component
     public function render()
     {
-        // Query to search and sort user suggestions
-        $suggestions = User::query()
+        // Query to search and sort users
+        $users = User::query()
             ->where(function (Builder $query) {
                 $query->where('first_name', 'like', '%' . $this->search . '%')
                       ->orWhere('last_name', 'like', '%' . $this->search . '%')
@@ -39,7 +39,7 @@ class UserSearch extends Component
             ->get();
 
         return view('Administrator.livewire.user-search', [
-            'suggestions' => $suggestions,
+            'users' => $users,
         ]);
     }
 }

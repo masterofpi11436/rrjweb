@@ -6,18 +6,19 @@ use Illuminate\Http\Request;
 
 // Required Models
 use App\Models\Login\User;
-use App\Models\Login\Application;
 
 // Base Controller
 use App\Http\Controllers\Controller;
 
 class AdministratorController extends Controller
 {
+    // Display the user dashboard for IT administrator(s)
     public function dashboard()
     {
         return view('Administrator.dashboard');
     }
 
+    // Manage the users index page
     public function index()
     {
         return view('Administrator.Users.index');
@@ -26,42 +27,23 @@ class AdministratorController extends Controller
     // Create new entry
     public function create()
     {
-        $applications = Application::with('roles')->get();
-
         return view('Administrator.Users.create');
     }
 
-    public function store(Request $request)
-    {
-        // Validate the user input
-        $request->validate([
-            'name' => 'required|string',
-            'email' => 'required|email|unique:users,email',
-            'roles' => 'required|array', // The selected roles
-        ]);
-
-        // Create the user
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => bcrypt('default-password'), // Set the default password or let the user reset it
-        ]);
-
-        // Loop through selected roles and assign them
-        foreach ($request->roles as $applicationId => $roleIds) {
-            foreach ($roleIds as $roleId) {
-                $user->applicationRoles()->create([
-                    'application_id' => $applicationId,
-                    'role_id' => $roleId,
-                ]);
-            }
-        }
-
-        return redirect()->route('users.index')->with('success', 'User created successfully!');
-    }
-
+    // Display the form to edit an existing user
     public function edit($id)
     {
-        return view('Administrator.Users.edit', ['userId' => $id]);
+        $user = User::findOrFail($id);
+        return view('Administrator.Users.edit', ['user' => $user]);
+    }
+
+    // Delete an existing user
+    public function destroy($id)
+    {
+        $user = User::findOrFail($id);
+        $user->delete();
+
+        session()->flash('create-edit-delete-message', 'User deleted successfully!');
+        return redirect()->back();
     }
 }

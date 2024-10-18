@@ -4,7 +4,7 @@
         <input id="name" type="text" wire:model.live="name">
         @error('name') <span>{{ $message }}</span> @enderror
     </div>
-    
+
     <div>
         <label for="title">Title</label>
         <input id="title" type="text" wire:model.live="title">
@@ -22,8 +22,8 @@
         <input id="extension" type="text" wire:model.live="extension">
         @error('extension') <span>{{ $message }}</span> @enderror
     </div>
- 
+
     <div>
-        <button type="submit">Save Contact</button>
+        <button type="submit">{{ $phoneDirectoryId ? 'Update Extension' : 'Create Extension' }}</button>
     </div>
 </form>

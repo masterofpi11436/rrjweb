@@ -60,7 +60,7 @@ class PhoneDirectoryForm extends Component
 
         // Reset form fields
         $this->reset(['name', 'title', 'section', 'extension']);
-        
+
         // Redirect to index
         return redirect()->route('phone.dashboard');
     }

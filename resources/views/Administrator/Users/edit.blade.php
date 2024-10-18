@@ -8,6 +8,6 @@
 
     <a href="{{ route('admin.index') }}">Back</a>
 
-    @livewire('administrator.user-form', ['userId' => $userId])
+    @livewire('administrator.user-form', ['id' => $user->id])
 
 @endsection
