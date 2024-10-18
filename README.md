@@ -9,8 +9,10 @@ php artisan key:generate
 sudo /etc/init.d/apache2 stop
 sudo /opt/lampp/lampp start
 https://localhost/phpmyadmin
-php artisan migrate or php artisan migrate:refresh
-php artisan db:seed or php artisan migrate:refresh --seed
+php artisan migrate
+php artisan migrate:refresh
+php artisan db:seed
+php artisan migrate:refresh --seed
 
 Run on other computer in network:
 php artisan serve --host=128.168.123.75 --port=8000
