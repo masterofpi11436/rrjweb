@@ -14,7 +14,7 @@ class CheckAuthorizationPhone
         $user = Auth::user();
 
         // Check if the user is authenticated and has the necessary role
-        if (!$user || ($user->role !== $role && $user->admin !== 1)) {
+        if (!$user || ($user->phone !== 1 && $user->admin !== 1)) {
             // Redirect to a different page if access is denied
             return redirect()->route('phone.login')->withErrors(['access_denied' => 'You do not have access to this page.']);
         }
