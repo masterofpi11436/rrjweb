@@ -9,13 +9,13 @@ use Symfony\Component\HttpFoundation\Response;
 
 class CheckAuthorizationAdmin
 {
-    public function handle(Request $request, Closure $next, $role): Response
+    public function handle(Request $request, Closure $next): Response
     {
         $user = Auth::user();
 
-        // Check if the user is authenticated and has the necessary role
-        if (!$user || ($user->admin !== 1 && $user->admin !== 1)) {
-            // Redirect to a different page if access is denied
+        // Check if the user is authenticated and is an admin
+        if (!$user || $user->admin !== 1) {
+            // Redirect to the admin login page if access is denied
             return redirect()->route('admin.login')->withErrors(['access_denied' => 'You do not have access to this page.']);
         }
 
