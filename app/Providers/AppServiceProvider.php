@@ -2,7 +2,11 @@
 
 namespace App\Providers;
 
+use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
+use App\Http\Middleware\CheckAuthorizationAdmin;
+use App\Http\Middleware\CheckAuthorizationPhone;
+use App\Http\Middleware\CheckAuthorizationTablet;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -17,8 +21,11 @@ class AppServiceProvider extends ServiceProvider
     /**
      * Bootstrap any application services.
      */
-    public function boot(): void
+    public function boot(Router $router)
     {
-        //
+        // Register the custom middleware
+        $router->aliasMiddleware('check.authorization', CheckAuthorizationAdmin::class);
+        $router->aliasMiddleware('check.authorization', CheckAuthorizationPhone::class);
+        $router->aliasMiddleware('check.authorization', CheckAuthorizationTablet::class);
     }
 }

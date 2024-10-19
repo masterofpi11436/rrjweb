@@ -32,10 +32,10 @@ Route::post('tablet/logout', [TabletLoginController::class, 'logout'])->name('ta
 
 // Admin Dashboard Route
 Route::get('/', function () {
-    return redirect()->route('admin.dashboard');
+    return redirect()->route('admin.login');
 });
 
-Route::prefix('admin')->group(function () use ($adminClass) {
+Route::prefix('admin')->middleware('check.authorization:admin')->group(function () use ($adminClass) {
 
     Route::get('/dashboard', [$adminClass, 'dashboard'])
         ->name('admin.dashboard');
@@ -53,8 +53,8 @@ Route::prefix('admin')->group(function () use ($adminClass) {
         ->name('admin.destroy');
 });
 
-// Phone Directory Routes
-Route::prefix('phone')->group(function () use ($phoneClass) {
+// Phone Directory Routes with Middleware
+Route::prefix('phone')->middleware('check.authorization:phone')->group(function () use ($phoneClass) {
 
     Route::get('/dashboard', [$phoneClass, 'dashboard'])
         ->name('phone.dashboard');
@@ -70,7 +70,7 @@ Route::prefix('phone')->group(function () use ($phoneClass) {
 });
 
 // Tablet Management Routes
-Route::prefix('tablet')->group(function () use ($tabletClass) {
+Route::prefix('tablet')->middleware('check.authorization:tablet')->group(function () use ($tabletClass) {
 
     Route::get('/dashboard', [$tabletClass, 'dashboard'])
         ->name('tablet.dashboard');
