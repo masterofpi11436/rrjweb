@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Administrator;
 
-use Illuminate\Http\Request;
+use App\Models\Login\User;
 
 // Required Models
-use App\Models\Login\User;
+use Illuminate\Http\Request;
 
 // Base Controller
 use App\Http\Controllers\Controller;

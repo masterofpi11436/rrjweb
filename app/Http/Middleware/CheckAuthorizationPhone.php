@@ -15,7 +15,6 @@ class CheckAuthorizationPhone
 
         // Check if the user is authenticated and has phone access or is an admin
         if (!$user || ($user->phone !== 1 && $user->admin !== 1)) {
-            // Redirect to the phone login page if access is denied
             return redirect()->route('phone.login')->withErrors(['access_denied' => 'You do not have access to this page.']);
         }
 

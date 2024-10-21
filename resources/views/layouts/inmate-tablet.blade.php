@@ -15,6 +15,11 @@
     <header class="header">
         <h1>@yield('heading')</h1>
 
+        <form action="{{ route('tablet.logout') }}" method="POST">
+            @csrf
+            <button>Logout</button>
+        </form>
+
         <!-- Theme Toggle Inside Header -->
         <div class="theme-toggle">
             <label class="switch">

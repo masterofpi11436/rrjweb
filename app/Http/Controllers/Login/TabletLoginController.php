@@ -34,5 +34,4 @@ class TabletLoginController extends BaseLoginController
     {
         return parent::logout($route);
     }
-
 }

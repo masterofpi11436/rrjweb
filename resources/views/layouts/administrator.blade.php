@@ -15,6 +15,11 @@
     <header class="header">
         <h1>@yield('heading', 'Admin Dashboard')</h1> <!-- Default Heading -->
 
+        <form action="{{ route('admin.logout') }}" method="POST">
+            @csrf
+            <button>Logout</button>
+        </form>
+
         <!-- Theme Toggle Inside Header -->
         <div class="theme-toggle">
             <label class="switch">

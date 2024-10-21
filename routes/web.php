@@ -30,12 +30,12 @@ Route::post('tablet/login', [TabletLoginController::class, 'login'])->name('tabl
 Route::post('tablet/logout', [TabletLoginController::class, 'logout'])->name('tablet.logout');
 
 
-// Admin Dashboard Route
+// Admin Dashboard Redirect
 Route::get('/', function () {
     return redirect()->route('admin.login');
 });
 
-Route::prefix('admin')->middleware('check.authorization:admin')->group(function () use ($adminClass) {
+Route::prefix('admin')->middleware('admin')->group(function () use ($adminClass) {
 
     Route::get('/dashboard', [$adminClass, 'dashboard'])
         ->name('admin.dashboard');
@@ -54,7 +54,7 @@ Route::prefix('admin')->middleware('check.authorization:admin')->group(function 
 });
 
 // Phone Directory Routes with Middleware
-Route::prefix('phone')->middleware('check.authorization:phone')->group(function () use ($phoneClass) {
+Route::prefix('phone')->middleware('phone')->group(function () use ($phoneClass) {
 
     Route::get('/dashboard', [$phoneClass, 'dashboard'])
         ->name('phone.dashboard');
@@ -70,7 +70,7 @@ Route::prefix('phone')->middleware('check.authorization:phone')->group(function 
 });
 
 // Tablet Management Routes
-Route::prefix('tablet')->middleware('check.authorization:tablet')->group(function () use ($tabletClass) {
+Route::prefix('tablet')->middleware('tablet')->group(function () use ($tabletClass) {
 
     Route::get('/dashboard', [$tabletClass, 'dashboard'])
         ->name('tablet.dashboard');
