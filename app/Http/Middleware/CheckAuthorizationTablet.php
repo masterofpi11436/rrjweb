@@ -15,7 +15,7 @@ class CheckAuthorizationTablet
 
         // Check if the user is authenticated and has tablet access or is an admin
         if (!$user || ($user->tablet !== 1 && $user->admin !== 1)) {
-            return redirect()->route('tablet.login')->withErrors(['access_denied' => 'You do not have access to this page.']);
+            return redirect()->route('tablet.login')->withErrors(['access_denied' => 'You do not have access to the tablet admin pages.']);
         }
 
         return $next($request); // Allow access if the check passes

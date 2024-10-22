@@ -16,7 +16,7 @@ class CheckAuthorizationAdmin
         // Check if the user is authenticated and is an admin
         if (!$user || $user->admin !== 1) {
             // Redirect to the admin login page if access is denied
-            return redirect()->route('admin.login')->withErrors(['access_denied' => 'You do not have access to this page.']);
+            return redirect()->route('admin.login')->withErrors(['access_denied' => 'You do not have access to admin pages.']);
         }
 
         return $next($request); // Allow access if the check passes

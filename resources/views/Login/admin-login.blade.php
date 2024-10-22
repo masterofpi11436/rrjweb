@@ -40,4 +40,10 @@
         </div>
     @endif
 
+    @if ($errors->has('access_denied'))
+        <div style="color: red;">
+            {{ $errors->first('access_denied') }}
+        </div>
+    @endif
+
 @endsection
