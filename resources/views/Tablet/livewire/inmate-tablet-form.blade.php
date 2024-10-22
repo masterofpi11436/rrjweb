@@ -1,4 +1,11 @@
 <form wire:submit.prevent="submitForm">
+
+    <div>
+        <label for="inmate_info">Paste Inmate Info (Number, Last Name, First Name)</label>
+        <textarea id="inmate_info" wire:model.live="inmate_info"></textarea>
+        @error('inmate_info') <span>{{ $message }}</span> @enderror
+    </div>
+
     <div>
         <label for="inmate_number">Inmate Number:</label>
         <input id="inmate_number" type="text" wire:model.live="inmate_number">

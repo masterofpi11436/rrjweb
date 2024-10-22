@@ -13,10 +13,10 @@ class InmateTabletForm extends Component
     public $inmateTabletId;
 
     // Fields
-    public $inmate_number, $last_name, $first_name, $middle_name, 
-           $date_tablet_found, $is_101_incident_report_filed, $is_filed_by_inmate_accounts, 
+    public $inmate_info, $inmate_number, $last_name, $first_name, $middle_name,
+           $date_tablet_found, $is_101_incident_report_filed, $is_filed_by_inmate_accounts,
            $is_charged_by_inmate_accounts, $is_payed, $notes;
-    
+
     protected $rules = [
         'inmate_number' => 'required|numeric|digits_between:5,11',
         'last_name' => 'required|max:255',
@@ -29,6 +29,33 @@ class InmateTabletForm extends Component
         'is_payed' => 'boolean',
         'notes' => 'nullable'
     ];
+
+    public function updatedInmateInfo()
+    {
+        $this->combinedInmateInfoSplitter();
+    }
+
+    public function combinedInmateInfoSplitter()
+    {
+        $cleanPastedInfo = str_replace(',', '', $this->inmate_info);
+
+        $data = explode(' ', $cleanPastedInfo);
+
+        if (count($data) >= 3) {
+            $this->inmate_number = $data[0];
+            $this->last_name = $data[1];
+            $this->first_name = $data[2];
+
+            if (count($data) > 3) {
+                $this->middle_name = implode(' ', array_slice($data, 3));
+            } else {
+                $this->middle_name = null;
+            }
+
+        } else {
+            session()->flash('error', 'Invalid format, please use the format ##### Last Name First Name');
+        }
+    }
 
     public function mount($id = null)
     {
@@ -65,7 +92,7 @@ class InmateTabletForm extends Component
     public function submitForm()
     {
         $validateOnly = $this->validate();
-    
+
         if ($this->inmateTabletId) {
             $inmate_record = InmateTablet::findOrFail($this->inmateTabletId);
             $inmate_record->update($validateOnly);
@@ -74,21 +101,10 @@ class InmateTabletForm extends Component
             InmateTablet::create($validateOnly);
             session()->flash('create-edit-delete-message', 'Inmate tablet status added successfully!');
         }
-    
+
         // Reset form fields
-        $this->reset([
-            'inmate_number',
-            'last_name',
-            'first_name',
-            'middle_name',
-            'date_tablet_found',
-            'is_101_incident_report_filed',
-            'is_filed_by_inmate_accounts',
-            'is_charged_by_inmate_accounts',
-            'is_payed',
-            'notes'
-        ]);
-    
+        $this->reset();
+
         return redirect()->route('tablet.dashboard');
     }
 

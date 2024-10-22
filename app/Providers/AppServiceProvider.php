@@ -23,7 +23,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(Router $router)
     {
-        // Register the custom middleware
+        // Register the login middleware
         $router->aliasMiddleware('admin', CheckAuthorizationAdmin::class);
         $router->aliasMiddleware('phone', CheckAuthorizationPhone::class);
         $router->aliasMiddleware('tablet', CheckAuthorizationTablet::class);
