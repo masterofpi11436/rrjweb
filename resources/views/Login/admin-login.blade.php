@@ -46,4 +46,8 @@
         </div>
     @endif
 
+    <form action="/forgot_password">
+        <button>Forgot Password</button>
+    </form>
+
 @endsection

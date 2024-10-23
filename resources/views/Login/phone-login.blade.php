@@ -6,7 +6,7 @@
 
 @section('content')
 
-    <form method="POST" action="{{ route('phone.login.submit') }}">
+    <form method="POST" action="#">
         @csrf
 
         <div>

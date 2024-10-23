@@ -56,11 +56,6 @@ class BaseLoginController extends Controller
     {
         Auth::logout();
 
-        if ($route) {
-            return redirect()->route($route);
-        }
-
-        // Provide a fallback in case no route is passed
-        return redirect('/');
+        return redirect()->route($route);
     }
 }

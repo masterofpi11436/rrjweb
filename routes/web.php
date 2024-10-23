@@ -16,17 +16,17 @@ $adminClass = AdministratorController::class;
 
 // User Authentication for Admin application
 Route::get('admin/login', [AdminLoginController::class, 'adminLoginForm'])->name('admin.login');
-Route::post('admin/login', [AdminLoginController::class, 'login'])->name('admin.login.submit');
+Route::post('admin/login', [AdminLoginController::class, 'login']);
 Route::post('admin/logout', [AdminLoginController::class, 'logout'])->name('admin.logout');
 
 // User Authentication for Phone application
 Route::get('phone/login', [PhoneLoginController::class, 'phoneLoginForm'])->name('phone.login');
-Route::post('phone/login', [PhoneLoginController::class, 'login'])->name('phone.login.submit');
+Route::post('phone/login', [PhoneLoginController::class, 'login']);
 Route::post('phone/logout', [PhoneLoginController::class, 'logout'])->name('phone.logout');
 
 // User Authentication for Tablet application
 Route::get('tablet/login', [TabletLoginController::class, 'tabletLoginForm'])->name('tablet.login');
-Route::post('tablet/login', [TabletLoginController::class, 'login'])->name('tablet.login.submit');
+Route::post('tablet/login', [TabletLoginController::class, 'login']);
 Route::post('tablet/logout', [TabletLoginController::class, 'logout'])->name('tablet.logout');
 
 

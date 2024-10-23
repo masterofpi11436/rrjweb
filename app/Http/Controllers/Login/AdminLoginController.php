@@ -34,5 +34,4 @@ class AdminLoginController extends BaseLoginController
     {
         return parent::logout($route);
     }
-
 }
