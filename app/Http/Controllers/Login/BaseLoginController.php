@@ -58,4 +58,47 @@ class BaseLoginController extends Controller
 
         return redirect()->route($route);
     }
+
+    public function showForgotPasswordForm()
+    {
+        return view('Login.forgot-password');
+    }
+
+    public function forgotPassword(Request $request)
+    {
+        // Validate the email field
+        $request->validate([
+            'email' => 'required|email',
+        ]);
+
+        // Get the number of failed attempts from the session (default to 0)
+        $failedAttempts = session()->get('forgot_password_attempts', 0);
+
+        // Check if the user with the provided email exists
+        $user = User::where('email', $request->email)->first();
+
+        if (!$user) {
+            // Increment the failed attempts count
+            $failedAttempts++;
+
+            // Store the new count in the session
+            session()->put('forgot_password_attempts', $failedAttempts);
+
+            // If failed attempts exceed 3, show a different error message and reset the counter
+            if ($failedAttempts > 3) {
+                session()->forget('forgot_password_attempts'); // Reset the counter
+                return redirect()->back()->withErrors(['email_not_found' => 'Your email is not found. Please contact the administrator.']);
+            }
+
+            // Otherwise, show the regular "email not found" message
+            return redirect()->back()->withErrors(['email_not_found' => 'Email not found. Please check your email.']);
+        }
+
+        // Reset the failed attempts counter on successful email lookup
+        session()->forget('forgot_password_attempts');
+
+        // Here you would typically generate a reset token and send it via email
+        return redirect()->back()->with('status', 'Password reset email has been sent!');
+    }
+
 }

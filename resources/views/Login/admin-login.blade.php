@@ -46,8 +46,9 @@
         </div>
     @endif
 
-    <form action="/forgot_password">
-        <button>Forgot Password</button>
+    <form action="{{ route('login.forgot') }}">
+        @csrf
+        <button type="submit">Forgot Password</button>
     </form>
 
 @endsection

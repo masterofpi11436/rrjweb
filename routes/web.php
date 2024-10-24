@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\Login\BaseLoginController;
 use App\Http\Controllers\Login\AdminLoginController;
 use App\Http\Controllers\Login\PhoneLoginController;
 use App\Http\Controllers\Login\TabletLoginController;
@@ -13,6 +14,11 @@ use App\Http\Controllers\Administrator\AdministratorController;
 $phoneClass = PhoneDirectoryController::class;
 $tabletClass = InmateTabletController::class;
 $adminClass = AdministratorController::class;
+
+// Forgot password link for all applications
+Route::get('forgot', [BaseLoginController::class, 'showForgotPasswordForm'])->name('login.forgot');
+Route::post('forgot', [BaseLoginController::class, 'forgotPassword'])->name('login.forgot');
+
 
 // User Authentication for Admin application
 Route::get('admin/login', [AdminLoginController::class, 'adminLoginForm'])->name('admin.login');
