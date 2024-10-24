@@ -1,0 +1,22 @@
+<?php
+
+namespace App\Http\Middleware\Auth;
+
+class Phone extends BaseAuth
+{
+    protected function hasAccess($user): bool
+    {
+        // Check if the user is authenticated and has phone access or is an admin
+        return $user && ($user->phone === 1 || $user->admin === 1);
+    }
+
+    protected function getRedirectRoute(): string
+    {
+        return 'phone.login';
+    }
+
+    protected function getAccessDeniedMessage(): string
+    {
+        return 'You do not have access to the phone directory admin site.';
+    }
+}

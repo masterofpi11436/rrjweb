@@ -46,6 +46,12 @@
         </div>
     @endif
 
+    @if ($errors->has('session_timeout'))
+        <div style="color: red;">
+            {{ $errors->first('access_denied') }}
+        </div>
+    @endif
+
     <form action="{{ route('login.forgot') }}">
         @csrf
         <button type="submit">Forgot Password</button>

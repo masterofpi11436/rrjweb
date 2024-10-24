@@ -4,9 +4,9 @@ namespace App\Providers;
 
 use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
-use App\Http\Middleware\CheckAuthorizationAdmin;
-use App\Http\Middleware\CheckAuthorizationPhone;
-use App\Http\Middleware\CheckAuthorizationTablet;
+use App\Http\Middleware\Auth\Admin;
+use App\Http\Middleware\Auth\Phone;
+use App\Http\Middleware\Auth\Tablet;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -24,8 +24,8 @@ class AppServiceProvider extends ServiceProvider
     public function boot(Router $router)
     {
         // Register the login middleware
-        $router->aliasMiddleware('admin', CheckAuthorizationAdmin::class);
-        $router->aliasMiddleware('phone', CheckAuthorizationPhone::class);
-        $router->aliasMiddleware('tablet', CheckAuthorizationTablet::class);
+        $router->aliasMiddleware('admin', Admin::class);
+        $router->aliasMiddleware('phone', Phone::class);
+        $router->aliasMiddleware('tablet', Tablet::class);
     }
 }

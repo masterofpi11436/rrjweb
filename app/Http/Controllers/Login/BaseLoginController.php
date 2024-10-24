@@ -39,8 +39,12 @@ class BaseLoginController extends Controller
 
             // Check if the user has the correct access or is an admin
             if ($roleCheck($user)) {
+                // Store the session start time or expiration time in the session
+                $request->session()->put('session_start_time', time());
+
                 // Redirect to the specific application dashboard
                 return redirect()->route($redirectRoute);
+
             } else {
                 // If not authorized, deny access
                 Auth::logout();
