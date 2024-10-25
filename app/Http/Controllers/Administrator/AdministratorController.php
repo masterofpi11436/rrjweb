@@ -4,9 +4,6 @@ namespace App\Http\Controllers\Administrator;
 
 use App\Models\Login\User;
 
-// Required Models
-use Illuminate\Http\Request;
-
 // Base Controller
 use App\Http\Controllers\Controller;
 

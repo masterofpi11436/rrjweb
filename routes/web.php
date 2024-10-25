@@ -11,6 +11,7 @@ use App\Http\Controllers\Directory\PhoneDirectoryController;
 use App\Http\Controllers\Administrator\AdministratorController;
 
 // Shorthand classes
+$baseLoginClass = BaseLoginController::class;
 $adminClass = AdministratorController::class;
 $adminLoginClass = AdminLoginController::class;
 $phoneClass = PhoneDirectoryController::class;
@@ -19,9 +20,12 @@ $tabletClass = InmateTabletController::class;
 $tabletLoginClass = TabletLoginController::class;
 
 // Forgot password link for all applications
-Route::get('forgot', [BaseLoginController::class, 'showForgotPasswordForm'])->name('login.forgot');
-Route::post('forgot', [BaseLoginController::class, 'forgotPassword'])->name('login.forgot.form');
+Route::get('forgot', [$baseLoginClass, 'showForgotPasswordForm'])->name('login.forgot');
+Route::post('forgot', [$baseLoginClass, 'forgotPassword'])->name('login.forgot.form');
 
+Route::get('/password/reset/{token}', [$baseLoginClass, 'showResetForm'])->name('login.reset');
+Route::post('/password/reset', [$baseLoginClass, 'reset'])->name('login.update');
+Route::view('/login/success', 'Login.Resets.success')->name('login.success');
 
 // Admin Dashboard Redirect
 Route::get('/', function () {

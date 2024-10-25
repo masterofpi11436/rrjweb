@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="{{ asset('css/water-dark.css') }}" id="theme-link" >
     <link rel="stylesheet" href="{{ asset('css/common-styles.css') }}">
     <title>@yield('title', 'RRJ Web Applications')</title> <!-- Default title -->
-    @livewireStyles
 </head>
 <body>
 
@@ -50,8 +49,6 @@
     </form>
 
     @yield('content')
-
-    @livewireScripts
 
     <script src="{{ asset('javascript/theme-switcher.js') }}"></script>
 </body>

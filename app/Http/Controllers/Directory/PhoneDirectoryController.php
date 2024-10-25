@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers\Directory;
 
-use Illuminate\Http\Request;
-
 // Base Controller
 use App\Http\Controllers\Controller;
 

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Mail\PasswordResetMail;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Validator;
@@ -113,4 +114,30 @@ class BaseLoginController extends Controller
         return redirect()->back()->with('status', 'Password reset email has been sent!');
     }
 
+    public function showResetForm($token)
+    {
+        return view('Login.Resets.reset', ['token' => $token]);
+    }
+
+    public function reset(Request $request)
+    {
+        $request->validate([
+            'token' => 'required',
+            'email' => 'required|email',
+            'password' => 'required|confirmed',
+        ]);
+
+        $status = Password::reset(
+            $request->only('email', 'password', 'password_confirmation', 'token'),
+            function ($user, $password) {
+                $user->forceFill([
+                    'password' => Hash::make($password)
+                ])->save();
+
+                Auth::login($user);
+            }
+        );
+
+        return $status === Password::PASSWORD_RESET ? redirect()->route('login.success')->with('status', __($status)) : back()->withErrors(['email' => [__($status)]]);
+    }
 }
