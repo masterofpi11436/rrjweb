@@ -72,11 +72,6 @@
             </div>
         @endif
 
-        <form action="{{ route('login.forgot') }}">
-            @csrf
-            <button type="submit">Forgot Password</button>
-        </form>
-
     @yield('content')
 
     @livewireScripts

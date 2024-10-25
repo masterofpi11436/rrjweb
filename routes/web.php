@@ -17,12 +17,14 @@ $adminClass = AdministratorController::class;
 
 // Forgot password link for all applications
 Route::get('forgot', [BaseLoginController::class, 'showForgotPasswordForm'])->name('login.forgot');
-Route::post('forgot', [BaseLoginController::class, 'forgotPassword'])->name('login.forgot');
+Route::post('forgot', [BaseLoginController::class, 'forgotPassword'])->name('login.forgot.form');
 
 
 // User Authentication for Admin application
 Route::get('admin/login', [AdminLoginController::class, 'adminLoginForm'])->name('admin.login');
 Route::post('admin/login', [AdminLoginController::class, 'login']);
+Route::get('admin/forgot', [BaseLoginController::class, 'showForgotPasswordForm'])->name('admin.forgot.form');
+Route::post('admin/forgot', [BaseLoginController::class, 'forgotPassword'])->name('admin.forgot.form.submit');
 Route::post('admin/logout', [AdminLoginController::class, 'logout'])->name('admin.logout');
 
 // User Authentication for Phone application

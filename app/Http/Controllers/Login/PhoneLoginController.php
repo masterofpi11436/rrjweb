@@ -8,7 +8,7 @@ class PhoneLoginController extends BaseLoginController
 {
     public function phoneLoginForm()
     {
-        return view('Login.phone-login');
+        return view('Login.logins.phone-login');
     }
 
     public function login(Request $request)

@@ -66,9 +66,9 @@ class BaseLoginController extends Controller
         return redirect()->route($route);
     }
 
-    public function showForgotPasswordForm()
+    public function showForgotPasswordForm($viewName)
     {
-        return view('Login.forgot-password');
+        return view($viewName);
     }
 
     public function forgotPassword(Request $request)

@@ -8,7 +8,7 @@ class TabletLoginController extends BaseLoginController
 {
     public function tabletLoginForm()
     {
-        return view('Login.tablet-login');
+        return view('Login.logins.tablet-login');
     }
 
     public function login(Request $request)

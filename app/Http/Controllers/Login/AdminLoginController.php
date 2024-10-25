@@ -8,7 +8,7 @@ class AdminLoginController extends BaseLoginController
 {
     public function adminLoginForm()
     {
-        return view('Login.admin-login');
+        return view('Login.logins.admin-login');
     }
 
     public function login(Request $request)
@@ -28,6 +28,11 @@ class AdminLoginController extends BaseLoginController
         return $this->attemptLogin($request, 'admin.dashboard', function ($user) {
             return $user->admin == 1;
         });
+    }
+
+    public function adminForgotPasswordForm()
+    {
+        return parent::showForgotPasswordForm('Login.forgots.admin-forgot-password');
     }
 
     public function logout($route = 'admin.login')
