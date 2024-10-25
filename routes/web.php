@@ -11,35 +11,16 @@ use App\Http\Controllers\Directory\PhoneDirectoryController;
 use App\Http\Controllers\Administrator\AdministratorController;
 
 // Shorthand classes
-$phoneClass = PhoneDirectoryController::class;
-$tabletClass = InmateTabletController::class;
 $adminClass = AdministratorController::class;
+$adminLoginClass = AdminLoginController::class;
+$phoneClass = PhoneDirectoryController::class;
+$phoneLoginClass = PhoneLoginController::class;
+$tabletClass = InmateTabletController::class;
+$tabletLoginClass = TabletLoginController::class;
 
 // Forgot password link for all applications
 Route::get('forgot', [BaseLoginController::class, 'showForgotPasswordForm'])->name('login.forgot');
 Route::post('forgot', [BaseLoginController::class, 'forgotPassword'])->name('login.forgot.form');
-
-
-// User Authentication for Admin application
-Route::get('admin/login', [AdminLoginController::class, 'adminLoginForm'])->name('admin.login');
-Route::post('admin/login', [AdminLoginController::class, 'login']);
-Route::get('admin/forgot', [AdminLoginController::class, 'adminForgotPasswordForm'])->name('admin.forgot.form');
-Route::post('admin/forgot', [AdminLoginController::class, 'forgotPassword'])->name('admin.forgot.form.submit');
-Route::post('admin/logout', [AdminLoginController::class, 'logout'])->name('admin.logout');
-
-// User Authentication for Phone application
-Route::get('phone/login', [PhoneLoginController::class, 'phoneLoginForm'])->name('phone.login');
-Route::post('phone/login', [PhoneLoginController::class, 'login']);
-Route::get('phone/forgot', [PhoneLoginController::class, 'phoneForgotPasswordForm'])->name('phone.forgot.form');
-Route::post('phone/forgot', [PhoneLoginController::class, 'forgotPassword'])->name('phone.forgot.form.submit');
-Route::post('phone/logout', [PhoneLoginController::class, 'logout'])->name('phone.logout');
-
-// User Authentication for Tablet application
-Route::get('tablet/login', [TabletLoginController::class, 'tabletLoginForm'])->name('tablet.login');
-Route::post('tablet/login', [TabletLoginController::class, 'login']);
-Route::get('tablet/forgot', [TabletLoginController::class, 'tabletForgotPasswordForm'])->name('tablet.forgot.form');
-Route::post('tablet/forgot', [TabletLoginController::class, 'forgotPassword'])->name('tablet.forgot.form.submit');
-Route::post('tablet/logout', [TabletLoginController::class, 'logout'])->name('tablet.logout');
 
 
 // Admin Dashboard Redirect
@@ -47,52 +28,60 @@ Route::get('/', function () {
     return redirect()->route('admin.login');
 });
 
-Route::prefix('admin')->middleware('admin')->group(function () use ($adminClass) {
+// Admin Routes
+Route::prefix('admin')->group(function () use ($adminClass, $adminLoginClass) {
 
-    Route::get('/dashboard', [$adminClass, 'dashboard'])
-        ->name('admin.dashboard');
+    // Routes without middleware
+    Route::get('/login', [$adminLoginClass, 'adminLoginForm'])->name('admin.login');
+    Route::post('/login', [$adminLoginClass, 'login']);
+    Route::get('/forgot', [$adminLoginClass, 'adminForgotPasswordForm'])->name('admin.forgot.form');
+    Route::post('/forgot', [$adminLoginClass, 'forgotPassword'])->name('admin.forgot.form.submit');
+    Route::post('/logout', [$adminLoginClass, 'logout'])->name('admin.logout');
 
-    Route::get('/index', [$adminClass, 'index'])
-        ->name('admin.index');
-
-    Route::get('/create', [$adminClass, 'create'])
-        ->name('admin.create');
-
-    Route::get('/{id}/edit', [$adminClass, 'edit'])
-        ->name('admin.edit');
-
-    Route::delete('/{id}', [$adminClass, 'destroy'])
-        ->name('admin.destroy');
+    // Routes with 'admin' middleware
+    Route::middleware('admin')->group(function () use ($adminClass) {
+        Route::get('/dashboard', [$adminClass, 'dashboard'])->name('admin.dashboard');
+        Route::get('/index', [$adminClass, 'index'])->name('admin.index');
+        Route::get('/create', [$adminClass, 'create'])->name('admin.create');
+        Route::get('/{id}/edit', [$adminClass, 'edit'])->name('admin.edit');
+        Route::delete('/{id}', [$adminClass, 'destroy'])->name('admin.destroy');
+    });
 });
 
-// Phone Directory Routes with Middleware
-Route::prefix('phone')->middleware('phone')->group(function () use ($phoneClass) {
+// User Authentication for Phone Application
+Route::prefix('phone')->group(function () use ($phoneClass, $phoneLoginClass){
 
-    Route::get('/dashboard', [$phoneClass, 'dashboard'])
-        ->name('phone.dashboard');
+    // Routes without middleware
+    Route::get('/login', [$phoneLoginClass, 'phoneLoginForm'])->name('phone.login');
+    Route::post('/login', [$phoneLoginClass, 'login']);
+    Route::get('/forgot', [$phoneLoginClass, 'phoneForgotPasswordForm'])->name('phone.forgot.form');
+    Route::post('/forgot', [$phoneLoginClass, 'forgotPassword'])->name('phone.forgot.form.submit');
+    Route::post('/logout', [$phoneLoginClass, 'logout'])->name('phone.logout');
 
-    Route::get('/create', [$phoneClass, 'create'])
-        ->name('phone.create');
-
-    Route::get('/{id}/edit', [$phoneClass, 'edit'])
-        ->name('phone.edit');
-
-    Route::delete('/{id}', [$phoneClass, 'destroy'])
-        ->name('phone.destroy');
+    // Routes with 'phone' middleware
+    Route::middleware('phone')->group(function () use ($phoneClass) {
+        Route::get('/dashboard', [$phoneClass, 'dashboard'])->name('phone.dashboard');
+        Route::get('/create', [$phoneClass, 'create'])->name('phone.create');
+        Route::get('/{id}/edit', [$phoneClass, 'edit'])->name('phone.edit');
+        Route::delete('/{id}', [$phoneClass, 'destroy'])->name('phone.destroy');
+    });
 });
 
-// Tablet Management Routes
-Route::prefix('tablet')->middleware('tablet')->group(function () use ($tabletClass) {
+// User Authentication for Tablet Application
+Route::prefix('tablet')->group(function () use ($tabletClass, $tabletLoginClass){
 
-    Route::get('/dashboard', [$tabletClass, 'dashboard'])
-        ->name('tablet.dashboard');
+    // Routes without middleware
+    Route::get('/login', [$tabletLoginClass, 'tabletLoginForm'])->name('tablet.login');
+    Route::post('/login', [$tabletLoginClass, 'login']);
+    Route::get('/forgot', [$tabletLoginClass, 'tabletForgotPasswordForm'])->name('tablet.forgot.form');
+    Route::post('/forgot', [$tabletLoginClass, 'forgotPassword'])->name('tablet.forgot.form.submit');
+    Route::post('/logout', [$tabletLoginClass, 'logout'])->name('tablet.logout');
 
-    Route::get('/create', [$tabletClass, 'create'])
-        ->name('tablet.create');
-
-    Route::get('/{id}/edit', [$tabletClass, 'edit'])
-        ->name('tablet.edit');
-
-    Route::delete('/{id}', [$tabletClass, 'destroy'])
-        ->name('tablet.destroy');
+    // Routes with 'tablet' middleware
+    Route::middleware('tablet')->group(function () use ($tabletClass) {
+        Route::get('/dashboard', [$tabletClass, 'dashboard'])->name('tablet.dashboard');
+        Route::get('/create', [$tabletClass, 'create'])->name('tablet.create');
+        Route::get('/{id}/edit', [$tabletClass, 'edit'])->name('tablet.edit');
+        Route::delete('/{id}', [$tabletClass, 'destroy'])->name('tablet.destroy');
+    });
 });
