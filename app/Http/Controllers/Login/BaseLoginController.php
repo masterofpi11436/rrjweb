@@ -4,8 +4,11 @@ namespace App\Http\Controllers\Login;
 
 use App\Models\Login\User;
 use Illuminate\Http\Request;
+use App\Mail\PasswordResetMail;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Validator;
 
 class BaseLoginController extends Controller
@@ -101,7 +104,12 @@ class BaseLoginController extends Controller
         // Reset the failed attempts counter on successful email lookup
         session()->forget('forgot_password_attempts');
 
-        // Here you would typically generate a reset token and send it via email
+        // Generate a password reset token
+        $token = Password::createToken($user);
+
+        // Send the reset email
+        Mail::to($user->email)->send(new PasswordResetMail($token));
+
         return redirect()->back()->with('status', 'Password reset email has been sent!');
     }
 
