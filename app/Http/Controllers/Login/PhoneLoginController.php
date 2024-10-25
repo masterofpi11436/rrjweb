@@ -30,6 +30,11 @@ class PhoneLoginController extends BaseLoginController
         });
     }
 
+    public function phoneForgotPasswordForm()
+    {
+        return parent::showForgotPasswordForm('Login.forgots.phone-forgot-password');
+    }
+
     public function logout($route = 'phone.login')
     {
         return parent::logout($route);

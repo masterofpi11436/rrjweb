@@ -13,7 +13,7 @@
 
     {{-- Header Section with Theme Toggle --}}
     <header class="header">
-        <h1>@yield('heading', 'Admin Dashboard')</h1> {{-- Default Heading --}}
+        <h1>@yield('heading')</h1> {{-- Default Heading --}}
 
         <!-- Theme Toggle Inside Header -->
         <div class="theme-toggle">
@@ -24,6 +24,30 @@
             <span class="theme-label">Light/Dark Theme</span>
         </div>
     </header>
+
+    @if (session('status'))
+        <div style="color: green;">
+            {{ session('status') }}
+        </div>
+    @endif
+
+    <form method="POST" action="{{ route('login.forgot') }}">
+        @csrf
+
+        <div>
+            <label for="email">Email Address</label>
+            <input type="email" name="email" autofocus>
+        </div>
+        @if ($errors->has('email_not_found'))
+            <div style="color: red;">
+                {{ $errors->first('email_not_found') }}
+            </div>
+        @endif
+
+        <div>
+            <button type="submit">Send Reset Link</button>
+        </div>
+    </form>
 
     @yield('content')
 

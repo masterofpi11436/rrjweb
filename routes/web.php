@@ -23,18 +23,22 @@ Route::post('forgot', [BaseLoginController::class, 'forgotPassword'])->name('log
 // User Authentication for Admin application
 Route::get('admin/login', [AdminLoginController::class, 'adminLoginForm'])->name('admin.login');
 Route::post('admin/login', [AdminLoginController::class, 'login']);
-Route::get('admin/forgot', [BaseLoginController::class, 'showForgotPasswordForm'])->name('admin.forgot.form');
-Route::post('admin/forgot', [BaseLoginController::class, 'forgotPassword'])->name('admin.forgot.form.submit');
+Route::get('admin/forgot', [AdminLoginController::class, 'adminForgotPasswordForm'])->name('admin.forgot.form');
+Route::post('admin/forgot', [AdminLoginController::class, 'forgotPassword'])->name('admin.forgot.form.submit');
 Route::post('admin/logout', [AdminLoginController::class, 'logout'])->name('admin.logout');
 
 // User Authentication for Phone application
 Route::get('phone/login', [PhoneLoginController::class, 'phoneLoginForm'])->name('phone.login');
 Route::post('phone/login', [PhoneLoginController::class, 'login']);
+Route::get('phone/forgot', [PhoneLoginController::class, 'phoneForgotPasswordForm'])->name('phone.forgot.form');
+Route::post('phone/forgot', [PhoneLoginController::class, 'forgotPassword'])->name('phone.forgot.form.submit');
 Route::post('phone/logout', [PhoneLoginController::class, 'logout'])->name('phone.logout');
 
 // User Authentication for Tablet application
 Route::get('tablet/login', [TabletLoginController::class, 'tabletLoginForm'])->name('tablet.login');
 Route::post('tablet/login', [TabletLoginController::class, 'login']);
+Route::get('tablet/forgot', [TabletLoginController::class, 'tabletForgotPasswordForm'])->name('tablet.forgot.form');
+Route::post('tablet/forgot', [TabletLoginController::class, 'forgotPassword'])->name('tablet.forgot.form.submit');
 Route::post('tablet/logout', [TabletLoginController::class, 'logout'])->name('tablet.logout');
 
 

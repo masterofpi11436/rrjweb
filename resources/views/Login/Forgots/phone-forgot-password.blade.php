@@ -7,7 +7,7 @@
 @section('content')
 
     <div>
-        <a href="{{ route('admin.login') }}">Back to Login</a>
+        <a href="{{ route('phone.login') }}">Back to Login</a>
     </div>
 
 @endsection

@@ -30,6 +30,11 @@ class TabletLoginController extends BaseLoginController
         });
     }
 
+    public function tabletForgotPasswordForm()
+    {
+        return parent::showForgotPasswordForm('Login.forgots.tablet-forgot-password');
+    }
+
     public function logout($route = 'tablet.login')
     {
         return parent::logout($route);
