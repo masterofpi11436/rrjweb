@@ -8,7 +8,7 @@ class PhoneLoginController extends BaseLoginController
 {
     public function phoneLoginForm()
     {
-        return view('Login.logins.phone-login');
+        return view('Login.Logins.phone-login');
     }
 
     public function login(Request $request)
@@ -32,7 +32,7 @@ class PhoneLoginController extends BaseLoginController
 
     public function phoneForgotPasswordForm()
     {
-        return parent::showForgotPasswordForm('Login.forgots.phone-forgot-password');
+        return parent::showForgotPasswordForm('Login.Forgots.phone-forgot-password');
     }
 
     public function logout($route = 'phone.login')

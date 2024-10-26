@@ -8,7 +8,7 @@ class TabletLoginController extends BaseLoginController
 {
     public function tabletLoginForm()
     {
-        return view('Login.logins.tablet-login');
+        return view('Login.Logins.tablet-login');
     }
 
     public function login(Request $request)
@@ -32,7 +32,7 @@ class TabletLoginController extends BaseLoginController
 
     public function tabletForgotPasswordForm()
     {
-        return parent::showForgotPasswordForm('Login.forgots.tablet-forgot-password');
+        return parent::showForgotPasswordForm('Login.Forgots.tablet-forgot-password');
     }
 
     public function logout($route = 'tablet.login')
