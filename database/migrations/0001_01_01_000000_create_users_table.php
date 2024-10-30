@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('first_name');
             $table->string('email')->unique();
             $table->string('password')->nullable();
+            $table->string('google_id')->nullable();
             // Applications and their roles
             $table->boolean('admin')->default(false);
             $table->boolean('phone')->default(false);
