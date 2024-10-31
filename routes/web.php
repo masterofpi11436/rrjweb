@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Login\GoogleLoginController;
+use App\Http\Controllers\Login\AdminGoogleLoginController;
 use App\Http\Controllers\Login\BaseLoginController;
 use App\Http\Controllers\Login\AdminLoginController;
 use App\Http\Controllers\Login\PhoneLoginController;
@@ -21,7 +22,7 @@ $tabletClass = InmateTabletController::class;
 $tabletLoginClass = TabletLoginController::class;
 
 // Login with Google
-Route::controller(GoogleLoginController::class)->group(function () {
+Route::controller(AdminGoogleLoginController::class)->group(function () {
     Route::get('auth/google', 'googleLogin')->name('auth.google');
     Route::get('auth/google-callback', 'googleAuthentication')->name('auth.google-callback');
 });

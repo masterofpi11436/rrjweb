@@ -11,4 +11,9 @@
         <button type="submit">Forgot Password</button>
     </form>
 
+    {{-- Log in with Google--}}
+    <form action="{{ route('phone.google.login') }}">
+        <button>Login with Google</button>
+    </form>
+
 @endsection
