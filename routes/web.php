@@ -2,13 +2,14 @@
 
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers\Login\GoogleLoginController;
-use App\Http\Controllers\Login\AdminGoogleLoginController;
 use App\Http\Controllers\Login\BaseLoginController;
 use App\Http\Controllers\Login\AdminLoginController;
 use App\Http\Controllers\Login\PhoneLoginController;
 use App\Http\Controllers\Login\TabletLoginController;
 use App\Http\Controllers\Tablet\InmateTabletController;
+use App\Http\Controllers\Login\AdminGoogleLoginController;
+use App\Http\Controllers\Login\PhoneGoogleLoginController;
+use App\Http\Controllers\Login\TabletGoogleLoginController;
 use App\Http\Controllers\Directory\PhoneDirectoryController;
 use App\Http\Controllers\Administrator\AdministratorController;
 
@@ -21,11 +22,18 @@ $phoneLoginClass = PhoneLoginController::class;
 $tabletClass = InmateTabletController::class;
 $tabletLoginClass = TabletLoginController::class;
 
-// Login with Google
-Route::controller(AdminGoogleLoginController::class)->group(function () {
-    Route::get('auth/google', 'googleLogin')->name('auth.google');
-    Route::get('auth/google-callback', 'googleAuthentication')->name('auth.google-callback');
-});
+// Admin application Google login routes
+Route::get('admin/google-login', [AdminGoogleLoginController::class, 'googleLogin'])->name('admin.google.login');
+Route::get('admin/google-callback', [AdminGoogleLoginController::class, 'googleAuthentication'])->name('admin.google.callback');
+
+// Phone application Google login routes
+Route::get('phone/google-login', [PhoneGoogleLoginController::class, 'googleLogin'])->name('phone.google.login');
+Route::get('phone/google-callback', [PhoneGoogleLoginController::class, 'googleAuthentication'])->name('phone.google.callback');
+
+// Tablet application Google login routes
+Route::get('tablet/google-login', [TabletGoogleLoginController::class, 'googleLogin'])->name('tablet.google.login');
+Route::get('tablet/google-callback', [TabletGoogleLoginController::class, 'googleAuthentication'])->name('tablet.google.callback');
+
 
 
 // Forgot password link for all applications

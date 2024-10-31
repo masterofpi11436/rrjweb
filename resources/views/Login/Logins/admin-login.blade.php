@@ -12,7 +12,7 @@
     </form>
 
     {{-- Log in with Google--}}
-    <form action="{{ route('auth.google') }}">
+    <form action="{{ route('admin.google.login') }}">
         <button>Login with Google</button>
     </form>
 
