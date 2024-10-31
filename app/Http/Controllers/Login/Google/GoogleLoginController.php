@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Login;
+namespace App\Http\Controllers\Login\Google;
 
-use App\Models\Login\User;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
+use App\Http\Controllers\Login\Custom\BaseLoginController;
 
 abstract class GoogleLoginController extends BaseLoginController
 {

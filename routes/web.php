@@ -2,10 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers\Login\BaseLoginController;
-use App\Http\Controllers\Login\AdminLoginController;
-use App\Http\Controllers\Login\PhoneLoginController;
-use App\Http\Controllers\Login\TabletLoginController;
+use App\Http\Controllers\Login\Custom\BaseLoginController;
+use App\Http\Controllers\Login\Custom\AdminLoginController;
+use App\Http\Controllers\Login\Custom\PhoneLoginController;
+use App\Http\Controllers\Login\Custom\TabletLoginController;
 use App\Http\Controllers\Tablet\InmateTabletController;
 use App\Http\Controllers\Login\AdminGoogleLoginController;
 use App\Http\Controllers\Login\PhoneGoogleLoginController;
