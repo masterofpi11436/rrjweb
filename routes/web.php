@@ -7,9 +7,9 @@ use App\Http\Controllers\Login\Custom\AdminLoginController;
 use App\Http\Controllers\Login\Custom\PhoneLoginController;
 use App\Http\Controllers\Login\Custom\TabletLoginController;
 use App\Http\Controllers\Tablet\InmateTabletController;
-use App\Http\Controllers\Login\AdminGoogleLoginController;
-use App\Http\Controllers\Login\PhoneGoogleLoginController;
-use App\Http\Controllers\Login\TabletGoogleLoginController;
+use App\Http\Controllers\Login\Google\AdminGoogleLoginController;
+use App\Http\Controllers\Login\Google\PhoneGoogleLoginController;
+use App\Http\Controllers\Login\Google\TabletGoogleLoginController;
 use App\Http\Controllers\Directory\PhoneDirectoryController;
 use App\Http\Controllers\Administrator\AdministratorController;
 
