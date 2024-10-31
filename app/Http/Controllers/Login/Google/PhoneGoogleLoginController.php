@@ -10,7 +10,7 @@ class PhoneGoogleLoginController extends GoogleLoginController
     {
         return Socialite::driver('google')
             ->stateless()
-            ->redirectUrl('http://localhost:8000/phone/google-callback')
+            ->redirectUrl('http://localhost:8000/phone/google-callback') // Phone-specific callback
             ->redirect();
     }
 

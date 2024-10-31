@@ -10,7 +10,7 @@ class TabletGoogleLoginController extends GoogleLoginController
     {
         return Socialite::driver('google')
             ->stateless()
-            ->redirectUrl('http://localhost:8000/tablet/google-callback')
+            ->redirectUrl(config('services.google.redirect_tablet')))
             ->redirect();
     }
 
