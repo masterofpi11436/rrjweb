@@ -26,3 +26,8 @@ Lists all the extensions with some outside vendors
 # Inmate Tablet
 Lists the inmates that are not allowed to have a tablet. This information is used in conjuction with the 
 list of inmates on the mailroom app to sort through the mail.
+
+# Notes
+Override Directly in Socialite Configuration: Instead of setting redirectUrl in each child class, configure a URL parameter based on the application. In services.php, set the redirect URL conditionally based on the application's context or an environment variable.
+
+Alternative Solution: If the redirectUrl method continues to revert to the default, use a middleware or an interceptor on the callback route that dynamically redirects based on the request origin or user session data after authentication completes.
