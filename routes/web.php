@@ -2,16 +2,17 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\Tablet\InmateTabletController;
 use App\Http\Controllers\Login\Custom\BaseLoginController;
 use App\Http\Controllers\Login\Custom\AdminLoginController;
 use App\Http\Controllers\Login\Custom\PhoneLoginController;
+use App\Http\Controllers\Directory\PhoneDirectoryController;
 use App\Http\Controllers\Login\Custom\TabletLoginController;
-use App\Http\Controllers\Tablet\InmateTabletController;
+use App\Http\Controllers\Login\Google\GoogleLoginController;
+use App\Http\Controllers\Administrator\AdministratorController;
 use App\Http\Controllers\Login\Google\AdminGoogleLoginController;
 use App\Http\Controllers\Login\Google\PhoneGoogleLoginController;
 use App\Http\Controllers\Login\Google\TabletGoogleLoginController;
-use App\Http\Controllers\Directory\PhoneDirectoryController;
-use App\Http\Controllers\Administrator\AdministratorController;
 
 // Shorthand classes
 $baseLoginClass = BaseLoginController::class;
@@ -24,17 +25,14 @@ $tabletLoginClass = TabletLoginController::class;
 
 // Admin application Google login routes
 Route::get('admin/google-login', [AdminGoogleLoginController::class, 'googleLogin'])->name('admin.google.login');
-Route::get('admin/google-callback', [AdminGoogleLoginController::class, 'googleAuthentication'])->name('admin.google.callback');
-
+Route::get('google-callback', [AdminGoogleLoginController::class, 'googleAuthentication'])->name('google.callback');
 // Phone application Google login routes
 Route::get('phone/google-login', [PhoneGoogleLoginController::class, 'googleLogin'])->name('phone.google.login');
-Route::get('phone/google-callback', [PhoneGoogleLoginController::class, 'googleAuthentication'])->name('phone.google.callback');
+Route::get('google-callback', [PhoneGoogleLoginController::class, 'googleAuthentication'])->name('google.callback');
 
 // Tablet application Google login routes
 Route::get('tablet/google-login', [TabletGoogleLoginController::class, 'googleLogin'])->name('tablet.google.login');
-Route::get('tablet/google-callback', [TabletGoogleLoginController::class, 'googleAuthentication'])->name('tablet.google.callback');
-
-
+Route::get('google-callback', [TabletGoogleLoginController::class, 'googleAuthentication'])->name('google.callback');
 
 // Forgot password link for all applications
 Route::get('forgot', [$baseLoginClass, 'showForgotPasswordForm'])->name('login.forgot');

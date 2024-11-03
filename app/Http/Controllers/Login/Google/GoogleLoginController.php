@@ -14,38 +14,41 @@ abstract class GoogleLoginController extends BaseLoginController
         return Socialite::driver('google')->stateless()->redirect();
     }
 
-    // Authenitcates the user through the google account
     public function googleAuthentication()
     {
-        // Get the user's google information
         $googleUser = Socialite::driver('google')->stateless()->user();
 
-        // Check if the email is the same as google
+        // Retrieve the application identifier from the state parameter
+        $app = request()->query('state');
+
+        // Check if the user exists in your database
         $user = $this->checkEmailExists($googleUser->email);
 
-        // If the user is not found, redirect to login with an error
         if (!$user) {
             return redirect()->route($this->loginRoute())->withErrors(['email_not_found' => 'Your Google account is not associated with this application.']);
         }
 
-        // Attempt to log the user in, ensuring they have the necessary admin access
-        return $this->attemptLoginUsingGoogle($user, $this->dashboardRoute(), function ($user) {
-            return $this->checkUserRole($user);
-        });
+        // Attempt to log the user in and redirect to the application-specific dashboard
+        return $this->attemptLoginUsingGoogle($user, $app);
     }
 
-    protected function attemptLoginUsingGoogle($user, $redirectRoute, $roleCheck)
+    protected function attemptLoginUsingGoogle($user, $app)
     {
-        // Check if the user has access (admin == 1 or specific role)
-        if ($user->admin == 1 || $roleCheck($user)) {
+        if ($user->admin == 1 || $this->checkUserRole($user)) {
             Auth::login($user);
             session()->put('session_start_time', time());
 
-            // Redirect to the application-specific dashboard route
-            return redirect()->route($redirectRoute);
+            // Redirect to the specific application dashboard based on the app identifier
+            $route = match ($app) {
+                'admin' => 'admin.dashboard',
+                'phone' => 'phone.dashboard',
+                'tablet' => 'tablet.dashboard',
+                default => 'default.dashboard' // Fallback route
+            };
+
+            return redirect()->route($route);
         }
 
-        // If not authorized, log them out and redirect to the application's login page with an error
         Auth::logout();
         return redirect()->route($this->loginRoute())->withErrors(['email' => 'You are not authorized to access this application.']);
     }

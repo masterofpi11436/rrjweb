@@ -10,7 +10,7 @@ class AdminGoogleLoginController extends GoogleLoginController
     {
         return Socialite::driver('google')
             ->stateless()
-            ->redirectUrl('http://localhost:8000/admin/google-callback') // Admin-specific callback
+            ->with(['state' => 'admin']) // Pass 'admin' as the application identifier
             ->redirect();
     }
 
