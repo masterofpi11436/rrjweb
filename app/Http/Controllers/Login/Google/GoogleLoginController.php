@@ -14,7 +14,7 @@ class GoogleLoginController extends Controller
     {
         return Socialite::driver('google')
             ->stateless()
-            ->with(['state' => $app]) // Pass application identifier as state
+            ->with(['state' => $app, 'prompt' => 'login']) // Pass application identifier as state
             ->redirect();
     }
 
