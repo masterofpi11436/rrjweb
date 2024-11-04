@@ -12,8 +12,7 @@
     </form>
 
     {{-- Log in with Google--}}
-    <form action="{{ route('phone.google.login') }}">
-        <input type="hidden" name="state" value="admin">
+    <form action="{{ route('google.login', ['app' => 'phone']) }}">
         <button>Login with Google</button>
     </form>
 
