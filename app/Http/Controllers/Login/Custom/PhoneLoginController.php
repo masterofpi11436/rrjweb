@@ -13,8 +13,11 @@ class PhoneLoginController extends BaseLoginController
 
     public function login(Request $request)
     {
-        // Validate login input
-        $this->validateLogin($request);
+        // Validate login input with ends_with directly in the login method
+        $request->validate([
+            'email' => 'required|email|ends_with:rrjva.org',
+            'password' => 'required',
+        ]);
 
         // Check if the email exists
         $user = $this->checkEmailExists($request->email);

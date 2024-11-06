@@ -59,18 +59,6 @@
             </div>
         @endif
 
-        @if ($errors->has('access_denied'))
-            <div style="color: red;">
-                {{ $errors->first('access_denied') }}
-            </div>
-        @endif
-
-        @if ($errors->has('session_timeout'))
-            <div style="color: red;">
-                {{ $errors->first('access_denied') }}
-            </div>
-        @endif
-
     @yield('content')
 
     <script src="{{ asset('javascript/theme-switcher.js') }}"></script>

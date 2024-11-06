@@ -1,27 +1,29 @@
-    <h2>Reset Password</h2>
-    <form action="{{ route('login.update') }}" method="POST">
-        @csrf
-        <input type="hidden" name="token" value="{{ $token }}">
-        <label for="email">Email Address</label>
-        <input type="email" name="email" id="email" required>
+<h2>Reset Password</h2>
 
-        <label for="password">New Password</label>
-        <input type="password" name="password" id="password" required>
+<form action="{{ route('login.update') }}" method="POST">
+    @csrf
 
-        <label for="password_confirmation">Confirm Password</label>
-        <input type="password" name="password_confirmation" id="password_confirmation" required>
+    <input type="hidden" name="token" value="{{ $token }}">
+    <label for="email">Email Address</label>
+    <input type="email" name="email" id="email" required>
 
-        <button type="submit">Reset Password</button>
-    </form>
+    <label for="password">New Password</label>
+    <input type="password" name="password" id="password" required>
 
-    @if (session('status'))
-        <p style="color: green;">{{ session('status') }}</p>
-    @endif
+    <label for="password_confirmation">Confirm Password</label>
+    <input type="password" name="password_confirmation" id="password_confirmation" required>
 
-    @error('email')
-        <p style="color: red;">{{ $message }}</p>
-    @enderror
+    <button type="submit">Reset Password</button>
+</form>
 
-    @error('password')
-        <p style="color: red;">{{ $message }}</p>
-    @enderror
+@if (session('status'))
+    <p style="color: green;">{{ session('status') }}</p>
+@endif
+
+@error('email')
+    <p style="color: red;">{{ $message }}</p>
+@enderror
+
+@error('password')
+    <p style="color: red;">{{ $message }}</p>
+@enderror

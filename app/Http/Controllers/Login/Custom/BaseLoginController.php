@@ -14,21 +14,6 @@ use Illuminate\Support\Facades\Validator;
 
 class BaseLoginController extends Controller
 {
-    public function validateLogin(Request $request)
-    {
-        // Validate the request
-        $validator = Validator::make($request->all(), [
-            'email' => 'required|email',
-            'password' => 'required',
-        ]);
-
-        if ($validator->fails()) {
-            return redirect()->back()
-                             ->withErrors($validator)
-                             ->withInput();
-        }
-    }
-
     public function checkEmailExists($email)
     {
         return User::where('email', $email)->first();
