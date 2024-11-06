@@ -3,19 +3,19 @@
 
         <div>
             <label for="first_name">First Name</label>
-            <input type="text" id="first_name" wire:model.defer="first_name" required>
+            <input type="text" id="first_name" wire:model.live="first_name" required>
             @error('first_name') <span class="error">{{ $message }}</span> @enderror
         </div>
 
         <div>
             <label for="last_name">Last Name</label>
-            <input type="text" id="last_name" wire:model.defer="last_name" required>
+            <input type="text" id="last_name" wire:model.live="last_name" required>
             @error('last_name') <span class="error">{{ $message }}</span> @enderror
         </div>
 
         <div>
             <label for="email">Email</label>
-            <input type="email" id="email" wire:model.defer="email" required>
+            <input type="email" id="email" wire:model.live="email" required>
             @error('email') <span class="error">{{ $message }}</span> @enderror
         </div>
 

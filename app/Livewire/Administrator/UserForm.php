@@ -55,6 +55,12 @@ class UserForm extends Component
         ];
     }
 
+    // For live validation
+    public function updated($propertyName)
+    {
+        $this->validateOnly($propertyName);
+    }
+
     // Handle the form submission
     public function submitForm()
     {
