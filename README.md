@@ -1,9 +1,41 @@
 # rrjweb
-Laravel version of the same apps with Livewire
+Source code is on github. 
 
-On a new PC Instructions
+In order to download and run the framework locally; the tools git and composer are required for download. XAMPP is used for the MySQL database, any MySQL database can be used.
+
+# How to Run the Application on a Local Environment (Windows)
+Ensure XAMPP, Git, and Composer are installed. The latest versions are recommended.
+
+1. Clone the repository where the application is stored
+    command: git clone <repository-url>
+
+2. Create the Environment File
+    Copy the .env.example file to create a new .env file
+    If using a different MySQL database
+
+3. Install Dependencies
+    Install PHP dependencies using Composer: composer install
+
+4. Generate the Application Key
+    Run the following command to generate an application key: php artisan key:generate
+
+5. Ensure your database is up and running
+    If using XAMPP, make sure Apache and MySQL is running
+
+6. Run Migrations and Seeders
+    Run the following commands to set up the database structure and seed sample data:
+        php artisan migrate
+        php artisan db:seed
+
+7. Serve the application (Start the application)
+    Start the Laravel Development server with the command(This is will run it locally):
+        php artisan serve
+
+8. Open the browser to view the application
+    Go to the web page: http://localhost:8000
+
 git pull origin main
-Create the .env file from the .env.example file
+Copy the .env file from the .env.example file
 composer install
 php artisan key:generate
 sudo /etc/init.d/apache2 stop
@@ -26,8 +58,3 @@ Lists all the extensions with some outside vendors
 # Inmate Tablet
 Lists the inmates that are not allowed to have a tablet. This information is used in conjuction with the 
 list of inmates on the mailroom app to sort through the mail.
-
-# Notes
-Override Directly in Socialite Configuration: Instead of setting redirectUrl in each child class, configure a URL parameter based on the application. In services.php, set the redirect URL conditionally based on the application's context or an environment variable.
-
-Alternative Solution: If the redirectUrl method continues to revert to the default, use a middleware or an interceptor on the callback route that dynamically redirects based on the request origin or user session data after authentication completes.
