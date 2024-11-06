@@ -47,7 +47,7 @@ class UserForm extends Component
         return [
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email,' . $this->userId,
+            'email' => 'required|email|ends_with:rrjva.org|unique:users,email,' . $this->userId,
             'password' => 'nullable|min:6|confirmed',
             'admin' => 'boolean',
             'phone' => 'boolean',

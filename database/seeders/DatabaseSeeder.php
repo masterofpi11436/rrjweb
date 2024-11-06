@@ -60,6 +60,18 @@ class DatabaseSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
+            [
+                'last_name' => 'Tuggle',
+                'first_name' => 'Mark',
+                'email' => 'tugglem@rrjva.org',
+                'password' => Hash::make('asd'),
+                'admin' => true,
+                'phone' => false,
+                'tablet' => false,
+                'remember_token' => Str::random(10),
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
         ]);
 
         // Populate random data for applications
