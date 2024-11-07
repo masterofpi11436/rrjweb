@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Login\Custom;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cookie;
 
 class TabletLoginController extends BaseLoginController
 {
@@ -38,8 +40,17 @@ class TabletLoginController extends BaseLoginController
         return parent::showForgotPasswordForm('Login.Forgots.tablet-forgot-password');
     }
 
-    public function logout($route = 'tablet.login')
+    public function logout(Request $request, $route = 'tablet.login')
     {
-        return parent::logout($route);
+        // Perform the standard logout
+        Auth::logout();
+
+        // Invalidate the session to delete the cookie
+        $request->session()->invalidate();
+        Cookie::queue(Cookie::forget('XSRF-TOKEN'));
+        Cookie::queue(Cookie::forget('remember_token'));
+
+        // Redirect to the specified route
+        return redirect()->route($route);
     }
 }

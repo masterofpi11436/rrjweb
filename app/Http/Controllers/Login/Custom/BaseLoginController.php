@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Password;
-use Illuminate\Support\Facades\Validator;
 
 class BaseLoginController extends Controller
 {
@@ -43,13 +42,6 @@ class BaseLoginController extends Controller
 
         // If password is incorrect, return back with password error
         return redirect()->back()->withErrors(['password_incorrect' => 'Password is incorrect.']);
-    }
-
-    public function logout($route = null)
-    {
-        Auth::logout();
-
-        return redirect()->route($route);
     }
 
     public function showForgotPasswordForm($viewName)

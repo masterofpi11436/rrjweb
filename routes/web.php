@@ -43,7 +43,7 @@ Route::get('/', function () {
 });
 
 // Admin Routes
-Route::prefix('admin')->group(function () use ($adminClass, $adminLoginClass) {
+Route::prefix('admin')->group(function () use ($adminClass, $adminLoginClass, $baseLoginClass) {
 
     // Routes without middleware
     Route::get('/login', [$adminLoginClass, 'adminLoginForm'])->name('admin.login');

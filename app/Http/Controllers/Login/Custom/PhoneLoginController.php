@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Login\Custom;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cookie;
 
 class PhoneLoginController extends BaseLoginController
 {
@@ -38,8 +40,17 @@ class PhoneLoginController extends BaseLoginController
         return parent::showForgotPasswordForm('Login.Forgots.phone-forgot-password');
     }
 
-    public function logout($route = 'phone.login')
+    public function logout(Request $request, $route = 'phone.login')
     {
-        return parent::logout($route);
+        // Perform the standard logout
+        Auth::logout();
+
+        // Invalidate the session to delete the cookie
+        $request->session()->invalidate();
+        Cookie::queue(Cookie::forget('XSRF-TOKEN'));
+        Cookie::queue(Cookie::forget('remember_token'));
+
+        // Redirect to the specified route
+        return redirect()->route($route);
     }
 }

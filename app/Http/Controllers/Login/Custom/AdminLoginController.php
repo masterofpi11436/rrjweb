@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Login\Custom;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cookie;
 
 class AdminLoginController extends BaseLoginController
 {
@@ -38,8 +41,17 @@ class AdminLoginController extends BaseLoginController
         return parent::showForgotPasswordForm('Login.Forgots.admin-forgot-password');
     }
 
-    public function logout($route = 'admin.login')
+    public function logout(Request $request, $route = 'admin.login')
     {
-        return parent::logout($route);
+        // Perform the standard logout
+        Auth::logout();
+
+        // Invalidate the session to delete the cookie
+        $request->session()->invalidate();
+        Cookie::queue(Cookie::forget('XSRF-TOKEN'));
+        Cookie::queue(Cookie::forget('remember_token'));
+
+        // Redirect to the specified route
+        return redirect()->route($route);
     }
 }
