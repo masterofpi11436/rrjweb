@@ -88,7 +88,7 @@ class BaseLoginController extends Controller
         // Send the reset email
         Mail::to($user->email)->send(new PasswordResetMail($token));
 
-        return redirect()->back()->with('status', 'Password reset email has been sent!');
+        return redirect()->back()->with('status', 'Password reset email has been sent! Please check your email and close this page');
     }
 
     public function showResetForm($token)
