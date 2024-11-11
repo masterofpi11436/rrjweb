@@ -23,9 +23,11 @@
         </div>
     </header>
 
+    <!-- Flash Message -->
     @if (session('status'))
-        <div style="color: green;">
-            {{ session('status') }}
+        <div id="flash-message" class="flash-message">
+        <button class="close-btn" onclick="this.parentElement.style.display='none';">&times;</button>
+        {{ session('status') }}
         </div>
     @endif
 
@@ -36,6 +38,11 @@
             <label for="email">Email Address</label>
             <input type="email" name="email" autofocus>
         </div>
+        @if ($errors->has('email'))
+            <div style="color: red;">
+                {{ $errors->first('email') }}
+            </div>
+        @endif
         @if ($errors->has('email_not_found'))
             <div style="color: red;">
                 {{ $errors->first('email_not_found') }}

@@ -53,7 +53,7 @@ class BaseLoginController extends Controller
     {
         // Validate the email field
         $request->validate([
-            'email' => 'required|email',
+            'email' => 'required|email|ends_with:rrjva.org,icsolutions.com',
         ]);
 
         // Get the number of failed attempts from the session (default to 0)
