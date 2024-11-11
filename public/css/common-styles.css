@@ -2,17 +2,26 @@
 
 /* Center and style the header */
 .header {
-    display: flex; /* To align items horizontally */
-    justify-content: flex-start; /* Aligns everything to the left */
-    justify-content: space-between; /* Puts space between title and toggle */
-    align-items: center; /* Vertically aligns items */
+    display: flex;
+    justify-content: space-between; /* Space between the left and right containers */
+    align-items: center;
     padding-bottom: 50px;
 }
 
-/* H1 inside the header */
 .header h1 {
     font-size: 2.5rem;
     margin: 0;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 15px; /* Adds space between logout button and theme toggle */
+}
+
+.header-right form {
+    margin: 0;
+    padding-right: 0;
 }
 
 /* Reusable Theme Toggle Component */

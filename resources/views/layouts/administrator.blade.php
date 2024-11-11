@@ -14,18 +14,19 @@
     <header class="header">
         <h1>@yield('heading')</h1>
 
-        <form action="{{ route('admin.logout') }}" method="POST">
-            @csrf
-            <button>Logout</button>
-        </form>
+        <div class="header-right">
+            <form action="{{ route('admin.logout') }}" method="POST">
+                @csrf
+                <button>Logout</button>
+            </form>
 
-        <!-- Theme Toggle Inside Header -->
-        <div class="theme-toggle">
-            <label class="switch">
-                <input type="checkbox" id="theme-toggle">
-                <span class="slider round"></span>
-            </label>
-            <span class="theme-label">Light/Dark Theme</span>
+            <div class="theme-toggle">
+                <label class="switch">
+                    <input type="checkbox" id="theme-toggle">
+                    <span class="slider round"></span>
+                </label>
+                <span class="theme-label">Light/Dark Theme</span>
+            </div>
         </div>
     </header>
 
