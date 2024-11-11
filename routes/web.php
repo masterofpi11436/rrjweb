@@ -2,16 +2,17 @@
 
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers\Tablet\InmateTabletController;
 use App\Http\Controllers\Login\Custom\BaseLoginController;
 use App\Http\Controllers\Login\Custom\AdminLoginController;
 use App\Http\Controllers\Login\Custom\PhoneLoginController;
-use App\Http\Controllers\Directory\PhoneDirectoryController;
 use App\Http\Controllers\Login\Custom\TabletLoginController;
 use App\Http\Controllers\Login\Google\GoogleLoginController;
 use App\Http\Controllers\Administrator\AdministratorController;
+use App\Http\Controllers\Directory\PhoneDirectoryController;
+use App\Http\Controllers\Tablet\InmateTabletController;
 
 // Shorthand classes
+$googleLoginClass = GoogleLoginController::class;
 $baseLoginClass = BaseLoginController::class;
 $adminClass = AdministratorController::class;
 $adminLoginClass = AdminLoginController::class;
@@ -21,13 +22,12 @@ $tabletClass = InmateTabletController::class;
 $tabletLoginClass = TabletLoginController::class;
 
 // Unified route for Google login that includes application type as a parameter
-Route::get('{app}/google-login', [GoogleLoginController::class, 'googleLogin'])
+Route::get('{app}/google-login', [$googleLoginClass, 'googleLogin'])
     ->where('app', 'admin|phone|tablet') // Limits the allowed values for app
     ->name('google.login');
 
-// Unified callback route for all applications
-Route::get('google-callback', [GoogleLoginController::class, 'googleAuthentication'])->name('google.callback');
-
+// Unified callback route for all applications to login
+Route::get('google-callback', [$googleLoginClass, 'googleAuthentication'])->name('google.callback');
 
 // Forgot password link for all applications
 Route::get('forgot', [$baseLoginClass, 'showForgotPasswordForm'])->name('login.forgot');
@@ -43,7 +43,7 @@ Route::get('/', function () {
 });
 
 // Admin Routes
-Route::prefix('admin')->group(function () use ($adminClass, $adminLoginClass, $baseLoginClass) {
+Route::prefix('admin')->group(function () use ($adminClass, $adminLoginClass) {
 
     // Routes without middleware
     Route::get('/login', [$adminLoginClass, 'adminLoginForm'])->name('admin.login');
