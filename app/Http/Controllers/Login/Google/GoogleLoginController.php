@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Login\Google;
 
 use App\Models\Login\User;
 use App\Http\Controllers\Controller;
+use Exception;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
 
@@ -14,27 +15,33 @@ class GoogleLoginController extends Controller
     {
         return Socialite::driver('google')
             ->stateless()
-            ->with(['state' => $app, 'prompt' => 'login']) // Pass application identifier as state
+            ->with(['state' => $app]) // Pass application identifier as state
             ->redirect();
     }
 
     // Handles the callback from Google
     public function googleAuthentication()
     {
-        $googleUser = Socialite::driver('google')->stateless()->user();
-
         // Retrieve the application identifier from the state parameter
         $app = request()->query('state');
 
-        // Check if the user exists in your database
-        $user = $this->checkEmailExists($googleUser->email);
+        try {
+            $googleUser = Socialite::driver('google')->stateless()->user();
 
-        if (!$user) {
-            return redirect()->back()->withErrors(['email_not_found' => 'Your Google account is not associated with this application.']);
+            // Check if the user exists in your database
+            $user = $this->checkEmailExists($googleUser->email);
+
+            if (!$user) {
+                return redirect()->back()->withErrors(['email_not_found' => 'Your Google account is not associated with this application.']);
+            }
+
+            // Attempt to log the user in and redirect to the application-specific dashboard
+            return $this->attemptLoginUsingGoogle($user, $app);
+        } catch (Exception $e) {
+
+            return redirect()->route($app . '.login')->withErrors(['email_not_found' => "Canceled Google login"]) ;
         }
 
-        // Attempt to log the user in and redirect to the application-specific dashboard
-        return $this->attemptLoginUsingGoogle($user, $app);
     }
 
     protected function attemptLoginUsingGoogle($user, $app)
@@ -67,7 +74,7 @@ class GoogleLoginController extends Controller
             'tablet' => 'tablet.login'
         };
 
-        Auth::logout();
+        // Not authroized to access the application.
         return redirect()->route($loginRoute)->withErrors(['email' => 'You are not authorized to access this application.']);
     }
 
