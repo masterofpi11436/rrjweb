@@ -50,7 +50,7 @@ class TabletLoginController extends BaseLoginController
         Cookie::queue(Cookie::forget('XSRF-TOKEN'));
         Cookie::queue(Cookie::forget('remember_token'));
 
-        // Redirect to the specified route
+        // Redirect to the specified application
         return redirect()->route($route);
     }
 }

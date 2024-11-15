@@ -30,7 +30,7 @@ class GoogleLoginController extends Controller
         $user = $this->checkEmailExists($googleUser->email);
 
         if (!$user) {
-            return redirect()->route('login')->withErrors(['email_not_found' => 'Your Google account is not associated with this application.']);
+            return redirect()->back()->withErrors(['email_not_found' => 'Your Google account is not associated with this application.']);
         }
 
         // Attempt to log the user in and redirect to the application-specific dashboard
@@ -44,7 +44,6 @@ class GoogleLoginController extends Controller
             'admin' => $user->admin == 1,
             'phone' => $user->phone == 1 || $user->admin == 1,
             'tablet' => $user->tablet == 1 || $user->admin == 1,
-            default => false,
         };
 
         if ($hasAccess) {
@@ -55,8 +54,7 @@ class GoogleLoginController extends Controller
             $route = match ($app) {
                 'admin' => 'admin.dashboard',
                 'phone' => 'phone.dashboard',
-                'tablet' => 'tablet.dashboard',
-                default => 'default.dashboard'
+                'tablet' => 'tablet.dashboard'
             };
 
             return redirect()->route($route);
@@ -66,8 +64,7 @@ class GoogleLoginController extends Controller
         $loginRoute = match ($app) {
             'admin' => 'admin.login',
             'phone' => 'phone.login',
-            'tablet' => 'tablet.login',
-            default => 'login' // Fallback, ensure this route exists or adjust as needed
+            'tablet' => 'tablet.login'
         };
 
         Auth::logout();
