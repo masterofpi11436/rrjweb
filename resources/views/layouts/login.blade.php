@@ -24,41 +24,52 @@
     </header>
 
     {{-- Login Form Layout --}}
-    <form method="POST" action="#">
-        @csrf
+    <div class="login-container">
+        <div class="login-section">
+            <form method="POST" action="#">
+                @csrf
 
-        <div>
-            <label for="email">Email</label>
-            <input type="email" name="email" required autofocus>
+                <div>
+                    <label for="email">Email</label>
+                    <input type="email" name="email" required autofocus>
+                </div>
+                @if ($errors->has('email_not_found'))
+                    <div style="color: red;">
+                        {{ $errors->first('email_not_found') }}
+                    </div>
+                @endif
+
+                <div>
+                    <label for="password">Password</label>
+                    <input type="password" name="password" required>
+                </div>
+                @if ($errors->has('password_incorrect'))
+                    <div style="color: red;">
+                        {{ $errors->first('password_incorrect') }}
+                    </div>
+                @endif
+
+                <div>
+                    <button type="submit">Login</button>
+                </div>
+            </form>
+
+            @if ($errors->has('email'))
+                <div style="color: red;">
+                    {{ $errors->first('email') }}
+                </div>
+            @endif
         </div>
-        @if ($errors->has('email_not_found'))
-            <div style="color: red;">
-                {{ $errors->first('email_not_found') }}
-            </div>
-        @endif
 
-        <div>
-            <label for="password">Password</label>
-            <input type="password" name="password" required>
+        <!-- Separator Line -->
+        <div class="separator"></div>
+
+        <!-- Dynamic Content Section -->
+        <div class="login-section forgot-google-section">
+            @yield('content')
         </div>
-        @if ($errors->has('password_incorrect'))
-            <div style="color: red;">
-                {{ $errors->first('password_incorrect') }}
-            </div>
-        @endif
 
-        <div>
-            <button type="submit">Login</button>
-        </div>
-    </form>
-
-        @if ($errors->has('email'))
-            <div style="color: red;">
-                {{ $errors->first('email') }}
-            </div>
-        @endif
-
-    @yield('content')
+    </div>
 
     <script src="{{ asset('javascript/theme-switcher.js') }}"></script>
 </body>

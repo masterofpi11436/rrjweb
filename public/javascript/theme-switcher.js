@@ -2,6 +2,8 @@ var themeToggleBtn = document.getElementById('theme-toggle');
 var themeLink = document.getElementById('theme-link');
 var lightTheme = "/css/water-light.css";
 var darkTheme = "/css/water-dark.css";
+var lightCommon = "/css/common-styles-light.css";
+var darkCommon = "/css/common-styles-dark.css";
 
 // Function to toggle the theme
 function toggleTheme() {
