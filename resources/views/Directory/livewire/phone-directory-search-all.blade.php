@@ -51,6 +51,6 @@
             </tbody>
         </table>
     @else
-        <h1>No Record Found.</h1>
+        <h1>No Extension Found</h1>
     @endif
 </div>

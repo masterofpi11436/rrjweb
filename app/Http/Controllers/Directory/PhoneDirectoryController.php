@@ -11,31 +11,28 @@ use App\Models\Directory\PhoneDirectory;
 class PhoneDirectoryController extends Controller
 {
     // Unprotected route for everyone to view the directory
-    public function indexAll()
+    public function phoneDirectory()
     {
-        return view('Directory.PhoneDirectory.indexAll');
+        return view('Directory.PhoneDirectory.phone-directory');
     }
 
-    // Dashboard for the Phone Directory manager
+    // Login Required Pages
     public function dashboard()
     {
         return view('Directory.PhoneDirectory.dashboard');
     }
 
-    // Create new entry
     public function create()
     {
         return view('Directory.PhoneDirectory.create');
     }
 
-    // Edit existing entry
     public function edit($id)
     {
         $phoneDirectory = PhoneDirectory::findOrFail($id);
         return view('Directory.PhoneDirectory.edit', ['phoneDirectory' => $phoneDirectory]);
     }
 
-    // Delete entry
     public function destroy($id)
     {
         $phoneDirectory = PhoneDirectory::findOrFail($id);

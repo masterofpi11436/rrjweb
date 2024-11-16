@@ -72,6 +72,9 @@ Route::prefix('phone')->group(function () use ($phoneClass, $phoneLoginClass){
     Route::post('/forgot', [$phoneLoginClass, 'forgotPassword'])->name('phone.forgot.form.submit');
     Route::post('/logout', [$phoneLoginClass, 'logout'])->name('phone.logout');
 
+    // Public Route(s)
+    Route::get('/phone-directory', [$phoneClass, 'phoneDirectory']);
+
     // Routes with 'phone' middleware
     Route::middleware('phone')->group(function () use ($phoneClass) {
         Route::get('/dashboard', [$phoneClass, 'dashboard'])->name('phone.dashboard');
@@ -90,6 +93,9 @@ Route::prefix('tablet')->group(function () use ($tabletClass, $tabletLoginClass)
     Route::get('/forgot', [$tabletLoginClass, 'tabletForgotPasswordForm'])->name('tablet.forgot.form');
     Route::post('/forgot', [$tabletLoginClass, 'forgotPassword'])->name('tablet.forgot.form.submit');
     Route::post('/logout', [$tabletLoginClass, 'logout'])->name('tablet.logout');
+
+    // Public Route(s)
+    Route::get('/inmate-tablets', [$tabletClass, 'inmateTablets']);
 
     // Routes with 'tablet' middleware
     Route::middleware('tablet')->group(function () use ($tabletClass) {
