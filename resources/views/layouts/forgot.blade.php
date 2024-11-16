@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ asset('css/water-dark.css') }}" id="theme-link" >
-    <link rel="stylesheet" href="{{ asset('css/common-styles.css') }}">
-    <title>@yield('title', 'RRJ Web Applications')</title> <!-- Default title -->
+    <link rel="stylesheet" href="/css/common-styles-light.css" id="common-styles-link">
+    <title>@yield('title')</title>
 </head>
 <body>
 

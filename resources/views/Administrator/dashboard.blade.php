@@ -2,7 +2,7 @@
 
 @section('title', 'App/User Dashboard')
 
-@section('heading', 'Applications and Users Management')
+@section('heading', 'App and User Management')
 
 @section('content')
 
