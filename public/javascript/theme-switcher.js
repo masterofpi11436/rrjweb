@@ -1,5 +1,6 @@
 var themeToggleBtn = document.getElementById('theme-toggle');
 var themeLink = document.getElementById('theme-link');
+var commonStylesLink = document.getElementById('common-styles-link');
 var lightTheme = "/css/water-light.css";
 var darkTheme = "/css/water-dark.css";
 var lightCommon = "/css/common-styles-light.css";
@@ -9,9 +10,11 @@ var darkCommon = "/css/common-styles-dark.css";
 function toggleTheme() {
     if (themeLink.getAttribute('href') === lightTheme) {
         themeLink.setAttribute('href', darkTheme);
+        commonStylesLink.setAttribute('href', darkCommon);
         localStorage.setItem('theme', 'dark'); // Store the dark theme preference
     } else {
         themeLink.setAttribute('href', lightTheme);
+        commonStylesLink.setAttribute('href', lightCommon);
         localStorage.setItem('theme', 'light'); // Store the light theme preference
     }
 }
@@ -30,15 +33,19 @@ function setTheme() {
         // Apply the stored theme preference
         if (storedTheme === 'dark') {
             themeLink.setAttribute('href', darkTheme);
+            commonStylesLink.setAttribute('href', darkCommon);
         } else {
             themeLink.setAttribute('href', lightTheme);
+            commonStylesLink.setAttribute('href', lightCommon);
         }
     } else {
         // If no theme is stored, follow system preference
         if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
             themeLink.setAttribute('href', darkTheme);
+            commonStylesLink.setAttribute('href', darkCommon);
         } else {
             themeLink.setAttribute('href', lightTheme);
+            commonStylesLink.setAttribute('href', lightCommon);
         }
     }
 }
