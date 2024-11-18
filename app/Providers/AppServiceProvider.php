@@ -7,6 +7,7 @@ use Illuminate\Support\ServiceProvider;
 use App\Http\Middleware\Auth\Admin;
 use App\Http\Middleware\Auth\Phone;
 use App\Http\Middleware\Auth\Tablet;
+use App\Http\Middleware\ClearCache;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -27,5 +28,6 @@ class AppServiceProvider extends ServiceProvider
         $router->aliasMiddleware('admin', Admin::class);
         $router->aliasMiddleware('phone', Phone::class);
         $router->aliasMiddleware('tablet', Tablet::class);
+        $router->aliasMiddleware('cache', ClearCache::class);
     }
 }
