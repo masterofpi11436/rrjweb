@@ -9,7 +9,7 @@ use Illuminate\Http\Response;
 class ClearCache
 {
     /**
-     * Handle an incoming request.
+     * Disables caching of data so the pages load with fresh data.
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response)  $next
      */
@@ -17,6 +17,7 @@ class ClearCache
     {
         $response = $next($request);
 
+        // Add headers to the response to prevent caching
         return $response->header('Cache-Control', 'no-cache, no-store, must-revalidate')
                         ->header('Pragma', 'no-cache');
     }

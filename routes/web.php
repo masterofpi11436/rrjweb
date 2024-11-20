@@ -53,8 +53,8 @@ Route::prefix('admin')->group(function () use ($adminClass, $adminLoginClass) {
     Route::post('/logout', [$adminLoginClass, 'logout'])->name('admin.logout');
 
     // Routes with 'admin' middleware
-    Route::middleware('admin', 'cache')->group(function () use ($adminClass) {
-        Route::get('/dashboard', [$adminClass, 'dashboard'])->name('admin.dashboard');
+    Route::middleware('admin')->group(function () use ($adminClass) {
+        Route::get('/dashboard', [$adminClass, 'dashboard'])->name('admin.dashboard')->middleware('cache');
         Route::get('/index', [$adminClass, 'index'])->name('admin.index');
         Route::get('/create', [$adminClass, 'create'])->name('admin.create');
         Route::get('/{id}/edit', [$adminClass, 'edit'])->name('admin.edit');
