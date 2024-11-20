@@ -10,6 +10,7 @@ class ClearCache
 {
     /**
      * Disables caching of data so the pages load with fresh data.
+     * Used for the admin dashbaord to clear the cache to prevent back button page view
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response)  $next
      */
