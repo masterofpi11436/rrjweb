@@ -4,7 +4,9 @@ namespace App\Livewire\Administrator;
 
 use Livewire\Component;
 use App\Models\Login\User;
-use Illuminate\Support\Facades\Hash;
+use App\Mail\PasswordResetMail;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Password;
 
 class UserForm extends Component
 {
@@ -83,6 +85,15 @@ class UserForm extends Component
         $user->tablet = $this->tablet;
 
         $user->save();
+
+        // Send password reset email if it's a new user
+        if (!$this->userId) {
+            // Generate password reset token
+            $token = Password::createToken($user);
+
+            // Send the reset email
+            Mail::to($user->email)->send(new PasswordResetMail($token));
+        }
 
         session()->flash('message', $this->userId ? 'User updated successfully!' : 'User created successfully!');
 
