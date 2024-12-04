@@ -51,6 +51,7 @@ class GoogleLoginController extends Controller
             'admin' => $user->admin == 1,
             'phone' => $user->phone == 1 || $user->admin == 1,
             'tablet' => $user->tablet == 1 || $user->admin == 1,
+            'oprList' => $user->oprList == 1 || $user->admin == 1,
         };
 
         if ($hasAccess) {
@@ -61,7 +62,8 @@ class GoogleLoginController extends Controller
             $route = match ($app) {
                 'admin' => 'admin.dashboard',
                 'phone' => 'phone.dashboard',
-                'tablet' => 'tablet.dashboard'
+                'tablet' => 'tablet.dashboard',
+                'oprList' => 'oprList.dashboard'
             };
 
             return redirect()->route($route);

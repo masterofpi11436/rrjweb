@@ -6,11 +6,12 @@ use App\Http\Controllers\Login\Custom\BaseLoginController;
 use App\Http\Controllers\Login\Custom\AdminLoginController;
 use App\Http\Controllers\Login\Custom\PhoneLoginController;
 use App\Http\Controllers\Login\Custom\TabletLoginController;
+use App\Http\Controllers\Login\Custom\OPRListLoginController;
 use App\Http\Controllers\Login\Google\GoogleLoginController;
 use App\Http\Controllers\Administrator\AdministratorController;
 use App\Http\Controllers\Directory\PhoneDirectoryController;
-use App\Http\Controllers\OPR\OPRListController;
 use App\Http\Controllers\Tablet\InmateTabletController;
+use App\Http\Controllers\OPR\OPRListController;
 
 // Shorthand classes
 $googleLoginClass = GoogleLoginController::class;
@@ -21,7 +22,8 @@ $phoneClass = PhoneDirectoryController::class;
 $phoneLoginClass = PhoneLoginController::class;
 $tabletClass = InmateTabletController::class;
 $tabletLoginClass = TabletLoginController::class;
-$oprClass = OPRListController::class;
+$oprListClass = OPRListController::class;
+$oprListLoginClass = OPRListLoginController::class;
 
 // Unified route for Google login that includes application type as a parameter
 Route::get('{app}/google-login', [$googleLoginClass, 'googleLogin'])
@@ -109,6 +111,23 @@ Route::prefix('tablet')->group(function () use ($tabletClass, $tabletLoginClass)
 });
 
 // User Authentication for OPR List Application
-Route::prefix('opr')->group(function () use ($oprClass){
-    Route::get('/dashboard', [$oprClass, 'dashboard'])->name('tablet.dashboard');
+Route::prefix('oprList')->group(function () use ($oprListClass, $oprListLoginClass){
+
+    // Routes without middleware
+    Route::get('/login', [$oprListLoginClass, 'oprListLoginForm'])->name('oprList.login');
+    Route::post('/login', [$oprListLoginClass, 'login']);
+    Route::get('/forgot', [$oprListLoginClass, 'oprListForgotPasswordForm'])->name('oprList.forgot.form');
+    Route::post('/forgot', [$oprListLoginClass, 'forgotPassword'])->name('oprList.forgot.form.submit');
+    Route::post('/logout', [$oprListLoginClass, 'logout'])->name('oprList.logout');
+
+    // Public Route(s)
+    Route::get('/inmate-tablets', [$oprListClass, 'inmateTablets']);
+
+    // Routes with 'tablet' middleware
+    Route::middleware('oprList')->group(function () use ($oprListClass) {
+        Route::get('/dashboard', [$oprListClass, 'dashboard'])->name('oprList.dashboard');
+        Route::get('/create', [$oprListClass, 'create'])->name('oprList.create');
+        Route::get('/{id}/edit', [$oprListClass, 'edit'])->name('oprList.edit');
+        Route::delete('/{id}', [$oprListClass, 'destroy'])->name('oprList.destroy');
+    });
 });
