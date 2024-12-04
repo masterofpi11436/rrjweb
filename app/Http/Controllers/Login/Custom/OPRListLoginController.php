@@ -17,7 +17,7 @@ class OPRListLoginController extends BaseLoginController
     {
         // Validate login input with ends_with directly in the login method
         $request->validate([
-            'email' => 'required|email|ends_with:icsolutions.com,rrjva.org',
+            'email' => 'required|email|ends_with:rrjva.org',
             'password' => 'required',
         ]);
 

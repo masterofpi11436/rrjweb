@@ -16,7 +16,7 @@
 @section('content')
 
 <!-- Link to navigate to the Create page -->
-{{-- <a href="{{ route('oprList.create') }}" class="create-link">Create New Entry</a> --}}
+<a href="{{ route('oprList.create') }}" class="create-link">Create New Entry</a>
 
 <!-- Livewire search component -->
 {{-- @livewire('oprList.oprList-search') --}}
