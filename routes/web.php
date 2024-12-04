@@ -9,6 +9,7 @@ use App\Http\Controllers\Login\Custom\TabletLoginController;
 use App\Http\Controllers\Login\Google\GoogleLoginController;
 use App\Http\Controllers\Administrator\AdministratorController;
 use App\Http\Controllers\Directory\PhoneDirectoryController;
+use App\Http\Controllers\OPR\OPRListController;
 use App\Http\Controllers\Tablet\InmateTabletController;
 
 // Shorthand classes
@@ -20,6 +21,7 @@ $phoneClass = PhoneDirectoryController::class;
 $phoneLoginClass = PhoneLoginController::class;
 $tabletClass = InmateTabletController::class;
 $tabletLoginClass = TabletLoginController::class;
+$oprClass = OPRListController::class;
 
 // Unified route for Google login that includes application type as a parameter
 Route::get('{app}/google-login', [$googleLoginClass, 'googleLogin'])
@@ -104,4 +106,9 @@ Route::prefix('tablet')->group(function () use ($tabletClass, $tabletLoginClass)
         Route::get('/{id}/edit', [$tabletClass, 'edit'])->name('tablet.edit');
         Route::delete('/{id}', [$tabletClass, 'destroy'])->name('tablet.destroy');
     });
+});
+
+// User Authentication for OPR List Application
+Route::prefix('opr')->group(function () use ($oprClass){
+    Route::get('/dashboard', [$oprClass, 'dashboard'])->name('tablet.dashboard');
 });

@@ -19,7 +19,7 @@ class InmateTabletController extends Controller
     }
 
     // Login Required Pages
-    public function dashboard(Request $request)
+    public function dashboard()
     {
         return view('Tablet.InmateTablet.dashboard');
     }
