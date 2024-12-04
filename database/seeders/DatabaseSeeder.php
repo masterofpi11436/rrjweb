@@ -2,19 +2,13 @@
 
 namespace Database\Seeders;
 
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use App\Models\Login\Role;
-
-
-use App\Models\Login\User;
-
 // Required Models
-use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use App\Models\Tablet\InmateTablet;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Directory\PhoneDirectory;
+use App\Models\OPR\OPRList;
 
 class DatabaseSeeder extends Seeder
 {
@@ -73,5 +67,6 @@ class DatabaseSeeder extends Seeder
         // Populate random data for applications
         PhoneDirectory::factory()->count(25)->create();
         InmateTablet::factory()->count(50)->create();
+        OPRList::factory()->count(50)->create();
     }
 }
