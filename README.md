@@ -87,6 +87,12 @@ php artisan migrate:refresh --seed
 Run on other computer in network:
 php artisan serve --host=128.168.123.75 --port=8000
 
+Clear Laravel Cache:
+
+php artisan cache:clear
+php artisan config:clear
+php artisan view:clear
+
 # Admin Dashboard
 Dashboard for the IT administrator to manage all users and all applications
 
