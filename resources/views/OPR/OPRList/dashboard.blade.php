@@ -1,4 +1,3 @@
-<h1>OPR dashboard</h1>
 @extends('layouts.oprList')
 
 @section('title', 'OPR List')

@@ -1,8 +1,8 @@
 @extends('layouts.reset')
 
-@section('title', 'Reset Your Password')
+@section('title', 'Password Reset Success')
 
-@section('heading', 'Reset Your Password')
+@section('heading', 'Password Reset Success')
 
 @section('content')
 

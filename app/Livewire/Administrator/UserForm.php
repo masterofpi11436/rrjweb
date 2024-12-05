@@ -19,6 +19,7 @@ class UserForm extends Component
     public $admin = false;
     public $phone = false;
     public $tablet = false;
+    public $opr_list = false;
 
     public function mount($id = null)
     {
@@ -40,6 +41,7 @@ class UserForm extends Component
             $this->admin = $user->admin;
             $this->phone = $user->phone;
             $this->tablet = $user->tablet;
+            $this->opr_list = $user->opr_list;
         }
     }
 
@@ -54,6 +56,7 @@ class UserForm extends Component
             'admin' => 'boolean',
             'phone' => 'boolean',
             'tablet' => 'boolean',
+            'opr_list' => 'boolean',
         ];
     }
 
@@ -83,6 +86,7 @@ class UserForm extends Component
         $user->admin = $this->admin;
         $user->phone = $this->phone;
         $user->tablet = $this->tablet;
+        $user->opr_list = $this->opr_list;
 
         $user->save();
 

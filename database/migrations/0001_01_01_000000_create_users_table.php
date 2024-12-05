@@ -23,6 +23,7 @@ return new class extends Migration
             $table->boolean('admin')->default(false);
             $table->boolean('phone')->default(false);
             $table->boolean('tablet')->default(false);
+            $table->boolean('opr_list')->default(false);
             $table->timestamps();
         });
 

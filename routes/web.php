@@ -27,7 +27,7 @@ $oprListLoginClass = OPRListLoginController::class;
 
 // Unified route for Google login that includes application type as a parameter
 Route::get('{app}/google-login', [$googleLoginClass, 'googleLogin'])
-    ->where('app', 'admin|phone|tablet') // Limits the allowed values for app
+    ->where('app', 'admin|phone|tablet|oprList') // Limits the allowed values for app
     ->name('google.login');
 
 // Unified callback route for all applications to login
@@ -41,10 +41,14 @@ Route::get('/password/reset/{token}', [$baseLoginClass, 'showResetForm'])->name(
 Route::post('/password/reset', [$baseLoginClass, 'reset'])->name('login.update');
 Route::view('/login/success', 'Login.Resets.success')->name('login.success');
 
-// Admin Dashboard Redirect
+// Default Redirect Route for testing
 Route::get('/', function () {
-    return redirect()->route('admin.login');
+    return redirect()->route('oprList.login');
 });
+
+// Public Routes
+Route::get('/phone-directory', [$phoneClass, 'phoneDirectory']);
+Route::get('/inmate-tablets', [$tabletClass, 'inmateTablets']);
 
 // Admin Routes
 Route::prefix('admin')->group(function () use ($adminClass, $adminLoginClass) {
@@ -76,9 +80,6 @@ Route::prefix('phone')->group(function () use ($phoneClass, $phoneLoginClass){
     Route::post('/forgot', [$phoneLoginClass, 'forgotPassword'])->name('phone.forgot.form.submit');
     Route::post('/logout', [$phoneLoginClass, 'logout'])->name('phone.logout');
 
-    // Public Route(s)
-    Route::get('/phone-directory', [$phoneClass, 'phoneDirectory']);
-
     // Routes with 'phone' middleware
     Route::middleware('phone')->group(function () use ($phoneClass) {
         Route::get('/dashboard', [$phoneClass, 'dashboard'])->name('phone.dashboard');
@@ -97,9 +98,6 @@ Route::prefix('tablet')->group(function () use ($tabletClass, $tabletLoginClass)
     Route::get('/forgot', [$tabletLoginClass, 'tabletForgotPasswordForm'])->name('tablet.forgot.form');
     Route::post('/forgot', [$tabletLoginClass, 'forgotPassword'])->name('tablet.forgot.form.submit');
     Route::post('/logout', [$tabletLoginClass, 'logout'])->name('tablet.logout');
-
-    // Public Route(s)
-    Route::get('/inmate-tablets', [$tabletClass, 'inmateTablets']);
 
     // Routes with 'tablet' middleware
     Route::middleware('tablet')->group(function () use ($tabletClass) {
@@ -120,12 +118,9 @@ Route::prefix('oprList')->group(function () use ($oprListClass, $oprListLoginCla
     Route::post('/forgot', [$oprListLoginClass, 'forgotPassword'])->name('oprList.forgot.form.submit');
     Route::post('/logout', [$oprListLoginClass, 'logout'])->name('oprList.logout');
 
-    // Public Route(s)
-    Route::get('/inmate-tablets', [$oprListClass, 'inmateTablets']);
-
-    // Routes with 'tablet' middleware
+    // Routes with 'opr_list' middleware
     Route::middleware('oprList')->group(function () use ($oprListClass) {
-        Route::get('/dashboard', [$oprListClass, 'dashboard'])->name('oprList.dashboard');
+        Route::get('/dashboard', [$oprListClass, 'dashboard'])->name('oprList.dashboard')->middleware('cache');
         Route::get('/create', [$oprListClass, 'create'])->name('oprList.create');
         Route::get('/{id}/edit', [$oprListClass, 'edit'])->name('oprList.edit');
         Route::delete('/{id}', [$oprListClass, 'destroy'])->name('oprList.destroy');

@@ -35,6 +35,11 @@
         </div>
 
         <div>
+            <label for="opr_list">OPR Access</label>
+            <input type="checkbox" id="opr_list" wire:model.defer="opr_list" {{ $opr_list ? 'checked' : '' }}>
+        </div>
+
+        <div>
             <button type="submit">{{ $userId ? 'Update User' : 'Create User' }}</button>
         </div>
     </form>

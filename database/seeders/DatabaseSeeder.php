@@ -65,7 +65,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         // Populate random data for applications
-        PhoneDirectory::factory()->count(25)->create();
+        PhoneDirectory::factory()->count(250)->create();
         InmateTablet::factory()->count(50)->create();
         OPRList::factory()->count(50)->create();
     }

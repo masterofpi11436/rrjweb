@@ -51,7 +51,7 @@ class GoogleLoginController extends Controller
             'admin' => $user->admin == 1,
             'phone' => $user->phone == 1 || $user->admin == 1,
             'tablet' => $user->tablet == 1 || $user->admin == 1,
-            'oprList' => $user->oprList == 1 || $user->admin == 1,
+            'oprList' => $user->opr_list == 1 || $user->admin == 1,
         };
 
         if ($hasAccess) {

@@ -52,6 +52,14 @@
                         @endif
                     </a>
                 </th>
+                <th>
+                    <a href="#" wire:click.prevent="sortBy('opr_list')">
+                        OPR Access
+                        @if ($sortColumn === 'opr_list')
+                            @if ($sortDirection === 'asc') ▲ @else ▼ @endif
+                        @endif
+                    </a>
+                </th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -64,6 +72,7 @@
                     <td>{{ $user->admin ? 'Yes' : 'No' }}</td>
                     <td>{{ $user->phone ? 'Yes' : 'No' }}</td>
                     <td>{{ $user->tablet ? 'Yes' : 'No' }}</td>
+                    <td>{{ $user->opr_list ? 'Yes' : 'No' }}</td>
                     <td>
                         <a href="{{ route('admin.edit', $user->id) }}">Edit</a>/
                         <div>

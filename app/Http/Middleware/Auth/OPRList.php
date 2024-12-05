@@ -7,7 +7,7 @@ class OPRList extends BaseAuth
     protected function hasAccess($user): bool
     {
         // Check if the user is authenticated and has oprList access or is an admin
-        return $user && ($user->oprList === 1 || $user->admin === 1);
+        return $user && ($user->opr_list === 1 || $user->admin === 1);
     }
 
     protected function getRedirectRoute(): string

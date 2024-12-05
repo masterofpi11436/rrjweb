@@ -31,7 +31,7 @@ class OPRListLoginController extends BaseLoginController
 
         // Attempt login with oprList access or admin access
         return $this->attemptLogin($request, 'oprList.dashboard', function ($user) {
-            return $user->oprList == 1 || $user->admin == 1;
+            return $user->opr_list == 1 || $user->admin == 1;
         });
     }
 
