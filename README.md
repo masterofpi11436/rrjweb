@@ -106,3 +106,15 @@ list of inmates on the mailroom app to sort through the mail. List is maintained
 # OPR List
 Contains the list of names of inmates that are required to have all their mail forwarded to OPR. There is a public page to 
 view the list to be seen by the mailroom staff. The protected routes are for OPR use.
+
+# Name
+Searches the Tablet and OPR list for inmates that do not have tablets. Used when approving mail.
+
+# Warehouse Store
+Users can submit orders to the warehouse for delivery. Users are managed by the warehouse manager but can be managed by the IT Administrator.
+User, Supervisors, Proprty, Warehouse Technician, and Warehouse Supervisor are the role types.
+
+User can submit requests to Supervisors and Property users
+Supervisors can approve, edit, consolidate, and deny (delete) requests submitted to them by users.
+Proprty is the same as Supervisors, but can add property items.
+Warehouse Technician can approve, edit, and deny requests. Can also add or remove users, items, and create a request for 1 for 1 Exchanges.
