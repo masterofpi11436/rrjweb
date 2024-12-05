@@ -102,3 +102,7 @@ Lists all the extensions with some outside vendor numbers
 # Inmate Tablet
 Lists the inmates that are not allowed to have a tablet. This information is used in conjuction with the 
 list of inmates on the mailroom app to sort through the mail. List is maintained by ICS
+
+# OPR List
+Contains the list of names of inmates that are required to have all their mail forwarded to OPR. There is a public page to 
+view the list to be seen by the mailroom staff. The protected routes are for OPR use.

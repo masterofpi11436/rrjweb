@@ -49,6 +49,7 @@ Route::get('/', function () {
 // Public Routes
 Route::get('/phone-directory', [$phoneClass, 'phoneDirectory']);
 Route::get('/inmate-tablets', [$tabletClass, 'inmateTablets']);
+Route::get('/opr-list', [$oprListClass, 'mailingList']);
 
 // Admin Routes
 Route::prefix('admin')->group(function () use ($adminClass, $adminLoginClass) {

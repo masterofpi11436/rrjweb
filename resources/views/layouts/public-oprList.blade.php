@@ -15,11 +15,6 @@
         <h1>@yield('heading')</h1>
 
         <div class="header-right">
-            <form action="{{ route('oprList.logout') }}" method="POST">
-                @csrf
-                <button>Logout</button>
-            </form>
-
             <div class="theme-toggle">
                 <label class="switch">
                     <input type="checkbox" id="theme-toggle">
