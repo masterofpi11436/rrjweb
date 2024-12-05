@@ -1,4 +1,4 @@
-@extends('layouts.public-phone-directory')
+@extends('layouts.Public.phone-directory')
 
 @section('title', 'Phone Directory')
 

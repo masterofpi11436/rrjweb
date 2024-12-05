@@ -1,4 +1,4 @@
-@extends('layouts.public-oprList')
+@extends('layouts.Public.oprList')
 
 @section('title', 'OPR List')
 

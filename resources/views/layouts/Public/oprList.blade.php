@@ -32,8 +32,6 @@
     @livewireScripts
 
     <script src="{{ asset('javascript/theme-switcher.js') }}"></script>
-    <script src="{{ asset('javascript/flash-message-expiry.js') }}"></script>
-    <script src="{{ asset('javascript/delete-confirmation.js') }}"></script>
     <script src="{{ asset('javascript/back-to-top.js') }}"></script>
 </body>
 </html>
