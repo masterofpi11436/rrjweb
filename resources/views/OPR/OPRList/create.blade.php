@@ -1,4 +1,4 @@
-@extends('layouts.oprList')
+@extends('layouts.opr-list')
 
 @section('title', 'Create New Inmate Entry')
 
@@ -8,6 +8,6 @@
 
 <a href="{{ route('oprList.dashboard') }}">Back</a>
 
-@livewire('oprList.oprList-form')
+@livewire('OPRList.OPRList-form')
 
 @endsection

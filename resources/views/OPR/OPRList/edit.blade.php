@@ -1,4 +1,4 @@
-@extends('layouts.oprList')
+@extends('layouts.opr-list')
 
 @section('title', 'Edit Name')
 
@@ -8,6 +8,6 @@
 
 <a href="{{ route('oprList.dashboard') }}">Back</a>
 
-@livewire('oprList.oprList-form', ['id' => $oprListId->id])
+@livewire('OPRList.OPRList-form', ['id' => $oprListId->id])
 
 @endsection

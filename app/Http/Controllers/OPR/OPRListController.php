@@ -10,6 +10,7 @@ use App\Models\OPR\OPRList;
 
 class OPRListController extends Controller
 {
+    // Public webpage
     public function mailingList()
     {
         return view('OPR.OPRList.mailing-list');
