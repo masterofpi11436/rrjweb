@@ -7,6 +7,6 @@
 @section('content')
 
 <!-- Livewire search component -->
-@livewire('oprList.oprList-search-all')
+@livewire('OPRList.OPRList-search-all')
 
 @endsection

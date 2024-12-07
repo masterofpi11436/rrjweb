@@ -1,4 +1,4 @@
-@extends('layouts.oprList')
+@extends('layouts.opr-list')
 
 @section('title', 'OPR List')
 
@@ -18,6 +18,6 @@
 <a href="{{ route('oprList.create') }}" class="create-link">Create New Entry</a>
 
 <!-- Livewire search component -->
-@livewire('oprList.oprList-search')
+@livewire('OPRList.OPRList-search')
 
 @endsection
