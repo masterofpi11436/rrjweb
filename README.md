@@ -99,18 +99,14 @@ Dashboard for the IT administrator to manage all users and all applications
 # Phone Directory
 Lists all the extensions with some outside vendor numbers
 
-# Inmate Tablet
-Lists the inmates that are not allowed to have a tablet. This information is used in conjuction with the 
-list of inmates on the mailroom app to sort through the mail. List is maintained by ICS
+# Policy Search (In-Progress)
+Search through the RRJ's policies to find specific policy based on string search. Admins can upload and remove policies.
+Public are able to search through policies.
 
-# OPR List
-Contains the list of names of inmates that are required to have all their mail forwarded to OPR. There is a public page to 
-view the list to be seen by the mailroom staff. The protected routes are for OPR use.
+# Vehicle Repair Tracker (In-Progress)
+Maintenance departments online vehicle repair tracker.
 
-# Name
-Searches the Tablet and OPR list for inmates that do not have tablets. Used when approving mail.
-
-# Warehouse Store
+# Warehouse Store (In-Progress)
 Users can submit orders to the warehouse for delivery. Users are managed by the warehouse manager but can be managed by the IT Administrator.
 User, Supervisors, Proprty, Warehouse Technician, and Warehouse Supervisor are the role types.
 

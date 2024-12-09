@@ -16,19 +16,4 @@
     <button>Phone Directory</button>
 </form>
 
-<!-- Link to navigate to the Inmate Tablet App -->
-<form action="{{ route('tablet.dashboard') }}">
-    <button>Inmate Tablets</button>
-</form>
-
-<!-- Link to navigate to the OPR List App -->
-<form action="{{ route('oprList.dashboard') }}">
-    <button>OPR List</button>
-</form>
-
-<!-- Link to navigate to the Name Search App -->
-<form action="{{ route('mail.dashboard') }}">
-    <button>Mail Search</button>
-</form>
-
 @endsection

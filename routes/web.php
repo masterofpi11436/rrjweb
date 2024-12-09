@@ -35,13 +35,11 @@ Route::view('/login/success', 'Login.Resets.success')->name('login.success');
 
 // Default Redirect Route for testing
 Route::get('/', function () {
-    return redirect()->route('oprList.login');
+    return redirect()->route('admin.login');
 });
 
 // Public Routes
 Route::get('/phone-directory', [$phoneClass, 'phoneDirectory']);
-Route::get('/inmate-tablets', [$tabletClass, 'inmateTablets']);
-Route::get('/mailroom', [$oprListClass, 'mailingList']);
 
 // Admin Routes
 Route::prefix('admin')->group(function () use ($adminClass, $adminLoginClass) {
