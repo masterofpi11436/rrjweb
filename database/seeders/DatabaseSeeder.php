@@ -25,7 +25,6 @@ class DatabaseSeeder extends Seeder
                 'password' => Hash::make('asd'),
                 'admin' => true,
                 'phone' => false,
-                'tablet' => false,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -36,7 +35,6 @@ class DatabaseSeeder extends Seeder
                 'password' => Hash::make('asd'),
                 'admin' => false,
                 'phone' => true,
-                'tablet' => false,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -47,7 +45,6 @@ class DatabaseSeeder extends Seeder
                 'password' => Hash::make('asd'),
                 'admin' => false,
                 'phone' => false,
-                'tablet' => true,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -58,7 +55,6 @@ class DatabaseSeeder extends Seeder
                 'password' => Hash::make('asd'),
                 'admin' => true,
                 'phone' => false,
-                'tablet' => false,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -66,7 +62,5 @@ class DatabaseSeeder extends Seeder
 
         // Populate random data for applications
         PhoneDirectory::factory()->count(250)->create();
-        InmateTablet::factory()->count(50)->create();
-        OPRList::factory()->count(50)->create();
     }
 }

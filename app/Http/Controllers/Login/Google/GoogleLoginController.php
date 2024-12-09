@@ -50,8 +50,6 @@ class GoogleLoginController extends Controller
         $hasAccess = match ($app) {
             'admin' => $user->admin == 1,
             'phone' => $user->phone == 1 || $user->admin == 1,
-            'tablet' => $user->tablet == 1 || $user->admin == 1,
-            'oprList' => $user->opr_list == 1 || $user->admin == 1,
         };
 
         if ($hasAccess) {
@@ -61,9 +59,7 @@ class GoogleLoginController extends Controller
             // Redirect to the specific application dashboard based on app identifier
             $route = match ($app) {
                 'admin' => 'admin.dashboard',
-                'phone' => 'phone.dashboard',
-                'tablet' => 'tablet.dashboard',
-                'oprList' => 'oprList.dashboard'
+                'phone' => 'phone.dashboard'
             };
 
             return redirect()->route($route);
@@ -72,8 +68,7 @@ class GoogleLoginController extends Controller
         // Redirect to the application's login route with an error message if not authorized
         $loginRoute = match ($app) {
             'admin' => 'admin.login',
-            'phone' => 'phone.login',
-            'tablet' => 'tablet.login'
+            'phone' => 'phone.login'
         };
 
         // Not authroized to access the application.

@@ -18,8 +18,6 @@ class UserForm extends Component
     public $password_confirmation;
     public $admin = false;
     public $phone = false;
-    public $tablet = false;
-    public $opr_list = false;
 
     public function mount($id = null)
     {
@@ -40,8 +38,6 @@ class UserForm extends Component
             $this->email = $user->email;
             $this->admin = $user->admin;
             $this->phone = $user->phone;
-            $this->tablet = $user->tablet;
-            $this->opr_list = $user->opr_list;
         }
     }
 
@@ -54,9 +50,7 @@ class UserForm extends Component
             'email' => 'required|email|ends_with:rrjva.org,icsolutions.com,gmail.com|unique:users,email,' . $this->userId,
             'password' => 'nullable|min:6|confirmed',
             'admin' => 'boolean',
-            'phone' => 'boolean',
-            'tablet' => 'boolean',
-            'opr_list' => 'boolean',
+            'phone' => 'boolean'
         ];
     }
 
@@ -85,8 +79,6 @@ class UserForm extends Component
         $user->email = $this->email;
         $user->admin = $this->admin;
         $user->phone = $this->phone;
-        $user->tablet = $this->tablet;
-        $user->opr_list = $this->opr_list;
 
         $user->save();
 
