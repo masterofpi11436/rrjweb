@@ -5,10 +5,9 @@ namespace Database\Seeders;
 // Required Models
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use App\Models\Tablet\InmateTablet;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Directory\PhoneDirectory;
-use App\Models\OPR\OPRList;
+use App\Models\FleetVehicleMaintenance\FleetVehicleMaintenance;
 
 class DatabaseSeeder extends Seeder
 {
@@ -62,5 +61,6 @@ class DatabaseSeeder extends Seeder
 
         // Populate random data for applications
         PhoneDirectory::factory()->count(250)->create();
+        FleetVehicleMaintenance::factory()->count(100)->create();
     }
 }
