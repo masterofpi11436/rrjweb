@@ -106,6 +106,15 @@ Public are able to search through policies.
 # Vehicle Repair Tracker (In-Progress)
 Maintenance departments online vehicle repair tracker.
 
+1. Are there going to be different types of users? (User that can only view records, a user that can create, read, update, or delete (CRUD) records, or a user that can create/update, but not delete records?)
+All maintenance staff can log in and use the application. Only I or Mark McDaniel can delete records.
+2. When a user logs in, what is the workflow of filling out the maintenance form?
+Top left to bottom left or sample sheet provided and then notes field and signature.
+3. Do you want the form to have drop down menu items for certain fields (if so, which fields?) or do you want the entries to be typed out every time? Type the fields above inspection and check boxes for Inspection topics.  Notes field will be a text box.
+
+Just some questions I need before continuing on. I made the database for this application and the login page is set up for one level of authentication. Are there any features you want with this application?
+We will have the need for a search tool using VIN Number, Plate Number etc,  to display a history of work records for a vehicle.
+
 # Warehouse Store (In-Progress)
 Users can submit orders to the warehouse for delivery. Users are managed by the warehouse manager but can be managed by the IT Administrator.
 User, Supervisors, Proprty, Warehouse Technician, and Warehouse Supervisor are the role types.
