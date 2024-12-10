@@ -29,18 +29,18 @@ class VFMLoginController extends BaseLoginController
             return redirect()->route('vfm.login')->withErrors(['email_not_found' => 'No account found with this email address.']);
         }
 
-        // Attempt login with phone access or admin access
-        return $this->attemptLogin($request, 'vehicle-fleet-maintenacnce.dashboard', function ($user) {
-            return $user->vehicle_fleet_maintenacnce == 1 || $user->admin == 1;
+        // Attempt login with vfm access or admin access
+        return $this->attemptLogin($request, 'vfm.dashboard', function ($user) {
+            return $user->vfm == 1 || $user->admin == 1;
         });
     }
 
-    public function phoneForgotPasswordForm()
+    public function vfmForgotPasswordForm()
     {
-        return parent::showForgotPasswordForm('Login.Forgots.phone-forgot-password');
+        return parent::showForgotPasswordForm('Login.Forgots.vfm-forgot-password');
     }
 
-    public function logout(Request $request, $route = 'phone.login')
+    public function logout(Request $request, $route = 'vfm.login')
     {
         // Perform the standard logout
         Auth::logout();

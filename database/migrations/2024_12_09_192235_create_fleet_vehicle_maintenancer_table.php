@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('fleet_vehicle_maintenance', function (Blueprint $table) {
+        Schema::create('vfm', function (Blueprint $table) {
             $table->id();
             $table->date('date_in');
             $table->date('date_out');
@@ -58,6 +58,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('fleet_vehicle_maintenance');
+        Schema::dropIfExists('vfm');
     }
 };

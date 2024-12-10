@@ -1,13 +1,13 @@
 <?php
 
-namespace Database\Factories\FleetVehicleMaintenance;
+namespace Database\Factories\VFM;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Model>
  */
-class FleetVehicleMaintenanceFactory extends Factory
+class VFMFactory extends Factory
 {
     /**
      * Define the model's default state.

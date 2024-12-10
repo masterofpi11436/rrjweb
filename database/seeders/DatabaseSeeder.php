@@ -7,7 +7,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Directory\PhoneDirectory;
-use App\Models\FleetVehicleMaintenance\FleetVehicleMaintenance;
+use App\Models\VFM\VFM;
 
 class DatabaseSeeder extends Seeder
 {
@@ -61,6 +61,6 @@ class DatabaseSeeder extends Seeder
 
         // Populate random data for applications
         PhoneDirectory::factory()->count(250)->create();
-        FleetVehicleMaintenance::factory()->count(100)->create();
+        VFM::factory()->count(100)->create();
     }
 }

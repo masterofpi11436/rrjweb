@@ -5,9 +5,12 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Login\Custom\BaseLoginController;
 use App\Http\Controllers\Login\Custom\AdminLoginController;
 use App\Http\Controllers\Login\Custom\PhoneLoginController;
+use App\Http\Controllers\Directory\PhoneDirectoryController;
+use App\Http\Controllers\Login\Custom\VFMLoginController;
 use App\Http\Controllers\Login\Google\GoogleLoginController;
 use App\Http\Controllers\Administrator\AdministratorController;
-use App\Http\Controllers\Directory\PhoneDirectoryController;
+
+use App\Http\Controllers\VFM\VFMController;
 
 // Shorthand classes
 $googleLoginClass = GoogleLoginController::class;
@@ -16,6 +19,8 @@ $adminClass = AdministratorController::class;
 $adminLoginClass = AdminLoginController::class;
 $phoneClass = PhoneDirectoryController::class;
 $phoneLoginClass = PhoneLoginController::class;
+$vfmClass = VFMController::class;
+$vfmLoginClass = VFMLoginController::class;
 
 // Unified route for Google login that includes application type as a parameter
 Route::get('{app}/google-login', [$googleLoginClass, 'googleLogin'])
@@ -77,5 +82,24 @@ Route::prefix('phone')->group(function () use ($phoneClass, $phoneLoginClass){
         Route::get('/create', [$phoneClass, 'create'])->name('phone.create');
         Route::get('/{id}/edit', [$phoneClass, 'edit'])->name('phone.edit');
         Route::delete('/{id}', [$phoneClass, 'destroy'])->name('phone.destroy');
+    });
+});
+
+// User Authentication for Vehicle Fleet Maintenance Application
+Route::prefix('vfm')->group(function () use ($vfmClass, $vfmLoginClass){
+
+    // Routes without middleware
+    Route::get('/login', [$vfmLoginClass, 'vfmLoginForm'])->name('vfm.login');
+    Route::post('/login', [$vfmLoginClass, 'login']);
+    Route::get('/forgot', [$vfmLoginClass, 'vfmForgotPasswordForm'])->name('vfm.forgot.form');
+    Route::post('/forgot', [$vfmLoginClass, 'forgotPassword'])->name('vfm.forgot.form.submit');
+    Route::post('/logout', [$vfmLoginClass, 'logout'])->name('vfm.logout');
+
+    // Routes with 'vfm' middleware
+    Route::middleware('vfm')->group(function () use ($vfmClass) {
+        Route::get('/dashboard', [$vfmClass, 'dashboard'])->name('vfm.dashboard');
+        Route::get('/create', [$vfmClass, 'create'])->name('vfm.create');
+        Route::get('/{id}/edit', [$vfmClass, 'edit'])->name('vfm.edit');
+        Route::delete('/{id}', [$vfmClass, 'destroy'])->name('vfm.destroy');
     });
 });
