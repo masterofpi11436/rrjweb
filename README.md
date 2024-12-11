@@ -124,3 +124,22 @@ User can submit requests to Supervisors and Property users
 Supervisors can approve, edit, consolidate, and deny (delete) requests submitted to them by users.
 Proprty is the same as Supervisors, but can add property items.
 Warehouse Technician can approve, edit, and deny requests. Can also add or remove users, items, and create a request for 1 for 1 Exchanges.
+
+This is running as a virtual host:
+1. Line added in C:\Windows\System32\drivers\etc\hosts file called hosts:
+    127.0.0.1 rrjweb2.local
+2. Virtual host is set up in C:\xampp\apache\conf\extra\httpd-vhosts
+    <VirtualHost *:80>
+        ServerAdmin webmaster@rrjweb.local
+        DocumentRoot "C:/xampp/htdocs/rrjweb/public"
+        ServerName rrjweb.local
+        ServerAlias www.rrjweb.local
+        ErrorLog "logs/rrjweb.local-error.log"
+        CustomLog "logs/rrjweb.local-access.log" common
+
+        <Directory "C:/xampp/htdocs/rrjweb/public">
+            Options Indexes FollowSymLinks
+            AllowOverride All
+            Require all granted
+        </Directory>
+    </VirtualHost>
