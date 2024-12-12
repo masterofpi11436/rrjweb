@@ -9,6 +9,6 @@ class VFMController extends Controller
 {
     public function dashboard()
     {
-        return view('VFM.dashboard');
+        return view('VFM.VFM.dashboard');
     }
 }

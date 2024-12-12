@@ -27,6 +27,7 @@
                 </label>
                 <span class="theme-label">Light/Dark Theme</span>
             </div>
+            <div>Welcome: {{ Auth::user()->last_name}}, {{ Auth::user()->first_name}}</div>
         </div>
     </header>
 
