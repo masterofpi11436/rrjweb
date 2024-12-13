@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ asset('css/water-dark.css') }}" id="theme-link" >
-    <link rel="stylesheet" href="/css/common-styles-light.css" id="common-styles-link">
+    <link rel="stylesheet" href="{{ asset('/css/common-styles-dark.css') }}" id="common-styles-link" >
     <title>@yield('title')</title>
     @livewireStyles
 </head>
@@ -27,7 +27,6 @@
                 </label>
                 <span class="theme-label">Light/Dark Theme</span>
             </div>
-            <div>Welcome: {{ Auth::user()->last_name}}, {{ Auth::user()->first_name}}</div>
         </div>
     </header>
 

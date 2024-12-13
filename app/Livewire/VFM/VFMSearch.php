@@ -10,7 +10,7 @@ use App\Models\VFM\VFM;
 class VFMSearch extends Component
 {
     public $search = ''; // Default search term
-    public $sortColumn = 'make'; // Default sort column
+    public $sortColumn = 'maintenance_technician'; // Default sort column
     public $sortDirection = 'asc'; // Default sort direction
     public $confirmingDelete = false;
     public $deleteId;
@@ -35,6 +35,8 @@ class VFMSearch extends Component
                                            ->orWhere('license_plate', 'like', '%' . $this->search . '%')
                                            ->orWhere('make', 'like', '%' . $this->search . '%')
                                            ->orWhere('model', 'like', '%' . $this->search . '%')
+                                           ->orWhere('vehicle_year', 'like', '%' . $this->search . '%')
+                                           ->orWhere('maintenance_technician', 'like', '%' . $this->search . '%')
                                            ->orderBy($this->sortColumn, $this->sortDirection)
                                            ->get(),
         ]);

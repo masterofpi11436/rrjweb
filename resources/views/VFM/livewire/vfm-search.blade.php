@@ -7,6 +7,14 @@
             <thead>
                 <tr>
                     <th>
+                        <a href="#" wire:click.prevent="sortBy('maintenance_technician')">
+                            Technician
+                            @if ($sortColumn === 'maintenance_technician')
+                                @if ($sortDirection === 'asc') ▲ @else ▼ @endif
+                            @endif
+                        </a>
+                    </th>
+                    <th>
                         <a href="#" wire:click.prevent="sortBy('make')">
                             Make
                             @if ($sortColumn === 'make')
@@ -31,9 +39,9 @@
                         </a>
                     </th>
                     <th>
-                        <a href="#" wire:click.prevent="sortBy('year')">
+                        <a href="#" wire:click.prevent="sortBy('vehicle_year')">
                             Year
-                            @if ($sortColumn === 'year')
+                            @if ($sortColumn === 'vehicle_year')
                                 @if ($sortDirection === 'asc') ▲ @else ▼ @endif
                             @endif
                         </a>
@@ -44,16 +52,17 @@
             <tbody>
                 @foreach ($suggestions as $vehicle)
                     <tr>
+                        <td>{{ $vehicle->maintenance_technician }}</td>
                         <td>{{ $vehicle->make }}</td>
                         <td>{{ $vehicle->model }}</td>
                         <td>{{ $vehicle->vin }}</td>
-                        <td>{{ $vehicle->year }}</td>
+                        <td>{{ $vehicle->vehicle_year }}</td>
                         <td>
-                            <a href="#">Edit</a>/
+                            <a href="{{ route('vfm.edit', $vehicle->id) }}">Edit</a>/
                             <div>
                                 <!-- Delete link -->
                                 <a href="#" onclick="event.preventDefault(); confirmDelete({{ $vehicle->id }});">Delete</a>
-                                <form id="delete-form-{{ $vehicle->id }}" action="#" method="POST" style="display: none;">
+                                <form id="delete-form-{{ $vehicle->id }}" action="{{ route('vfm.destroy', $vehicle->id) }}" method="POST" style="display: none;">
                                     @csrf
                                     @method('DELETE')
                                 </form>

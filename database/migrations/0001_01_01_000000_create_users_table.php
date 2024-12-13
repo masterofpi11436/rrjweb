@@ -22,7 +22,7 @@ return new class extends Migration
             // Applications and their roles
             $table->boolean('admin')->default(false);
             $table->boolean('phone')->default(false);
-            $table->boolean('vfm')->default(false);
+            $table->string('vfm')->default('technician');
             $table->timestamps();
         });
 
