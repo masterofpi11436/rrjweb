@@ -1,0 +1,181 @@
+Instructions on how to install an Ubuntu VM in Virtual Box
+Install Virtualbox
+
+Setting Up a Virtual Machine with Ubuntu to Host a Website
+
+    1. Download Ubuntu Desktop:
+        Download the latest version of Ubuntu Desktop from the official website.
+        Save the file to a location you will remember (e.g., Desktop or Downloads folder).
+        During the download, select both checkboxes for proprietary software and leave all other settings at their default.
+
+    2. Install Ubuntu in VirtualBox:
+        Follow the installation prompts and create your user account with a username and password.
+        Complete the installation process and configure preferences as needed.
+
+    3. Enable Copy and Paste Between Host and VM:
+
+    Install VirtualBox Guest Additions:
+        Go to the VirtualBox menu bar and select Devices > Insert Guest Additions CD Image.
+        Open a terminal in Ubuntu and run the following commands:
+			sudo apt update
+			sudo apt upgrade -y
+			sudo apt install -y build-essential dkms linux-headers-$(uname -r)
+			sudo mount /dev/cdrom /mnt
+			sudo /mnt/VBoxLinuxAdditions.run
+
+		***Sometimes there are issues with mounting the CDROM, make sure that it is mounted then run the commands.***
+		Shut down the VM.
+
+	4. Configure Clipboard Sharing:
+
+		In VirtualBox, go to the Settings of your VM.
+		Navigate to General > Advanced.
+		Set Shared Clipboard to Bidirectional.
+		(Optional) Set Drag and Drop to Bidirectional as well.
+
+	5. Update the Ubuntu VM After Restart:
+
+		Restart the VM.
+		Open the terminal and run:
+			sudo apt update
+			sudo apt upgrade -y
+			***Restart if needed***
+
+***************************
+2. Installing Visual Studio Code
+
+    Download VS Code from the App Center:
+        Open the Ubuntu App Center.
+        Search for Code in the search bar.
+        Select Visual Studio Code and click Install.
+
+    Open and Configure VS Code:
+        Launch VS Code from the Applications menu.
+        Configure settings and extensions as needed for your workflow.
+
+***************************
+3. Setting Up Git for Version Control with GitHub
+	1. Install Git
+
+		Open a terminal in Ubuntu.
+		Run the following commands to check and install Git:
+		sudo apt update
+		sudo apt install git -y
+
+	2. Configure Git
+
+		Set up your username for Git commits:
+			git config --global user.name "Your GitHub Username"
+
+		Set up your email for Git commits:
+			git config --global user.email "your-email@example.com"
+
+		Verify the configuration:
+			git config --global --list
+
+***************************
+4. Install curl
+
+	Open a terminal and run the following commands:
+		sudo apt update
+		sudo apt install curl
+
+***************************
+5. Install netstat tools to run XAMPP with the commands
+
+	Open a terminal and run the following commands:
+		sudo apt update
+		sudo apt install net-tools
+
+***********************************************************************************************************************************************
+These next set of instructions are for using PHP (Laravel) and may not pertain to ASP.net. Installing Node for the npm tool will work.
+***********************************************************************************************************************************************
+
+6.  Node.js for npm (Change version to the most recent version, Node.js 22.x in this case)
+	***This is to make use of the tool npm to download Tailwind.CSS. Can be used for React and other JavaScript Libraries.
+
+		sudo apt update
+		curl -fsSL https://deb.nodesource.com/setup_22.x | sudo -E bash -
+		sudo apt install -y nodejs
+
+***************************
+7. Install XAMPP
+
+	Download the installer and navigate to the Downloads folder
+		chmod +x xampp-linux-x64-8.2.12-0-installer.run
+		sudo ./xampp-linux-x64-8.2.12-0-installer.run
+		Leave everything default
+
+	Run the Apache/MySQL services
+		sudo /opt/lampp/lampp start
+		sudo /opt/lampp/lampp stopInstall
+
+***************************
+8. Make the htdocs folder read/writable to view web pages
+
+sudo chmod -R 775 /opt/lampp/htdocs
+sudo chown -R $USER:www-data /opt/lampp/htdocs
+
+***************************
+9. Intall Composer
+	sudo apt update
+	sudo apt install composer -y
+
+***************************
+10. Install Tailwind CSS (Project Dependent)
+
+Open the Project in VS Code
+npm install -D tailwindcss postcss autoprefixer
+npx tailwindcss init
+
+***************************
+11. PHP dependencise
+sudo apt install php php-cli php-mbstring php-xml php-zip php-curl php-intl php-mysql unzip -y
+
+***************************
+12. Install the project from a fresh install
+
+git pull origin main
+Copy the .env file from the .env.example file
+composer install
+php artisan key:generate
+sudo /etc/init.d/apache2 stop
+sudo /opt/lampp/lampp start/stop
+https://localhost/phpmyadmin
+php artisan migrate
+php artisan migrate:refresh
+php artisan db:seed
+php artisan migrate:refresh --seed
+
+***************************
+13. Changed the network adapter to NAT and configure static IP then configure port forwarding
+
+ip a
+sudo nano /etc/netplan/01-netcfg.yaml
+network:
+  version: 2
+  renderer: networkd
+  ethernets:
+    enp0s3:  # Use your interface name
+      addresses:
+        - 10.0.2.100/24  # Replace with your desired static IP and subnet mask
+      gateway4: 10.0.2.1  # Replace with your network gateway
+      nameservers:
+        addresses:
+          - 8.8.8.8  # DNS server 1
+          - 8.8.4.4  # DNS server 2
+sudo netplan apply
+
+Set the port forwarding to port 80
+
+***************************
+14. Add CNAME and A Record
+
+Go to Advanced DNS settings
+Add A record and set it to your public IP address
+Add a CNAME (Alias Record)
+
+*************************
+15. Port forwarding
+
+In the gateway settings, forward ports 80 and 443
