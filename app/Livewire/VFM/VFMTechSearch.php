@@ -28,7 +28,7 @@ class VFMTechSearch extends Component
     public function render()
     {
         // Search for matching records
-        return view('VFM.livewire.vfm-tech-search', [
+        return view('VFMTech.livewire.vfm-tech-search', [
             'suggestions' => VFM::where('vin', 'like', '%' . $this->search . '%')
                                            ->orWhere('license_plate', 'like', '%' . $this->search . '%')
                                            ->orWhere('make', 'like', '%' . $this->search . '%')

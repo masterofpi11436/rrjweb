@@ -1,4 +1,4 @@
-@extends('layouts.vfm')
+@extends('layouts.vfm-tech')
 
 @section('title', 'VFM Tech')
 

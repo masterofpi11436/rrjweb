@@ -149,6 +149,6 @@ class VFMTechForm extends Component
 
     public function render()
     {
-        return view('VFM.livewire.vfm-tech-form');
+        return view('VFMTech.livewire.vfm-tech-form');
     }
 }
