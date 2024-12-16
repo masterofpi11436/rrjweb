@@ -1,6 +1,6 @@
 @extends('layouts.vfm')
 
-@section('title', 'VFM Admin')
+@section('title', 'VFM Tech')
 
 @section('heading', 'Vehicle Fleet Maintenance Tracker')
 
@@ -15,8 +15,8 @@
 @endif
 
 <!-- Link to navigate to the Create page -->
-<a href="{{ route('vfm.create') }}" class="create-link">Create New Maintenance Ticket</a>
+<a href="{{ route('vfm-tech.create') }}" class="create-link">Create New Maintenance Ticket</a>
 
-@livewire('VFM.VFM-search')
+@livewire('VFM.VFM-tech-search')
 
 @endsection

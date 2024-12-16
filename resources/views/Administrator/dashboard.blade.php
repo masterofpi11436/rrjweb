@@ -16,4 +16,9 @@
     <button>Phone Directory</button>
 </form>
 
+<!-- Link to navigate to the Phone Directory App -->
+<form action="{{ route('vfm.dashboard') }}">
+    <button>Vehicle Fleet Maintenance (VFM) Tracker</button>
+</form>
+
 @endsection

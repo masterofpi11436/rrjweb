@@ -1,14 +1,14 @@
 @extends('layouts.login')
 
-@section('title', 'VFM')
+@section('title', 'VFM Tech')
 
-@section('heading', 'Vehicle Fleet Maintenance Admin Login')
+@section('heading', 'Vehicle Fleet Maintenance Tech Login')
 
 @section('content')
 
 <div class="google-login">
     {{-- Log in with Google --}}
-    <form action="{{ route('google.login', ['app' => 'vfm']) }}">
+    <form action="{{ route('google.login', ['app' => 'vfm-tech']) }}">
         <button>
             <img src="{{asset('images/email-logo.jpg')}}" alt="Google">
             Login with Work Email</button>
@@ -16,8 +16,8 @@
 </div>
 
 <div class="forgot-login">
-    {{-- VFM Admin forgot --}}
-    <form action="{{ route('vfm.forgot.form') }}">
+    {{-- VFM Tech forgot --}}
+    <form action="{{ route('vfm-tech.forgot.form') }}">
         @csrf
         <button type="submit">Forgot Password</button>
     </form>

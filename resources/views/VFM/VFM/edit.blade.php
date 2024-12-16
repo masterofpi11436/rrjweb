@@ -1,6 +1,6 @@
 @extends('layouts.vfm')
 
-@section('title', 'VFM')
+@section('title', 'VFM Admin')
 
 @section('heading', 'Edit an Insepction Ticket')
 

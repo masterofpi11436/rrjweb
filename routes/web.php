@@ -2,15 +2,19 @@
 
 use Illuminate\Support\Facades\Route;
 
+// Login Controllers
 use App\Http\Controllers\Login\Custom\BaseLoginController;
 use App\Http\Controllers\Login\Custom\AdminLoginController;
 use App\Http\Controllers\Login\Custom\PhoneLoginController;
-use App\Http\Controllers\Directory\PhoneDirectoryController;
-use App\Http\Controllers\Login\Custom\VFMLoginController;
 use App\Http\Controllers\Login\Google\GoogleLoginController;
-use App\Http\Controllers\Administrator\AdministratorController;
 
+// Class Controllers
+use App\Http\Controllers\Login\Custom\VFMLoginController;
+use App\Http\Controllers\Login\Custom\VFMTechLoginController;
+use App\Http\Controllers\Directory\PhoneDirectoryController;
+use App\Http\Controllers\Administrator\AdministratorController;
 use App\Http\Controllers\VFM\VFMController;
+use App\Http\Controllers\VFM\VFMTechController;
 
 // Shorthand classes
 $googleLoginClass = GoogleLoginController::class;
@@ -21,10 +25,12 @@ $phoneClass = PhoneDirectoryController::class;
 $phoneLoginClass = PhoneLoginController::class;
 $vfmClass = VFMController::class;
 $vfmLoginClass = VFMLoginController::class;
+$vfmTechClass = VFMTechController::class;
+$vfmTechLoginClass = VFMTechLoginController::class;
 
 // Unified route for Google login that includes application type as a parameter
 Route::get('{app}/google-login', [$googleLoginClass, 'googleLogin'])
-    ->where('app', 'admin|phone|tablet|oprList') // Limits the allowed values for app
+    ->where('app', 'admin|phone|vfm|vfm-tech') // Limits the allowed values for app
     ->name('google.login');
 
 // Unified callback route for all applications to login
@@ -40,7 +46,7 @@ Route::view('/login/success', 'Login.Resets.success')->name('login.success');
 
 // Default Redirect Route for testing
 Route::get('/', function () {
-    return redirect()->route('admin.login');
+    return redirect()->route('vfm-tech.login');
 });
 
 // Public Routes
@@ -85,7 +91,7 @@ Route::prefix('phone')->group(function () use ($phoneClass, $phoneLoginClass){
     });
 });
 
-// User Authentication for Vehicle Fleet Maintenance Application
+// User Authentication for Vehicle Fleet Maintenance Application (Admins)
 Route::prefix('vfm')->group(function () use ($vfmClass, $vfmLoginClass){
 
     // Routes without middleware
@@ -95,11 +101,28 @@ Route::prefix('vfm')->group(function () use ($vfmClass, $vfmLoginClass){
     Route::post('/forgot', [$vfmLoginClass, 'forgotPassword'])->name('vfm.forgot.form.submit');
     Route::post('/logout', [$vfmLoginClass, 'logout'])->name('vfm.logout');
 
-    // Routes with 'vfm' middleware
+    // Routes with 'vfm' middleware (Admin side)
     Route::middleware('vfm')->group(function () use ($vfmClass) {
         Route::get('/dashboard', [$vfmClass, 'dashboard'])->name('vfm.dashboard');
         Route::get('/create', [$vfmClass, 'create'])->name('vfm.create');
         Route::get('/{id}/edit', [$vfmClass, 'edit'])->name('vfm.edit');
         Route::delete('/{id}', [$vfmClass, 'destroy'])->name('vfm.destroy');
+    });
+});
+
+// User Authentication for Vehicle Fleet Maintenance Application (Technicians)
+Route::prefix('vfm-tech')->group(function () use ($vfmTechClass, $vfmTechLoginClass){
+
+    // Routes without middleware
+    Route::get('/login', [$vfmTechLoginClass, 'VFMTechLoginForm'])->name('vfm-tech.login');
+    Route::post('/login', [$vfmTechLoginClass, 'login']);
+    Route::get('/forgot', [$vfmTechLoginClass, 'vfmTechForgotPasswordForm'])->name('vfm-tech.forgot.form');
+    Route::post('/forgot', [$vfmTechLoginClass, 'forgotPassword'])->name('vfm-tech.forgot.form.submit');
+    Route::post('/logout', [$vfmTechLoginClass, 'logout'])->name('vfm-tech.logout');
+
+    // Routes with 'vfm' middleware (Admin side)
+    Route::middleware('vfm-tech')->group(function () use ($vfmTechClass) {
+        Route::get('/dashboard', [$vfmTechClass, 'dashboard'])->name('vfm-tech.dashboard');
+        Route::get('/create', [$vfmTechClass, 'create'])->name('vfm-tech.create');
     });
 });

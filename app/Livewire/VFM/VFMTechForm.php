@@ -6,9 +6,8 @@ use App\Models\VFM\VFM;
 use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
 
-class VFMForm extends Component
+class VFMTechForm extends Component
 {
-    public $vfmId;
     public $date_in;
     public $date_out;
     public $state_inspection;
@@ -88,50 +87,6 @@ class VFMForm extends Component
         ];
     }
 
-        // Method to load existing data if editing
-    public function mount($id = null)
-    {
-        if ($id) {
-            $vfm = VFM::findOrFail($id);
-            $this->vfmId = $vfm->id;
-            $this->date_in = $vfm->date_in;
-            $this->date_out = $vfm->date_out;
-            $this->state_inspection = $vfm->state_inspection;
-            $this->license_plate = $vfm->license_plate;
-            $this->mileage = $vfm->mileage;
-            $this->vehicle_year = $vfm->vehicle_year;
-            $this->make = $vfm->make;
-            $this->model = $vfm->model;
-            $this->vin = $vfm->vin;
-            $this->air_filter = $vfm->air_filter;
-            $this->antifreeze = $vfm->antifreeze;
-            $this->battery = $vfm->battery;
-            $this->battery_booster = $vfm->battery_booster;
-            $this->belts = $vfm->belts;
-            $this->brake_fluid = $vfm->brake_fluid;
-            $this->brakes_front = $vfm->brakes_front;
-            $this->brakes_rear = $vfm->brakes_rear;
-            $this->detention_equipment = $vfm->detention_equipment;
-            $this->diagnostic_scan = $vfm->diagnostic_scan;
-            $this->engine_oil = $vfm->engine_oil;
-            $this->exhaust = $vfm->exhaust;
-            $this->hoses = $vfm->hoses;
-            $this->lights = $vfm->lights;
-            $this->mirrors = $vfm->mirrors;
-            $this->power_steering_fluid = $vfm->power_steering_fluid;
-            $this->safety_restraints = $vfm->safety_restraints;
-            $this->shocks_struts = $vfm->shocks_struts;
-            $this->tires = $vfm->tires;
-            $this->transmission_fluid = $vfm->transmission_fluid;
-            $this->washer_fluid = $vfm->washer_fluid;
-            $this->window_operation = $vfm->window_operation;
-            $this->windshield = $vfm->windshield;
-            $this->wiper_blades = $vfm->wiper_blades;
-            $this->fire_extinguisher = $vfm->fire_extinguisher;
-            $this->description_of_service = $vfm->description_of_service;
-        }
-    }
-
     // For live validation
     public function updated($propertyName)
     {
@@ -143,15 +98,10 @@ class VFMForm extends Component
     {
         $this->validate();
 
-        if ($this->vfmId) {
-            $vfm = VFM::find($this->vfmId);
-            session()->flash('create-edit-delete-message', 'VFM updated successfully!');
-        } else {
-            // Create new VFM
-            $vfm = new VFM;
-            $vfm->maintenance_technician = Auth::user()->first_name . ' ' . Auth::user()->last_name;
-            session()->flash('create-edit-delete-message', 'VFM created successfully!');
-        }
+        // Create new VFM
+        $vfm = new VFM;
+
+        session()->flash('create-edit-delete-message', 'VFM created successfully!');
 
         $vfm->date_in = $this->date_in;
         $vfm->date_out = $this->date_out;
@@ -188,16 +138,17 @@ class VFMForm extends Component
         $vfm->wiper_blades = $this->wiper_blades;
         $vfm->fire_extinguisher = $this->fire_extinguisher;
         $vfm->description_of_service = $this->description_of_service;
+        $vfm->maintenance_technician = Auth::user()->first_name . ' ' . Auth::user()->last_name;
 
         $vfm->save();
 
-        session()->flash('message', $this->vfmId ? 'VFM updated successfully!' : 'VFM created successfully!');
+        session()->flash('message', 'VFM created successfully!');
 
-        return redirect()->route('vfm.dashboard'); // Redirect to user list
+        return redirect()->route('vfm-tech.dashboard'); // Redirect to user list
     }
 
     public function render()
     {
-        return view('VFM.livewire.vfm-form');
+        return view('VFM.livewire.vfm-tech-form');
     }
 }
