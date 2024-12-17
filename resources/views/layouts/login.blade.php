@@ -60,15 +60,6 @@
                 </div>
             @endif
         </div>
-
-        <!-- Separator Line -->
-        <div class="separator"></div>
-
-        <!-- Dynamic Content Section -->
-        <div class="login-section forgot-google-section">
-            @yield('content')
-        </div>
-
     </div>
 
     <script src="{{ asset('javascript/theme-switcher.js') }}"></script>
