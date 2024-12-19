@@ -5,11 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ asset('css/water-dark.css') }}" id="theme-link" >
     <link rel="stylesheet" href="{{ asset('/css/common-styles-dark.css') }}" id="common-styles-link" >
+    <link rel="stylesheet" href="{{ asset('/css/vfm-form.css')}}">
     <title>@yield('title')</title>
     @livewireStyles
 </head>
 <body>
-
+<h1>Test</h1>
     <!-- Header Section with Theme Toggle -->
     <header class="header">
         <h1>@yield('heading')</h1>

@@ -6,7 +6,7 @@
 
 @section('content')
 
-<div class="forgot-login">
+<div>
     {{-- Admin forgot --}}
     <form action="{{ route('admin.forgot.form') }}">
         @csrf

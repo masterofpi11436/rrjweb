@@ -54,6 +54,8 @@
                 </div>
             </form>
 
+            @yield('content')
+
             @if ($errors->has('email'))
                 <div style="color: red;">
                     {{ $errors->first('email') }}

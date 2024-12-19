@@ -106,44 +106,6 @@
     gap: 15px;
 }
 
-.separator {
-    border-left: 1px solid #ccc;
-    height: auto;
-    margin-left: 15%;
-    align-self: stretch;
-}
-
-.forgot-google-section {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-}
-
-.forgot-google-section button {
-    background-color: #004186;
-    border: solid 1px black;
-    padding: 10px 20px;
-    font-size: 16px;
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    border-radius: 5px;
-}
-
-.forgot-google-section button:hover {
-    background-color: #002347;
-}
-
-.forgot-google-section button img {
-    width: 20px; /* Adjust size as needed */
-    height: 20px; /* Keep it square */
-    display: inline-block;
-}
-
-.forgot-google-section form {
-    width: 100%;
-}
 /*********************************************************************************/
 
 /* Create Record Link */

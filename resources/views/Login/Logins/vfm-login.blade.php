@@ -6,7 +6,7 @@
 
 @section('content')
 
-<div class="forgot-login">
+<div>
     {{-- VFM Admin forgot --}}
     <form action="{{ route('vfm.forgot.form') }}">
         @csrf

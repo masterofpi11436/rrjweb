@@ -6,7 +6,7 @@
 
 @section('content')
 
-<div class="forgot-login">
+<div>
     {{-- Phone forgot --}}
     <form action="{{ route('phone.forgot.form') }}">
         @csrf
