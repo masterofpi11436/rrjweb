@@ -10,7 +10,7 @@
     @livewireStyles
 </head>
 <body>
-<h1>Test</h1>
+
     <!-- Header Section with Theme Toggle -->
     <header class="header">
         <h1>@yield('heading')</h1>
