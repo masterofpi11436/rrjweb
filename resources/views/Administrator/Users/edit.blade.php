@@ -6,7 +6,7 @@
 
 @section('content')
 
-    <a href="{{ route('admin.index') }}">Back</a>
+<a href="{{ route('admin.index') }}">Back</a>
 
     @livewire('administrator.user-form', ['id' => $user->id])
 

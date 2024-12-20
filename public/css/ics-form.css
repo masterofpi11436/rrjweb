@@ -1,0 +1,49 @@
+/* Section Styling */
+fieldset {
+    margin-bottom: 20px;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+fieldset legend {
+    font-size: 1.2rem;
+    font-weight: bold;
+    padding: 0 10px;
+}
+
+/* Form Layout */
+.field-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-bottom: 15px;
+}
+
+.field-group > div {
+    flex: 1 1 calc(50% - 20px); /* Two columns layout */
+    min-width: 200px;
+}
+
+.field-group input,
+.field-group textarea {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Checkbox Grid Layout */
+.checkbox-group {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* Four columns layout */
+    gap: 10px;
+}
+
+.checkbox-group div {
+    display: flex;
+    align-items: center;
+}
+
+/* Textarea Styling */
+textarea {
+    resize: none;
+}

@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Routing\Router;
+use App\Http\Middleware\Auth\ICS;
 use App\Http\Middleware\Auth\VFM;
 use App\Http\Middleware\Auth\Admin;
 use App\Http\Middleware\Auth\Phone;
@@ -30,6 +31,7 @@ class AppServiceProvider extends ServiceProvider
         $router->aliasMiddleware('phone', Phone::class);
         $router->aliasMiddleware('vfm', VFM::class);
         $router->aliasMiddleware('vfm-tech', VFMTech::class);
+        $router->aliasMiddleware('ics', ICS::class);
         $router->aliasMiddleware('cache', ClearCache::class);
     }
 }

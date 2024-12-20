@@ -6,25 +6,31 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Login\Custom\BaseLoginController;
 use App\Http\Controllers\Login\Custom\AdminLoginController;
 use App\Http\Controllers\Login\Custom\PhoneLoginController;
-
-// Class Controllers
 use App\Http\Controllers\Login\Custom\VFMLoginController;
 use App\Http\Controllers\Login\Custom\VFMTechLoginController;
+use App\Http\Controllers\Login\Custom\ICSLoginController;
+
+// Class Controllers
 use App\Http\Controllers\Directory\PhoneDirectoryController;
 use App\Http\Controllers\Administrator\AdministratorController;
 use App\Http\Controllers\VFM\VFMController;
 use App\Http\Controllers\VFM\VFMTechController;
+use App\Http\Controllers\ICS\ICSController;
 
-// Shorthand classes
+// Shorthand login Classes
 $baseLoginClass = BaseLoginController::class;
-$adminClass = AdministratorController::class;
 $adminLoginClass = AdminLoginController::class;
-$phoneClass = PhoneDirectoryController::class;
 $phoneLoginClass = PhoneLoginController::class;
-$vfmClass = VFMController::class;
 $vfmLoginClass = VFMLoginController::class;
-$vfmTechClass = VFMTechController::class;
 $vfmTechLoginClass = VFMTechLoginController::class;
+$icsLoginClass = ICSLoginController::class;
+
+// Shorthand Controller Classes
+$adminClass = AdministratorController::class;
+$phoneClass = PhoneDirectoryController::class;
+$vfmClass = VFMController::class;
+$vfmTechClass = VFMTechController::class;
+$icsClass = ICSController::class;
 
 // Forgot password link for all applications
 Route::get('forgot', [$baseLoginClass, 'showForgotPasswordForm'])->name('login.forgot');
@@ -118,20 +124,20 @@ Route::prefix('vfm-tech')->group(function () use ($vfmTechClass, $vfmTechLoginCl
 });
 
 // ICS Application
-Route::prefix('ics')->group(function () use ($phoneClass, $phoneLoginClass){
+Route::prefix('ics')->group(function () use ($icsClass, $icsLoginClass){
 
     // Routes without middleware
-    Route::get('/login', [$phoneLoginClass, 'phoneLoginForm'])->name('phone.login');
-    Route::post('/login', [$phoneLoginClass, 'login']);
-    Route::get('/forgot', [$phoneLoginClass, 'phoneForgotPasswordForm'])->name('phone.forgot.form');
-    Route::post('/forgot', [$phoneLoginClass, 'forgotPassword'])->name('phone.forgot.form.submit');
-    Route::post('/logout', [$phoneLoginClass, 'logout'])->name('phone.logout');
+    Route::get('/login', [$icsLoginClass, 'icsLoginForm'])->name('ics.login');
+    Route::post('/login', [$icsLoginClass, 'login']);
+    Route::get('/forgot', [$icsLoginClass, 'icsForgotPasswordForm'])->name('ics.forgot.form');
+    Route::post('/forgot', [$icsLoginClass, 'forgotPassword'])->name('ics.forgot.form.submit');
+    Route::post('/logout', [$icsLoginClass, 'logout'])->name('ics.logout');
 
-    // Routes with 'phone' middleware
-    Route::middleware('phone')->group(function () use ($phoneClass) {
-        Route::get('/dashboard', [$phoneClass, 'dashboard'])->name('phone.dashboard');
-        Route::get('/create', [$phoneClass, 'create'])->name('phone.create');
-        Route::get('/{id}/edit', [$phoneClass, 'edit'])->name('phone.edit');
-        Route::delete('/{id}', [$phoneClass, 'destroy'])->name('phone.destroy');
+    // Routes with 'ics' middleware
+    Route::middleware('ics')->group(function () use ($icsClass) {
+        Route::get('/dashboard', [$icsClass, 'dashboard'])->name('ics.dashboard');
+        Route::get('/create', [$icsClass, 'create'])->name('ics.create');
+        Route::get('/{id}/edit', [$icsClass, 'edit'])->name('ics.edit');
+        Route::delete('/{id}', [$icsClass, 'destroy'])->name('ics.destroy');
     });
 });

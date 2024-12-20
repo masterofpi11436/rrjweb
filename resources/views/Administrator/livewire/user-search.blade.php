@@ -30,7 +30,7 @@
                 </th>
                 <th>
                     <a href="#" wire:click.prevent="sortBy('admin')">
-                        Admin Access
+                        Admin
                         @if ($sortColumn === 'admin')
                             @if ($sortDirection === 'asc') ▲ @else ▼ @endif
                         @endif
@@ -38,8 +38,32 @@
                 </th>
                 <th>
                     <a href="#" wire:click.prevent="sortBy('phone')">
-                        Phone Access
+                        Phone
                         @if ($sortColumn === 'phone')
+                            @if ($sortDirection === 'asc') ▲ @else ▼ @endif
+                        @endif
+                    </a>
+                </th>
+                <th>
+                    <a href="#" wire:click.prevent="sortBy('vfm')">
+                        VFM Admin
+                        @if ($sortColumn === 'vfm')
+                            @if ($sortDirection === 'asc') ▲ @else ▼ @endif
+                        @endif
+                    </a>
+                </th>
+                <th>
+                    <a href="#" wire:click.prevent="sortBy('vfm-tech')">
+                        VFM Tech
+                        @if ($sortColumn === 'vfm-tech')
+                            @if ($sortDirection === 'asc') ▲ @else ▼ @endif
+                        @endif
+                    </a>
+                </th>
+                <th>
+                    <a href="#" wire:click.prevent="sortBy('ics')">
+                        ICS
+                        @if ($sortColumn === 'ics')
                             @if ($sortDirection === 'asc') ▲ @else ▼ @endif
                         @endif
                     </a>
@@ -55,6 +79,9 @@
                     <td>{{ $user->email }}</td>
                     <td>{{ $user->admin ? 'Yes' : 'No' }}</td>
                     <td>{{ $user->phone ? 'Yes' : 'No' }}</td>
+                    <td>{{ $user->vfm ? 'Yes' : 'No' }}</td>
+                    <td>{{ $user->vfm_tech ? 'Yes' : 'No' }}</td>
+                    <td>{{ $user->ics ? 'Yes' : 'No' }}</td>
                     <td>
                         <a href="{{ route('admin.edit', $user->id) }}">Edit</a>/
                         <div>

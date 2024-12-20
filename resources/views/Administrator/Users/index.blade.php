@@ -14,6 +14,14 @@
     </div>
 @endif
 
+<!-- Reset Password Flash Message -->
+@if (session()->has('password-reset'))
+    <div id="flash-message" class="flash-message">
+        <button class="close-btn" onclick="this.parentElement.style.display='none';">&times;</button>
+        {{ session('password-reset') }}
+    </div>
+@endif
+
 <!-- Link to navigate to the Create page -->
 <a href="{{ route('admin.create') }}" class="create-link">Create New User</a>
 

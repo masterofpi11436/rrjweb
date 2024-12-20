@@ -13,7 +13,7 @@ class User extends Authenticatable
     // Define mass-assignable fields
     protected $fillable = [
         'first_name', 'last_name', 'email', 'password',
-        'admin', 'phone',
+        'admin', 'phone', 'vfm', 'vfm-tech', 'ics',
     ];
 
     // Define fields hidden from serialization (e.g., in JSON responses)
@@ -29,6 +29,12 @@ class User extends Authenticatable
                 return $this->admin;
             case 'phone':
                 return $this->phone;
+            case 'vfm':
+                return $this->vfm;
+            case 'vfm_tech':
+                return $this->vfm_tech;
+            case 'ics':
+                return $this->ics;
             default:
                 return false;
         }

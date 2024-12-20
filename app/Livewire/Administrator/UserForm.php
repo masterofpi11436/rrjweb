@@ -18,6 +18,9 @@ class UserForm extends Component
     public $password_confirmation;
     public $admin = false;
     public $phone = false;
+    public $vfm = false;
+    public $vfm_tech = false;
+    public $ics = false;
 
     public function mount($id = null)
     {
@@ -38,6 +41,9 @@ class UserForm extends Component
             $this->email = $user->email;
             $this->admin = $user->admin;
             $this->phone = $user->phone;
+            $this->vfm = $user->vfm;
+            $this->vfm_tech = $user->vfm_tech;
+            $this->ics = $user->ics;
         }
     }
 
@@ -50,7 +56,10 @@ class UserForm extends Component
             'email' => 'required|email|ends_with:rrjva.org,icsolutions.com,gmail.com|unique:users,email,' . $this->userId,
             'password' => 'nullable|min:6|confirmed',
             'admin' => 'boolean',
-            'phone' => 'boolean'
+            'phone' => 'boolean',
+            'vfm' => 'boolean',
+            'vfm_tech' => 'boolean',
+            'ics' => 'boolean',
         ];
     }
 
@@ -79,21 +88,54 @@ class UserForm extends Component
         $user->email = $this->email;
         $user->admin = $this->admin;
         $user->phone = $this->phone;
+        $user->vfm = $this->vfm;
+        $user->vfm_tech = $this->vfm_tech;
+        $user->ics = $this->ics;
+
+        $isCreating = !$this->userId;
 
         $user->save();
 
-        // Send password reset email if it's a new user
-        if (!$this->userId) {
+        if ($isCreating) {
+            try {
+                // Generate password reset token
+                $token = Password::createToken($user);
+
+                // Attempt to send the email
+                Mail::to($user->email)->send(new PasswordResetMail($token));
+
+                // Flash success message if email is sent
+                session()->flash('create-edit-delete-message', 'User created and email sent!');
+            } catch (\Exception $e) {
+                // Handle email sending failure
+                session()->flash('create-edit-delete-message', 'User created but email could NOT be sent.');
+            }
+        } else {
+            session()->flash('create-edit-delete-message', 'User updated successfully!');
+        }
+
+        return redirect()->route('admin.index');
+    }
+
+    public function sendResetEmail()
+    {
+        $user = User::find($this->userId);
+
+        try {
             // Generate password reset token
             $token = Password::createToken($user);
 
             // Send the reset email
             Mail::to($user->email)->send(new PasswordResetMail($token));
+
+            session()->flash('password-reset', 'Password reset email sent successfully!');
+
+            return redirect()->route('admin.index');
+        } catch (\Exception $e) {
+            session()->flash('password-reset', 'Failed to send password reset email. Please try again.');
+
+            return redirect()->route('admin.index');
         }
-
-        session()->flash('message', $this->userId ? 'User updated successfully!' : 'User created successfully!');
-
-        return redirect()->route('admin.index'); // Redirect to user list
     }
 
     public function render()

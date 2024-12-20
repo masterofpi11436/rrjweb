@@ -20,17 +20,41 @@
         </div>
 
         <div>
-            <label for="admin">Admin Access</label>
+            <label for="admin">Admin</label>
             <input type="checkbox" id="admin" wire:model.defer="admin" {{ $admin ? 'checked' : '' }}>
         </div>
 
         <div>
-            <label for="phone">Phone Access</label>
+            <label for="phone">Phone</label>
             <input type="checkbox" id="phone" wire:model.defer="phone" {{ $phone ? 'checked' : '' }}>
+        </div>
+
+        <div>
+            <label for="vfm">VFM Admin</label>
+            <input type="checkbox" id="vfm" wire:model.defer="vfm" {{ $vfm ? 'checked' : '' }}>
+        </div>
+
+        <div>
+            <label for="vfm_tech">VFM Tech</label>
+            <input type="checkbox" id="vfm_tech" wire:model.defer="vfm_tech" {{ $vfm_tech ? 'checked' : '' }}>
+        </div>
+
+        <div>
+            <label for="ics">ICS</label>
+            <input type="checkbox" id="ics" wire:model.defer="ics" {{ $ics ? 'checked' : '' }}>
         </div>
 
         <div>
             <button type="submit">{{ $userId ? 'Update User' : 'Create User' }}</button>
         </div>
+
+        @if ($userId)
+            <div>
+                <button type="button" wire:click="sendResetEmail">
+                    Reset Password
+                </button>
+            </div>
+        @endif
+
     </form>
 </div>
