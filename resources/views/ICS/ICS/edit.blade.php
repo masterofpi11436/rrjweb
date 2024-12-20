@@ -8,6 +8,6 @@
 
 <a href="{{ route('ics.dashboard') }}">Back</a>
 
-@livewire('ics.ics-form', ['id' => $ics->id])
+@livewire('ICS.ICS-form', ['id' => $ics->id])
 
 @endsection
