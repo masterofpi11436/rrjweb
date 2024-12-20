@@ -18,6 +18,6 @@
 <a href="{{ route('ics.create') }}" class="create-link">Create New Entry</a>
 
 <!-- Livewire search component -->
-@livewire('ICS.ics-search')
+@livewire('ICS.ICS-search')
 
 @endsection

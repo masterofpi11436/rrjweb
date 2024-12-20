@@ -19,15 +19,15 @@ class DatabaseSeeder extends Seeder
     {
         DB::table('users')->insert([
             [
-                'last_name' => 'Tuggle',
-                'first_name' => 'Mark',
-                'email' => 'masterofpi11436@gmail.com',
-                'password' => Hash::make('asd'),
-                'admin' => true,
+                'last_name' => 'Scott',
+                'first_name' => 'Heather',
+                'email' => 'heather.scott@icsolutions.com',
+                'password' => Hash::make('admin'),
+                'admin' => false,
                 'phone' => false,
                 'vfm' => false,
                 'vfm_tech' => false,
-                'ics' => false,
+                'ics' => true,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
