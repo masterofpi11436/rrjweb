@@ -9,7 +9,8 @@
         "laravel/framework": "^11.9",
         "laravel/socialite": "^5.16",
         "laravel/tinker": "^2.9",
-        "livewire/livewire": "^3.5"
+        "livewire/livewire": "^3.5",
+        "smalot/pdfparser": "^2.11"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.14",
