@@ -1,4 +1,13 @@
 <form wire:submit.prevent="submitForm">
+
+    <fieldset>
+        <legend>Paste Inmate Information</legend>
+        <div>
+            <label for="paste_input">Paste Info Here:</label>
+            <input id="paste_input" type="text" placeholder="Paste inmate details here">
+        </div>
+    </fieldset>
+
     <fieldset>
         <legend>Inmate Information</legend>
         <div class="field-group">
@@ -27,7 +36,7 @@
             </div>
 
             <div>
-                <label for="date_found">Middle Name</label>
+                <label for="date_found">Date Found</label>
                 <input id="date_found" type="date" wire:model.defer="date">
                 @error('date_found') <span>{{ $message }}</span> @enderror
             </div>
