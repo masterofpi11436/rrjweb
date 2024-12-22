@@ -46,4 +46,12 @@ class PolicyController extends Controller
         return back()->with('create-edit-delete-message', 'PDF uploaded successfully!');
     }
 
+    public function destroy($id)
+    {
+        $policy = Policy::findOrFail($id);
+        $policy->delete();
+
+        session()->flash('create-edit-delete-message', 'Record deleted successfully!');
+        return redirect()->back();
+    }
 }
