@@ -9,6 +9,7 @@ use App\Http\Controllers\Login\Custom\PhoneLoginController;
 use App\Http\Controllers\Login\Custom\VFMLoginController;
 use App\Http\Controllers\Login\Custom\VFMTechLoginController;
 use App\Http\Controllers\Login\Custom\ICSLoginController;
+use App\Http\Controllers\Login\Custom\PolicyLoginController;
 
 // Class Controllers
 use App\Http\Controllers\Directory\PhoneDirectoryController;
@@ -16,6 +17,7 @@ use App\Http\Controllers\Administrator\AdministratorController;
 use App\Http\Controllers\VFM\VFMController;
 use App\Http\Controllers\VFM\VFMTechController;
 use App\Http\Controllers\ICS\ICSController;
+use App\Http\Controllers\Policy\PolicyController;
 
 // Shorthand login Classes
 $baseLoginClass = BaseLoginController::class;
@@ -24,6 +26,7 @@ $phoneLoginClass = PhoneLoginController::class;
 $vfmLoginClass = VFMLoginController::class;
 $vfmTechLoginClass = VFMTechLoginController::class;
 $icsLoginClass = ICSLoginController::class;
+$policyLoginClass = PolicyLoginController::class;
 
 // Shorthand Controller Classes
 $adminClass = AdministratorController::class;
@@ -31,6 +34,7 @@ $phoneClass = PhoneDirectoryController::class;
 $vfmClass = VFMController::class;
 $vfmTechClass = VFMTechController::class;
 $icsClass = ICSController::class;
+$policyClass = PolicyController::class;
 
 // Forgot password link for all applications
 Route::get('forgot', [$baseLoginClass, 'showForgotPasswordForm'])->name('login.forgot');
@@ -42,7 +46,7 @@ Route::view('/login/success', 'Login.Resets.success')->name('login.success');
 
 // Default Redirect Route for testing
 Route::get('/', function () {
-    return redirect()->route('vfm-tech.login');
+    return redirect()->route('policy.login');
 });
 
 // Public Routes
@@ -139,5 +143,25 @@ Route::prefix('ics')->group(function () use ($icsClass, $icsLoginClass){
         Route::get('/create', [$icsClass, 'create'])->name('ics.create');
         Route::get('/{id}/edit', [$icsClass, 'edit'])->name('ics.edit');
         Route::delete('/{id}', [$icsClass, 'destroy'])->name('ics.destroy');
+    });
+});
+
+// Policy Application
+Route::prefix('policy')->group(function () use ($policyClass, $policyLoginClass){
+
+    // Routes without middleware
+    Route::get('/login', [$policyLoginClass, 'policyLoginForm'])->name('policy.login');
+    Route::post('/login', [$policyLoginClass, 'login']);
+    Route::get('/forgot', [$policyLoginClass, 'policyForgotPasswordForm'])->name('policy.forgot.form');
+    Route::post('/forgot', [$policyLoginClass, 'forgotPassword'])->name('policy.forgot.form.submit');
+    Route::post('/logout', [$policyLoginClass, 'logout'])->name('policy.logout');
+
+    // Routes with 'policy' middleware
+    Route::middleware('policy')->group(function () use ($policyClass) {
+        Route::get('/dashboard', [$policyClass, 'dashboard'])->name('policy.dashboard');
+        Route::get('/upload', [$policyClass, 'create'])->name('policy.upload');
+        Route::post('/upload', [$policyClass, 'upload'])->name('policy.upload');
+        Route::get('/{id}/edit', [$policyClass, 'edit'])->name('policy.edit');
+        Route::delete('/{id}', [$policyClass, 'destroy'])->name('policy.destroy');
     });
 });

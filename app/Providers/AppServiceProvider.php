@@ -9,6 +9,7 @@ use App\Http\Middleware\Auth\Admin;
 use App\Http\Middleware\Auth\Phone;
 use App\Http\Middleware\ClearCache;
 use App\Http\Middleware\Auth\VFMTech;
+use App\Http\Middleware\Auth\Policy;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -32,6 +33,7 @@ class AppServiceProvider extends ServiceProvider
         $router->aliasMiddleware('vfm', VFM::class);
         $router->aliasMiddleware('vfm-tech', VFMTech::class);
         $router->aliasMiddleware('ics', ICS::class);
+        $router->aliasMiddleware('policy', Policy::class);
         $router->aliasMiddleware('cache', ClearCache::class);
     }
 }

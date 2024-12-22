@@ -99,9 +99,9 @@ Dashboard for the IT administrator to manage all users and all applications
 # Phone Directory
 Lists all the extensions with some outside vendor numbers
 
-# Policy Search (In-Progress)
+# Policy (In-Progress)
 Search through the RRJ's policies to find specific policy based on string search. Admins can upload and remove policies.
-Public are able to search through policies.
+Public users are able to search through policies.
 
 # Vehicle Repair Tracker
 Maintenance departments online vehicle repair tracker. There is a VFM admin and tech version. Admin can edit and delete whereas Tech cannot
