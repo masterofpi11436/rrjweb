@@ -29,12 +29,12 @@ class PolicyController extends Controller
             'pdf' => 'required|mimes:pdf|max:2048', // Ensure file is a PDF with max size of 2MB
         ]);
 
-        // Sanitize and store the file
+        // Sanitize the file name
         $file = $request->file('pdf');
         $sanitizedName = time() . '_' . preg_replace('/\s+/', '_', $file->getClientOriginalName());
 
         // Store the PDF in the 'public/policy-pdf' directory
-        $filePath = $file->storeAs('policy-pdf', $sanitizedName, 'public');
+        $filePath = $file->storeAs('policy-pdf', $sanitizedName);
 
         // Save policy information to the database
         Policy::create([
