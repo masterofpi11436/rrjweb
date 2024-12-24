@@ -179,3 +179,9 @@ Add a CNAME (Alias Record)
 15. Port forwarding
 
 In the gateway settings, forward ports 80 and 443
+
+
+16. Run a migration on a specific table
+
+Run the command:
+php artisan migrate --path=/database/migrations/(table_full_name).php
