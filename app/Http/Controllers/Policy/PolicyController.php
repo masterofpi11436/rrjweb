@@ -21,25 +21,25 @@ class PolicyController extends Controller
         return view('Policy.Policy.upload');
     }
 
-    public function upload(Request $request)
+    public function store(Request $request)
     {
         // Validate the form inputs
         $request->validate([
             'title' => 'required|string|max:255', // Title for the policy
-            'pdf' => 'required|mimes:pdf|max:2048', // Ensure file is a PDF with max size of 2MB
+            'pdf' => 'required|mimes:pdf|max:3,072', // Ensure file is a PDF with max size of 3MB
         ]);
 
-        // Sanitize the file name
-        $file = $request->file('pdf');
-        $sanitizedName = time() . '_' . preg_replace('/\s+/', '_', $file->getClientOriginalName());
+        // Handle the file upload
+        if ($request->hasFile('pdf')) {
+            $file = $request->file('pdf');
+            $originalName = $file->getClientOriginalName(); // Get the original file name
+            $filePath = $file->storeAs('policies', $originalName, 'public'); // Save with original name in 'policies' folder
+        }
 
-        // Store the PDF in the 'public/policy-pdf' directory
-        $filePath = $file->storeAs('policy-pdf', $sanitizedName);
-
-        // Save policy information to the database
+        // Create the policy record in the database
         Policy::create([
-            'title' => $request->title, // Save the title from the form
-            'pdf_path' => $filePath, // Save the file path
+            'title' => $request->input('title'),
+            'pdf' => $filePath, // Save the file path
         ]);
 
         // Redirect back with a success message

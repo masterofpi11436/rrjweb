@@ -14,8 +14,7 @@ return new class extends Migration
         Schema::create('policy', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->string('pdf_path');
-            $table->string('text_path');
+            $table->string('pdf');
             $table->timestamps();
         });
     }

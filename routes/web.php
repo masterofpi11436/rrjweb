@@ -160,7 +160,7 @@ Route::prefix('policy')->group(function () use ($policyClass, $policyLoginClass)
     Route::middleware('policy')->group(function () use ($policyClass) {
         Route::get('/dashboard', [$policyClass, 'dashboard'])->name('policy.dashboard');
         Route::get('/upload', [$policyClass, 'create'])->name('policy.upload');
-        Route::post('/upload', [$policyClass, 'upload'])->name('policy.upload');
+        Route::post('/upload', [$policyClass, 'store'])->name('policy.upload');
         Route::get('/{id}/edit', [$policyClass, 'edit'])->name('policy.edit');
         Route::delete('/{id}', [$policyClass, 'destroy'])->name('policy.destroy');
     });
