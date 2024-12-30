@@ -127,6 +127,29 @@ return [
             'path' => storage_path('logs/laravel.log'),
         ],
 
+        // Log the users logging into the applications
+        'login' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/login.log'),
+            'level' => env('LOG_LEVEL', 'info'),
+            'days' => 14,
+        ],
+
+        // Log the users attempting to gain access
+        'un_auth_login' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/un_auth_login.log'),
+            'level' => env('LOG_LEVEL', 'info'),
+            'days' => 14,
+        ],
+
+        // Log the users failing to log into the applications
+        'failed_login' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/failed_login.log'),
+            'level' => env('LOG_LEVEL', 'info'),
+            'days' => 14,
+        ],
     ],
 
 ];

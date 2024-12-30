@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Login\Custom;
 use App\Models\Login\User;
 use Illuminate\Http\Request;
 use App\Mail\PasswordResetMail;
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -25,6 +26,14 @@ class BaseLoginController extends Controller
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
             $user = Auth::user();
 
+            // Log the user's login information. Log expires after 14 days
+            Log::channel('login')->info('User Logged In', [
+                'first_name' => $user->first_name,
+                'last_name' => $user->last_name,
+                'email' => $user->email,
+                'logged_in_at' => now()->toDateTimeString(),
+            ]);
+
             // Check if the user has the correct access or is an admin
             if ($roleCheck($user)) {
                 // Store the session start time or expiration time in the session
@@ -34,11 +43,26 @@ class BaseLoginController extends Controller
                 return redirect()->route($redirectRoute);
 
             } else {
+
+                // Log users attempting to login where they don't have access. Log expires after 14 days
+                Log::channel('un_auth_login')->info('Unauthorized Login Attempt', [
+                    'first_name' => $user->first_name,
+                    'last_name' => $user->last_name,
+                    'email' => $user->email,
+                    'logged_in_at' => now()->toDateTimeString(),
+                ]);
                 // If not authorized, deny access
                 Auth::logout();
                 return redirect()->back()->withErrors(['email' => 'You are not authorized to access this application.']);
             }
         }
+
+        // Log the incorrect password attempt. Log expires after 14 days
+        Log::channel('failed_login')->info('Incorrect Password Attempt', [
+            'email' => $request->email,
+            'attempted_at' => now()->toDateTimeString(),
+            'ip_address' => $request->ip(),
+        ]);
 
         // If password is incorrect, return back with password error
         return redirect()->back()->withErrors(['password_incorrect' => 'Password is incorrect.']);
