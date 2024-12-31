@@ -27,7 +27,6 @@ class PolicyController extends Controller
     {
         // Validate the form inputs
         $request->validate([
-            'title' => 'required|string|max:255', // Title for the policy
             'pdf' => 'required|mimes:pdf|max:30720', // Ensure file is a PDF with max size of 30MB
         ]);
 
@@ -50,7 +49,7 @@ class PolicyController extends Controller
 
             // Create the policy record in the database
             Policy::create([
-                'title' => $request->input('title'),
+                'title' => $originalName,
                 'pdf' => $pdfFilePath,
                 'text' => $textFilePath,
             ]);

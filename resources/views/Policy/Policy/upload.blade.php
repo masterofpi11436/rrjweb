@@ -11,10 +11,6 @@
 <form action="{{ route('policy.upload') }}" method="POST" enctype="multipart/form-data">
     @csrf
     <div>
-        <label for="title">Policy Name:</label>
-        <input type="text" name="title" id="title" required>
-    </div>
-    <div>
         <label for="pdf">Choose PDF:</label>
         <input type="file" name="pdf" id="pdf" accept="application/pdf" required>
     </div>
