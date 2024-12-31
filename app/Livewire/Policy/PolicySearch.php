@@ -3,6 +3,7 @@
 namespace App\Livewire\Policy;
 
 use Livewire\Component;
+use Illuminate\Support\Facades\Storage;
 
 // Required Models
 use App\Models\Policy\Policy;
@@ -30,8 +31,23 @@ class PolicySearch extends Component
     public function render()
     {
         // Search for matching records
+        $suggestions = Policy::all()->filter(function ($policy) {
+            // Check if the title matches the search term
+            if (stripos($policy->title, $this->search) !== false) {
+                return true;
+            }
+
+            // Check if the text file contains the search term
+            if (Storage::disk('public')->exists($policy->text)) {
+                $textContent = Storage::disk('public')->get($policy->text);
+                return stripos($textContent, $this->search) !== false;
+            }
+
+            return false;
+        });
+
         return view('Policy.livewire.policy-search', [
-            'suggestions' => Policy::where('title', 'like', '%' . $this->search . '%')->get(),
+            'suggestions' => $suggestions,
         ]);
     }
 }

@@ -20,9 +20,12 @@
             <tbody>
                 @foreach ($suggestions as $policy)
                     <tr>
-                        <td>{{ $policy->title }}</td>
                         <td>
-                            <a href="{{ route('policy.edit', $policy->id) }}">Edit</a>/
+                            <a href="{{ asset('storage/' . $policy->pdf) }}{{ $search ? '#search=' . urlencode($search) : '' }}" target="_blank">
+                                {{ $policy->title }}
+                            </a>
+                        </td>
+                        <td>
                             <div>
                                 <!-- Delete link -->
                                 <a href="#" onclick="event.preventDefault(); confirmDelete({{ $policy->id }});">Delete</a>

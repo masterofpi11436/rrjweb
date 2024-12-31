@@ -11,12 +11,11 @@
 <form action="{{ route('policy.upload') }}" method="POST" enctype="multipart/form-data">
     @csrf
     <div>
-        <label for="pdf">Choose PDF:</label>
-        <input type="file" name="pdf" id="pdf" accept="application/pdf" required>
+        <label for="pdfs">Upload PDFs</label>
+        <input type="file" name="pdfs[]" id="pdfs" accept="application/pdf" multiple required>
     </div>
-    <div>
-        <button type="submit">Upload</button>
-    </div>
+    <button>Upload</button>
 </form>
+
 
 @endsection
