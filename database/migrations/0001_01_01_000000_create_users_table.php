@@ -25,6 +25,7 @@ return new class extends Migration
             $table->boolean('vfm_tech')->default(false);
             $table->boolean('ics')->default(false);
             $table->boolean('policy')->default(false);
+            $table->boolean('warehouse_manager')->default(false);
             $table->timestamps();
         });
 
