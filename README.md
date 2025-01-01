@@ -99,7 +99,7 @@ Dashboard for the IT administrator to manage all users and all applications
 # Phone Directory
 Lists all the extensions with some outside vendor numbers
 
-# Policy (In-Progress)
+# Policy
 Search through the RRJ's policies to find specific policy based on string search. Admins can upload and remove policies.
 Public users are able to search through policies.
 
