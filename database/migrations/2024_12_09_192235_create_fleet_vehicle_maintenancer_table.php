@@ -42,6 +42,7 @@ return new class extends Migration
             $table->boolean('shocks_struts')->default(false);
             $table->boolean('tires')->default(false);
             $table->boolean('transmission_fluid')->default(false);
+            $table->boolean('vehicle_jump_starter')->default(false);
             $table->boolean('washer_fluid')->default(false);
             $table->boolean('window_operation')->default(false);
             $table->boolean('windshield')->default(false);

@@ -48,6 +48,7 @@ class VFMFactory extends Factory
             'shocks_struts' => $this->faker->boolean(),
             'tires' => $this->faker->boolean(),
             'transmission_fluid' => $this->faker->boolean(),
+            'vehicle_jump_starter' => $this->faker->boolean(),
             'washer_fluid' => $this->faker->boolean(),
             'window_operation' => $this->faker->boolean(),
             'windshield' => $this->faker->boolean(),

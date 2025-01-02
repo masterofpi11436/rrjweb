@@ -37,6 +37,7 @@ class VFMTechForm extends Component
     public $shocks_struts = false;
     public $tires = false;
     public $transmission_fluid = false;
+    public $vehicle_jump_starter = false;
     public $washer_fluid = false;
     public $window_operation = false;
     public $windshield = false;
@@ -79,6 +80,7 @@ class VFMTechForm extends Component
             'shocks_struts' => 'boolean',
             'tires' => 'boolean',
             'transmission_fluid' => 'boolean',
+            'vehicle_jump_starter' => 'boolean',
             'washer_fluid' => 'boolean',
             'window_operation' => 'boolean',
             'windshield' => 'boolean',
@@ -132,6 +134,7 @@ class VFMTechForm extends Component
         $vfm->shocks_struts = $this->shocks_struts;
         $vfm->tires = $this->tires;
         $vfm->transmission_fluid = $this->transmission_fluid;
+        $vfm->vehicle_jump_starter = $this->vehicle_jump_starter;
         $vfm->washer_fluid = $this->washer_fluid;
         $vfm->window_operation = $this->window_operation;
         $vfm->windshield = $this->windshield;
