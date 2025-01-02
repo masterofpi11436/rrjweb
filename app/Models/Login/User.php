@@ -2,9 +2,10 @@
 
 namespace App\Models\Login;
 
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Warehouse\Order;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
@@ -41,5 +42,19 @@ class User extends Authenticatable
                 return false;
         }
     }
-}
 
+    public function orders()
+    {
+        return $this->hasMany(Order::class, 'user_id');
+    }
+
+    public function supervisedOrders()
+    {
+        return $this->hasMany(Order::class, 'supervisor_id');
+    }
+
+    public function approvedOrders()
+    {
+        return $this->hasMany(Order::class, 'approved_denied_by');
+    }
+}
