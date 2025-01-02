@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Policy;
 use Illuminate\Http\Request;
 
 // Models required
+use Smalot\PdfParser\Parser;
 use App\Models\Policy\Policy;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
@@ -36,7 +37,7 @@ class PolicyController extends Controller
                 $pdfFilePath = $file->storeAs('policies', $originalName, 'public'); // Save with original name in 'policies' folder
 
                 // Extract text from the uploaded PDF
-                $parser = new \Smalot\PdfParser\Parser();
+                $parser = new Parser();
                 $pdf = $parser->parseFile(storage_path('app/public/' . $pdfFilePath));
                 $extractedText = $pdf->getText();
 
