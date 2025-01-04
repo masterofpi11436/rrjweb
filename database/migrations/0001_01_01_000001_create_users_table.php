@@ -25,7 +25,11 @@ return new class extends Migration
             $table->boolean('vfm_tech')->default(false);
             $table->boolean('ics')->default(false);
             $table->boolean('policy')->default(false);
-            $table->boolean('warehouse_role')->default(false);
+            $table->boolean('warehouse_manager')->default(false);
+            $table->foreignId('warehouse_role_id')
+                ->nullable()
+                ->constrained('warehouse_role_level')
+                ->onDelete('set null');
             $table->timestamps();
         });
 

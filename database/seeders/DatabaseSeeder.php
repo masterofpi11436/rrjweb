@@ -65,6 +65,28 @@ class DatabaseSeeder extends Seeder
             ],
         ]);
 
+        DB::table('item_types')->insert([
+            ['type' => 'Housekeeping Supplies'],
+            ['type' => 'Office Supplies'],
+            ['type' => 'Printer Ink'],
+            ['type' => 'Personal Care'],
+            ['type' => 'Property'],
+            ['type' => '1 for 1 Exchange'],
+        ]);
+
+        DB::table('statuses')->insert([
+            ['name' => 'Pending Supervisor Approval'],
+            ['name' => 'Pending Warehouse Approval'],
+            ['name' => 'Approved'],
+            ['name' => 'Denied'],
+        ]);
+
+        DB::table('statuses')->insert([
+            ['name' => 'Pending Supervisor Approval'],
+            ['name' => 'Pending Warehouse Approval'],
+            ['name' => 'Approved'],
+            ['name' => 'Denied'],
+        ]);
         // Populate random data for applications
         PhoneDirectory::factory()->count(250)->create();
         VFM::factory()->count(100)->create();
