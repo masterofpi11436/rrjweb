@@ -14,8 +14,8 @@ class Item extends Model
 
     protected $fillable = ['name', 'item_type_id', 'image', 'quantity'];
 
-    public function itemType()
+    public function category()
     {
-        return $this->belongsTo(ItemType::class);
+        return $this->belongsTo(Category::class);
     }
 }

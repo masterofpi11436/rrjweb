@@ -17,23 +17,26 @@ return new class extends Migration
                 ->nullable()
                 ->constrained('users')
                 ->onDelete('set null');
+            $table->string('user_name')->nullable(); // Backup user name if user is deleted
             $table->foreignId('supervisor_id')
                 ->nullable()
                 ->constrained('users')
                 ->onDelete('set null');
+            $table->string('supervisor_name')->nullable(); // Backup supervisor name if user is deleted
             $table->foreignId('section_id')
-                ->nullable() // Delete
+                ->nullable()
                 ->constrained('sections')
                 ->onDelete('set null');
             $table->json('items');
             $table->foreignId('status_id')
-                ->nullable() // Delete
+                ->nullable()
                 ->constrained('statuses')
                 ->onDelete('set null');
             $table->foreignId('approved_denied_by')
                 ->nullable()
                 ->constrained('users')
                 ->onDelete('set null');
+            $table->string('approved_denied_by_name')->nullable(); // Backup approver name if user is deleted
             $table->date('approved_denied_at')->nullable();
             $table->longText('note')->nullable();
             $table->timestamps();

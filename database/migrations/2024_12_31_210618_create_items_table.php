@@ -18,6 +18,7 @@ return new class extends Migration
                 ->nullable()
                 ->constrained('item_types')
                 ->onDelete('set null');
+            $table->string('category_name')->nullable(); // Backup column for category name
             $table->string('image')->nullable();
             $table->integer('quantity')->default(0);
             $table->timestamps();

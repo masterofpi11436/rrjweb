@@ -1,8 +1,9 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
 return new class extends Migration
 {
@@ -25,10 +26,11 @@ return new class extends Migration
             $table->boolean('vfm_tech')->default(false);
             $table->boolean('ics')->default(false);
             $table->boolean('policy')->default(false);
-            $table->boolean('warehouse_manager')->default(false);
+            // Warehouse Specific Roles from the warehouse_roles table
             $table->foreignId('warehouse_role_id')
                 ->nullable()
-                ->constrained('warehouse_role_level')
+                ->default(DB::table('warehouse_roles')->where('name', 'user')->value('id'))
+                ->constrained('warehouse_roles')
                 ->onDelete('set null');
             $table->timestamps();
         });
