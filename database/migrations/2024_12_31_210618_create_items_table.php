@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('items', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->foreignId('item_type_id')
+            $table->foreignId('category_id')
                 ->nullable()
-                ->constrained('item_types')
+                ->constrained('categories')
                 ->onDelete('set null');
             $table->string('category_name')->nullable(); // Backup column for category name
             $table->string('image')->nullable();
