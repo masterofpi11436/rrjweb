@@ -15,9 +15,9 @@
                         </a>
                     </th>
                     <th>
-                        <a href="#" wire:click.prevent="sortBy('make')">
-                            Make
-                            @if ($sortColumn === 'make')
+                        <a href="#" wire:click.prevent="sortBy('license_plate')">
+                            License Plate
+                            @if ($sortColumn === 'license_plate')
                                 @if ($sortDirection === 'asc') ▲ @else ▼ @endif
                             @endif
                         </a>
