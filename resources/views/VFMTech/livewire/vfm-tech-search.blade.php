@@ -52,7 +52,7 @@
                 @foreach ($suggestions as $vehicle)
                     <tr>
                         <td>{{ $vehicle->maintenance_technician }}</td>
-                        <td>{{ $vehicle->make }}</td>
+                        <td>{{ $vehicle->license_plate }}</td>
                         <td>{{ $vehicle->date_in }}</td>
                         <td>{{ $vehicle->date_out }}</td>
                         <td>{{ $vehicle->vehicle_year }}</td>
