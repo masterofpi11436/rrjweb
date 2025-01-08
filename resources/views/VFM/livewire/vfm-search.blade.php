@@ -15,9 +15,9 @@
                         </a>
                     </th>
                     <th>
-                        <a href="#" wire:click.prevent="sortBy('make')">
-                            Make
-                            @if ($sortColumn === 'make')
+                        <a href="#" wire:click.prevent="sortBy('license_plate')">
+                            License Plate
+                            @if ($sortColumn === 'license_plate')
                                 @if ($sortDirection === 'asc') ▲ @else ▼ @endif
                             @endif
                         </a>
@@ -53,7 +53,7 @@
                 @foreach ($suggestions as $vehicle)
                     <tr>
                         <td>{{ $vehicle->maintenance_technician }}</td>
-                        <td>{{ $vehicle->make }}</td>
+                        <td>{{ $vehicle->license_plate }}</td>
                         <td>{{ $vehicle->date_in }}</td>
                         <td>{{ $vehicle->date_out }}</td>
                         <td>{{ $vehicle->vehicle_year }}</td>

@@ -47,6 +47,20 @@ class DatabaseSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
+                'last_name' => 'Feury',
+                'first_name' => 'Lonnie',
+                'email' => 'feury.lonnie@rrjva.org',
+                'password' => Hash::make('admin'),
+                'admin' => false,
+                'phone' => false,
+                'vfm' => true,
+                'vfm_tech' => true,
+                'ics' => false,
+                'policy' => false,
+                'warehouse_role_id' => $userRoleId, // Default role
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],            [
                 'last_name' => 'Flexon',
                 'first_name' => 'Tim',
                 'email' => 'tflexon@rrjva.org',
