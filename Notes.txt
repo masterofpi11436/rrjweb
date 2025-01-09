@@ -1,0 +1,51 @@
+1) Vehicle Jump Start and Battery Boost are the same. Delete Vehicle Jump Start. They are the same thing.
+2) Instead of breaking down the front and rear brakes. Combine the two and name it Brakes.
+3) Instead of just having checkboxes. Have two columns, one for checked but no service needed, and one for checked and completed service.
+4) Maybe at the bottom below the Description of Service box, add a line for Outside Service Required with a line for a P.O. number.
+5) Add Body and Paint to the 25 Point Inspection.
+6) Add an Emergency Roadside Kit to the 25 Point Inspection
+7) Have the form set that if all fields aren't filled in, it won't save. Maybe even have a pop up window letting the user know to fill in all fields.
+
+The changes I suggested keep it at a 25 Point Inspection.
+
+I have attached a 30 Point Inspection list that I would like to have implemented instead of a 25 Point if it is an easy change. If it isn't, don't worry about it.
+
+Safety Systems
+1	Horn
+2	Seatbelts
+3	Detention Equipment
+4	Fire Extinguisher
+5	Battery Booster
+6	Emergency Roadside Kit
+
+Under the Hood
+1	Engine oil
+2	coolant
+3	brake fluid
+4	power steering fluid
+5	transmission fluid
+6	washer fluid
+7	Air filter
+8	Belts and hoses
+9	Battery
+
+Drivetrain
+1	Diagnostic Scan
+2	Driveshaft/CV joints/U-joints
+3	Exhaust
+4	Brakes
+
+Interior and Exterior
+1	Body and Paint
+2	Lights
+3	A/C systems
+4	Windshield wipers
+5	Windshield
+6	Window Operation
+7	Mirrors
+
+Suspension
+1	Tires
+2	Tire air pressure
+3	Shock/Struts
+4	Ball joints and bushings
