@@ -93,22 +93,6 @@ php artisan cache:clear
 php artisan config:clear
 php artisan view:clear
 
-# Execute this command in powershell if npm will not run
-
-Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
-
-# Install Tailwind for project (must be in project file)
-npm install -D tailwindcss postcss autoprefixer
-npx tailwindcss init -p
-
-npm run dev
-
-add @vite('resources/css/app.css') in the <head> Element
-
-# For production (Won't see changes while developing)
-
-npm run build
-
 # Admin Dashboard
 Dashboard for the IT administrator to manage all users and all applications
 
