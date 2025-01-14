@@ -5,6 +5,7 @@ namespace Database\Seeders;
 // Required Models
 use App\Models\ICS\ICS;
 use App\Models\VFM\VFM;
+use App\Models\VFM\VFM30;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -111,6 +112,7 @@ class DatabaseSeeder extends Seeder
         // Populate random data for applications
         PhoneDirectory::factory()->count(250)->create();
         VFM::factory()->count(100)->create();
+        VFM30::factory()->count(100)->create();
         ICS::factory()->count(100)->create();
     }
 }
