@@ -21,6 +21,7 @@ class UserForm extends Component
     public $vfm = false;
     public $vfm_tech = false;
     public $ics = false;
+    public $policy = false;
 
     public function mount($id = null)
     {
@@ -44,6 +45,7 @@ class UserForm extends Component
             $this->vfm = $user->vfm;
             $this->vfm_tech = $user->vfm_tech;
             $this->ics = $user->ics;
+            $this->policy = $user->policy;
         }
     }
 
@@ -60,6 +62,7 @@ class UserForm extends Component
             'vfm' => 'boolean',
             'vfm_tech' => 'boolean',
             'ics' => 'boolean',
+            'policy' => 'boolean',
         ];
     }
 
@@ -91,6 +94,7 @@ class UserForm extends Component
         $user->vfm = $this->vfm;
         $user->vfm_tech = $this->vfm_tech;
         $user->ics = $this->ics;
+        $user->policy = $this->policy;
 
         $isCreating = !$this->userId;
 

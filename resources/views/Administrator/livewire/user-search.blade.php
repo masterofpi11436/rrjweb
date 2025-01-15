@@ -29,7 +29,7 @@
                     </a>
                 </th>
                 <th>
-                    <a href="#" wire:click.prevent="sortBy('admin')">
+                    <a href="#" wire:click.prevent="sortBy('admin')" title="Administreator for ALL Applications. Can log into all applications and perform CRUD operations">
                         Admin
                         @if ($sortColumn === 'admin')
                             @if ($sortDirection === 'asc') ▲ @else ▼ @endif
@@ -37,7 +37,7 @@
                     </a>
                 </th>
                 <th>
-                    <a href="#" wire:click.prevent="sortBy('phone')">
+                    <a href="#" wire:click.prevent="sortBy('phone')" title="Admin for the RRJ Phone Directory">
                         Phone
                         @if ($sortColumn === 'phone')
                             @if ($sortDirection === 'asc') ▲ @else ▼ @endif
@@ -45,7 +45,7 @@
                     </a>
                 </th>
                 <th>
-                    <a href="#" wire:click.prevent="sortBy('vfm')">
+                    <a href="#" wire:click.prevent="sortBy('vfm')" title="Admin for the Vehicle Fleet Maintenance Forms.">
                         VFM Admin
                         @if ($sortColumn === 'vfm')
                             @if ($sortDirection === 'asc') ▲ @else ▼ @endif
@@ -53,7 +53,7 @@
                     </a>
                 </th>
                 <th>
-                    <a href="#" wire:click.prevent="sortBy('vfm-tech')">
+                    <a href="#" wire:click.prevent="sortBy('vfm-tech')" title="Technician can only create Vehicle Fleet Maintenance Forms">
                         VFM Tech
                         @if ($sortColumn === 'vfm-tech')
                             @if ($sortDirection === 'asc') ▲ @else ▼ @endif
@@ -61,9 +61,17 @@
                     </a>
                 </th>
                 <th>
-                    <a href="#" wire:click.prevent="sortBy('ics')">
+                    <a href="#" wire:click.prevent="sortBy('ics')" title="Manages inmates that have access to tablets">
                         ICS
                         @if ($sortColumn === 'ics')
+                            @if ($sortDirection === 'asc') ▲ @else ▼ @endif
+                        @endif
+                    </a>
+                </th>
+                <th>
+                    <a href="#" wire:click.prevent="sortBy('policy')" title="Can remove/upload policies">
+                        Policy
+                        @if ($sortColumn === 'policy')
                             @if ($sortDirection === 'asc') ▲ @else ▼ @endif
                         @endif
                     </a>
@@ -82,6 +90,7 @@
                     <td>{{ $user->vfm ? 'Yes' : 'No' }}</td>
                     <td>{{ $user->vfm_tech ? 'Yes' : 'No' }}</td>
                     <td>{{ $user->ics ? 'Yes' : 'No' }}</td>
+                    <td>{{ $user->policy ? 'Yes' : 'No' }}</td>
                     <td>
                         <a href="{{ route('admin.edit', $user->id) }}">Edit</a>/
                         <div>

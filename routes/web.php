@@ -46,7 +46,7 @@ Route::view('/login/success', 'Login.Resets.success')->name('login.success');
 
 // Default Redirect Route for testing
 Route::get('/', function () {
-    return redirect()->route('policy.login');
+    return redirect()->route('admin.login');
 });
 
 // Public Routes

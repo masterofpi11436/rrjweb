@@ -45,6 +45,11 @@
         </div>
 
         <div>
+            <label for="policy">Policy</label>
+            <input type="checkbox" id="policy" wire:model.defer="policy" {{ $policy ? 'checked' : '' }}>
+        </div>
+
+        <div>
             <button type="submit">{{ $userId ? 'Update User' : 'Create User' }}</button>
         </div>
 
