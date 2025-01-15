@@ -93,6 +93,9 @@ php artisan cache:clear
 php artisan config:clear
 php artisan view:clear
 
+Edited .htaccess file in public directory
+php_value max_file_uploads 100
+
 # Admin Dashboard
 Dashboard for the IT administrator to manage all users and all applications
 
