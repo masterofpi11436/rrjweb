@@ -13,6 +13,11 @@ use Illuminate\Support\Facades\Storage;
 
 class PolicyController extends Controller
 {
+    public function policySearch()
+    {
+        return view('Policy.Policy.policy-search');
+    }
+    
     public function dashboard()
     {
         return view('Policy.Policy.dashboard');
