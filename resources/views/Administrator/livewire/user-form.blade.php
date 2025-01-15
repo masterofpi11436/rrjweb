@@ -50,6 +50,18 @@
         </div>
 
         <div>
+            <label for="warehouse_role">Warehouse Role</label>
+            <select id="warehouse_role" wire:model="warehouse_role" class="form-control">
+                <option value="Requestor">Requestor</option>
+                <option value="Property">Property</option>
+                <option value="Supervisor">Supervisor</option>
+                <option value="Warehouse Technician">Warehouse Technician</option>
+                <option value="Warehouse Supervisor">Warehouse Supervisor</option>
+            </select>
+            @error('warehouse_role') <span class="text-danger">{{ $message }}</span> @enderror
+        </div>
+
+        <div>
             <button type="submit">{{ $userId ? 'Update User' : 'Create User' }}</button>
         </div>
 

@@ -46,16 +46,16 @@
                 </th>
                 <th>
                     <a href="#" wire:click.prevent="sortBy('vfm')" title="Admin for the Vehicle Fleet Maintenance Forms.">
-                        VFM Admin
+                        VFM
                         @if ($sortColumn === 'vfm')
                             @if ($sortDirection === 'asc') ▲ @else ▼ @endif
                         @endif
                     </a>
                 </th>
                 <th>
-                    <a href="#" wire:click.prevent="sortBy('vfm-tech')" title="Technician can only create Vehicle Fleet Maintenance Forms">
+                    <a href="#" wire:click.prevent="sortBy('vfm_tech')" title="Technician can only create Vehicle Fleet Maintenance Forms">
                         VFM Tech
-                        @if ($sortColumn === 'vfm-tech')
+                        @if ($sortColumn === 'vfm_tech')
                             @if ($sortDirection === 'asc') ▲ @else ▼ @endif
                         @endif
                     </a>
@@ -76,6 +76,14 @@
                         @endif
                     </a>
                 </th>
+                <th>
+                    <a href="#" wire:click.prevent="sortBy('warehouse_role')" title="Different levels of access for the Warehouse Store">
+                        Warehouse
+                        @if ($sortColumn === 'warehouse_role')
+                            @if ($sortDirection === 'asc') ▲ @else ▼ @endif
+                        @endif
+                    </a>
+                </th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -91,6 +99,7 @@
                     <td>{{ $user->vfm_tech ? 'Yes' : 'No' }}</td>
                     <td>{{ $user->ics ? 'Yes' : 'No' }}</td>
                     <td>{{ $user->policy ? 'Yes' : 'No' }}</td>
+                    <td>{{ $user->warehouse_role }}</td>
                     <td>
                         <a href="{{ route('admin.edit', $user->id) }}">Edit</a>/
                         <div>

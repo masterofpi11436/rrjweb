@@ -18,19 +18,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $warehouseRoles = [
-            ['name' => 'Warehouse Supervisor', 'created_at' => now(), 'updated_at' => now()],
-            ['name' => 'Warehouse Technician', 'created_at' => now(), 'updated_at' => now()],
-            ['name' => 'Property', 'created_at' => now(), 'updated_at' => now()],
-            ['name' => 'Supervisor', 'created_at' => now(), 'updated_at' => now()],
-            ['name' => 'Requestor', 'created_at' => now(), 'updated_at' => now()],
-        ];
-
-        DB::table('warehouse_roles')->insertOrIgnore($warehouseRoles);
-
-        // Retrieve the ID of the 'user' role
-        $userRoleId = DB::table('warehouse_roles')->where('name', 'Requestor')->value('id');
-
         DB::table('users')->insert([
             [
                 'last_name' => 'Scott',
@@ -43,7 +30,7 @@ class DatabaseSeeder extends Seeder
                 'vfm_tech' => false,
                 'ics' => true,
                 'policy' => false,
-                'warehouse_role_id' => $userRoleId, // Default role
+                'warehouse_role' => 'Requestor',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -58,7 +45,7 @@ class DatabaseSeeder extends Seeder
                 'vfm_tech' => true,
                 'ics' => false,
                 'policy' => false,
-                'warehouse_role_id' => $userRoleId, // Default role
+                'warehouse_role' => 'Requestor',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],            [
@@ -72,7 +59,7 @@ class DatabaseSeeder extends Seeder
                 'vfm_tech' => true,
                 'ics' => false,
                 'policy' => false,
-                'warehouse_role_id' => $userRoleId, // Default role
+                'warehouse_role' => 'Requestor',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -87,7 +74,7 @@ class DatabaseSeeder extends Seeder
                 'vfm_tech' => false,
                 'ics' => false,
                 'policy' => false,
-                'warehouse_role_id' => $userRoleId, // Default role
+                'warehouse_role' => 'Requestor',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
