@@ -51,6 +51,7 @@ Route::get('/', function () {
 
 // Public Routes
 Route::get('/phone-directory', [$phoneClass, 'phoneDirectory']);
+Route::get('/policy-search', [$policyClass, 'policySearch']);
 
 // Admin Routes
 Route::prefix('admin')->group(function () use ($adminClass, $adminLoginClass) {

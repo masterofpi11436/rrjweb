@@ -15,9 +15,9 @@ class PolicyController extends Controller
 {
     public function policySearch()
     {
-        return view('Policy.Policy.policy-search');
+        return view('Policy.Policy.public-dashboard');
     }
-    
+
     public function dashboard()
     {
         return view('Policy.Policy.dashboard');

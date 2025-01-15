@@ -93,7 +93,12 @@ php artisan cache:clear
 php artisan config:clear
 php artisan view:clear
 
-Edited .htaccess file in public directory
+# php.ini edits:
+upload_max_filesize = 100M
+post_max_size = 100M
+max_file_uploads = 100
+
+# Edited .htaccess file in public directory
 php_value max_file_uploads 100
 
 # Admin Dashboard
