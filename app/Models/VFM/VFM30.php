@@ -22,6 +22,8 @@ class VFM30 extends Model
         'model',
         'vin',
         'maintenance_technician',
+        'outside_service_required',
+        'outside_service_po',
         'description_of_service'
     ];
 }
