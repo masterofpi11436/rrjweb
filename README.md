@@ -24,6 +24,9 @@ php artisan cache:clear
 php artisan config:clear
 php artisan view:clear
 
+# Link the storage to allow user to see documents in the storage folder
+php artisan storage:link
+
 # php.ini edits:
 upload_max_filesize = 100M
 post_max_size = 100M
