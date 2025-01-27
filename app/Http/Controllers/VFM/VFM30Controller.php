@@ -10,18 +10,18 @@ class VFM30Controller extends Controller
 {
     public function dashboard()
     {
-        return view('VFM.VFM.dashboard');
+        return view('VFM30.VFM30.dashboard');
     }
 
     public function create()
     {
-        return view('VFM.VFM.create');
+        return view('VFM30.VFM30.create');
     }
 
     public function edit($id)
     {
         $vfm = VFM30::findOrFail($id);
-        return view('VFM.VFM.edit', ['vfm' => $vfm]);
+        return view('VFM30.VFM30.edit', ['vfm' => $vfm]);
     }
 
     public function destroy($id)

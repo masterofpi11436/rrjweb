@@ -8,6 +8,6 @@
 <!-- Link to navigate back to the dashboard -->
 <a href="{{ route('vfm.dashboard') }}">Cancel</a>
 
-@livewire('VFM.VFM30-form')
+@livewire('VFM.VFM-form')
 
 @endsection

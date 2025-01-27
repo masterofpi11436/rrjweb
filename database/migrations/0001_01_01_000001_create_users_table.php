@@ -22,6 +22,7 @@ return new class extends Migration
             $table->boolean('admin')->default(false);
             $table->boolean('phone')->default(false);
             $table->boolean('vfm')->default(false);
+            $table->boolean('vfm30')->default(false);
             $table->boolean('vfm_tech')->default(false);
             $table->boolean('ics')->default(false);
             $table->boolean('policy')->default(false);

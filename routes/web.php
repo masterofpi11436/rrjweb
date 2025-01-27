@@ -7,6 +7,7 @@ use App\Http\Controllers\Login\Custom\BaseLoginController;
 use App\Http\Controllers\Login\Custom\AdminLoginController;
 use App\Http\Controllers\Login\Custom\PhoneLoginController;
 use App\Http\Controllers\Login\Custom\VFMLoginController;
+use App\Http\Controllers\Login\Custom\VFM30LoginController;
 use App\Http\Controllers\Login\Custom\VFMTechLoginController;
 use App\Http\Controllers\Login\Custom\ICSLoginController;
 use App\Http\Controllers\Login\Custom\PolicyLoginController;
@@ -18,12 +19,14 @@ use App\Http\Controllers\VFM\VFMController;
 use App\Http\Controllers\VFM\VFMTechController;
 use App\Http\Controllers\ICS\ICSController;
 use App\Http\Controllers\Policy\PolicyController;
+use App\Http\Controllers\VFM\VFM30Controller;
 
 // Shorthand login Classes
 $baseLoginClass = BaseLoginController::class;
 $adminLoginClass = AdminLoginController::class;
 $phoneLoginClass = PhoneLoginController::class;
 $vfmLoginClass = VFMLoginController::class;
+$vfm30LoginClass = VFM30LoginController::class;
 $vfmTechLoginClass = VFMTechLoginController::class;
 $icsLoginClass = ICSLoginController::class;
 $policyLoginClass = PolicyLoginController::class;
@@ -32,6 +35,7 @@ $policyLoginClass = PolicyLoginController::class;
 $adminClass = AdministratorController::class;
 $phoneClass = PhoneDirectoryController::class;
 $vfmClass = VFMController::class;
+$vfm30Class = VFM30Controller::class;
 $vfmTechClass = VFMTechController::class;
 $icsClass = ICSController::class;
 $policyClass = PolicyController::class;
@@ -108,6 +112,24 @@ Route::prefix('vfm')->group(function () use ($vfmClass, $vfmLoginClass){
         Route::get('/create', [$vfmClass, 'create'])->name('vfm.create');
         Route::get('/{id}/edit', [$vfmClass, 'edit'])->name('vfm.edit');
         Route::delete('/{id}', [$vfmClass, 'destroy'])->name('vfm.destroy');
+    });
+});
+
+Route::prefix('vfm30')->group(function () use ($vfm30Class, $vfm30LoginClass){
+
+    // Routes without middleware
+    Route::get('/login', [$vfm30LoginClass, 'vfmLoginForm'])->name('vfm30.login');
+    Route::post('/login', [$vfm30LoginClass, 'login']);
+    Route::get('/forgot', [$vfm30LoginClass, 'vfmForgotPasswordForm'])->name('vfm30.forgot.form');
+    Route::post('/forgot', [$vfm30LoginClass, 'forgotPassword'])->name('vfm30.forgot.form.submit');
+    Route::post('/logout', [$vfm30LoginClass, 'logout'])->name('vfm30.logout');
+
+    // Routes with 'vfm' middleware (Admin side)
+    Route::middleware('vfm')->group(function () use ($vfm30Class) {
+        Route::get('/dashboard', [$vfm30Class, 'dashboard'])->name('vfm30.dashboard');
+        Route::get('/create', [$vfm30Class, 'create'])->name('vfm30.create');
+        Route::get('/{id}/edit', [$vfm30Class, 'edit'])->name('vfm30.edit');
+        Route::delete('/{id}', [$vfm30Class, 'destroy'])->name('vfm30.destroy');
     });
 });
 
