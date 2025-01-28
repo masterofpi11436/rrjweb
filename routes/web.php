@@ -19,7 +19,7 @@ use App\Http\Controllers\VFM\VFMController;
 use App\Http\Controllers\VFM\VFMTechController;
 use App\Http\Controllers\ICS\ICSController;
 use App\Http\Controllers\Policy\PolicyController;
-use App\Http\Controllers\VFM\VFM30Controller;
+use App\Http\Controllers\VFM30\VFM30Controller;
 
 // Shorthand login Classes
 $baseLoginClass = BaseLoginController::class;
@@ -125,7 +125,7 @@ Route::prefix('vfm30')->group(function () use ($vfm30Class, $vfm30LoginClass){
     Route::post('/logout', [$vfm30LoginClass, 'logout'])->name('vfm30.logout');
 
     // Routes with 'vfm' middleware (Admin side)
-    Route::middleware('vfm')->group(function () use ($vfm30Class) {
+    Route::middleware('vfm30')->group(function () use ($vfm30Class) {
         Route::get('/dashboard', [$vfm30Class, 'dashboard'])->name('vfm30.dashboard');
         Route::get('/create', [$vfm30Class, 'create'])->name('vfm30.create');
         Route::get('/{id}/edit', [$vfm30Class, 'edit'])->name('vfm30.edit');

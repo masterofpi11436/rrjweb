@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\VFM;
+namespace App\Http\Controllers\VFM30;
 
 // Base Controller
 use App\Http\Controllers\Controller;
