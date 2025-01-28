@@ -1,6 +1,5 @@
 3) Instead of just having checkboxes. Have two columns, one for checked but no service needed, and one for checked and completed service.
 4) Maybe at the bottom below the Description of Service box, add a line for Outside Service Required with a line for a P.O. number.
-7) Have the form set that if all fields aren't filled in, it won't save. Maybe even have a pop up window letting the user know to fill in all fields.
 
 The changes I suggested keep it at a 25 Point Inspection.
 

@@ -34,7 +34,25 @@ form {
     text-align: left;
 }
 
-/* Checkbox Section: 25 Point Inspection */
+/* Checkbox Section: 30 Point Inspection */
+
+table {
+    width: 100%; /* Makes the table fill its container */
+    table-layout: fixed; /* Ensures columns have equal width */
+}
+
+th {
+    text-align: center;
+}
+
+td {
+    width: 33.33%; /* Each column takes up 1/3 of the table width */
+}
+
+td:nth-child(2), td:nth-child(3) {
+        text-align: center; /* Centers the content horizontally */
+}
+
 .inspection {
     margin-bottom: 20px;
     padding: 15px;

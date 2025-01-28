@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\VFM;
+namespace App\Livewire\VFM30;
 
 use App\Models\VFM\VFM30;
 use Livewire\Component;
@@ -391,6 +391,6 @@ class VFM30Form extends Component
 
     public function render()
     {
-        return view('VFM.livewire.vfm30-form');
+        return view('VFM30.livewire.vfm30-form');
     }
 }

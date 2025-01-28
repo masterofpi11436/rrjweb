@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\VFM;
+namespace App\Livewire\VFM30;
 
 use Livewire\Component;
 
@@ -10,7 +10,7 @@ use App\Models\VFM\VFM;
 class VFM30Search extends Component
 {
     public $search = ''; // Default search term
-    public $sortColumn = 'maintenance_technician'; // Default sort column
+    public $sortColumn = 'date_out'; // Default sort column
     public $sortDirection = 'asc'; // Default sort direction
     public $confirmingDelete = false;
     public $deleteId;
@@ -30,7 +30,7 @@ class VFM30Search extends Component
     public function render()
     {
         // Search for matching records
-        return view('VFM.livewire.vfm30-search', [
+        return view('VFM30.livewire.vfm30-search', [
             'suggestions' => VFM::where('vin', 'like', '%' . $this->search . '%')
                                            ->orWhere('license_plate', 'like', '%' . $this->search . '%')
                                            ->orWhere('make', 'like', '%' . $this->search . '%')

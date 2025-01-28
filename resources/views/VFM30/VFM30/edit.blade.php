@@ -1,13 +1,13 @@
-@extends('layouts.vfm')
+@extends('layouts.vfm30')
 
-@section('title', 'VFM Admin')
+@section('title', 'VFM 30 Admin')
 
 @section('heading', 'Edit an Insepction Ticket')
 
 @section('content')
 <!-- Link to navigate back to the dashboard -->
-<a href="{{ route('vfm.dashboard') }}">Cancel</a>
+<a href="{{ route('vfm30.dashboard') }}">Cancel</a>
 
-@livewire('VFM.VFM-form', ['id' => $vfm->id])
+@livewire('VFM30.VFM30-form', ['id' => $vfm->id])
 
 @endsection
