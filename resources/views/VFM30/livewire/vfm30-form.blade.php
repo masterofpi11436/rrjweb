@@ -451,74 +451,212 @@
             </thead>
             <tbody>
                 <tr>
-                    <td>Diagnostic Scan</td>
+                    <td>Body and Paint</td>
                     <td>
                         <input type="checkbox"
-                               id="diagnostic_scan_checked_no_service_required"
-                               wire:model.defer="diagnostic_scan_checked_no_service_required"
-                               {{ $diagnostic_scan_checked_no_service_required ? 'checked' : '' }}
-                               onclick="if(this.checked) document.getElementById('diagnostic_scan_checked_service_completed').checked = false;">
+                               id="body_and_paint_checked_no_service_required"
+                               wire:model.defer="body_and_paint_checked_no_service_required"
+                               {{ $body_and_paint_checked_no_service_required ? 'checked' : '' }}
+                               onclick="if(this.checked) document.getElementById('body_and_paint_checked_service_completed').checked = false;">
                     </td>
                     <td>
                         <input type="checkbox"
-                               id="diagnostic_scan_checked_service_completed"
-                               wire:model.defer="diagnostic_scan_checked_service_completed"
-                               {{ $diagnostic_scan_checked_service_completed ? 'checked' : '' }}
-                               onclick="if(this.checked) document.getElementById('diagnostic_scan_checked_no_service_required').checked = false;">
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>Driveshaft/CV joints/U-joints</td>
-                    <td>
-                        <input type="checkbox"
-                               id="driveshaft_cv_joints_u_joints_checked_no_service_required"
-                               wire:model.defer="driveshaft_cv_joints_u_joints_checked_no_service_required"
-                               {{ $driveshaft_cv_joints_u_joints_checked_no_service_required ? 'checked' : '' }}
-                               onclick="if(this.checked) document.getElementById('driveshaft_cv_joints_u_joints_checked_service_completed').checked = false;">
-                    </td>
-                    <td>
-                        <input type="checkbox"
-                               id="driveshaft_cv_joints_u_joints_checked_service_completed"
-                               wire:model.defer="driveshaft_cv_joints_u_joints_checked_service_completed"
-                               {{ $driveshaft_cv_joints_u_joints_checked_service_completed ? 'checked' : '' }}
-                               onclick="if(this.checked) document.getElementById('driveshaft_cv_joints_u_joints_checked_no_service_required').checked = false;">
+                               id="body_and_paint_checked_service_completed"
+                               wire:model.defer="body_and_paint_checked_service_completed"
+                               {{ $body_and_paint_checked_service_completed ? 'checked' : '' }}
+                               onclick="if(this.checked) document.getElementById('body_and_paint_checked_no_service_required').checked = false;">
                     </td>
                 </tr>
 
                 <tr>
-                    <td>Exhaust</td>
+                    <td>Lights</td>
                     <td>
                         <input type="checkbox"
-                               id="exhaust_checked_no_service_required"
-                               wire:model.defer="exhaust_checked_no_service_required"
-                               {{ $exhaust_checked_no_service_required ? 'checked' : '' }}
-                               onclick="if(this.checked) document.getElementById('exhaust_checked_service_completed').checked = false;">
+                               id="lights_checked_no_service_required"
+                               wire:model.defer="lights_checked_no_service_required"
+                               {{ $lights_checked_no_service_required ? 'checked' : '' }}
+                               onclick="if(this.checked) document.getElementById('lights_checked_service_completed').checked = false;">
                     </td>
                     <td>
                         <input type="checkbox"
-                               id="exhaust_checked_service_completed"
-                               wire:model.defer="exhaust_checked_service_completed"
-                               {{ $exhaust_checked_service_completed ? 'checked' : '' }}
-                               onclick="if(this.checked) document.getElementById('exhaust_checked_no_service_required').checked = false;">
+                               id="lights_checked_service_completed"
+                               wire:model.defer="lights_checked_service_completed"
+                               {{ $lights_checked_service_completed ? 'checked' : '' }}
+                               onclick="if(this.checked) document.getElementById('lights_checked_no_service_required').checked = false;">
                     </td>
                 </tr>
 
                 <tr>
-                    <td>Brakes</td>
+                    <td>A/C Systems</td>
                     <td>
                         <input type="checkbox"
-                               id="brakes_checked_no_service_required"
-                               wire:model.defer="brakes_checked_no_service_required"
-                               {{ $brakes_checked_no_service_required ? 'checked' : '' }}
-                               onclick="if(this.checked) document.getElementById('brakes_checked_service_completed').checked = false;">
+                               id="ac_systems_checked_no_service_required"
+                               wire:model.defer="ac_systems_checked_no_service_required"
+                               {{ $ac_systems_checked_no_service_required ? 'checked' : '' }}
+                               onclick="if(this.checked) document.getElementById('ac_systems_checked_service_completed').checked = false;">
                     </td>
                     <td>
                         <input type="checkbox"
-                               id="brakes_checked_service_completed"
-                               wire:model.defer="brakes_checked_service_completed"
-                               {{ $brakes_checked_service_completed ? 'checked' : '' }}
-                               onclick="if(this.checked) document.getElementById('brakes_checked_no_service_required').checked = false;">
+                               id="ac_systems_checked_service_completed"
+                               wire:model.defer="ac_systems_checked_service_completed"
+                               {{ $ac_systems_checked_service_completed ? 'checked' : '' }}
+                               onclick="if(this.checked) document.getElementById('ac_systems_checked_no_service_required').checked = false;">
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Windshield Wipers</td>
+                    <td>
+                        <input type="checkbox"
+                               id="windshield_wipers_checked_no_service_required"
+                               wire:model.defer="windshield_wipers_checked_no_service_required"
+                               {{ $windshield_wipers_checked_no_service_required ? 'checked' : '' }}
+                               onclick="if(this.checked) document.getElementById('windshield_wipers_checked_service_completed').checked = false;">
+                    </td>
+                    <td>
+                        <input type="checkbox"
+                               id="windshield_wipers_checked_service_completed"
+                               wire:model.defer="windshield_wipers_checked_service_completed"
+                               {{ $windshield_wipers_checked_service_completed ? 'checked' : '' }}
+                               onclick="if(this.checked) document.getElementById('windshield_wipers_checked_no_service_required').checked = false;">
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Windshield</td>
+                    <td>
+                        <input type="checkbox"
+                               id="windshield_checked_no_service_required"
+                               wire:model.defer="windshield_checked_no_service_required"
+                               {{ $windshield_checked_no_service_required ? 'checked' : '' }}
+                               onclick="if(this.checked) document.getElementById('windshield_checked_service_completed').checked = false;">
+                    </td>
+                    <td>
+                        <input type="checkbox"
+                               id="windshield_checked_service_completed"
+                               wire:model.defer="windshield_checked_service_completed"
+                               {{ $windshield_checked_service_completed ? 'checked' : '' }}
+                               onclick="if(this.checked) document.getElementById('windshield_checked_no_service_required').checked = false;">
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Window Operation</td>
+                    <td>
+                        <input type="checkbox"
+                               id="window_operation_checked_no_service_required"
+                               wire:model.defer="window_operation_checked_no_service_required"
+                               {{ $window_operation_checked_no_service_required ? 'checked' : '' }}
+                               onclick="if(this.checked) document.getElementById('window_operation_checked_service_completed').checked = false;">
+                    </td>
+                    <td>
+                        <input type="checkbox"
+                               id="window_operation_checked_service_completed"
+                               wire:model.defer="window_operation_checked_service_completed"
+                               {{ $window_operation_checked_service_completed ? 'checked' : '' }}
+                               onclick="if(this.checked) document.getElementById('window_operation_checked_no_service_required').checked = false;">
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Mirrors</td>
+                    <td>
+                        <input type="checkbox"
+                               id="mirrors_checked_no_service_required"
+                               wire:model.defer="mirrors_checked_no_service_required"
+                               {{ $mirrors_checked_no_service_required ? 'checked' : '' }}
+                               onclick="if(this.checked) document.getElementById('mirrors_checked_service_completed').checked = false;">
+                    </td>
+                    <td>
+                        <input type="checkbox"
+                               id="mirrors_checked_service_completed"
+                               wire:model.defer="mirrors_checked_service_completed"
+                               {{ $mirrors_checked_service_completed ? 'checked' : '' }}
+                               onclick="if(this.checked) document.getElementById('mirrors_checked_no_service_required').checked = false;">
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2><u>Suspension</u></h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Item Inspected</th>
+                    <th>No Service Required</th>
+                    <th>Service Required</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Tires</td>
+                    <td>
+                        <input type="checkbox"
+                               id="tires_checked_no_service_required"
+                               wire:model.defer="tires_checked_no_service_required"
+                               {{ $tires_checked_no_service_required ? 'checked' : '' }}
+                               onclick="if(this.checked) document.getElementById('tires_checked_service_completed').checked = false;">
+                    </td>
+                    <td>
+                        <input type="checkbox"
+                               id="tires_checked_service_completed"
+                               wire:model.defer="tires_checked_service_completed"
+                               {{ $tires_checked_service_completed ? 'checked' : '' }}
+                               onclick="if(this.checked) document.getElementById('tires_checked_no_service_required').checked = false;">
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Tire Air Pressure</td>
+                    <td>
+                        <input type="checkbox"
+                               id="tire_air_pressure_checked_no_service_required"
+                               wire:model.defer="tire_air_pressure_checked_no_service_required"
+                               {{ $tire_air_pressure_checked_no_service_required ? 'checked' : '' }}
+                               onclick="if(this.checked) document.getElementById('tire_air_pressure_checked_service_completed').checked = false;">
+                    </td>
+                    <td>
+                        <input type="checkbox"
+                               id="tire_air_pressure_checked_service_completed"
+                               wire:model.defer="tire_air_pressure_checked_service_completed"
+                               {{ $tire_air_pressure_checked_service_completed ? 'checked' : '' }}
+                               onclick="if(this.checked) document.getElementById('tire_air_pressure_checked_no_service_required').checked = false;">
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Shocks/Struts</td>
+                    <td>
+                        <input type="checkbox"
+                               id="shocks_struts_checked_no_service_required"
+                               wire:model.defer="shocks_struts_checked_no_service_required"
+                               {{ $shocks_struts_checked_no_service_required ? 'checked' : '' }}
+                               onclick="if(this.checked) document.getElementById('shocks_struts_checked_service_completed').checked = false;">
+                    </td>
+                    <td>
+                        <input type="checkbox"
+                               id="shocks_struts_checked_service_completed"
+                               wire:model.defer="shocks_struts_checked_service_completed"
+                               {{ $shocks_struts_checked_service_completed ? 'checked' : '' }}
+                               onclick="if(this.checked) document.getElementById('shocks_struts_checked_no_service_required').checked = false;">
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Ball Joints and Bushings</td>
+                    <td>
+                        <input type="checkbox"
+                               id="ball_joints_and_bushings_checked_no_service_required"
+                               wire:model.defer="ball_joints_and_bushings_checked_no_service_required"
+                               {{ $ball_joints_and_bushings_checked_no_service_required ? 'checked' : '' }}
+                               onclick="if(this.checked) document.getElementById('ball_joints_and_bushings_checked_service_completed').checked = false;">
+                    </td>
+                    <td>
+                        <input type="checkbox"
+                               id="ball_joints_and_bushings_checked_service_completed"
+                               wire:model.defer="ball_joints_and_bushings_checked_service_completed"
+                               {{ $ball_joints_and_bushings_checked_service_completed ? 'checked' : '' }}
+                               onclick="if(this.checked) document.getElementById('ball_joints_and_bushings_checked_no_service_required').checked = false;">
                     </td>
                 </tr>
             </tbody>
@@ -530,6 +668,15 @@
         <textarea id="description_of_service" wire:model.live="description_of_service"></textarea>
     </div>
 
+    <div>
+        <label for="outside_service_required">Outside Service Required?</label>
+        <input type="checkbox" id="outside_service_required">
+    </div>
+
+    @if (outside_service_required clicked)
+        <label for="outside_service_po">PO #:</label>
+        <input id="outside_service_po" type="text" wire:model.live="vin">
+    @endif
     <div>
         <button type="submit">{{ $vfmId ? 'Update VFM' : 'Create VFM' }}</button>
     </div>
