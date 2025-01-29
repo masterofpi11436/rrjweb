@@ -5,7 +5,7 @@ namespace App\Livewire\VFM30;
 use Livewire\Component;
 
 // Required Models
-use App\Models\VFM\VFM;
+use App\Models\VFM30\VFM30;
 
 class VFM30Search extends Component
 {
@@ -19,11 +19,11 @@ class VFM30Search extends Component
     {
         if ($this->sortColumn === $column) {
             // If the column is already being sorted, reverse the direction
-            $this->sortDirection = $this->sortDirection === 'asc' ? 'desc' : 'asc';
+            $this->sortDirection = $this->sortDirection === 'desc' ? 'asc' : 'desc';
         } else {
-            // Otherwise, set the new column and reset direction to ascending
+            // Otherwise, set the new column and reset direction to descending
             $this->sortColumn = $column;
-            $this->sortDirection = 'asc';
+            $this->sortDirection = 'desc';
         }
     }
 
@@ -31,7 +31,7 @@ class VFM30Search extends Component
     {
         // Search for matching records
         return view('VFM30.livewire.vfm30-search', [
-            'suggestions' => VFM::where('vin', 'like', '%' . $this->search . '%')
+            'suggestions' => VFM30::where('vin', 'like', '%' . $this->search . '%')
                                            ->orWhere('license_plate', 'like', '%' . $this->search . '%')
                                            ->orWhere('make', 'like', '%' . $this->search . '%')
                                            ->orWhere('model', 'like', '%' . $this->search . '%')

@@ -58,7 +58,7 @@
             </div>
         </div>
     </div>
-
+{{--
     <div class="inspection">
         <h3>30 Point Inspection</h3>
 
@@ -661,22 +661,13 @@
                 </tr>
             </tbody>
         </table>
-    </div>
+    </div> --}}
 
     <div>
         <label for="description_of_service">Description of Service:</label>
         <textarea id="description_of_service" wire:model.live="description_of_service"></textarea>
     </div>
 
-    <div>
-        <label for="outside_service_required">Outside Service Required?</label>
-        <input type="checkbox" id="outside_service_required">
-    </div>
-
-    @if (outside_service_required clicked)
-        <label for="outside_service_po">PO #:</label>
-        <input id="outside_service_po" type="text" wire:model.live="vin">
-    @endif
     <div>
         <button type="submit">{{ $vfmId ? 'Update VFM' : 'Create VFM' }}</button>
     </div>

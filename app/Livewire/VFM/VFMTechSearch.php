@@ -10,18 +10,18 @@ use App\Models\VFM\VFM;
 class VFMTechSearch extends Component
 {
     public $search = ''; // Default search term
-    public $sortColumn = 'maintenance_technician'; // Default sort column
-    public $sortDirection = 'asc'; // Default sort direction
+    public $sortColumn = 'date_out'; // Default sort column
+    public $sortDirection = 'desc'; // Default sort direction
 
     public function sortBy($column)
     {
         if ($this->sortColumn === $column) {
             // If the column is already being sorted, reverse the direction
-            $this->sortDirection = $this->sortDirection === 'asc' ? 'desc' : 'asc';
+            $this->sortDirection = $this->sortDirection === 'desc' ? 'asc' : 'desc';
         } else {
             // Otherwise, set the new column and reset direction to ascending
             $this->sortColumn = $column;
-            $this->sortDirection = 'asc';
+            $this->sortDirection = 'desc';
         }
     }
 

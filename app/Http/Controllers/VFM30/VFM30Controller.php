@@ -4,7 +4,7 @@ namespace App\Http\Controllers\VFM30;
 
 // Base Controller
 use App\Http\Controllers\Controller;
-use App\Models\VFM\VFM30;
+use App\Models\VFM30\VFM30;
 
 class VFM30Controller extends Controller
 {

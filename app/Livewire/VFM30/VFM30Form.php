@@ -2,7 +2,7 @@
 
 namespace App\Livewire\VFM30;
 
-use App\Models\VFM\VFM30;
+use App\Models\VFM30\VFM30;
 use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
 
@@ -178,7 +178,7 @@ class VFM30Form extends Component
             'ball_joints_and_bushings_checked_service_completed' => 'boolean',
             'description_of_service' => 'string',
             'is_outside_service_required' => 'boolean',
-            'outside_service_required' => 'boolean',
+            'outside_service_required' => 'string',
             'outside_service_po' => 'string',
         ];
     }
@@ -386,7 +386,7 @@ class VFM30Form extends Component
 
         session()->flash('message', $this->vfmId ? 'VFM updated successfully!' : 'VFM created successfully!');
 
-        return redirect()->route('vfm30.dashboard'); // Redirect to user list
+        return redirect()->route('vfm30.dashboard');
     }
 
     public function render()
