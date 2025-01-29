@@ -1,10 +1,10 @@
 # rrjweb
 Source code is on github. 
 
-In order to download and run the framework locally; the tools git and composer are required for download. XAMPP is used for the MySQL database, any MySQL database can be used.
+In order to download and run the framework locally; the tools git, composer, and XAMPP is used for the MySQL database
 
 git pull origin main
-Copy the .env file from the .env.example file
+Create the .env file from the .env.example file
 composer install
 php artisan key:generate
 sudo /etc/init.d/apache2 stop
@@ -15,10 +15,17 @@ php artisan migrate:refresh
 php artisan db:seed
 php artisan migrate:refresh --seed
 
-Run on other computer in network:
+# Migrate one table
+php artisan migrate --path=/database/migrations/2025_01_28_125006_create_test_table.php
+
+# Drop one specific table:
+php artisan tinker
+Schema::dropIfExists('table_name');
+
+# Run on other computer in network:
 php artisan serve --host=128.168.123.75 --port=8000
 
-Clear Laravel Cache:
+# Clear Laravel Cache:
 
 php artisan cache:clear
 php artisan config:clear
