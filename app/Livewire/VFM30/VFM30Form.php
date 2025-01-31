@@ -60,9 +60,6 @@ class VFM30Form extends Component
     public $ball_joints_and_bushings = false;
 
     public $description_of_service;
-    public $is_outside_service_required = false;
-    public $outside_service_required;
-    public $outside_service_po;
 
     // Validation rules for the form
     protected function rules()
@@ -119,9 +116,6 @@ class VFM30Form extends Component
             'ball_joints_and_bushings' => 'boolean',
 
             'description_of_service' => 'nullable|string',
-            'is_outside_service_required' => 'boolean',
-            'outside_service_required' => 'nullable|string',
-            'outside_service_po' => 'nullable|string',
         ];
     }
 
@@ -182,9 +176,6 @@ class VFM30Form extends Component
             $this->ball_joints_and_bushings = $vfm->ball_joints_and_bushings;
 
             $this->description_of_service = $vfm->description_of_service;
-            $this->is_outside_service_required = $vfm->is_outside_service_required;
-            $this->outside_service_required = $vfm->outside_service_required;
-            $this->outside_service_po = $vfm->outside_service_po;
         }
     }
 
@@ -260,9 +251,6 @@ class VFM30Form extends Component
         $vfm->ball_joints_and_bushings = $this->ball_joints_and_bushings;
 
         $vfm->description_of_service = $this->description_of_service;
-        $vfm->is_outside_service_required = $this->is_outside_service_required;
-        $vfm->outside_service_required = $this->outside_service_required;
-        $vfm->outside_service_po = $this->outside_service_po;
 
         $vfm->save();
 

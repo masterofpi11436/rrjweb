@@ -68,9 +68,6 @@ class VFM30Factory extends Factory
             'ball_joints_and_bushings' => $this->faker->boolean(),
 
             'description_of_service' => $this->faker->optional()->sentence(),
-            'is_outside_service_required' => $this->faker->boolean(),
-            'outside_service_required' => $this->faker->word(),
-            'outside_service_po' => strtoupper($this->faker->bothify('PO-#####')),
             'maintenance_technician' => $this->faker->name(),
         ];
     }

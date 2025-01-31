@@ -62,7 +62,7 @@
                             <div>
                                 <!-- Delete link -->
                                 <a href="#" onclick="event.preventDefault(); confirmDelete({{ $vehicle->id }});">Delete</a>
-                                <form id="delete-form-{{ $vehicle->id }}" action="{{ route('vfm.destroy', $vehicle->id) }}" method="POST" style="display: none;">
+                                <form id="delete-form-{{ $vehicle->id }}" action="{{ route('vfm30.destroy', $vehicle->id) }}" method="POST" style="display: none;">
                                     @csrf
                                     @method('DELETE')
                                 </form>

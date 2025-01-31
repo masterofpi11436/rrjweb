@@ -230,11 +230,6 @@
     </div>
 
     <div>
-        <label for="outside_service_required">outside_service_required</label>
-        <input type="checkbox" id="outside_service_required" wire:model.defer="outside_service_required" {{ $outside_service_required ? 'checked' : '' }}>
-    </div>
-
-    <div>
         <button type="submit">{{ $vfmId ? 'Update VFM' : 'Create VFM' }}</button>
     </div>
 </form>

@@ -14,6 +14,6 @@ class VFM30 extends Model
     protected $fillable = [
         'date_in', 'date_out', 'state_inspection', 'license_plate', 'mileage',
         'vehicle_year', 'make', 'model', 'vin', 'maintenance_technician',
-        'description_of_service', 'outside_service_required', 'outside_service_po'
+        'description_of_service'
     ];
 }

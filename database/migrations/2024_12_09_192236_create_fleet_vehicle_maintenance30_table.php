@@ -64,9 +64,6 @@ return new class extends Migration
             $table->boolean('ball_joints_and_bushings')->default(false);
 
             $table->text('description_of_service')->nullable();
-            $table->boolean('is_outside_service_required')->default(false);
-            $table->string('outside_service_required')->nullable();
-            $table->string('outside_service_po')->nullable();
             $table->string('maintenance_technician');
             $table->timestamps();
         });
