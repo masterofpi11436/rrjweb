@@ -11,7 +11,7 @@ class VFM30Search extends Component
 {
     public $search = ''; // Default search term
     public $sortColumn = 'date_out'; // Default sort column
-    public $sortDirection = 'asc'; // Default sort direction
+    public $sortDirection = 'desc'; // Default sort direction
     public $confirmingDelete = false;
     public $deleteId;
 

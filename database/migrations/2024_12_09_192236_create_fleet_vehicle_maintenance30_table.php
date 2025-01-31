@@ -23,70 +23,45 @@ return new class extends Migration
             $table->string('model');
             $table->string('vin');
 
-            $table->boolean('horn_checked_no_service_required')->default(false);
-            $table->boolean('horn_checked_service_completed')->default(false);
-            $table->boolean('seatbelts_checked_no_service_required')->default(false);
-            $table->boolean('seatbelts_checked_service_completed')->default(false);
-            $table->boolean('detention_equipment_checked_no_service_required')->default(false);
-            $table->boolean('detention_equipment_checked_service_completed')->default(false);
-            $table->boolean('fire_extinguisher_checked_no_service_required')->default(false);
-            $table->boolean('fire_extinguisher_checked_service_completed')->default(false);
-            $table->boolean('battery_booster_checked_no_service_required')->default(false);
-            $table->boolean('battery_booster_checked_service_completed')->default(false);
-            $table->boolean('emergency_roadside_kit_checked_no_service_required')->default(false);
-            $table->boolean('emergency_roadside_kit_checked_service_completed')->default(false);
+            // Safety Systems
+            $table->boolean('horn')->default(false);
+            $table->boolean('seatbelts')->default(false);
+            $table->boolean('detention_equipment')->default(false);
+            $table->boolean('fire_extinguisher')->default(false);
+            $table->boolean('battery_booster')->default(false);
+            $table->boolean('emergency_roadside_kit')->default(false);
 
-            $table->boolean('engine_oil_checked_no_service_required')->default(false);
-            $table->boolean('engine_oil_checked_service_completed')->default(false);
-            $table->boolean('coolant_checked_no_service_required')->default(false);
-            $table->boolean('coolant_checked_service_completed')->default(false);
-            $table->boolean('brake_fluid_checked_no_service_required')->default(false);
-            $table->boolean('brake_fluid_checked_service_completed')->default(false);
-            $table->boolean('power_steering_fluid_checked_no_service_required')->default(false);
-            $table->boolean('power_steering_fluid_checked_service_completed')->default(false);
-            $table->boolean('transmission_fluid_checked_no_service_required')->default(false);
-            $table->boolean('transmission_fluid_checked_service_completed')->default(false);
-            $table->boolean('washer_fluid_checked_no_service_required')->default(false);
-            $table->boolean('washer_fluid_checked_service_completed')->default(false);
-            $table->boolean('air_filter_checked_no_service_required')->default(false);
-            $table->boolean('air_filter_checked_service_completed')->default(false);
-            $table->boolean('belts_and_hoses_checked_no_service_required')->default(false);
-            $table->boolean('belts_and_hoses_checked_service_completed')->default(false);
-            $table->boolean('battery_checked_no_service_required')->default(false);
-            $table->boolean('battery_checked_service_completed')->default(false);
+            // Under the Hood
+            $table->boolean('engine_oil')->default(false);
+            $table->boolean('coolant')->default(false);
+            $table->boolean('brake_fluid')->default(false);
+            $table->boolean('power_steering_fluid')->default(false);
+            $table->boolean('transmission_fluid')->default(false);
+            $table->boolean('washer_fluid')->default(false);
+            $table->boolean('air_filter')->default(false);
+            $table->boolean('belts_and_hoses')->default(false);
+            $table->boolean('battery')->default(false);
 
-            $table->boolean('diagnostic_scan_checked_no_service_required')->default(false);
-            $table->boolean('diagnostic_scan_checked_service_completed')->default(false);
-            $table->boolean('driveshaft_cv_joints_u_joints_checked_no_service_required')->default(false);
-            $table->boolean('driveshaft_cv_joints_u_joints_checked_service_completed')->default(false);
-            $table->boolean('exhaust_checked_no_service_required')->default(false);
-            $table->boolean('exhaust_checked_service_completed')->default(false);
-            $table->boolean('brakes_checked_no_service_required')->default(false);
-            $table->boolean('brakes_checked_service_completed')->default(false);
+            // Drivetrain
+            $table->boolean('diagnostic_scan')->default(false);
+            $table->boolean('driveshaft_cv_joints_u_joints')->default(false);
+            $table->boolean('exhaust')->default(false);
+            $table->boolean('brakes')->default(false);
 
-            $table->boolean('body_and_paint_checked_no_service_required')->default(false);
-            $table->boolean('body_and_paint_checked_service_completed')->default(false);
-            $table->boolean('lights_checked_no_service_required')->default(false);
-            $table->boolean('lights_checked_service_completed')->default(false);
-            $table->boolean('ac_systems_checked_no_service_required')->default(false);
-            $table->boolean('ac_systems_checked_service_completed')->default(false);
-            $table->boolean('windshield_wipers_checked_no_service_required')->default(false);
-            $table->boolean('windshield_wipers_checked_service_completed')->default(false);
-            $table->boolean('windshield_checked_no_service_required')->default(false);
-            $table->boolean('windshield_checked_service_completed')->default(false);
-            $table->boolean('window_operation_checked_no_service_required')->default(false);
-            $table->boolean('window_operation_checked_service_completed')->default(false);
-            $table->boolean('mirrors_checked_no_service_required')->default(false);
-            $table->boolean('mirrors_checked_service_completed')->default(false);
+            // Interior and Exterior
+            $table->boolean('body_and_paint')->default(false);
+            $table->boolean('lights')->default(false);
+            $table->boolean('a_c_systems')->default(false);
+            $table->boolean('windshield_wipers')->default(false);
+            $table->boolean('windshield')->default(false);
+            $table->boolean('window_operation')->default(false);
+            $table->boolean('mirrors')->default(false);
 
-            $table->boolean('tires_checked_no_service_required')->default(false);
-            $table->boolean('tires_checked_service_completed')->default(false);
-            $table->boolean('tire_air_pressure_checked_no_service_required')->default(false);
-            $table->boolean('tire_air_pressure_checked_service_completed')->default(false);
-            $table->boolean('shocks_struts_checked_no_service_required')->default(false);
-            $table->boolean('shocks_struts_checked_service_completed')->default(false);
-            $table->boolean('ball_joints_and_bushings_checked_no_service_required')->default(false);
-            $table->boolean('ball_joints_and_bushings_checked_service_completed')->default(false);
+            // Suspension
+            $table->boolean('tires')->default(false);
+            $table->boolean('tire_air_pressure')->default(false);
+            $table->boolean('shock_Struts')->default(false);
+            $table->boolean('ball_joints_and_bushings')->default(false);
 
             $table->text('description_of_service')->nullable();
             $table->boolean('is_outside_service_required')->default(false);

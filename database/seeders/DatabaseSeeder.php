@@ -5,7 +5,7 @@ namespace Database\Seeders;
 // Required Models
 use App\Models\ICS\ICS;
 use App\Models\VFM\VFM;
-use App\Models\VFM\VFM30;
+use App\Models\VFM30\VFM30;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
