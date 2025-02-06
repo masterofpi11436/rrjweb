@@ -18,6 +18,14 @@ php artisan migrate:refresh --seed
 # Migrate one table
 php artisan migrate --path=/database/migrations/2025_01_28_125006_create_test_table.php
 
+# change permission of the folders
+chmod 777 storage
+chmod 777 storage/framework/views
+chmod 777 storage/app
+chmod 777 storage/app/public
+chmod 777 storage/framework
+chmod 777 storage/logs
+
 # Drop one specific table:
 php artisan tinker
 Schema::dropIfExists('table_name');
