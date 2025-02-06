@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36" version="26.0.2" pages="6">
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0" version="26.0.11" pages="7">
   <diagram id="dJJgGQKudCN2aHdvwWQC" name="Users">
     <mxGraphModel dx="478" dy="246" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
@@ -287,6 +287,143 @@
         </mxCell>
         <mxCell id="80gYIPT8HzUYU9vndbxn-14" value="updated_at (TIMESTAMP)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;fontColor=default;" vertex="1" parent="80gYIPT8HzUYU9vndbxn-1">
           <mxGeometry y="1170" width="240" height="30" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram name="VFM30" id="uPWBYRdKL0ofYEGfhieJ">
+    <mxGraphModel dx="1368" dy="760" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="RwphE0w-pqUruh42P_Tx-0" />
+        <mxCell id="RwphE0w-pqUruh42P_Tx-1" parent="RwphE0w-pqUruh42P_Tx-0" />
+        <mxCell id="RwphE0w-pqUruh42P_Tx-2" value="vfm_30" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" vertex="1" parent="RwphE0w-pqUruh42P_Tx-1">
+          <mxGeometry x="360" y="40" width="240" height="1290" as="geometry" />
+        </mxCell>
+        <mxCell id="RwphE0w-pqUruh42P_Tx-3" value="id (PK)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" vertex="1" parent="RwphE0w-pqUruh42P_Tx-2">
+          <mxGeometry y="30" width="240" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="RwphE0w-pqUruh42P_Tx-4" value="date_in (DATE)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;" vertex="1" parent="RwphE0w-pqUruh42P_Tx-2">
+          <mxGeometry y="60" width="240" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="RwphE0w-pqUruh42P_Tx-5" value="date_out (DATE)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;" vertex="1" parent="RwphE0w-pqUruh42P_Tx-2">
+          <mxGeometry y="90" width="240" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="RwphE0w-pqUruh42P_Tx-6" value="state_inspection (DATE)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;" vertex="1" parent="RwphE0w-pqUruh42P_Tx-2">
+          <mxGeometry y="120" width="240" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="RwphE0w-pqUruh42P_Tx-7" value="license_plate (VARCHAR)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;" vertex="1" parent="RwphE0w-pqUruh42P_Tx-2">
+          <mxGeometry y="150" width="240" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="RwphE0w-pqUruh42P_Tx-8" value="mileage (INT)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;" vertex="1" parent="RwphE0w-pqUruh42P_Tx-2">
+          <mxGeometry y="180" width="240" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="RwphE0w-pqUruh42P_Tx-9" value="vehicle_year (INT)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;fontColor=default;" vertex="1" parent="RwphE0w-pqUruh42P_Tx-2">
+          <mxGeometry y="210" width="240" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="RwphE0w-pqUruh42P_Tx-10" value="make (VARCHAR)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;fontColor=default;" vertex="1" parent="RwphE0w-pqUruh42P_Tx-2">
+          <mxGeometry y="240" width="240" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="RwphE0w-pqUruh42P_Tx-11" value="model (VARCHAR)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;fontColor=default;" vertex="1" parent="RwphE0w-pqUruh42P_Tx-2">
+          <mxGeometry y="270" width="240" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="RwphE0w-pqUruh42P_Tx-12" value="horn (BOOL)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;fontColor=default;" vertex="1" parent="RwphE0w-pqUruh42P_Tx-2">
+          <mxGeometry y="300" width="240" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="RwphE0w-pqUruh42P_Tx-13" value="seatbelts (BOOL)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;fontColor=default;" vertex="1" parent="RwphE0w-pqUruh42P_Tx-2">
+          <mxGeometry y="330" width="240" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="RwphE0w-pqUruh42P_Tx-14" value="detention_equipment (BOOL)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;fontColor=default;" vertex="1" parent="RwphE0w-pqUruh42P_Tx-2">
+          <mxGeometry y="360" width="240" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="RwphE0w-pqUruh42P_Tx-15" value="fire_extinguisher (BOOL)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;fontColor=default;" vertex="1" parent="RwphE0w-pqUruh42P_Tx-2">
+          <mxGeometry y="390" width="240" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="RwphE0w-pqUruh42P_Tx-16" value="battery_booster (BOOL)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;fontColor=default;" vertex="1" parent="RwphE0w-pqUruh42P_Tx-2">
+          <mxGeometry y="420" width="240" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="RwphE0w-pqUruh42P_Tx-17" value="emergency_roadside_kit (BOOL)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;fontColor=default;" vertex="1" parent="RwphE0w-pqUruh42P_Tx-2">
+          <mxGeometry y="450" width="240" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="RwphE0w-pqUruh42P_Tx-18" value="engine_oil (BOOL)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;fontColor=default;" vertex="1" parent="RwphE0w-pqUruh42P_Tx-2">
+          <mxGeometry y="480" width="240" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="RwphE0w-pqUruh42P_Tx-19" value="coolant (BOOL)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;fontColor=default;" vertex="1" parent="RwphE0w-pqUruh42P_Tx-2">
+          <mxGeometry y="510" width="240" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="RwphE0w-pqUruh42P_Tx-20" value="brake_fluid (BOOL)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;fontColor=default;" vertex="1" parent="RwphE0w-pqUruh42P_Tx-2">
+          <mxGeometry y="540" width="240" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="RwphE0w-pqUruh42P_Tx-21" value="power_steering_fluid (BOOL)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;fontColor=default;" vertex="1" parent="RwphE0w-pqUruh42P_Tx-2">
+          <mxGeometry y="570" width="240" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="RwphE0w-pqUruh42P_Tx-22" value="transmission_fluid (BOOL)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;fontColor=default;" vertex="1" parent="RwphE0w-pqUruh42P_Tx-2">
+          <mxGeometry y="600" width="240" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="RwphE0w-pqUruh42P_Tx-23" value="washer_fluid (BOOL)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;fontColor=default;" vertex="1" parent="RwphE0w-pqUruh42P_Tx-2">
+          <mxGeometry y="630" width="240" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="RwphE0w-pqUruh42P_Tx-24" value="air_filter (BOOL)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;fontColor=default;" vertex="1" parent="RwphE0w-pqUruh42P_Tx-2">
+          <mxGeometry y="660" width="240" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="RwphE0w-pqUruh42P_Tx-25" value="belts_and_hoses (BOOL)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;fontColor=default;" vertex="1" parent="RwphE0w-pqUruh42P_Tx-2">
+          <mxGeometry y="690" width="240" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="RwphE0w-pqUruh42P_Tx-26" value="battery (BOOL)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;fontColor=default;" vertex="1" parent="RwphE0w-pqUruh42P_Tx-2">
+          <mxGeometry y="720" width="240" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="RwphE0w-pqUruh42P_Tx-27" value="diagnostic_scan (BOOL)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;fontColor=default;" vertex="1" parent="RwphE0w-pqUruh42P_Tx-2">
+          <mxGeometry y="750" width="240" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="RwphE0w-pqUruh42P_Tx-28" value="driveshaft_cv_joints_u_joints (BOOL)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;fontColor=default;" vertex="1" parent="RwphE0w-pqUruh42P_Tx-2">
+          <mxGeometry y="780" width="240" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="RwphE0w-pqUruh42P_Tx-29" value="exhaust (BOOL)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;fontColor=default;" vertex="1" parent="RwphE0w-pqUruh42P_Tx-2">
+          <mxGeometry y="810" width="240" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="RwphE0w-pqUruh42P_Tx-30" value="brakes (BOOL)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;fontColor=default;" vertex="1" parent="RwphE0w-pqUruh42P_Tx-2">
+          <mxGeometry y="840" width="240" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="RwphE0w-pqUruh42P_Tx-31" value="body_and_paint (BOOL)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;fontColor=default;" vertex="1" parent="RwphE0w-pqUruh42P_Tx-2">
+          <mxGeometry y="870" width="240" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="RwphE0w-pqUruh42P_Tx-32" value="lights (BOOL)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;fontColor=default;" vertex="1" parent="RwphE0w-pqUruh42P_Tx-2">
+          <mxGeometry y="900" width="240" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="RwphE0w-pqUruh42P_Tx-33" value="a_c_systems (BOOL)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;fontColor=default;" vertex="1" parent="RwphE0w-pqUruh42P_Tx-2">
+          <mxGeometry y="930" width="240" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="RwphE0w-pqUruh42P_Tx-34" value="windshield_wipers (BOOL)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;fontColor=default;" vertex="1" parent="RwphE0w-pqUruh42P_Tx-2">
+          <mxGeometry y="960" width="240" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="RwphE0w-pqUruh42P_Tx-35" value="windshield (BOOL)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;fontColor=default;" vertex="1" parent="RwphE0w-pqUruh42P_Tx-2">
+          <mxGeometry y="990" width="240" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="RwphE0w-pqUruh42P_Tx-36" value="window_operation (BOOL)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;fontColor=default;" vertex="1" parent="RwphE0w-pqUruh42P_Tx-2">
+          <mxGeometry y="1020" width="240" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="RwphE0w-pqUruh42P_Tx-37" value="mirrors (BOOL)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;fontColor=default;" vertex="1" parent="RwphE0w-pqUruh42P_Tx-2">
+          <mxGeometry y="1050" width="240" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="LM_4xQAy63AlgQLRNaLs-0" value="tire_air_pressure (BOOL)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;fontColor=default;" vertex="1" parent="RwphE0w-pqUruh42P_Tx-2">
+          <mxGeometry y="1080" width="240" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="LM_4xQAy63AlgQLRNaLs-1" value="shock_Struts (BOOL)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;fontColor=default;" vertex="1" parent="RwphE0w-pqUruh42P_Tx-2">
+          <mxGeometry y="1110" width="240" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="LM_4xQAy63AlgQLRNaLs-2" value="ball_joints_and_bushings (BOOL)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;fontColor=default;" vertex="1" parent="RwphE0w-pqUruh42P_Tx-2">
+          <mxGeometry y="1140" width="240" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="RwphE0w-pqUruh42P_Tx-38" value="description_of_service (TEXT)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;fontColor=default;" vertex="1" parent="RwphE0w-pqUruh42P_Tx-2">
+          <mxGeometry y="1170" width="240" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="RwphE0w-pqUruh42P_Tx-39" value="maintenance_technician (VARCHAR)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;fontColor=default;" vertex="1" parent="RwphE0w-pqUruh42P_Tx-2">
+          <mxGeometry y="1200" width="240" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="RwphE0w-pqUruh42P_Tx-40" value="created_at (TIMESTAMP)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;fontColor=default;" vertex="1" parent="RwphE0w-pqUruh42P_Tx-2">
+          <mxGeometry y="1230" width="240" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="RwphE0w-pqUruh42P_Tx-41" value="updated_at (TIMESTAMP)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;fontColor=default;" vertex="1" parent="RwphE0w-pqUruh42P_Tx-2">
+          <mxGeometry y="1260" width="240" height="30" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
