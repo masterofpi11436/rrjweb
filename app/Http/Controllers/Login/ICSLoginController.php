@@ -1,23 +1,23 @@
 <?php
 
-namespace App\Http\Controllers\Login\Custom;
+namespace App\Http\Controllers\Login;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
 
-class VFMTechLoginController extends BaseLoginController
+class ICSLoginController extends BaseLoginController
 {
-    public function VFMTechLoginForm()
+    public function icsLoginForm()
     {
-        return view('Login.Logins.vfm-tech-login');
+        return view('Login.Logins.ics-login');
     }
 
     public function login(Request $request)
     {
         // Validate login input with ends_with directly in the login method
         $request->validate([
-            'email' => 'required|email|ends_with:rrjva.org',
+            'email' => 'required|email|ends_with:rrjva.org,icsolutions.com',
             'password' => 'required',
         ]);
 
@@ -26,21 +26,21 @@ class VFMTechLoginController extends BaseLoginController
 
         // If user is not found, return error
         if (!$user) {
-            return redirect()->route('vfm-tech.login')->withErrors(['email_not_found' => 'No account found with this email address.']);
+            return redirect()->route('ics.login')->withErrors(['email_not_found' => 'No account found with this email address.']);
         }
 
-        // Attempt login with vfm access or admin access
-        return $this->attemptLogin($request, 'vfm-tech.dashboard', function ($user) {
-            return $user->vfm_tech == 1 || $user->admin == 1;
+        // Attempt login with ics access or admin access
+        return $this->attemptLogin($request, 'ics.dashboard', function ($user) {
+            return $user->ics == 1 || $user->admin == 1;
         });
     }
 
-    public function vfmTechForgotPasswordForm()
+    public function icsForgotPasswordForm()
     {
-        return parent::showForgotPasswordForm('Login.Forgots.vfm-tech-forgot-password');
+        return parent::showForgotPasswordForm('Login.Forgots.ics-forgot-password');
     }
 
-    public function logout(Request $request, $route = 'vfm-tech.login')
+    public function logout(Request $request, $route = 'ics.login')
     {
         // Perform the standard logout
         Auth::logout();

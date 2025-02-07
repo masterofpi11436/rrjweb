@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Http\Controllers\Login\Custom;
+namespace App\Http\Controllers\Login;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
 
-class PolicyLoginController extends BaseLoginController
+class PhoneLoginController extends BaseLoginController
 {
-    public function policyLoginForm()
+    public function phoneLoginForm()
     {
-        return view('Login.Logins.policy-login');
+        return view('Login.Logins.phone-login');
     }
 
     public function login(Request $request)
@@ -26,21 +26,21 @@ class PolicyLoginController extends BaseLoginController
 
         // If user is not found, return error
         if (!$user) {
-            return redirect()->route('policy.login')->withErrors(['email_not_found' => 'No account found with this email address.']);
+            return redirect()->route('phone.login')->withErrors(['email_not_found' => 'No account found with this email address.']);
         }
 
-        // Attempt login with ics access or admin access
-        return $this->attemptLogin($request, 'policy.dashboard', function ($user) {
-            return $user->policy == 1 || $user->admin == 1;
+        // Attempt login with phone access or admin access
+        return $this->attemptLogin($request, 'phone.dashboard', function ($user) {
+            return $user->phone == 1 || $user->admin == 1;
         });
     }
 
-    public function policyForgotPasswordForm()
+    public function phoneForgotPasswordForm()
     {
-        return parent::showForgotPasswordForm('Login.Forgots.policy-forgot-password');
+        return parent::showForgotPasswordForm('Login.Forgots.phone-forgot-password');
     }
 
-    public function logout(Request $request, $route = 'policy.login')
+    public function logout(Request $request, $route = 'phone.login')
     {
         // Perform the standard logout
         Auth::logout();

@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Http\Controllers\Login\Custom;
+namespace App\Http\Controllers\Login;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
 
-class VFM30LoginController extends BaseLoginController
+class PolicyLoginController extends BaseLoginController
 {
-    public function vFMLoginForm()
+    public function policyLoginForm()
     {
-        return view('Login.Logins.vfm30-login');
+        return view('Login.Logins.policy-login');
     }
 
     public function login(Request $request)
@@ -26,21 +26,21 @@ class VFM30LoginController extends BaseLoginController
 
         // If user is not found, return error
         if (!$user) {
-            return redirect()->route('vfm30.login')->withErrors(['email_not_found' => 'No account found with this email address.']);
+            return redirect()->route('policy.login')->withErrors(['email_not_found' => 'No account found with this email address.']);
         }
 
-        // Attempt login with vfm access or admin access
-        return $this->attemptLogin($request, 'vfm30.dashboard', function ($user) {
-            return $user->vfm == 1 || $user->admin == 1;
+        // Attempt login with ics access or admin access
+        return $this->attemptLogin($request, 'policy.dashboard', function ($user) {
+            return $user->policy == 1 || $user->admin == 1;
         });
     }
 
-    public function vfmForgotPasswordForm()
+    public function policyForgotPasswordForm()
     {
-        return parent::showForgotPasswordForm('Login.Forgots.vfm30-forgot-password');
+        return parent::showForgotPasswordForm('Login.Forgots.policy-forgot-password');
     }
 
-    public function logout(Request $request, $route = 'vfm30.login')
+    public function logout(Request $request, $route = 'policy.login')
     {
         // Perform the standard logout
         Auth::logout();

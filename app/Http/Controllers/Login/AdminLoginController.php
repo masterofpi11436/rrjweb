@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Login\Custom;
+namespace App\Http\Controllers\Login;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;

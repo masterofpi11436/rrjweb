@@ -3,23 +3,26 @@
 use Illuminate\Support\Facades\Route;
 
 // Login Controllers
-use App\Http\Controllers\Login\Custom\BaseLoginController;
-use App\Http\Controllers\Login\Custom\AdminLoginController;
-use App\Http\Controllers\Login\Custom\PhoneLoginController;
-use App\Http\Controllers\Login\Custom\VFMLoginController;
-use App\Http\Controllers\Login\Custom\VFM30LoginController;
-use App\Http\Controllers\Login\Custom\VFMTechLoginController;
-use App\Http\Controllers\Login\Custom\ICSLoginController;
-use App\Http\Controllers\Login\Custom\PolicyLoginController;
+
+use App\Http\Controllers\Policy\PolicyController;
+use App\Http\Controllers\Login\ICSLoginController;
+use App\Http\Controllers\Login\VFMLoginController;
+use App\Http\Controllers\Login\BaseLoginController;
+use App\Http\Controllers\Login\AdminLoginController;
+use App\Http\Controllers\Login\PhoneLoginController;
+use App\Http\Controllers\Login\VFM30LoginController;
+use App\Http\Controllers\Login\PolicyLoginController;
+use App\Http\Controllers\Login\VFMTechLoginController;
+use App\Http\Controllers\Login\WarehouseLoginController;
 
 // Class Controllers
+use App\Http\Controllers\ICS\ICSController;
+use App\Http\Controllers\VFM\VFMController;
+use App\Http\Controllers\VFM30\VFM30Controller;
+use App\Http\Controllers\VFM\VFMTechController;
 use App\Http\Controllers\Directory\PhoneDirectoryController;
 use App\Http\Controllers\Administrator\AdministratorController;
-use App\Http\Controllers\VFM\VFMController;
-use App\Http\Controllers\VFM\VFMTechController;
-use App\Http\Controllers\ICS\ICSController;
-use App\Http\Controllers\Policy\PolicyController;
-use App\Http\Controllers\VFM30\VFM30Controller;
+use App\Http\Controllers\Warehouse\WarehouseSupervisorController;
 
 // Shorthand login Classes
 $baseLoginClass = BaseLoginController::class;
@@ -30,6 +33,7 @@ $vfm30LoginClass = VFM30LoginController::class;
 $vfmTechLoginClass = VFMTechLoginController::class;
 $icsLoginClass = ICSLoginController::class;
 $policyLoginClass = PolicyLoginController::class;
+$warehouseLoginClass = WarehouseLoginController::class;
 
 // Shorthand Controller Classes
 $adminClass = AdministratorController::class;
@@ -39,6 +43,7 @@ $vfm30Class = VFM30Controller::class;
 $vfmTechClass = VFMTechController::class;
 $icsClass = ICSController::class;
 $policyClass = PolicyController::class;
+$warehouseSupervisorClass = WarehouseSupervisorController::class;
 
 // Forgot password link for all applications
 Route::get('forgot', [$baseLoginClass, 'showForgotPasswordForm'])->name('login.forgot');
@@ -186,4 +191,27 @@ Route::prefix('policy')->group(function () use ($policyClass, $policyLoginClass)
         Route::post('/upload', [$policyClass, 'store'])->name('policy.upload');
         Route::delete('/{id}', [$policyClass, 'destroy'])->name('policy.destroy');
     });
+});
+
+// ***---Warehouse Application---*** //
+Route::prefix('warehouse')->group(function () use ($warehouseLoginClass, $warehouseSupervisorClass){
+        // Routes without middleware
+        Route::get('/login', [$warehouseLoginClass, 'warehouseLoginForm'])->name('warehouse.login');
+        Route::post('/login', [$warehouseLoginClass, 'login']);
+        Route::get('/forgot', [$warehouseLoginClass, 'warehouseForgotPasswordForm'])->name('warehouse.forgot.form');
+        Route::post('/forgot', [$warehouseLoginClass, 'forgotPassword'])->name('warehouse.forgot.form.submit');
+        Route::post('/logout', [$warehouseLoginClass, 'logout'])->name('warehouse.logout');
+
+        // Warehouse Supervisor Routes
+        Route::prefix('warehouse-supervisor')->middleware('warehouseSupervisor')->group(function () use ($warehouseSupervisorClass) {
+            Route::get('/dashboard', [$warehouseSupervisorClass, 'dashboard'])->name('warehouse.warehouse-supervisor.dashboard')->middleware('cache');
+        });
+
+        // Warehouse Technician
+
+        // Property
+
+        // Supervisors
+
+        // Requestors
 });

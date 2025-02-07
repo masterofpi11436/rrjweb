@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Http\Controllers\Login\Custom;
+namespace App\Http\Controllers\Login;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
 
-class WarehouseSupervisorLoginController extends BaseLoginController
+class VFMTechLoginController extends BaseLoginController
 {
-    public function WarehouseSupervisorLoginForm()
+    public function VFMTechLoginForm()
     {
-        return view('Login.Logins.warehouse-supervisor-login');
+        return view('Login.Logins.vfm-tech-login');
     }
 
     public function login(Request $request)
@@ -26,21 +26,21 @@ class WarehouseSupervisorLoginController extends BaseLoginController
 
         // If user is not found, return error
         if (!$user) {
-            return redirect()->route('phone.login')->withErrors(['email_not_found' => 'No account found with this email address.']);
+            return redirect()->route('vfm-tech.login')->withErrors(['email_not_found' => 'No account found with this email address.']);
         }
 
-        // Attempt login with phone access or admin access
-        return $this->attemptLogin($request, 'phone.dashboard', function ($user) {
-            return $user->phone == 1 || $user->admin == 1;
+        // Attempt login with vfm access or admin access
+        return $this->attemptLogin($request, 'vfm-tech.dashboard', function ($user) {
+            return $user->vfm_tech == 1 || $user->admin == 1;
         });
     }
 
-    public function phoneForgotPasswordForm()
+    public function vfmTechForgotPasswordForm()
     {
-        return parent::showForgotPasswordForm('Login.Forgots.phone-forgot-password');
+        return parent::showForgotPasswordForm('Login.Forgots.vfm-tech-forgot-password');
     }
 
-    public function logout(Request $request, $route = 'phone.login')
+    public function logout(Request $request, $route = 'vfm-tech.login')
     {
         // Perform the standard logout
         Auth::logout();

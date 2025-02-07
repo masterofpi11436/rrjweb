@@ -5,13 +5,14 @@ namespace App\Providers;
 use Illuminate\Routing\Router;
 use App\Http\Middleware\Auth\ICS;
 use App\Http\Middleware\Auth\VFM;
-use App\Http\Middleware\Auth\VFM30;
 use App\Http\Middleware\Auth\Admin;
 use App\Http\Middleware\Auth\Phone;
+use App\Http\Middleware\Auth\VFM30;
 use App\Http\Middleware\ClearCache;
-use App\Http\Middleware\Auth\VFMTech;
 use App\Http\Middleware\Auth\Policy;
+use App\Http\Middleware\Auth\VFMTech;
 use Illuminate\Support\ServiceProvider;
+use App\Http\Middleware\Auth\Warehouse\WarehouseSupervisor;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -36,6 +37,7 @@ class AppServiceProvider extends ServiceProvider
         $router->aliasMiddleware('vfm-tech', VFMTech::class);
         $router->aliasMiddleware('ics', ICS::class);
         $router->aliasMiddleware('policy', Policy::class);
+        $router->aliasMiddleware('warehouseSupervisor', WarehouseSupervisor::class);
         $router->aliasMiddleware('cache', ClearCache::class);
     }
 }
