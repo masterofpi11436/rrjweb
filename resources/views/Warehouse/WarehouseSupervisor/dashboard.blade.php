@@ -6,6 +6,6 @@
 
 @section('content')
 
-<h1>Dashboard goes here</h1>
+<h1 class="text-3xl font-bold underline">Dashboard goes here</h1>
 
 @endsection

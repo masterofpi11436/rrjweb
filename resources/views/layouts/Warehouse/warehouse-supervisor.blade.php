@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ asset('css/water-dark.css') }}" id="theme-link" >
     <link rel="stylesheet" href="/css/common-styles-light.css" id="common-styles-link">
+    @vite('resources/css/app.css')
     <title>@yield('title')</title>
     @livewireStyles
 </head>
