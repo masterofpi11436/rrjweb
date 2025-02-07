@@ -46,6 +46,8 @@ php artisan storage:link
 upload_max_filesize = 100M
 post_max_size = 100M
 max_file_uploads = 100
+max_execution_time=300
+max_input_time=300
 
 # Edited .htaccess file in public directory
 php_value max_file_uploads 100

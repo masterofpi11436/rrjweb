@@ -32,7 +32,7 @@ class PolicyController extends Controller
     {
         // Validate the form inputs
         $request->validate([
-            'pdfs.*' => 'required|mimes:pdf|max:102400', // Ensure each file is a PDF with max size of 100MB
+            'pdfs.*' => 'required|mimes:pdf', // Ensure each file is a PDF with max size of 100MB
         ]);
 
         if ($request->hasFile('pdfs')) {
