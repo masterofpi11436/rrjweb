@@ -20,18 +20,18 @@ class DatabaseSeeder extends Seeder
     {
         DB::table('users')->insert([
             [
-                'last_name' => 'Scott',
-                'first_name' => 'Heather',
-                'email' => 'heather.scott@icsolutions.com',
-                'password' => Hash::make('admin'),
-                'admin' => false,
+                'last_name' => 'Tuggle',
+                'first_name' => 'Mark',
+                'email' => 'tugglem@rrjva.org',
+                'password' => Hash::make('asd'),
+                'admin' => true,
                 'phone' => false,
                 'vfm' => false,
                 'vfm30' => false,
                 'vfm_tech' => false,
-                'ics' => true,
+                'ics' => false,
                 'policy' => false,
-                'warehouse_role' => 'Requestor',
+                'warehouse_role' => 'Warehouse Supervisor',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -66,22 +66,34 @@ class DatabaseSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
-            [
-                'last_name' => 'Tuggle',
-                'first_name' => 'Mark',
-                'email' => 'tugglem@rrjva.org',
-                'password' => Hash::make('asd'),
-                'admin' => true,
-                'phone' => false,
-                'vfm' => false,
-                'vfm30' => false,
-                'vfm_tech' => false,
-                'ics' => false,
-                'policy' => false,
-                'warehouse_role' => 'Requestor',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
+        ]);
+
+        DB::table('sections')->insert([
+            ['section' => 'Administration'],
+            ['section' => 'Booking'],
+            ['section' => 'C&T'],
+            ['section' => 'Captains Hall'],
+            ['section' => 'Classification'],
+            ['section' => 'Compliance'],
+            ['section' => 'Housekeeping'],
+            ['section' => 'HUM'],
+            ['section' => 'Housing Unit 1'],
+            ['section' => 'Housing Unit 2'],
+            ['section' => 'Housing Unit 3'],
+            ['section' => 'Housing Unit 4'],
+            ['section' => 'Housing Unit 5'],
+            ['section' => 'Housing Unit 6'],
+            ['section' => 'Maintenance'],
+            ['section' => 'Medical Housing'],
+            ['section' => 'Movement'],
+            ['section' => 'OPR'],
+            ['section' => 'Programs'],
+            ['section' => 'Property'],
+            ['section' => 'Records'],
+            ['section' => 'SEC'],
+            ['section' => 'SHU-A'],
+            ['section' => 'SHU-B'],
+            ['section' => 'Warehouse'],
         ]);
 
         DB::table('categories')->insert([
@@ -94,10 +106,10 @@ class DatabaseSeeder extends Seeder
         ]);
 
         DB::table('statuses')->insert([
-            ['name' => 'Pending Supervisor Approval'],
-            ['name' => 'Pending Warehouse Approval'],
-            ['name' => 'Approved'],
-            ['name' => 'Denied'],
+            ['status' => 'Pending Supervisor Approval'],
+            ['status' => 'Pending Warehouse Approval'],
+            ['status' => 'Approved'],
+            ['status' => 'Denied'],
         ]);
 
         // Populate random data for applications
