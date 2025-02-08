@@ -6,6 +6,7 @@ In order to download and run the framework locally; the tools git, composer, and
 git pull origin main
 Create the .env file from the .env.example file
 composer install
+npm install
 php artisan key:generate
 sudo /etc/init.d/apache2 stop
 sudo /opt/lampp/lampp start
