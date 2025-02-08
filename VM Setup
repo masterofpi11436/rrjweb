@@ -129,9 +129,25 @@ sudo chown -R $USER:www-data /opt/lampp/htdocs
 Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
 
 # Install Tailwind for project (must be in project file)
-npm install -D tailwindcss postcss autoprefixer
-npx tailwindcss init -p
+cd my-project
+npm install tailwindcss @tailwindcss/vite
 
+# Add this to the vite.config.js file
+import { defineConfig } from 'vite'
+import tailwindcss from '@tailwindcss/vite'
+
+export default defineConfig({
+      plugins: [
+        tailwindcss(),
+        // …
+      ],
+})
+
+In ./resources/css/app.css, add these:
+@import "tailwindcss";
+@source "../views";
+
+Run the development build
 npm run dev
 
 add @vite('resources/css/app.css') in the <head> Element
