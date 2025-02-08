@@ -51,6 +51,7 @@
             </tbody>
         </table>
     @else
-        <h1>No Extension Found</h1>
+        <h1>No Extension Found.</h1>
+        <p>Contact MIU to update the phone directory.</p>
     @endif
 </div>
