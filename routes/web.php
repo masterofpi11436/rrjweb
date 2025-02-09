@@ -22,7 +22,7 @@ use App\Http\Controllers\VFM30\VFM30Controller;
 use App\Http\Controllers\VFM\VFMTechController;
 use App\Http\Controllers\Directory\PhoneDirectoryController;
 use App\Http\Controllers\Administrator\AdministratorController;
-use App\Http\Controllers\Warehouse\WarehouseSupervisorController;
+use App\Http\Controllers\Warehouse\WarehouseSupervisor\WarehouseSupervisorController;
 
 // Shorthand login Classes
 $baseLoginClass = BaseLoginController::class;
