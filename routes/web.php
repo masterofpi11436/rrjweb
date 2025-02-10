@@ -23,6 +23,8 @@ use App\Http\Controllers\VFM\VFMTechController;
 use App\Http\Controllers\Directory\PhoneDirectoryController;
 use App\Http\Controllers\Administrator\AdministratorController;
 use App\Http\Controllers\Warehouse\WarehouseSupervisor\WarehouseSupervisorController;
+use App\Http\Controllers\Warehouse\WarehouseSupervisor\ItemController;
+use App\Http\Controllers\Warehouse\WarehouseSupervisor\UserController;
 
 // Shorthand login Classes
 $baseLoginClass = BaseLoginController::class;
@@ -44,6 +46,8 @@ $vfmTechClass = VFMTechController::class;
 $icsClass = ICSController::class;
 $policyClass = PolicyController::class;
 $warehouseSupervisorClass = WarehouseSupervisorController::class;
+$itemClass = ItemController::class;
+$userClass = UserController::class;
 
 // Forgot password link for all applications
 Route::get('forgot', [$baseLoginClass, 'showForgotPasswordForm'])->name('login.forgot');
@@ -194,7 +198,7 @@ Route::prefix('policy')->group(function () use ($policyClass, $policyLoginClass)
 });
 
 // ***---Warehouse Application---*** //
-Route::prefix('warehouse')->group(function () use ($warehouseLoginClass, $warehouseSupervisorClass){
+Route::prefix('warehouse')->group(function () use ($warehouseLoginClass, $warehouseSupervisorClass, $itemClass, $userClass){
         // Routes without middleware
         Route::get('/login', [$warehouseLoginClass, 'warehouseLoginForm'])->name('warehouse.login');
         Route::post('/login', [$warehouseLoginClass, 'login']);
@@ -203,8 +207,18 @@ Route::prefix('warehouse')->group(function () use ($warehouseLoginClass, $wareho
         Route::post('/logout', [$warehouseLoginClass, 'logout'])->name('warehouse.logout');
 
         // Warehouse Supervisor Routes
-        Route::prefix('warehouse-supervisor')->middleware('warehouseSupervisor')->group(function () use ($warehouseSupervisorClass) {
+        Route::prefix('warehouse-supervisor')->middleware('warehouseSupervisor')->group(function () use ($warehouseSupervisorClass, $itemClass, $userClass) {
             Route::get('/dashboard', [$warehouseSupervisorClass, 'dashboard'])->name('warehouse.warehouse-supervisor.dashboard')->middleware('cache');
+
+            // Item Management
+            Route::prefix('item')->middleware('warehouseSupervisor')->group(function () use ($itemClass) {
+                Route::get('/dashboard', [$itemClass, 'dashboard'])->name('warehouse.warehouse-supervisor.item.dashboard')->middleware('cache');
+            });
+
+            // User Management
+            Route::prefix('user')->middleware('warehouseSupervisor')->group(function () use ($userClass) {
+                Route::get('/dashboard', [$userClass, 'dashboard'])->name('warehouse.warehouse-supervisor.user.dashboard')->middleware('cache');
+            });
         });
 
         // Warehouse Technician
