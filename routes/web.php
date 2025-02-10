@@ -207,17 +207,22 @@ Route::prefix('warehouse')->group(function () use ($warehouseLoginClass, $wareho
         Route::post('/logout', [$warehouseLoginClass, 'logout'])->name('warehouse.logout');
 
         // Warehouse Supervisor Routes
-        Route::prefix('warehouse-supervisor')->middleware('warehouseSupervisor')->group(function () use ($warehouseSupervisorClass, $itemClass, $userClass) {
-            Route::get('/dashboard', [$warehouseSupervisorClass, 'dashboard'])->name('warehouse.warehouse-supervisor.dashboard')->middleware('cache');
-
-            // Item Management
-            Route::prefix('item')->middleware('warehouseSupervisor')->group(function () use ($itemClass) {
-                Route::get('/dashboard', [$itemClass, 'dashboard'])->name('warehouse.warehouse-supervisor.item.dashboard')->middleware('cache');
-            });
+        Route::prefix('warehouse-supervisor')->middleware('warehouseSupervisor', 'cache')->group(function () use ($warehouseSupervisorClass, $itemClass, $userClass) {
+            Route::get('/dashboard', [$warehouseSupervisorClass, 'dashboard'])->name('warehouse.warehouse-supervisor.dashboard');
 
             // User Management
-            Route::prefix('user')->middleware('warehouseSupervisor')->group(function () use ($userClass) {
-                Route::get('/dashboard', [$userClass, 'dashboard'])->name('warehouse.warehouse-supervisor.user.dashboard')->middleware('cache');
+            Route::prefix('user')->group(function () use ($userClass) {
+                Route::get('/dashboard', [$userClass, 'dashboard'])->name('warehouse.warehouse-supervisor.user.dashboard');
+            });
+
+            // Item Management
+            Route::prefix('item')->group(function () use ($itemClass) {
+                Route::get('/dashboard', [$itemClass, 'dashboard'])->name('warehouse.warehouse-supervisor.item.dashboard');
+            });
+
+            // Section Management
+            Route::prefix('section')->group(function () use ($itemClass) {
+                Route::get('/dashboard', [$itemClass, 'dashboard'])->name('warehouse.warehouse-supervisor.section.dashboard');
             });
         });
 
