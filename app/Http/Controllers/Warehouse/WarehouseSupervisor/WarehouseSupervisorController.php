@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Warehouse\WarehouseSupervisor;
 // Base Controller
 use App\Http\Controllers\Controller;
 
+// This class only shows the dashboard for the manager.
 class WarehouseSupervisorController extends Controller
 {
     public function dashboard()
