@@ -2,21 +2,14 @@
 
 @section('title', 'Warehouse Store Supervisor')
 
-@section('heading', 'Warehouse Store Supervisor Pages')
+@section('heading', 'Section Management')
 
 @section('content')
 <div class="grid grid-cols-3 gap-6">
     <a href=""><div class="p-5 bg-yellow-300 rounded shadow">
-        <h3 class="text-lg font-semibold">Pending Orders</h3>
-        <p class="text-gray-700">10 Pending Orders</p>
+        <h3 class="text-lg font-semibold">Sections</h3>
+        <p class="text-gray-700">CRUD Sections</p>
     </div></a>
-    <a href=""><div class="p-5 bg-green-300 rounded shadow">
-        <h3 class="text-lg font-semibold">Recently Approved Orders</h3>
-        <p class="text-gray-700">25 Approved Orders</p>
-    </div></a>
-    <a href=""><div class="p-5 bg-red-300 rounded shadow">
-        <h3 class="text-lg font-semibold">Recently Denied Orders</h3>
-        <p class="text-gray-700">5 Denied Orders</p>
     </div></a>
 </div>
 @endsection

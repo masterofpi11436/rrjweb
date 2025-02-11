@@ -24,7 +24,10 @@ use App\Http\Controllers\Directory\PhoneDirectoryController;
 use App\Http\Controllers\Administrator\AdministratorController;
 use App\Http\Controllers\Warehouse\WarehouseSupervisor\WarehouseSupervisorController;
 use App\Http\Controllers\Warehouse\WarehouseSupervisor\ItemController;
+use App\Http\Controllers\Warehouse\WarehouseSupervisor\ItemTypeController;
+use App\Http\Controllers\Warehouse\WarehouseSupervisor\SectionController;
 use App\Http\Controllers\Warehouse\WarehouseSupervisor\UserController;
+use App\Http\Controllers\Warehouse\WarehouseSupervisor\ReportsHistoryController;
 
 // Shorthand login Classes
 $baseLoginClass = BaseLoginController::class;
@@ -47,7 +50,10 @@ $icsClass = ICSController::class;
 $policyClass = PolicyController::class;
 $warehouseSupervisorClass = WarehouseSupervisorController::class;
 $itemClass = ItemController::class;
+$itemTypeClass = ItemTypeController::class;
+$sectionClass = SectionController::class;
 $userClass = UserController::class;
+$reportsHistoryClass = ReportsHistoryController::class;
 
 // Forgot password link for all applications
 Route::get('forgot', [$baseLoginClass, 'showForgotPasswordForm'])->name('login.forgot');
@@ -59,7 +65,7 @@ Route::view('/login/success', 'Login.Resets.success')->name('login.success');
 
 // Default Redirect Route for testing
 Route::get('/', function () {
-    return redirect()->route('admin.login');
+    return redirect()->route('warehouse.login');
 });
 
 // Public Routes
@@ -198,7 +204,7 @@ Route::prefix('policy')->group(function () use ($policyClass, $policyLoginClass)
 });
 
 // ***---Warehouse Application---*** //
-Route::prefix('warehouse')->group(function () use ($warehouseLoginClass, $warehouseSupervisorClass, $itemClass, $userClass){
+Route::prefix('warehouse')->group(function () use ($warehouseLoginClass, $warehouseSupervisorClass, $itemClass, $itemTypeClass, $sectionClass, $userClass, $reportsHistoryClass){
         // Routes without middleware
         Route::get('/login', [$warehouseLoginClass, 'warehouseLoginForm'])->name('warehouse.login');
         Route::post('/login', [$warehouseLoginClass, 'login']);
@@ -207,7 +213,7 @@ Route::prefix('warehouse')->group(function () use ($warehouseLoginClass, $wareho
         Route::post('/logout', [$warehouseLoginClass, 'logout'])->name('warehouse.logout');
 
         // Warehouse Supervisor Routes
-        Route::prefix('warehouse-supervisor')->middleware('warehouseSupervisor', 'cache')->group(function () use ($warehouseSupervisorClass, $itemClass, $userClass) {
+        Route::prefix('warehouse-supervisor')->middleware('warehouseSupervisor', 'cache')->group(function () use ($warehouseSupervisorClass, $itemClass, $itemTypeClass, $sectionClass, $userClass, $reportsHistoryClass) {
             Route::get('/dashboard', [$warehouseSupervisorClass, 'dashboard'])->name('warehouse.warehouse-supervisor.dashboard');
 
             // User Management
@@ -220,9 +226,19 @@ Route::prefix('warehouse')->group(function () use ($warehouseLoginClass, $wareho
                 Route::get('/dashboard', [$itemClass, 'dashboard'])->name('warehouse.warehouse-supervisor.item.dashboard');
             });
 
+            // Item Management
+            Route::prefix('itemtype')->group(function () use ($itemTypeClass) {
+                Route::get('/dashboard', [$itemTypeClass, 'dashboard'])->name('warehouse.warehouse-supervisor.itemtype.dashboard');
+            });
+
             // Section Management
-            Route::prefix('section')->group(function () use ($itemClass) {
-                Route::get('/dashboard', [$itemClass, 'dashboard'])->name('warehouse.warehouse-supervisor.section.dashboard');
+            Route::prefix('section')->group(function () use ($sectionClass) {
+                Route::get('/dashboard', [$sectionClass, 'dashboard'])->name('warehouse.warehouse-supervisor.section.dashboard');
+            });
+
+            // Section Management
+            Route::prefix('reports_history')->group(function () use ($reportsHistoryClass) {
+                Route::get('/dashboard', [$reportsHistoryClass, 'dashboard'])->name('warehouse.warehouse-supervisor.reports_history.dashboard');
             });
         });
 

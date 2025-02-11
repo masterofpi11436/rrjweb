@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Warehouse Supervisor Panel</title>
+    <title>@yield('title')</title>
     @vite('resources/css/app.css')
 </head>
 <body class="bg-gray-100">
@@ -21,26 +21,18 @@
                             <summary class="block p-2 rounded hover:bg-blue-700 cursor-pointer">Inventory Management</summary>
                             <ul class="pl-4 mt-2 hidden group-open:block">
                                 <li class="mb-2"><a href="{{ route('warehouse.warehouse-supervisor.item.dashboard') }}" class="block p-2 rounded hover:bg-blue-600">Manage Items</a></li>
+                                <li class="mb-2"><a href="{{ route('warehouse.warehouse-supervisor.itemtype.dashboard') }}" class="block p-2 rounded hover:bg-blue-600">Manage Item Types</a></li>
                                 <li class="mb-2"><a href="{{ route('warehouse.warehouse-supervisor.section.dashboard') }}" class="block p-2 rounded hover:bg-blue-600">Manage Sections</a></li>
                                 <li class="mb-2"><a href="#" class="block p-2 rounded hover:bg-blue-600">Inventory Overview</a></li>
                             </ul>
                         </details>
                     </li>
 
-                    <!-- Orders Management Dropdown -->
-                    <li class="mb-3">
-                        <details class="group">
-                            <summary class="block p-2 rounded hover:bg-blue-700 cursor-pointer">Orders</summary>
-                            <ul class="pl-4 mt-2 hidden group-open:block">
-                                <li class="mb-2"><a href="#" class="block p-2 rounded hover:bg-blue-600">Pending Orders</a></li>
-                                <li class="mb-2"><a href="#" class="block p-2 rounded hover:bg-blue-600">Approved Orders</a></li>
-                                <li class="mb-2"><a href="#" class="block p-2 rounded hover:bg-blue-600">Denied Orders</a></li>
-                            </ul>
-                        </details>
-                    </li>
-
                     <!-- Reports -->
-                    <li class="mb-3"><a href="#" class="block p-2 rounded hover:bg-blue-700">Reports/History</a></li>
+                    <li class="mb-3"><a href="{{ route('warehouse.warehouse-supervisor.reports_history.dashboard') }}" class="block p-2 rounded hover:bg-blue-700">Reports/History</a></li>
+
+                    <!-- Create Request -->
+                    <li class="mb-3"><a href="#" class="block p-2 rounded hover:bg-blue-700">Create Request</a></li>
 
                     <!-- User Management -->
                     <li class="mb-3"><a href="{{ route('warehouse.warehouse-supervisor.user.dashboard')}}" class="block p-2 rounded hover:bg-blue-700">Manage Users</a></li>
@@ -53,7 +45,7 @@
         <div class="flex-1 flex flex-col">
             <!-- Header -->
             <header class="bg-white p-4 shadow flex justify-between items-center">
-                <h2 class="text-xl font-semibold">Warehouse Management</h2>
+                <h2 class="text-xl font-semibold">@yield('heading')</h2>
                 <div class="flex items-center gap-4">
                     <h2>Welcome: {{ Auth::user()->first_name }} {{ Auth::user()->last_name }}</h2>
                     <form action="{{ route('warehouse.logout') }}" method="POST">
