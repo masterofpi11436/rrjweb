@@ -54,13 +54,11 @@
                 </button>
             @endif
 
-        <!-- Cancel Button -->
-        <a href="{{ route('warehouse.warehouse-supervisor.user.dashboard') }}"
-            class="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition inline-block text-center">
-            Cancel
-        </a>
-
+            <!-- Cancel Button -->
+            <a href="{{ route('warehouse.warehouse-supervisor.user.dashboard') }}"
+                class="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition inline-block text-center">
+                Cancel
+            </a>
         </div>
-
     </form>
 </div>
