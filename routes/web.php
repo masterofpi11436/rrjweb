@@ -213,12 +213,15 @@ Route::prefix('warehouse')->group(function () use ($warehouseLoginClass, $wareho
         Route::post('/logout', [$warehouseLoginClass, 'logout'])->name('warehouse.logout');
 
         // Warehouse Supervisor Routes
-        Route::prefix('warehouse-supervisor')->middleware('warehouseSupervisor', 'cache')->group(function () use ($warehouseSupervisorClass, $itemClass, $itemTypeClass, $sectionClass, $userClass, $reportsHistoryClass) {
+        Route::prefix('warehouse-supervisor')->middleware('warehouseSupervisor')->group(function () use ($warehouseSupervisorClass, $itemClass, $itemTypeClass, $sectionClass, $userClass, $reportsHistoryClass) {
             Route::get('/dashboard', [$warehouseSupervisorClass, 'dashboard'])->name('warehouse.warehouse-supervisor.dashboard');
 
             // User Management
             Route::prefix('user')->group(function () use ($userClass) {
                 Route::get('/dashboard', [$userClass, 'dashboard'])->name('warehouse.warehouse-supervisor.user.dashboard');
+                Route::get('/create', [$userClass, 'create'])->name('warehouse.warehouse-supervisor.user.create');
+                Route::get('/{id}/edit', [$userClass, 'edit'])->name('warehouse.warehouse-supervisor.user.edit');
+                Route::delete('/{id}', [$userClass, 'destroy'])->name('warehouse.warehouse-supervisor.user.destroy');
             });
 
             // Item Management

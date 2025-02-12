@@ -25,24 +25,6 @@ class UserSearch extends Component
         }
     }
 
-    public function confirmDelete($userId)
-    {
-        $this->confirmingDelete = $userId; // Set user ID for deletion confirmation
-    }
-
-    public function deleteUser()
-    {
-        if ($this->confirmingDelete) {
-            $user = User::findOrFail($this->confirmingDelete);
-            $user->delete();
-
-            // Reset confirmation
-            $this->confirmingDelete = null;
-
-            session()->flash('message', 'User deleted successfully.');
-        }
-    }
-
     // Render method for livewire component
     public function render()
     {
