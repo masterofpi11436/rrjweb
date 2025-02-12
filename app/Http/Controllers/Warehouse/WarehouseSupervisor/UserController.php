@@ -10,6 +10,6 @@ class UserController extends Controller
 {
     public function dashboard()
     {
-        return view('Warehouse.WarehouseSupervisor.User.dashboard');
+        return view('Warehouse.WarehouseSupervisor.User.user.dashboard');
     }
 }
