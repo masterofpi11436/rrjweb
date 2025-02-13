@@ -227,6 +227,9 @@ Route::prefix('warehouse')->group(function () use ($warehouseLoginClass, $wareho
             // Item Management
             Route::prefix('item')->group(function () use ($itemClass) {
                 Route::get('/dashboard', [$itemClass, 'dashboard'])->name('warehouse.warehouse-supervisor.item.dashboard');
+                Route::get('/create', [$itemClass, 'create'])->name('warehouse.warehouse-supervisor.item.create');
+                Route::get('/{id}/edit', [$itemClass, 'edit'])->name('warehouse.warehouse-supervisor.item.edit');
+                Route::delete('/{id}', [$itemClass, 'destroy'])->name('warehouse.warehouse-supervisor.item.destroy');
             });
 
             // Item Management
