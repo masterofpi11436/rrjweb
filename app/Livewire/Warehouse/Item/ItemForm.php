@@ -9,6 +9,11 @@ class ItemForm extends Component
 {
     public $itemId;
     public $name;
+    public $category_id;
+    public $category_name;
+    public $image;
+    public $quantity;
+    public $low_stock_threshold;
 
     public function mount($id = null)
     {
@@ -25,6 +30,11 @@ class ItemForm extends Component
 
         if ($item) {
             $this->name = $item->name;
+            $this->category_id = $item->category_id;
+            $this->category_name = $item->category_name;
+            $this->image = $item->image;
+            $this->quantity = $item->quantity;
+            $this->low_stock_threshold = $item->low_stock_threshold;
         }
     }
 
@@ -33,6 +43,11 @@ class ItemForm extends Component
     {
         return [
             'name' => 'required|string|max:255',
+            'category_id' => 'required',
+            'category_name' => 'required',
+            'image' => 'mimes:jpg',
+            'quantity' => 'required|integer',
+            'low_stock_threshold' => 'required|integer',
         ];
     }
 

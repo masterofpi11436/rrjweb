@@ -24,6 +24,22 @@
                             @endif
                         </a>
                     </th>
+                    <th>
+                        <a href="#" wire:click.prevent="sortBy('category_id')" class="text-blue-600 underline hover:text-blue-800">
+                            Category
+                            @if ($sortColumn === 'category_id')
+                                @if ($sortDirection === 'asc') ▲ @else ▼ @endif
+                            @endif
+                        </a>
+                    </th>
+                    <th>
+                        <a href="#" wire:click.prevent="sortBy('quantity')" class="text-blue-600 underline hover:text-blue-800">
+                            Quantity
+                            @if ($sortColumn === 'quantity')
+                                @if ($sortDirection === 'asc') ▲ @else ▼ @endif
+                            @endif
+                        </a>
+                    </th>
                     <th class="p-3">Actions</th>
                 </tr>
             </thead>
@@ -31,6 +47,8 @@
                 @forelse($items as $item)
                     <tr class="border-b hover:bg-gray-50">
                         <td class="p-3">{{ $item->name }}</td>
+                        <td class="p-3">{{ $item->category->category ?? 'No Category '}}</td>
+                        <td class="p-3">{{ $item->quantity }}</td>
                         <td class="p-3 flex space-x-2">
                             <a href="{{ route('warehouse.warehouse-supervisor.item.edit', $item->id) }}" class="text-blue-500 hover:text-blue-700">Edit</a>
 

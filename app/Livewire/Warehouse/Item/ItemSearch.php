@@ -28,12 +28,9 @@ class ItemSearch extends Component
     // Render method for livewire component
     public function render()
     {
-        // Define columns for query
-        $columns = ['id', 'name'];
-
         // Query to search and sort items
         $items = Item::query()
-            ->select($columns)
+            ->with('category:id,category')
             ->where(function (Builder $query) {
                 $query->where('name', 'like', '%' . $this->search . '%');
             })
