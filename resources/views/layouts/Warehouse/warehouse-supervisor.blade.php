@@ -10,7 +10,7 @@
 <body class="bg-gray-100">
     <div class="flex h-screen bg-gray-100">
         <!-- Sidebar -->
-        <aside class="w-64 bg-green-900 text-white p-5 flex flex-col">
+        <aside class="w-64 bg-green-900 text-white p-5 flex flex-col h-screen fixed">
             <h1 class="text-2xl font-bold mb-5">Navigation</h1>
             <nav>
                 <ul>
@@ -43,9 +43,9 @@
         </aside>
 
         <!-- Main Content -->
-        <div class="flex-1 flex flex-col">
+        <div class="flex-1 flex flex-col ml-64">
             <!-- Header -->
-            <header class="bg-white p-4 shadow flex justify-between items-center">
+            <header class="bg-white p-4 shadow flex justify-between items-center sticky top-0 z-50">
                 <h2 class="text-xl font-semibold">@yield('heading')</h2>
                 <div class="flex items-center gap-4">
                     <h2>Welcome: {{ Auth::user()->first_name }} {{ Auth::user()->last_name }}</h2>
