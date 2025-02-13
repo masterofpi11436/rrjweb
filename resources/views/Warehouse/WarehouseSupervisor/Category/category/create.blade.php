@@ -2,11 +2,11 @@
 
 @section('title', 'Warehouse Store Supervisor')
 
-@section('heading', 'Create New Section')
+@section('heading', 'Create New Category')
 
 @section('content')
 
 <!-- Livewire search component -->
-@livewire('warehouse.section.section-form')
+@livewire('warehouse.category.category-form')
 
 @endsection

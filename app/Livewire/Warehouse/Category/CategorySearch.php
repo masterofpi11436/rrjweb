@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Builder;
 class CategorySearch extends Component
 {
     public $search = ''; // Default search term
-    public $sortColumn = 'section'; // Default sort column
+    public $sortColumn = 'category'; // Default sort column
     public $sortDirection = 'asc'; // Default sort direction
     public $confirmingDelete = false;
     public $deleteId;
@@ -29,19 +29,19 @@ class CategorySearch extends Component
     public function render()
     {
         // Define columns for query
-        $columns = ['id', 'section'];
+        $columns = ['id', 'category'];
 
-        // Query to search and sort sections
-        $sections = Category::query()
+        // Query to search and sort categoryies
+        $categories = Category::query()
             ->select($columns)
             ->where(function (Builder $query) {
-                $query->where('section', 'like', '%' . $this->search . '%');
+                $query->where('category', 'like', '%' . $this->search . '%');
             })
             ->orderBy($this->sortColumn, $this->sortDirection)
             ->get();
 
-        return view('Warehouse.WarehouseSupervisor.Section.livewire.section-search', [
-            'sections' => $sections,
+        return view('Warehouse.WarehouseSupervisor.Category.livewire.category-search', [
+            'categories' => $categories,
         ]);
     }
 }

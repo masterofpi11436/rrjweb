@@ -7,24 +7,24 @@ use App\Models\Warehouse\Category;
 
 class CategoryForm extends Component
 {
-    public $sectionId;
-    public $section;
+    public $categoryId;
+    public $category;
 
     public function mount($id = null)
     {
         if ($id) {
-            $this->sectionId = $id;
-            $this->loadSection();
+            $this->categoryId = $id;
+            $this->loadCategory();
         }
     }
 
     // Load the section data for editing
-    public function loadSection()
+    public function loadCategory()
     {
-        $section = Category::find($this->sectionId);
+        $category = Category::find($this->categoryId);
 
-        if ($section) {
-            $this->section = $section->section;
+        if ($category) {
+            $this->category = $category->category;
         }
     }
 
@@ -32,7 +32,7 @@ class CategoryForm extends Component
     protected function rules()
     {
         return [
-            'section' => 'required|string|max:255',
+            'category' => 'required|string|max:255',
         ];
     }
 
@@ -47,24 +47,24 @@ class CategoryForm extends Component
     {
         $this->validate();
 
-        if ($this->sectionId) {
-            $section = Category::find($this->sectionId);
+        if ($this->categoryId) {
+            $category = Category::find($this->categoryId);
             session()->flash('create-edit-delete-message', 'Section updated successfully!');
         } else {
             // Create new user
-            $section = new Category;
+            $category = new Category;
             session()->flash('create-edit-delete-message', 'Section created successfully!');
         }
 
-        $section->section = $this->section;
+        $category->category = $this->category;
 
-        $section->save();
+        $category->save();
 
-        return redirect()->route('warehouse.warehouse-supervisor.section.dashboard');
+        return redirect()->route('warehouse.warehouse-supervisor.category.dashboard');
     }
 
     public function render()
     {
-        return view('Warehouse.WarehouseSupervisor.Section.livewire.section-form');
+        return view('Warehouse.WarehouseSupervisor.Category.livewire.category-form');
     }
 }

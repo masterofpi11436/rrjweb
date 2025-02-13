@@ -2,11 +2,11 @@
 
 @section('title', 'Warehouse Store Supervisor')
 
-@section('heading', 'Edit Section Name')
+@section('heading', 'Edit Category Name')
 
 @section('content')
 
 <!-- Livewire search component -->
-@livewire('warehouse.section.section-form', ['id' => $section->id])
+@livewire('warehouse.category.category-form', ['id' => $category->id])
 
 @endsection

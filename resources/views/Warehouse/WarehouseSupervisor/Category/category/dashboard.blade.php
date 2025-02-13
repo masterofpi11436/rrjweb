@@ -15,6 +15,6 @@
 @endif
 
 <!-- Livewire search component -->
-@livewire('warehouse.section.item-type-search')
+@livewire('warehouse.category.category-search')
 
 @endsection
