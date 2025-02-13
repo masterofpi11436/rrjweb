@@ -6,10 +6,10 @@ namespace App\Http\Controllers\Warehouse\WarehouseSupervisor;
 use App\Http\Controllers\Controller;
 
 // CRUD operations for item categories
-class ItemTypeController extends Controller
+class CategoryController extends Controller
 {
     public function dashboard()
     {
-        return view('Warehouse.WarehouseSupervisor.ItemType.dashboard');
+        return view('Warehouse.WarehouseSupervisor.Category.dashboard');
     }
 }

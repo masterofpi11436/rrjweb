@@ -22,7 +22,7 @@
                             <summary class="block p-2 rounded hover:bg-blue-700 cursor-pointer">Inventory Management</summary>
                             <ul class="pl-4 mt-2 hidden group-open:block">
                                 <li class="mb-2"><a href="{{ route('warehouse.warehouse-supervisor.item.dashboard') }}" class="block p-2 rounded hover:bg-blue-600">Manage Items</a></li>
-                                <li class="mb-2"><a href="{{ route('warehouse.warehouse-supervisor.itemtype.dashboard') }}" class="block p-2 rounded hover:bg-blue-600">Manage Item Types</a></li>
+                                <li class="mb-2"><a href="{{ route('warehouse.warehouse-supervisor.category.dashboard') }}" class="block p-2 rounded hover:bg-blue-600">Manage Item Categories</a></li>
                                 <li class="mb-2"><a href="{{ route('warehouse.warehouse-supervisor.section.dashboard') }}" class="block p-2 rounded hover:bg-blue-600">Manage Sections</a></li>
                                 <li class="mb-2"><a href="#" class="block p-2 rounded hover:bg-blue-600">Inventory Overview</a></li>
                             </ul>
