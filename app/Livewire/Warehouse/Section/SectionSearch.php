@@ -29,7 +29,7 @@ class SectionSearch extends Component
     public function render()
     {
         // Define columns for query
-        $columns = ['id', 'name'];
+        $columns = ['id', 'section'];
 
         // Query to search and sort sections
         $sections = Section::query()

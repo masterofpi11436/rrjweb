@@ -237,6 +237,9 @@ Route::prefix('warehouse')->group(function () use ($warehouseLoginClass, $wareho
             // Section Management
             Route::prefix('section')->group(function () use ($sectionClass) {
                 Route::get('/dashboard', [$sectionClass, 'dashboard'])->name('warehouse.warehouse-supervisor.section.dashboard');
+                Route::get('/create', [$sectionClass, 'create'])->name('warehouse.warehouse-supervisor.section.create');
+                Route::get('/{id}/edit', [$sectionClass, 'edit'])->name('warehouse.warehouse-supervisor.section.edit');
+                Route::delete('/{id}', [$sectionClass, 'destroy'])->name('warehouse.warehouse-supervisor.section.destroy');
             });
 
             // Section Management
