@@ -74,7 +74,7 @@ Setting Up a Virtual Machine with Ubuntu to Host a Website
 			git config --global --list
 
 ***************************
-4. Install curl
+4. Install curl (For installing nodejs and npm)
 
 	Open a terminal and run the following commands:
 		sudo apt update
@@ -98,6 +98,10 @@ These next set of instructions are for using PHP (Laravel) and may not pertain t
 		curl -fsSL https://deb.nodesource.com/setup_22.x | sudo -E bash -
 		sudo apt install -y nodejs
 
+    Verify node and npm installation
+        node -v
+        npm -v
+
 ***************************
 7. Install XAMPP
 
@@ -108,7 +112,7 @@ These next set of instructions are for using PHP (Laravel) and may not pertain t
 
 	Run the Apache/MySQL services
 		sudo /opt/lampp/lampp start
-		sudo /opt/lampp/lampp stopInstall
+		sudo /opt/lampp/lampp stop
 
 ***************************
 8. Make the htdocs folder read/writable to view web pages
@@ -130,6 +134,8 @@ Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
 
 # Install Tailwind for project (must be in project file)
 cd my-project
+npm install -D tailwindcss postcss autoprefixer (???)
+npx tailwindcss init -p (???)
 npm install tailwindcss @tailwindcss/vite
 
 # Add this to the vite.config.js file
