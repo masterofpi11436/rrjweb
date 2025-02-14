@@ -213,7 +213,7 @@ Route::prefix('warehouse')->group(function () use ($warehouseLoginClass, $wareho
         Route::post('/logout', [$warehouseLoginClass, 'logout'])->name('warehouse.logout');
 
         // Warehouse Supervisor Routes
-        Route::prefix('warehouse-supervisor')->middleware('warehouseSupervisor')->group(function () use ($warehouseSupervisorClass, $itemClass, $categoryClass, $sectionClass, $userClass, $reportsHistoryClass) {
+        Route::prefix('warehouse-supervisor')->middleware('warehouseSupervisor', 'cache')->group(function () use ($warehouseSupervisorClass, $itemClass, $categoryClass, $sectionClass, $userClass, $reportsHistoryClass) {
             Route::get('/dashboard', [$warehouseSupervisorClass, 'dashboard'])->name('warehouse.warehouse-supervisor.dashboard');
 
             // User Management
