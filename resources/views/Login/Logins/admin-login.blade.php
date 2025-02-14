@@ -5,7 +5,7 @@
 @section('heading', 'Administrator Login')
 
 @section('content')
-<h2>Hello World</h2>
+
 <div>
     {{-- Admin forgot --}}
     <form action="{{ route('admin.forgot.form') }}">
