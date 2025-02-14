@@ -27,6 +27,12 @@ sudo chmod 777 storage/app/public
 sudo chmod 777 storage/framework
 sudo chmod 777 storage/logs
 
+# Allow Port traffic
+
+sudo ufw allow 80/tcp
+sudo ufw allow 443/tcp
+
+
 # Drop one specific table:
 php artisan tinker
 Schema::dropIfExists('table_name');
