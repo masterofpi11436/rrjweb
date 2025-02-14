@@ -20,12 +20,18 @@ php artisan migrate:refresh --seed
 php artisan migrate --path=/database/migrations/2025_01_28_125006_create_test_table.php
 
 # change permission of the folders
-chmod 777 storage
-chmod 777 storage/framework/views
-chmod 777 storage/app
-chmod 777 storage/app/public
-chmod 777 storage/framework
-chmod 777 storage/logs
+sudo chmod 777 storage
+sudo chmod 777 storage/framework/views
+sudo chmod 777 storage/app
+sudo chmod 777 storage/app/public
+sudo chmod 777 storage/framework
+sudo chmod 777 storage/logs
+
+# Allow Port traffic
+
+sudo ufw allow 80/tcp
+sudo ufw allow 443/tcp
+
 
 # Drop one specific table:
 php artisan tinker
