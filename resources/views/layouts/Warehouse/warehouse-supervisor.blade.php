@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/delete-confirmation-modal.css">
+    <link rel="stylesheet" href="/css/back-to-top.css" id="common-styles-link">
     <title>@yield('title')</title>
     @vite('resources/css/app.css')
 </head>
@@ -61,8 +62,11 @@
                 @yield('content')
             </main>
 
+            <a href="#" id="back-to-top" class="back-to-top">⬆️ Back to Top</a>
+
             <script src="{{ asset('javascript/delete-confirmation.js') }}"></script>
             <script src="{{ asset('javascript/flash-message-expiry.js') }}"></script>
+            <script src="{{ asset('javascript/back-to-top.js') }}"></script>
         </div>
     </div>
 </body>

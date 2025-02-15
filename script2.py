@@ -1,5 +1,4 @@
-Items:
-BROOM HEAD (ea)
+raw_items = """BROOM HEAD (ea)
 CENTER PULL TOWELS (ro)
 DECK BRUSH 10" (ea)
 DUST MOP HEAD (ea)
@@ -200,4 +199,13 @@ Personnel File (bx) 14075
 Supervisor File (bx) 14076
 Inmate Flex Pen (ea)
 Mop Bucket (ea)
-HP148a/ HP148x
+HP148a/ HP148x"""
+
+# Convert pasted text into a list
+item_names = raw_items.split("\n")
+
+# Generate SQL INSERT statement
+sql = "INSERT INTO `items` (`name`) VALUES " + ", ".join(f"('{name}')" for name in item_names) + ";"
+
+# Print SQL statement
+print(sql)
