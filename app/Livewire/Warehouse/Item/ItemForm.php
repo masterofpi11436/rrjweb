@@ -3,27 +3,35 @@
 namespace App\Livewire\Warehouse\Item;
 
 use Livewire\Component;
+use Livewire\WithFileUploads;
+use Illuminate\Support\Str;
 use App\Models\Warehouse\Item;
+use App\Models\Warehouse\Category;
 
 class ItemForm extends Component
 {
+    use WithFileUploads;
+
     public $itemId;
     public $name;
     public $category_id;
     public $category_name;
     public $image;
+    public $imagePreview;
     public $quantity;
     public $low_stock_threshold;
+    public $categories = []; // Holds all categories
 
     public function mount($id = null)
     {
+        $this->categories = Category::all(); // Fetch categories for dropdown
+
         if ($id) {
             $this->itemId = $id;
             $this->loadItem();
         }
     }
 
-    // Load the section data for editing
     public function loadItem()
     {
         $item = Item::find($this->itemId);
@@ -32,48 +40,66 @@ class ItemForm extends Component
             $this->name = $item->name;
             $this->category_id = $item->category_id;
             $this->category_name = $item->category_name;
-            $this->image = $item->image;
             $this->quantity = $item->quantity;
             $this->low_stock_threshold = $item->low_stock_threshold;
+            $this->imagePreview = $item->image ? asset('storage/' . $item->image) : asset('images/default-item.png');
         }
     }
 
-    // Validation rules for the form
+    public function removeImage()
+    {
+        $this->image = null; // Clear uploaded image
+        $this->imagePreview = null; // Remove preview
+    }
+
+
     protected function rules()
     {
         return [
             'name' => 'required|string|max:255',
-            'category_id' => 'required',
-            'category_name' => 'required',
-            'image' => 'mimes:jpg',
-            'quantity' => 'required|integer',
-            'low_stock_threshold' => 'required|integer',
+            'category_id' => 'required|exists:categories,id',
+            'image' => 'nullable|image|max:2048', // Allow image uploads, max size 2MB
+            'quantity' => 'required|integer|min:0',
+            'low_stock_threshold' => 'required|integer|min:0',
         ];
     }
 
-    // For live validation
-    public function updated($propertyName)
+    public function updatedCategoryId()
     {
-        $this->validateOnly($propertyName);
+        $category = Category::find($this->category_id);
+        $this->category_name = $category ? $category->name : 'Unknown';
     }
 
-    // Handle the form submission
+    public function updatedImage()
+    {
+        if ($this->image) {
+            $this->imagePreview = $this->image->temporaryUrl();
+        }
+    }
+
     public function submitForm()
     {
         $this->validate();
 
-        if ($this->itemId) {
-            $item = Item::find($this->itemId);
-            session()->flash('create-edit-delete-message', 'Item updated successfully!');
-        } else {
-            // Create new user
-            $item = new Item;
-            session()->flash('create-edit-delete-message', 'Item created successfully!');
-        }
+        $item = $this->itemId ? Item::findOrFail($this->itemId) : new Item();
 
         $item->name = $this->name;
+        $item->category_id = $this->category_id;
+        $item->category_name = $this->category_name;
+        $item->quantity = $this->quantity;
+        $item->low_stock_threshold = $this->low_stock_threshold;
+
+        // Preserve original filename when storing image
+        if ($this->image) {
+            $originalFilename = $this->image->getClientOriginalName(); // Get original name
+            $filename = Str::slug(pathinfo($originalFilename, PATHINFO_FILENAME)) . '.' . $this->image->getClientOriginalExtension(); // Sanitize filename
+            $path = $this->image->storeAs('item-images', $filename, 'public'); // Store with original name
+            $item->image = $path; // Save path to DB
+        }
 
         $item->save();
+
+        session()->flash('create-edit-delete-message', $this->itemId ? 'Item updated successfully!' : 'Item created successfully!');
 
         return redirect()->route('warehouse.warehouse-supervisor.item.dashboard');
     }
