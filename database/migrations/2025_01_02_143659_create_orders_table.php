@@ -28,10 +28,12 @@ return new class extends Migration
                 ->constrained('sections')
                 ->onDelete('set null');
             $table->json('items');
-            $table->foreignId('status_id')
-                ->nullable()
-                ->constrained('statuses')
-                ->onDelete('set null');
+            $table->enum('status', [
+                'Pending Supervisor Approval',
+                'Pending Warehouse Approval',
+                'Approved',
+                'Denied'
+            ]);
             $table->foreignId('approved_denied_by')
                 ->nullable()
                 ->constrained('users')
