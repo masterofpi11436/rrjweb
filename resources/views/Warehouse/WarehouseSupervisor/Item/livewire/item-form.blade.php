@@ -30,22 +30,23 @@
                 class="w-full p-2 mt-1 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none">
             @error('image') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
 
-            <!-- Image Preview with Remove Button -->
+            <!-- Image Preview -->
             @if ($imagePreview)
                 <div class="mt-3 flex flex-col items-center">
 
-                    <img src="{{ $imagePreview ? $imagePreview : asset('images/default-image.jpg') }}"
-                    class="rounded-md shadow-md object-cover w-40 h-40">
+                    <img src="{{ $imagePreview }}" class="rounded-md shadow-md object-cover w-40 h-40">
 
-                    <!-- Remove Image Button -->
-                    <button type="button" wire:click="removeImage"
-                        class="mt-2 px-4 py-1 bg-red-500 text-white rounded-md hover:bg-red-600 transition">
-                        Remove Image
-                    </button>
+                    <!-- Show Remove Button Only If Image Is Not the Default -->
+                    @if ($imagePreview !== asset('images/default-image.jpg'))
+                        <button type="button" wire:click="removeImage"
+                            class="mt-2 px-4 py-1 bg-red-500 text-white rounded-md hover:bg-red-600 transition">
+                            Remove Image
+                        </button>
+                    @endif
+
                 </div>
             @endif
         </div>
-
 
         <!-- Quantity -->
         <div>
