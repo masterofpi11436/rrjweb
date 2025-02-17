@@ -44,7 +44,7 @@ class UserForm extends Component
         return [
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
-            'email' => 'required|email|ends_with:rrjva.org|unique:users,email' . $this->userId,
+            'email' => 'required|email|ends_with:rrjva.org|unique:users,email,' . $this->userId,
             'password' => 'nullable|min:6|confirmed',
             'warehouse_role' => 'required|in:Warehouse Supervisor,Warehouse Technician,Property,Supervisor,Requestor',
         ];
