@@ -3,10 +3,11 @@
 namespace App\Livewire\Warehouse\Item;
 
 use Livewire\Component;
-use Livewire\WithFileUploads;
 use Illuminate\Support\Str;
+use Livewire\WithFileUploads;
 use App\Models\Warehouse\Item;
 use App\Models\Warehouse\Category;
+use Illuminate\Support\Facades\Storage;
 
 class ItemForm extends Component
 {
@@ -42,16 +43,29 @@ class ItemForm extends Component
             $this->category_name = $item->category_name;
             $this->quantity = $item->quantity;
             $this->low_stock_threshold = $item->low_stock_threshold;
-            $this->imagePreview = $item->image ? asset('storage/' . $item->image) : asset('images/default-item.png');
+            $this->imagePreview = $item->image ? asset('storage/' . $item->image) : asset('images/default-image.jpg');
         }
     }
 
     public function removeImage()
     {
-        $this->image = null; // Clear uploaded image
-        $this->imagePreview = null; // Remove preview
-    }
+        if ($this->itemId) {
+            $item = Item::find($this->itemId);
 
+            if ($item && $item->image) {
+                // Delete the image from storage
+                Storage::disk('public')->delete($item->image);
+
+                // Remove the image reference from the database
+                $item->image = null;
+                $item->save();
+            }
+        }
+
+        // Clear the component's image data
+        $this->image = null;
+        $this->imagePreview = null;
+    }
 
     protected function rules()
     {

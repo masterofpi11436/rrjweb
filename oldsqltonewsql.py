@@ -1,5 +1,42 @@
-data_list = [
-    (4, 'BROOM HEAD (ea)', 1, '/public/images/broomhead.jpg', 0),
+import re
+
+def format_product_names(product_names):
+    """Formats product names by capitalizing the first two words."""
+    formatted_names = []
+    
+    for name in product_names:
+        words = name.split()
+        
+        if not words:
+            formatted_names.append(name)  # Keep empty lines unchanged
+            continue
+        
+        # Capitalize the first two words (if they exist)
+        words[0] = words[0].capitalize()
+        if len(words) > 1:
+            words[1] = words[1].capitalize()
+        
+        # Join the words back together
+        formatted_names.append(" ".join(words))
+
+    return formatted_names
+
+def extract_item_names(sql_insert_statement):
+    """Extracts item names from the SQL INSERT statement."""
+    # Regular expression to match values inside the insert statement
+    matches = re.findall(r"\(\d+, '(.*?)',", sql_insert_statement)
+    
+    # Format extracted item names
+    formatted_names = format_product_names(matches)
+    
+    # Generate new SQL INSERT statement
+    new_sql = "INSERT INTO `items` (`name`) VALUES " + ", ".join(f"('{name}')" for name in formatted_names) + ";"
+    
+    return new_sql
+
+# Old SQL INSERT statement (paste your actual statement here)
+old_sql = """INSERT INTO `item` (`id`, `name`, `item_type`, `image`, `quantity`) VALUES
+(4, 'BROOM HEAD (ea)', 1, '/public/images/broomhead.jpg', 0),
 (5, 'CENTER PULL TOWELS (ro)', 1, '/public/images/centertowels.jpg', 0),
 (6, 'DECK BRUSH 10\" (ea)', 1, '/public/images/deckbrush.jpg', 0),
 (7, 'DUST MOP HEAD (ea) ', 1, '/public/images/dustmop.jpg', 0),
@@ -200,12 +237,12 @@ data_list = [
 (263, 'Supervisor File (bx) 14076', 2, '', 0),
 (264, 'Inmate Flex Pen (ea)', 2, '', 0),
 (265, 'Mop Bucket (ea)', 1, '', 0),
-(266, 'HP148a/ HP148x', 3, '', 0)
-]
+(266, 'HP148a/ HP148x', 3, '', 0);"""
 
-results = [item[1] for item in data_list]
+# Generate the new insert statement
+new_sql = extract_item_names(old_sql)
 
-
-for result in results:
-    print(result)
+# Print new SQL statement
+print("\nGenerated SQL Query:\n")
+print(new_sql)
 

@@ -33,7 +33,9 @@
             <!-- Image Preview with Remove Button -->
             @if ($imagePreview)
                 <div class="mt-3 flex flex-col items-center">
-                    <img src="{{ $imagePreview }}" class="rounded-md shadow-md object-cover w-40 h-40">
+
+                    <img src="{{ $imagePreview ? $imagePreview : asset('images/default-image.jpg') }}"
+                    class="rounded-md shadow-md object-cover w-40 h-40">
 
                     <!-- Remove Image Button -->
                     <button type="button" wire:click="removeImage"
