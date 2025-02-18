@@ -27,6 +27,10 @@ sudo chmod 777 storage/app/public
 sudo chmod 777 storage/framework
 sudo chmod 777 storage/logs
 
+sudo chmod 644 phpmyadmin
+sudo chmod -R 755 /opt/lampp/phpmyadmin
+sudo chown -R www-date:www-data /opt/lampp/phpmyadmin
+
 # Allow Port traffic
 
 sudo ufw allow 80/tcp
