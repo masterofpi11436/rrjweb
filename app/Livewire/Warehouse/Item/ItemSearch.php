@@ -30,9 +30,12 @@ class ItemSearch extends Component
     {
         // Query to search and sort items
         $items = Item::query()
-            ->with('category:id,category')
+            ->with('category:id,category') // Ensure category relationship is loaded
             ->where(function (Builder $query) {
-                $query->where('name', 'like', '%' . $this->search . '%');
+                $query->where('name', 'like', '%' . $this->search . '%')
+                      ->orWhereHas('category', function (Builder $categoryQuery) {
+                          $categoryQuery->where('category', 'like', '%' . $this->search . '%');
+                      });
             })
             ->orderBy($this->sortColumn, $this->sortDirection)
             ->get();

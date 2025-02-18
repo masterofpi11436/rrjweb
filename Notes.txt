@@ -1,46 +1,203 @@
-3) Instead of just having checkboxes. Have two columns, one for checked but no service needed, and one for checked and completed service.
-4) Maybe at the bottom below the Description of Service box, add a line for Outside Service Required with a line for a P.O. number.
-
-The changes I suggested keep it at a 25 Point Inspection.
-
-I have attached a 30 Point Inspection list that I would like to have implemented instead of a 25 Point if it is an easy change. If it isn't, don't worry about it.
-
-Safety Systems
-1	Horn
-2	Seatbelts
-3	Detention Equipment
-4	Fire Extinguisher
-5	Battery Booster
-6	Emergency Roadside Kit
-
-Under the Hood
-1	Engine oil
-2	coolant
-3	brake fluid
-4	power steering fluid
-5	transmission fluid
-6	washer fluid
-7	Air filter
-8	Belts and hoses
-9	Battery
-
-Drivetrain
-1	Diagnostic Scan
-2	Driveshaft/CV joints/U-joints
-3	Exhaust
-4	Brakes
-
-Interior and Exterior
-1	Body and Paint
-2	Lights
-3	A/C systems
-4	Windshield wipers
-5	Windshield
-6	Window Operation
-7	Mirrors
-
-Suspension
-1	Tires
-2	Tire air pressure
-3	Shock/Struts
-4	Ball joints and bushings
+Items:
+BROOM HEAD (ea)
+CENTER PULL TOWELS (ro)
+DECK BRUSH 10" (ea)
+DUST MOP HEAD (ea)
+MOP HEAD f/SEALER (ea)
+CLOTH RAG (ea)
+SPRAY BOTTLE 1 QT (ea)
+SPRAY HEAD f/BT (ea)
+TRASH BAGS SM (ro)
+TRASH BAGS MED (bx)
+TRASH BAGS LG (bx)
+PLASTIC BAGS f/RECYCLING (ro)
+BUFF PAD CHAMPAGINE (ea)
+POLISHING PAD WHITE (ea)
+STRIP PAD BLACK (ea)
+CLEAN PAD GREEN (ea)
+PAPER TOWELS MFLD (cs)
+TOILET PAPER (cs)
+VINYL, GLOVES, PF,MED (bx)
+VINYL, GLOVES, PF, XL (bx)
+GLOVES FOOD HANDLING (pk)
+MELT-A-WAY LAUNDRY BAGS (ro)
+GREEN ANTIBACT HAND SOAP (ea)
+ANTIBACT FOAM HAND SOAP (ea)
+RAZOR (bx
+SOLAR BRITE (5gl)
+SANITARY NAPKINS (bx)
+SO FRESH (5gl)
+STAIN BLASTER (pk)
+GROUT SAFE (gl)
+GLASS CLEANER (bt)
+NABC1 (bt)
+TRI BASE (gl)
+PUMP SPRAY (gl)
+SCUM B GONE (bt)
+RRJ LEAVE REQUEST FORM (pk)
+TABLET STANDARD (ea)
+STENO NOTE BOOK (ea)
+POST IT LARGE (pk)
+LOG BOOK 300PG (ea)
+ENVELOPE COIN (bx)
+ENVELOPE INTER OFFICE (ea)
+ENVELOPE WINDOW (bx)
+ENVELOPE 9 X 12 (bx)
+ENVELOPE 10X15 (bx)
+ENVELOPE STD. WHITE (bx)
+CLIP PLASTIC MEDIUM (bx)
+CLIP PLASTIC LARGE (bx)
+CLIP PLASTIC XTRA-LG(bx)
+PEN BLACK (bx)
+PEN RED (bx)
+PENCILS (pk)
+MARKERS BLACK (ea)
+HIGHLITER YEL (ea)
+DRY ERASE MKR (PK)
+DRY ERASER (ea)
+POCKET PORTFOLIO (ea)
+LASER LABELS 1/3 CUT (pk)
+LASER LABELS MAILING (pk)
+LASER LABELS 1" X 2 5/8" (bx)
+FILE FOLDER STD (bx)
+BATTERY AA CELL (ea)
+BATTERY AAA CELL (ea)
+BATTERY C CELL (ea)
+BATTERY D CELL (ea)
+BATTERY 9 VOLT (ea)
+STAPLER (ea) (staple-less)
+TAPE TRANSPARENT (ro)
+RUBBER BANDS (pk)
+WHITEOUT PEN (ea)
+WHITEOUT (bt)
+TNG/CLASS RECORD FOLDER (bx) 13775
+PERSONNEL RECORD FOLDER (bx)
+SUPERVISOR RECORD FOLDER (bx)
+COPY PAPER 8.5x11 (cs)
+BANKER BOX, LTR, lg (ea)
+BANKER BOX, LEGAL (ea)
+BANKER BOX, LTR, sm (ea)
+Q5949X (ea)
+CB436A (ea)
+CE278A (ea)
+Q7553X (ea)
+CE505X (ea)
+0 C4127X (ea)
+CC364A (ea)
+C8061X (ea)
+600 (ea)
+D130 (ea)
+BROTHER 350 (ea)
+98X (ea)
+CF280A (ea)
+92A (ea)
+C7115X (ea)
+Q2613 (ea)
+Straw Broom (ea)
+SEALER WAY (gl)
+STRIPPER (gl)
+BLEACH
+H2 ORANGE (gl)
+Green Jumpers Med
+Green Jumpers LG
+Green Jumpers XL
+Green Jumpers 2XL
+Green Jumpers 3XL
+Green Jumpers 4XL
+Green Jumpers 5XL
+Green Jumpers 6XL
+Green Jumpers 7XL
+Green Jumpers 8XL
+Green Jumpers 9XL
+Green Jumpers 10XL
+GYM SHORTS SM
+GYM SHORTS MED
+GYM SHORTS LG
+GYM SHORTS XL
+GYM SHORTS 2XL
+GYM SHORTS 3XL
+GYM SHORTS 4XL
+FEMAL BRIEFS SM/5
+FEMAL BRIEFS MED/6
+FEMAL BRIEFS LG/7
+FEMAL BRIEFS XL/8
+FEMAL BRIEFS 2XL/9
+FEMAL BRIEFS 3XL/10
+FEMAL BRIEFS 4XL/11
+FEMAL BRIEFS 5XL/12
+FEMAL BRIEFS 6XL/13
+FEMAL BRIEFS 7XL/14
+BRA SIZE 32
+BRA SIZE 34
+BRA SIZE 36
+BRA SIZE 38
+BRA SIZE 40
+BRA SIZE 42
+BRA SIZE 44
+BRA SIZE 46
+MENS BRIEFS SM
+MENS BRIEFS MED
+MENS BRIEFS LG
+MENS BRIEFS XL
+MENS BRIEFS 2XL
+MENS BRIEFS 3XL
+MENS BRIEFS 4XL
+T-SHIRTS SM
+T-SHIRTS MED
+T-SHIRTS LG
+T-SHIRTS XL
+T-SHIRTS 2XL
+T-SHIRTS 3XL
+T-SHIRTS 4XL
+T-SHIRTS 5XL
+T-SHIRTS 6XL
+T-SHIRTS 7XL
+T-SHIRTS 8XL
+T-SHIRTS 9XL
+T-SHIRTS 10XL
+SHEETS
+BLANKETS
+GRAY BLANKETS
+WASH CLOTHES
+TOWELS
+CUPS
+SPOONS
+SHOES SIZE 5
+SHOES SIZE 6
+SHOES SIZE 7
+SHOES SIZE 8
+SHOES SIZE 9
+SHOES SIZE 10
+SHOES SIZE 11
+SHOES SIZE 12
+SHOES SIZE 13
+SHOES SIZE 14
+SHOES SIZE 15
+SHOES SIZE 16
+SHOWER SHOES SM/5&6
+SHOWER SHOES MED/7&8
+SHOWER SHOES LG/9&10
+SHOWER SHOES XL/11&12
+SHOWER SHOES 2XL/13&14
+SHOWER SHOES 3XL/15&16
+Inmate Request Forms
+Nitrile Gloves
+Socks
+55a, ink cartridge
+Broom Handle
+58a ink cartridge
+Laundry Destainer (bleach)
+83a ink cartridge
+Laundry Bags
+Mop Handle
+Scrub Brush
+Inmate Bar Soap
+Dust Pan
+Toilet Brush
+Spray Buff (gl)
+Receipt Book (ea)
+Personnel File (bx) 14075
+Supervisor File (bx) 14076
+Inmate Flex Pen (ea)
+Mop Bucket (ea)
+HP148a/ HP148x

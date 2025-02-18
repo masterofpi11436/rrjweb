@@ -122,13 +122,6 @@ class DatabaseSeeder extends Seeder
             ['category' => '1 for 1 Exchange'],
         ]);
 
-        DB::table('statuses')->insert([
-            ['status' => 'Pending Supervisor Approval'],
-            ['status' => 'Pending Warehouse Approval'],
-            ['status' => 'Approved'],
-            ['status' => 'Denied'],
-        ]);
-
         // Populate random data for applications
         PhoneDirectory::factory()->count(250)->create();
         VFM::factory()->count(100)->create();

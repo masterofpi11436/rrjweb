@@ -2,15 +2,20 @@
 
 namespace App\Models\Warehouse;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use App\Models\Login\User;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Http\Controllers\Warehouse\WarehouseSupervisor\OrderStatus;
 
 class Order extends Model
 {
     use HasFactory;
 
     protected $table = 'orders';
+
+    protected $casts = [
+        'status' => OrderStatus::class,
+    ];
 
     protected $fillable = [
         'user_id', 'supervisor_id', 'section_id',
