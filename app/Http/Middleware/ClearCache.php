@@ -4,22 +4,24 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+use Symfony\Component\HttpFoundation\Response;
 
 class ClearCache
 {
     /**
-     * Disables caching of data so the pages load with fresh data.
-     * Used for the admin dashbaord to clear the cache to prevent back button page view
+     * Handle an incoming request and prevent page caching.
      *
-     * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response)  $next
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Closure  $next
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function handle(Request $request, Closure $next): Response
     {
         $response = $next($request);
 
-        // Add headers to the response to prevent caching
-        return $response->header('Cache-Control', 'no-cache, no-store, must-revalidate')
-                        ->header('Pragma', 'no-cache');
+        // Ensure we apply headers to prevent back button caching
+        return $response->header('Cache-Control', 'no-cache, no-store, must-revalidate, max-age=0, s-maxage=0')
+                        ->header('Pragma', 'no-cache')
+                        ->header('Expires', '0');
     }
 }
