@@ -64,7 +64,7 @@ max_input_time=300
 php_value max_file_uploads 100
 
 # Admin Dashboard
-Dashboard for the IT administrator to manage all users and all applications
+Dashboard for the IT administrator to manage all users and all applications.
 
 # Phone Directory
 Lists all the extensions with some outside vendor numbers
@@ -96,3 +96,7 @@ New Features to be added
 - Status of orders submitted by Users
 - Status of orders submitted by Supervisors
 - Previous orders to allow order again/edit
+
+
+# Logging
+Time and date of when a user logs in to any application is logged.
