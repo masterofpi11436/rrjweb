@@ -23,6 +23,7 @@ use App\Http\Controllers\VFM\VFMTechController;
 use App\Http\Controllers\Directory\PhoneDirectoryController;
 use App\Http\Controllers\Administrator\AdministratorController;
 use App\Http\Controllers\Warehouse\WarehouseSupervisor\WarehouseSupervisorController;
+use App\Http\Controllers\Warehouse\Requestor\RequestorController;
 use App\Http\Controllers\Warehouse\WarehouseSupervisor\ItemController;
 use App\Http\Controllers\Warehouse\WarehouseSupervisor\CategoryController;
 use App\Http\Controllers\Warehouse\WarehouseSupervisor\SectionController;
@@ -54,6 +55,7 @@ $categoryClass = CategoryController::class;
 $sectionClass = SectionController::class;
 $userClass = UserController::class;
 $reportsHistoryClass = ReportsHistoryController::class;
+$requestorClass = RequestorController::class;
 
 // Forgot password link for all applications
 Route::get('forgot', [$baseLoginClass, 'showForgotPasswordForm'])->name('login.forgot');
@@ -204,7 +206,7 @@ Route::prefix('policy')->group(function () use ($policyClass, $policyLoginClass)
 });
 
 // ***---Warehouse Application---*** //
-Route::prefix('warehouse')->group(function () use ($warehouseLoginClass, $warehouseSupervisorClass, $itemClass, $categoryClass, $sectionClass, $userClass, $reportsHistoryClass){
+Route::prefix('warehouse')->group(function () use ($warehouseLoginClass, $warehouseSupervisorClass, $requestorClass, $itemClass, $categoryClass, $sectionClass, $userClass, $reportsHistoryClass){
         // Routes without middleware
         Route::get('/login', [$warehouseLoginClass, 'warehouseLoginForm'])->name('warehouse.login');
         Route::post('/login', [$warehouseLoginClass, 'login']);
@@ -261,4 +263,7 @@ Route::prefix('warehouse')->group(function () use ($warehouseLoginClass, $wareho
         // Supervisors
 
         // Requestors
+        Route::prefix('requestor')->middleware('requestor', 'cache')->group(function () use ($requestorClass) {
+            Route::get('/dashboard', [$requestorClass, 'dashboard'])->name('warehouse.requestor.dashboard');
+        });
 });

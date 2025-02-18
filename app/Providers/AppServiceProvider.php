@@ -13,6 +13,10 @@ use App\Http\Middleware\Auth\Policy;
 use App\Http\Middleware\Auth\VFMTech;
 use Illuminate\Support\ServiceProvider;
 use App\Http\Middleware\Auth\Warehouse\WarehouseSupervisor;
+use App\Http\Middleware\Auth\Warehouse\WarehouseTechnician;
+use App\Http\Middleware\Auth\Warehouse\Property;
+use App\Http\Middleware\Auth\Warehouse\Supervisor;
+use App\Http\Middleware\Auth\Warehouse\Requestor;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -38,6 +42,10 @@ class AppServiceProvider extends ServiceProvider
         $router->aliasMiddleware('ics', ICS::class);
         $router->aliasMiddleware('policy', Policy::class);
         $router->aliasMiddleware('warehouseSupervisor', WarehouseSupervisor::class);
+        $router->aliasMiddleware('warehouseTechnician', WarehouseTechnician::class);
+        $router->aliasMiddleware('property', Property::class);
+        $router->aliasMiddleware('supervisor', Supervisor::class);
+        $router->aliasMiddleware('requestor', Requestor::class);
         $router->aliasMiddleware('cache', ClearCache::class);
     }
 }
