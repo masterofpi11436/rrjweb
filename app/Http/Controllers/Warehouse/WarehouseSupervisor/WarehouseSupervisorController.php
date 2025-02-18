@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Warehouse\WarehouseSupervisor;
 
 // Base Controller
 use App\Models\Warehouse\Order;
-use App\Models\Warehouse\Status;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Warehouse\Enums\OrderStatus;
 
 // This class only shows the dashboard for the warehouse manager.
 class WarehouseSupervisorController extends Controller

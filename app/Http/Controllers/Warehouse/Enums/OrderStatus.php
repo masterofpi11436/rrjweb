@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Warehouse\WarehouseSupervisor;
+namespace App\Http\Controllers\Warehouse\Enums;
 
 enum OrderStatus: string
 {

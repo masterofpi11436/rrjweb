@@ -5,7 +5,7 @@ namespace App\Models\Warehouse;
 use App\Models\Login\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use App\Http\Controllers\Warehouse\WarehouseSupervisor\OrderStatus;
+use App\Http\Controllers\Warehouse\Enums\OrderStatus;
 
 class Order extends Model
 {
@@ -36,11 +36,6 @@ class Order extends Model
     public function section()
     {
         return $this->belongsTo(Section::class);
-    }
-
-    public function status()
-    {
-        return $this->belongsTo(Status::class);
     }
 
     public function approvedBy()
