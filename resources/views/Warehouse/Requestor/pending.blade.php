@@ -2,7 +2,7 @@
 
 @section('title', 'Warehouse Store Requestor')
 
-@section('heading', 'Warehouse Store')
+@section('heading', 'Your Pending Orders')
 
 @section('content')
 

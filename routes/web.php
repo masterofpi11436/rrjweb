@@ -265,5 +265,7 @@ Route::prefix('warehouse')->group(function () use ($warehouseLoginClass, $wareho
         // Requestors
         Route::prefix('requestor')->middleware('requestor', 'cache')->group(function () use ($requestorClass) {
             Route::get('/dashboard', [$requestorClass, 'dashboard'])->name('warehouse.requestor.dashboard');
+            Route::get('/pending', [$requestorClass, 'pendingOrders'])->name('warehouse.requestor.pending');
+            Route::get('/recent', [$requestorClass, 'recentOrders'])->name('warehouse.requestor.recent');
         });
 });

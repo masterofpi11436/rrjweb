@@ -15,29 +15,11 @@
             <h1 class="text-2xl font-bold mb-5">Navigation</h1>
             <nav>
                 <ul>
-                    <li class="mb-3"><a href="{{ route('warehouse.warehouse-supervisor.dashboard')}}" class="block p-2 rounded hover:bg-blue-700">Dashboard</a></li>
-
-                    <!-- Inventory Management Dropdown -->
-                    <li class="mb-3">
-                        <details class="group">
-                            <summary class="block p-2 rounded hover:bg-blue-700 cursor-pointer">Inventory Management</summary>
-                            <ul class="pl-4 mt-2 hidden group-open:block">
-                                <li class="mb-2"><a href="{{ route('warehouse.warehouse-supervisor.item.dashboard') }}" class="block p-2 rounded hover:bg-blue-600">Manage Items</a></li>
-                                <li class="mb-2"><a href="{{ route('warehouse.warehouse-supervisor.category.dashboard') }}" class="block p-2 rounded hover:bg-blue-600">Manage Item Categories</a></li>
-                                <li class="mb-2"><a href="{{ route('warehouse.warehouse-supervisor.section.dashboard') }}" class="block p-2 rounded hover:bg-blue-600">Manage Sections</a></li>
-                                <li class="mb-2"><a href="#" class="block p-2 rounded hover:bg-blue-600">Inventory Overview</a></li>
-                            </ul>
-                        </details>
-                    </li>
-
-                    <!-- Reports -->
-                    <li class="mb-3"><a href="{{ route('warehouse.warehouse-supervisor.reports_history.dashboard') }}" class="block p-2 rounded hover:bg-blue-700">Reports/History</a></li>
-
                     <!-- Create Request -->
-                    <li class="mb-3"><a href="#" class="block p-2 rounded hover:bg-blue-700">Create Request</a></li>
+                    <li class="mb-3"><a href="#" class="block p-2 rounded hover:bg-blue-700">Pending Orders</a></li>
 
                     <!-- Recent Orders -->
-                    <li class="mb-3"><a href="" class="block p-2 rounded hover:bg-blue-700">Recent Orders</a></li>
+                    <li class="mb-3"><a href="#" class="block p-2 rounded hover:bg-blue-700">Recent Orders</a></li>
 
                 </ul>
             </nav>
