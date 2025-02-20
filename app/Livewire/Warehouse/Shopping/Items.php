@@ -50,7 +50,7 @@ class Items extends Component
             return;
         }
 
-        $cart = Session::get('cart', []);
+        $cart = session()->get('cart', []);
 
         if (isset($cart[$itemId])) {
             $cart[$itemId]['quantity'] += 1;
@@ -58,15 +58,23 @@ class Items extends Component
             $cart[$itemId] = [
                 'id' => $item->id,
                 'name' => $item->name,
-                'price' => $item->price,
                 'quantity' => 1,
             ];
         }
 
         Session::put('cart', $cart);
+    }
 
-        // Emit event to update cart UI if needed
-        $this->emit('cartUpdated', $cart);
+    public function removeFromCart($itemId)
+    {
+        $cart = Session::get('cart', []);
+
+        if (isset($cart[$itemId])) {
+            unset($cart[$itemId]);
+        }
+
+        Session::put('cart', $cart);
+        $this->cart = $cart;
     }
 
     // Render method
@@ -92,10 +100,12 @@ class Items extends Component
         // Ensure items with or without a category are included
         $items = $query->orderBy($this->sortColumn, $this->sortDirection)->paginate(12);
         $categories = Category::all();
+        $cart = session()->get('cart', []);
 
         return view('Warehouse.Requestor.livewire.item-search', [
             'items' => $items,
             'categories' => $categories,
+            'cart' => $cart,
         ]);
     }
 }
