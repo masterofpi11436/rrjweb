@@ -67,14 +67,13 @@ class Items extends Component
 
     public function removeFromCart($itemId)
     {
-        $cart = Session::get('cart', []);
+        $cart = session()->get('cart', []);
 
         if (isset($cart[$itemId])) {
             unset($cart[$itemId]);
         }
 
-        Session::put('cart', $cart);
-        $this->cart = $cart;
+        session()->put('cart', $cart);
     }
 
     // Render method
@@ -102,7 +101,7 @@ class Items extends Component
         $categories = Category::all();
         $cart = session()->get('cart', []);
 
-        return view('Warehouse.Requestor.livewire.item-search', [
+        return view('Warehouse.livewire.item-search', [
             'items' => $items,
             'categories' => $categories,
             'cart' => $cart,

@@ -7,7 +7,7 @@
         >
 
         <!-- Category Dropdown -->
-        <select wire:model="selectedCategory"
+        <select wire:model.live="selectedCategory"
             class="w-full sm:w-1/3 p-3 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none bg-white">
             <option value="">All Categories</option>
             @foreach($categories as $category)
@@ -35,6 +35,15 @@
                     </li>
                 @endforeach
             </ul>
+
+            <!-- Checkout Button -->
+            <div class="mt-6 flex justify-center">
+                <a href="{{ route('warehouse.requestor.checkout')}}"
+                    class="bg-green-500 text-white px-6 py-3 rounded-md shadow-md hover:bg-green-600 transition">
+                    Proceed to Checkout
+                </a>
+            </div>
+
         @else
             <p class="text-gray-500">Your cart is empty.</p>
         @endif
@@ -64,8 +73,9 @@
         @endforelse
     </div>
 
-    <!-- Pagination -->
+    <!-- Pagination with Page Numbers -->
     <div class="mt-6 flex justify-center">
-        {{ $items->links() }}
+        {{ $items->onEachSide(3)->links() }}
     </div>
+
 </div>

@@ -12,4 +12,16 @@ class RequestorController extends Controller
     {
         return view('Warehouse.Requestor.requestor.dashboard');
     }
+
+    public function checkOut()
+    {
+        $cart = session()->get('cart', []);
+
+        return view('Warehouse.Requestor.requestor.checkout', compact('cart'));
+    }
+
+    public function confirm()
+    {
+        dd(session()->get('cart', []));
+    }
 }
