@@ -10,6 +10,6 @@ class RequestorController extends Controller
 {
     public function dashboard()
     {
-        return view('Warehouse.Requestor.dashboard');
+        return view('Warehouse.Requestor.requestor.dashboard');
     }
 }
