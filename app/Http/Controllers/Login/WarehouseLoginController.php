@@ -30,10 +30,13 @@ class WarehouseLoginController extends BaseLoginController
             return redirect()->route('warehouse.login')->withErrors(['email_not_found' => 'No account found with this email address.']);
         }
 
-        // Attempt login
+        // Attempt login using BaseLoginController method
         if (Auth::attempt($request->only('email', 'password'))) {
-            return $this->redirectWarehouseStoreUser($user);
+            return $this->redirectWarehouseStoreUser(Auth::user());
         }
+
+        // If login fails, redirect back with password error
+        return redirect()->route('warehouse.login')->withErrors(['password_incorrect' => 'Password is incorrect.']);
     }
 
     public function redirectWarehouseStoreUser($user)
