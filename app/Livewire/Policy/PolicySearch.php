@@ -54,7 +54,7 @@ class PolicySearch extends Component
             ? $suggestions->sortBy('title') // Sort by DB title
             : $suggestions->sortByDesc('title'); // Sort by DB title descending
 
-        return view('Policy.livewire.public-policy-search', [
+        return view('Policy.livewire.policy-search', [
             'suggestions' => $sortedSuggestions,
         ]);
     }
