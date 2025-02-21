@@ -30,15 +30,18 @@ class PolicySearch extends Component
 
     public function render()
     {
-        // Search for matching records
-        $suggestions = Policy::all()->filter(function ($policy) {
-            // Check if the title matches the search term
+        // Get all policies from the database
+        $policies = Policy::all();
+
+        // Filter by search term (matching database title or file content)
+        $suggestions = $policies->filter(function ($policy) {
+            // Check if the title (from the database) matches the search term
             if (stripos($policy->title, $this->search) !== false) {
                 return true;
             }
 
-            // Check if the text file contains the search term
-            if (Storage::disk('public')->exists($policy->text)) {
+            // Check if the file content contains the search term
+            if ($policy->text && Storage::disk('public')->exists($policy->text)) {
                 $textContent = Storage::disk('public')->get($policy->text);
                 return stripos($textContent, $this->search) !== false;
             }
@@ -46,8 +49,13 @@ class PolicySearch extends Component
             return false;
         });
 
-        return view('Policy.livewire.policy-search', [
-            'suggestions' => $suggestions,
+        // Ensure sorting is applied based on database title, NOT file name
+        $sortedSuggestions = $this->sortDirection === 'asc'
+            ? $suggestions->sortBy('title') // Sort by DB title
+            : $suggestions->sortByDesc('title'); // Sort by DB title descending
+
+        return view('Policy.livewire.public-policy-search', [
+            'suggestions' => $sortedSuggestions,
         ]);
     }
 }
