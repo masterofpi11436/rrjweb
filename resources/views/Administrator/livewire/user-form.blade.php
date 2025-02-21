@@ -52,6 +52,7 @@
         <div>
             <label for="warehouse_role">Warehouse Role</label>
             <select id="warehouse_role" wire:model="warehouse_role" class="form-control">
+                <option value="">-- No Access --</option>
                 <option value="Requestor">Requestor</option>
                 <option value="Property">Property</option>
                 <option value="Supervisor">Supervisor</option>

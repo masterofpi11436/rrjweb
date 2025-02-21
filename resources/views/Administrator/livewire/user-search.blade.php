@@ -99,7 +99,7 @@
                     <td>{{ $user->vfm_tech ? 'Yes' : 'No' }}</td>
                     <td>{{ $user->ics ? 'Yes' : 'No' }}</td>
                     <td>{{ $user->policy ? 'Yes' : 'No' }}</td>
-                    <td>{{ $user->warehouse_role }}</td>
+                    <td>{{ $user->warehouse_role ?? "No"}}</td>
                     <td>
                         <a href="{{ route('admin.edit', $user->id) }}">Edit</a>/
                         <div>

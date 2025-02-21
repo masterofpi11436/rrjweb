@@ -65,7 +65,7 @@ class UserForm extends Component
             'vfm_tech' => 'boolean',
             'ics' => 'boolean',
             'policy' => 'boolean',
-            'warehouse_role' => 'required|in:Warehouse Supervisor,Warehouse Technician,Property,Supervisor,Requestor',
+            'warehouse_role' => 'nullable|in:Warehouse Supervisor,Warehouse Technician,Property,Supervisor,Requestor',
         ];
     }
 
@@ -98,7 +98,7 @@ class UserForm extends Component
         $user->vfm_tech = $this->vfm_tech;
         $user->ics = $this->ics;
         $user->policy = $this->policy;
-        $user->warehouse_role = $this->warehouse_role;
+        $user->warehouse_role = $this->warehouse_role ?: null;
 
         $isCreating = !$this->userId;
 

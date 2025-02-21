@@ -34,6 +34,7 @@ class UserSearch extends Component
         // Query to search and sort users
         $users = User::query()
             ->select($columns)
+            ->whereNotNull('warehouse_role')
             ->where(function (Builder $query) {
                 $query->where('first_name', 'like', '%' . $this->search . '%')
                       ->orWhere('last_name', 'like', '%' . $this->search . '%')

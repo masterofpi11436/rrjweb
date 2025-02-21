@@ -1,20 +1,41 @@
---
--- Table structure for table `item`
---
+import re
 
-CREATE TABLE `item` (
-  `id` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `item_type` int(11) NOT NULL,
-  `image` varchar(255) NOT NULL,
-  `quantity` int(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+def format_product_names(product_names):
+    """Formats product names by capitalizing the first two words."""
+    formatted_names = []
+    
+    for name in product_names:
+        words = name.split()
+        
+        if not words:
+            formatted_names.append(name)  # Keep empty lines unchanged
+            continue
+        
+        # Capitalize the first two words (if they exist)
+        words[0] = words[0].capitalize()
+        if len(words) > 1:
+            words[1] = words[1].capitalize()
+        
+        # Join the words back together
+        formatted_names.append(" ".join(words))
 
---
--- Dumping data for table `item`
---
+    return formatted_names
 
-INSERT INTO `item` (`id`, `name`, `item_type`, `image`, `quantity`) VALUES
+def extract_item_names(sql_insert_statement):
+    """Extracts item names from the SQL INSERT statement."""
+    # Regular expression to match values inside the insert statement
+    matches = re.findall(r"\(\d+, '(.*?)',", sql_insert_statement)
+    
+    # Format extracted item names
+    formatted_names = format_product_names(matches)
+    
+    # Generate new SQL INSERT statement
+    new_sql = "INSERT INTO `items` (`name`) VALUES " + ", ".join(f"('{name}')" for name in formatted_names) + ";"
+    
+    return new_sql
+
+# Old SQL INSERT statement (paste your actual statement here)
+old_sql = """INSERT INTO `item` (`id`, `name`, `item_type`, `image`, `quantity`) VALUES
 (4, 'BROOM HEAD (ea)', 1, '/public/images/broomhead.jpg', 0),
 (5, 'CENTER PULL TOWELS (ro)', 1, '/public/images/centertowels.jpg', 0),
 (6, 'DECK BRUSH 10\" (ea)', 1, '/public/images/deckbrush.jpg', 0),
@@ -216,204 +237,13 @@ INSERT INTO `item` (`id`, `name`, `item_type`, `image`, `quantity`) VALUES
 (263, 'Supervisor File (bx) 14076', 2, '', 0),
 (264, 'Inmate Flex Pen (ea)', 2, '', 0),
 (265, 'Mop Bucket (ea)', 1, '', 0),
-(266, 'HP148a/ HP148x', 3, '', 0);
+(266, 'HP148a/ HP148x', 3, '', 0),
+(267, 'CE30a', 3, '', 0);"""
 
--- --------------------------------------------------------
+# Generate the new insert statement
+new_sql = extract_item_names(old_sql)
 
---
--- Table structure for table `item_type`
---
+# Print new SQL statement
+print("\nGenerated SQL Query:\n")
+print(new_sql)
 
-CREATE TABLE `item_type` (
-  `id` int(11) NOT NULL,
-  `type` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `item_type`
---
-
-INSERT INTO `item_type` (`id`, `type`) VALUES
-(1, 'Housekeeping Supplies'),
-(2, 'Office Supplies'),
-(3, 'Printer Ink'),
-(4, 'Property'),
-(8, '1 for 1 Exchange'),
-(9, 'Personal Care');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `mailroom`
---
-
-CREATE TABLE `mailroom` (
-  `id` int(11) NOT NULL,
-  `inmate_number` varchar(255) NOT NULL,
-  `first_name` varchar(255) NOT NULL,
-  `last_name` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `mailroom`
---
-
-INSERT INTO `mailroom` (`id`, `inmate_number`, `first_name`, `last_name`) VALUES
-(1, '12345', 'John', 'Doe');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `monthly`
---
-
-CREATE TABLE `monthly` (
-  `id` int(11) NOT NULL,
-  `first_name` varchar(255) NOT NULL,
-  `last_name` varchar(255) NOT NULL,
-  `email` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
-
---
--- Dumping data for table `monthly`
---
-
-INSERT INTO `monthly` (`id`, `first_name`, `last_name`, `email`) VALUES
-(2, 'Mark', 'Tuggle', 'tugglem@rrjva.org');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `orders`
---
-
-CREATE TABLE `orders` (
-  `id` int(255) NOT NULL,
-  `user_id` int(255) NOT NULL,
-  `supervisor_id` int(255) NOT NULL,
-  `section_id` int(255) NOT NULL,
-  `items` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL CHECK (json_valid(`items`)),
-  `status` enum('pending supervisor approval','pending warehouse approval','approved','denied','in progress') NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
-  `approved_denied_at` datetime DEFAULT NULL,
-  `approved_denied_by` int(255) DEFAULT NULL,
-  `note` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `orders`
---
-
-INSERT INTO `orders` (`id`, `user_id`, `supervisor_id`, `section_id`, `items`, `status`, `created_at`, `approved_denied_at`, `approved_denied_by`, `note`) VALUES
-(39, 80, 80, 6, '{\"73\":{\"id\":73,\"name\":\"BATTERY AAA CELL (ea)\",\"item_type\":2,\"image\":\"\",\"quantity\":4}}', 'approved', '2024-08-01 11:20:42', '2024-08-01 12:37:04', 37, 'you need 4 not 1, sold in each not pack');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `phone`
---
-
-CREATE TABLE `phone` (
-  `id` int(11) NOT NULL,
-  `name` varchar(255) DEFAULT NULL,
-  `title` varchar(255) DEFAULT NULL,
-  `extension` varchar(255) DEFAULT NULL,
-  `section` varchar(20) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Table structure for table `role`
---
-
-CREATE TABLE `role` (
-  `id` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `role`
---
-
-INSERT INTO `role` (`id`, `name`) VALUES
-(1, 'admin'),
-(2, 'tablet'),
-(3, 'phone'),
-(4, 'mailroom'),
-(5, 'program'),
-(6, 'contractor'),
-(7, 'volunteer'),
-(8, 'warehouse manager'),
-(9, 'supervisor'),
-(10, 'user'),
-(11, 'warehouse supervisor'),
-(12, 'property');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `section`
---
-
-CREATE TABLE `section` (
-  `id` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `section`
---
-
-INSERT INTO `section` (`id`, `name`) VALUES
-(1, 'Housing Unit 1'),
-(2, 'Housing Unit 2'),
-(3, 'Housing Unit 3'),
-(4, 'Housing Unit 4'),
-(5, 'Housing Unit 5'),
-(6, 'Housing Unit 6'),
-(7, 'Booking'),
-(8, 'Administration'),
-(9, 'Medical Housing'),
-(10, 'Classification'),
-(11, 'Records'),
-(12, 'Maintenance'),
-(13, 'Housekeeping'),
-(14, 'HUM'),
-(15, 'Programs'),
-(16, 'SEC'),
-(17, 'C&T'),
-(18, 'Warehouse'),
-(19, 'Compliance'),
-(20, 'Property'),
-(21, 'SHU-A'),
-(22, 'SHU-B'),
-(23, 'Movement'),
-(24, 'Captains Hall'),
-(25, 'OPR');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `tablet`
---
-
-CREATE TABLE `tablet` (
-  `id` int(255) NOT NULL,
-  `inmate_number` int(10) NOT NULL,
-  `first_name` varchar(255) NOT NULL,
-  `middle_name` varchar(255) DEFAULT NULL,
-  `last_name` varchar(255) NOT NULL,
-  `date_found` date DEFAULT NULL,
-  `is_reported` tinyint(1) DEFAULT NULL,
-  `is_filed` tinyint(1) DEFAULT NULL,
-  `is_charged` tinyint(1) DEFAULT NULL,
-  `is_paid` tinyint(1) DEFAULT NULL,
-  `note` text DEFAULT NULL,
-  `created_at` date DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `tablet`
---
-
-INSERT INTO `tablet` (`id`, `inmate_number`, `first_name`, `middle_name`, `last_name`, `date_found`, `is_reported`, `is_filed`, `is_charged`, `is_paid`, `note`, `created_at`) VALUES
-(1, 123454, 'John', 'Smith', 'Doe', NULL, 0, 0, 0, 0, 'Broke 2 tablets.', NULL);

@@ -26,7 +26,7 @@ return new class extends Migration
             $table->boolean('vfm_tech')->default(false);
             $table->boolean('ics')->default(false);
             $table->boolean('policy')->default(false);
-            $table->enum('warehouse_role', ['Warehouse Supervisor', 'Warehouse Technician', 'Property', 'Supervisor', 'Requestor'])->default('Requestor');
+            $table->enum('warehouse_role', ['Warehouse Supervisor', 'Warehouse Technician', 'Property', 'Supervisor', 'Requestor'])->default('Requestor')->nullable();
             $table->timestamps();
         });
 
