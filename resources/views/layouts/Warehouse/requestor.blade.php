@@ -20,7 +20,6 @@
 
                     <!-- Recent Orders -->
                     <li class="mb-3"><a href="#" class="block p-2 rounded hover:bg-blue-700">Recent Orders</a></li>
-
                 </ul>
             </nav>
         </aside>

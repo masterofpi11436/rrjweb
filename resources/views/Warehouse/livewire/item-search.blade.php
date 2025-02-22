@@ -16,6 +16,18 @@
         </select>
     </div>
 
+    <script>
+        function updateLivewireBeforeCheckout() {
+            // Trigger blur event on all quantity inputs to force Livewire to update
+            document.querySelectorAll('input[name^="cart"]').forEach(input => input.blur());
+
+            // Delay navigation slightly to allow Livewire updates to complete
+            setTimeout(() => {
+                window.location.href = "{{ route('warehouse.requestor.checkout') }}";
+            }, 300);
+        }
+    </script>
+
     <!-- Shopping Cart -->
     <div class="bg-white p-6 rounded-lg shadow-md mb-6">
         <h2 class="text-xl font-bold mb-4 text-gray-800">Shopping Cart</h2>
@@ -23,23 +35,31 @@
         @if(count($cart) > 0)
             <ul class="border p-4 rounded-md bg-gray-50">
                 @foreach ($cart as $item)
-                    <li class="flex justify-between items-center p-2 border-b last:border-b-0">
-                        <span class="font-medium text-gray-700">{{ $item['name'] }}</span>
-                        <div class="flex items-center gap-2">
-                            <span class="text-gray-700 font-bold">{{ $item['quantity'] }}</span>
-                            <button wire:click="removeFromCart({{ $item['id'] }})"
-                                class="text-red-500 hover:text-red-700 transition">
-                                ✖
-                            </button>
-                        </div>
-                    </li>
-                @endforeach
+                <li class="flex justify-between items-center p-2 border-b last:border-b-0">
+                    <span class="font-medium text-gray-700">{{ $item['name'] }}</span>
+                    <div class="flex items-center gap-2">
+                        <input
+                            type="number"
+                            min="1"
+                            wire:model.live="quantities.{{ $item['id'] }}"
+                            class="w-16 p-1 border border-gray-300 rounded"
+                        >
+                        <button
+                            wire:click="removeFromCart({{ $item['id'] }})"
+                            class="text-red-500 hover:text-red-700 transition"
+                        >
+                            ✖
+                        </button>
+                    </div>
+                </li>
+            @endforeach
             </ul>
 
             <!-- Checkout Button -->
             <div class="mt-6 flex justify-center">
-                <a href="{{ route('warehouse.requestor.checkout')}}"
-                    class="bg-green-500 text-white px-6 py-3 rounded-md shadow-md hover:bg-green-600 transition">
+                <a href="javascript:void(0)"
+                   onclick="updateLivewireBeforeCheckout()"
+                   class="bg-green-500 text-white px-6 py-3 rounded-md shadow-md hover:bg-green-600 transition">
                     Proceed to Checkout
                 </a>
             </div>
@@ -54,15 +74,14 @@
         @forelse($items as $item)
             <div class="bg-white border border-gray-200 rounded-lg shadow-md overflow-hidden transform transition hover:scale-105 hover:shadow-lg">
                 <img src="{{ $item->image ? asset('storage/' . $item->image) : asset('images/default-image.jpg') }}"
-                alt="{{ $item->name }}" class="w-full h-40 object-cover">
-
-
+                     alt="{{ $item->name }}" class="w-full h-40 object-cover">
                 <div class="p-4">
                     <h3 class="text-lg font-semibold text-gray-800">{{ $item->name }}</h3>
                     <p class="text-sm text-gray-600">{{ $item->category->category ?? 'No Category' }}</p>
-
+                    <input type="number" min="1" wire:model.live="quantities.{{ $item->id }}"
+                           class="w-full mt-2 p-2 border border-gray-300 rounded-md" placeholder="Enter quantity">
                     <button wire:click="addToCart({{ $item->id }})"
-                        class="mt-3 w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition">
+                            class="mt-3 w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition">
                         Add to Cart
                     </button>
                 </div>

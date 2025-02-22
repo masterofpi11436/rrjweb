@@ -27,7 +27,7 @@
                 class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none bg-white">
                 <option value="">-- Select Section --</option>
                 @foreach($sections as $section)
-                    <option value="{{ $section->id }}">{{ $section->name }}</option>
+                    <option value="{{ $section->id }}">{{ $section->section }}</option>
                 @endforeach
             </select>
         </div>
@@ -39,7 +39,7 @@
                 class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none bg-white">
                 <option value="">-- Select Supervisor --</option>
                 @foreach($supervisors as $supervisor)
-                    <option value="{{ $supervisor->id }}">{{ $supervisor->name }}</option>
+                    <option value="{{ $supervisor->id }}">{{ $supervisor->last_name }} {{ $supervisor->first_name }}</option>
                 @endforeach
             </select>
         </div>

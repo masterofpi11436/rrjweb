@@ -13,12 +13,66 @@ class Items extends Component
 {
     use WithPagination;
 
-    public $search = ''; // Search term
-    public $sortColumn = 'name'; // Sorting column
-    public $sortDirection = 'asc'; // Sorting direction
-    public $selectedCategory = ''; // Selected category for filtering
+    public $search = '';
+    public $sortColumn = 'name';
+    public $sortDirection = 'asc';
+    public $selectedCategory = '';
+    public $quantities = [];
 
     protected $paginationTheme = 'tailwind';
+
+    public function mount()
+    {
+        // Initialize $quantities with current cart contents
+        $cart = session('cart', []);
+        foreach ($cart as $itemId => $item) {
+            $this->quantities[$itemId] = $item['quantity'];
+        }
+    }
+
+    // Automatically called whenever a quantity changes
+    // e.g., if someone changes it in the cart
+    public function updatedQuantities($value, $itemId)
+    {
+        $cart = session('cart', []);
+
+        // If the item is already in cart, update its quantity
+        if (isset($cart[$itemId])) {
+            $cart[$itemId]['quantity'] = (int) $value;
+            session(['cart' => $cart]);
+        }
+    }
+
+    // Add item to cart using the single $quantities array
+    public function addToCart($itemId)
+    {
+        $item = Item::find($itemId);
+        if (!$item) return;
+
+        // Use the user's typed value or default to 1
+        $qty = isset($this->quantities[$itemId]) ? (int) $this->quantities[$itemId] : 1;
+
+        $cart = session('cart', []);
+        $cart[$itemId] = [
+            'id'       => $item->id,
+            'name'     => $item->name,
+            'quantity' => $qty,
+        ];
+
+        // Store in session and in $quantities so everything stays in sync
+        session(['cart' => $cart]);
+        $this->quantities[$itemId] = $qty;
+    }
+
+    public function removeFromCart($itemId)
+    {
+        $cart = session('cart', []);
+        unset($cart[$itemId]);
+        session(['cart' => $cart]);
+
+        // Optionally remove from $quantities array as well
+        unset($this->quantities[$itemId]);
+    }
 
     public function updatingSearch()
     {
@@ -30,7 +84,6 @@ class Items extends Component
         $this->resetPage();
     }
 
-    // Sorting function
     public function sortBy($column)
     {
         if ($this->sortColumn === $column) {
@@ -41,70 +94,33 @@ class Items extends Component
         }
     }
 
-    // Add item to cart (stored in session)
-    public function addToCart($itemId)
-    {
-        $item = Item::find($itemId);
-
-        if (!$item) {
-            return;
-        }
-
-        $cart = session()->get('cart', []);
-
-        if (isset($cart[$itemId])) {
-            $cart[$itemId]['quantity'] += 1;
-        } else {
-            $cart[$itemId] = [
-                'id' => $item->id,
-                'name' => $item->name,
-                'quantity' => 1,
-            ];
-        }
-
-        Session::put('cart', $cart);
-    }
-
-    public function removeFromCart($itemId)
-    {
-        $cart = session()->get('cart', []);
-
-        if (isset($cart[$itemId])) {
-            unset($cart[$itemId]);
-        }
-
-        session()->put('cart', $cart);
-    }
-
-    // Render method
     public function render()
     {
-        $query = Item::query()->with('category:id,category');
+        $query = Item::with('category:id,category');
 
-        // Apply search filtering
         if (!empty($this->search)) {
-            $query->where(function (Builder $query) {
-                $query->where('name', 'like', '%' . $this->search . '%') // Search by item name
-                      ->orWhereHas('category', function (Builder $categoryQuery) {
-                          $categoryQuery->where('category', 'like', '%' . $this->search . '%'); // Search by category name
-                      });
+            $query->where(function (Builder $q) {
+                $q->where('name', 'like', '%'.$this->search.'%')
+                  ->orWhereHas('category', function (Builder $cq) {
+                      $cq->where('category', 'like', '%'.$this->search.'%');
+                  });
             });
         }
 
-        // Apply category filter only if a specific category is selected
         if (!empty($this->selectedCategory)) {
             $query->where('category_id', $this->selectedCategory);
         }
 
-        // Ensure items with or without a category are included
-        $items = $query->orderBy($this->sortColumn, $this->sortDirection)->paginate(12);
+        $items = $query->orderBy($this->sortColumn, $this->sortDirection)
+                       ->paginate(12);
+
         $categories = Category::all();
-        $cart = session()->get('cart', []);
+        $cart       = session('cart', []);
 
         return view('Warehouse.livewire.item-search', [
-            'items' => $items,
+            'items'      => $items,
             'categories' => $categories,
-            'cart' => $cart,
+            'cart'       => $cart,
         ]);
     }
 }
