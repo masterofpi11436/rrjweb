@@ -1,21 +1,10 @@
 <div class="max-w-4xl mx-auto p-6 bg-white shadow-md rounded-lg">
+
     <!-- Back Button -->
-    <button onclick="updateLivewireBeforeBack()"
-        class="mt-4 bg-yellow-500 text-white px-6 py-3 text-lg font-semibold rounded-md hover:bg-yellow-600 transition shadow-md">
+    <a href="{{ route('warehouse.requestor.dashboard') }}"
+    class="mt-4 bg-yellow-500 text-white px-6 py-3 text-lg font-semibold rounded-md hover:bg-yellow-600 transition shadow-md">
         Back
-    </button>
-
-    <script>
-        function updateLivewireBeforeBack() {
-            // Trigger blur event on all quantity inputs to force Livewire to update
-            document.querySelectorAll('input[name^="cart"]').forEach(input => input.blur());
-
-            // Delay navigation slightly to allow Livewire updates to complete
-            setTimeout(() => {
-                window.location.href = "{{ route('warehouse.requestor.dashboard') }}";
-            }, 300);
-        }
-    </script>
+    </a>
 
     <h2 class="mt-4 text-xl font-bold mb-4 text-gray-800">Checkout</h2>
 
@@ -80,22 +69,10 @@
         </button>
 
         <!-- Confirm Order Button -->
-        <button onclick="updateLivewireBeforeNavigation()"
-            class="mt-4 w-full bg-green-500 text-white py-2 px-6 rounded-md hover:bg-green-600 transition">
+        <a href="{{ route('warehouse.requestor.confirm') }}"
+            class="mt-4 w-full inline-block text-center bg-green-500 text-white py-2 px-6 rounded-md hover:bg-green-600 transition">
             Confirm Order
-        </button>
-
-        <script>
-            function updateLivewireBeforeNavigation() {
-                // Trigger blur event on all quantity inputs to force Livewire to update
-                document.querySelectorAll('input[name^="cart"]').forEach(input => input.blur());
-
-                // Delay navigation slightly to allow Livewire updates to complete
-                setTimeout(() => {
-                    window.location.href = "{{ route('warehouse.requestor.confirm') }}";
-                }, 500);
-            }
-        </script>
+        </a>
 
     @else
         <p class="text-gray-500">Your cart is empty.</p>
