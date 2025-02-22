@@ -53,8 +53,9 @@
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         @forelse($items as $item)
             <div class="bg-white border border-gray-200 rounded-lg shadow-md overflow-hidden transform transition hover:scale-105 hover:shadow-lg">
-                <img src="{{ $item->image ?? asset('images/default-image.jpg') }}" alt="{{ $item->name }}"
-                    class="w-full h-40 object-cover">
+                <img src="{{ $item->image ? asset('storage/' . $item->image) : asset('images/default-image.jpg') }}"
+                alt="{{ $item->name }}" class="w-full h-40 object-cover">
+
 
                 <div class="p-4">
                     <h3 class="text-lg font-semibold text-gray-800">{{ $item->name }}</h3>
