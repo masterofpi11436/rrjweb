@@ -4,7 +4,6 @@ namespace App\Livewire\Warehouse\Shopping;
 
 use Livewire\Component;
 use Livewire\WithPagination;
-use Illuminate\Support\Facades\Session;
 use App\Models\Warehouse\Item;
 use App\Models\Warehouse\Category;
 use Illuminate\Database\Eloquent\Builder;

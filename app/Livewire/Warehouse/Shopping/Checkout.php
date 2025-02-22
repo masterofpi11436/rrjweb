@@ -19,11 +19,13 @@ class Checkout extends Component
         // Retrieve cart from session
         $this->cart = session()->get('cart', []);
 
-        // Fetch all sections for the dropdown
-        $this->sections = Section::all();
+        // Fetch all sections in alphabetical order
+        $this->sections = Section::orderBy('section', 'asc')->get();
 
-        // Fetch users who have the role "Supervisor"
-        $this->supervisors = User::where('warehouse_role', 'Supervisor')->get();
+        // Fetch supervisors in alphabetical order (by last_name, for example)
+        $this->supervisors = User::where('warehouse_role', 'Supervisor')
+                                 ->orderBy('last_name', 'asc')
+                                 ->get();
     }
 
     // Update quantity of an item
