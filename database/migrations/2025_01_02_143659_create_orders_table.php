@@ -27,6 +27,7 @@ return new class extends Migration
                 ->nullable()
                 ->constrained('sections')
                 ->onDelete('set null');
+            $table->string('section_name')->nullable(); // Backup section name if section is deleted
             $table->json('items');
             $table->enum('status', [
                 'Pending Supervisor Approval',
