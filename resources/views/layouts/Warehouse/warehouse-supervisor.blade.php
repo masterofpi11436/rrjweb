@@ -34,7 +34,7 @@
                     <li class="mb-3"><a href="{{ route('warehouse.warehouse-supervisor.reports_history.dashboard') }}" class="block p-2 rounded hover:bg-blue-700">Reports/History</a></li>
 
                     <!-- Create Request -->
-                    <li class="mb-3"><a href="#" class="block p-2 rounded hover:bg-blue-700">Create Request</a></li>
+                    <li class="mb-3"><a href="{{ route('warehouse.warehouse-supervisor.order.dashboard')}}" class="block p-2 rounded hover:bg-blue-700">Create Request</a></li>
 
                     <!-- User Management -->
                     <li class="mb-3"><a href="{{ route('warehouse.warehouse-supervisor.user.dashboard')}}" class="block p-2 rounded hover:bg-blue-700">Manage Users</a></li>

@@ -23,12 +23,14 @@ use App\Http\Controllers\VFM\VFMTechController;
 use App\Http\Controllers\Directory\PhoneDirectoryController;
 use App\Http\Controllers\Administrator\AdministratorController;
 use App\Http\Controllers\Warehouse\WarehouseSupervisor\WarehouseSupervisorController;
-use App\Http\Controllers\Warehouse\Requestor\RequestorController;
 use App\Http\Controllers\Warehouse\WarehouseSupervisor\ItemController;
 use App\Http\Controllers\Warehouse\WarehouseSupervisor\CategoryController;
 use App\Http\Controllers\Warehouse\WarehouseSupervisor\SectionController;
 use App\Http\Controllers\Warehouse\WarehouseSupervisor\UserController;
 use App\Http\Controllers\Warehouse\WarehouseSupervisor\ReportsHistoryController;
+use App\Http\Controllers\Warehouse\WarehouseSupervisor\OrderController;
+use App\Http\Controllers\Warehouse\Requestor\RequestorController;
+
 
 // Shorthand login Classes
 $baseLoginClass = BaseLoginController::class;
@@ -54,6 +56,7 @@ $itemClass = ItemController::class;
 $categoryClass = CategoryController::class;
 $sectionClass = SectionController::class;
 $userClass = UserController::class;
+$orderClass = OrderController::class;
 $reportsHistoryClass = ReportsHistoryController::class;
 $requestorClass = RequestorController::class;
 
@@ -206,7 +209,7 @@ Route::prefix('policy')->group(function () use ($policyClass, $policyLoginClass)
 });
 
 // ***---Warehouse Application---*** //
-Route::prefix('warehouse')->group(function () use ($warehouseLoginClass, $warehouseSupervisorClass, $requestorClass, $itemClass, $categoryClass, $sectionClass, $userClass, $reportsHistoryClass){
+Route::prefix('warehouse')->group(function () use ($warehouseLoginClass, $warehouseSupervisorClass, $requestorClass, $itemClass, $categoryClass, $sectionClass, $userClass, $reportsHistoryClass, $orderClass){
         // Routes without middleware
         Route::get('/login', [$warehouseLoginClass, 'warehouseLoginForm'])->name('warehouse.login');
         Route::post('/login', [$warehouseLoginClass, 'login']);
@@ -215,7 +218,7 @@ Route::prefix('warehouse')->group(function () use ($warehouseLoginClass, $wareho
         Route::post('/logout', [$warehouseLoginClass, 'logout'])->name('warehouse.logout');
 
         // Warehouse Supervisor Routes
-        Route::prefix('warehouse-supervisor')->middleware('warehouseSupervisor', 'cache')->group(function () use ($warehouseSupervisorClass, $itemClass, $categoryClass, $sectionClass, $userClass, $reportsHistoryClass) {
+        Route::prefix('warehouse-supervisor')->middleware('warehouseSupervisor', 'cache')->group(function () use ($warehouseSupervisorClass, $itemClass, $categoryClass, $sectionClass, $userClass, $reportsHistoryClass, $orderClass) {
             Route::get('/dashboard', [$warehouseSupervisorClass, 'dashboard'])->name('warehouse.warehouse-supervisor.dashboard');
 
             // User Management
@@ -250,9 +253,15 @@ Route::prefix('warehouse')->group(function () use ($warehouseLoginClass, $wareho
                 Route::delete('/{id}', [$sectionClass, 'destroy'])->name('warehouse.warehouse-supervisor.section.destroy');
             });
 
-            // Section Management
-            Route::prefix('reports_history')->group(function () use ($reportsHistoryClass) {
+            // Reports Pages
+            Route::prefix('reports-history')->group(function () use ($reportsHistoryClass) {
                 Route::get('/dashboard', [$reportsHistoryClass, 'dashboard'])->name('warehouse.warehouse-supervisor.reports_history.dashboard');
+            });
+
+            // Create an Order
+            Route::prefix('create-order')->group(function () use ($orderClass) {
+                Route::get('/dashboard', [$orderClass, 'dashboard'])->name('warehouse.warehouse-supervisor.order.dashboard');
+                Route::get('/checkout', [$orderClass, 'checkOut'])->name('warehouse.warehouse-supervisor.order.checkout');
             });
         });
 

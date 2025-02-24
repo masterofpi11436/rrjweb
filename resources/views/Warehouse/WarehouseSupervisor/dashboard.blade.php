@@ -6,7 +6,7 @@
 
 @section('content')
 <div class="grid grid-cols-3 gap-6">
-    <a href=""><div class="p-5 bg-green-300 rounded shadow">
+    <a href="{{ route('warehouse.warehouse-supervisor.order.dashboard')}}"><div class="p-5 bg-green-300 rounded shadow">
         <h3 class="text-lg font-semibold">+ Create Order</h3>
     </div></a>
     <a href="#">
