@@ -35,54 +35,6 @@ class DatabaseSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
-            [
-                'last_name' => 'Feury',
-                'first_name' => 'Lonnie',
-                'email' => 'feury.lonnie@rrjva.org',
-                'password' => Hash::make('admin'),
-                'admin' => false,
-                'phone' => false,
-                'vfm' => true,
-                'vfm30' => true,
-                'vfm_tech' => true,
-                'ics' => false,
-                'policy' => false,
-                'warehouse_role' => 'Requestor',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'last_name' => 'Flexon',
-                'first_name' => 'Tim',
-                'email' => 'tflexon@rrjva.org',
-                'password' => Hash::make('admin'),
-                'admin' => false,
-                'phone' => false,
-                'vfm' => true,
-                'vfm30' => true,
-                'vfm_tech' => true,
-                'ics' => false,
-                'policy' => false,
-                'warehouse_role' => 'Requestor',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'last_name' => 'Watson',
-                'first_name' => 'Charles',
-                'email' => 'watson.charles@rrjva.org',
-                'password' => Hash::make('admin'),
-                'admin' => false,
-                'phone' => false,
-                'vfm' => false,
-                'vfm30' => false,
-                'vfm_tech' => false,
-                'ics' => false,
-                'policy' => false,
-                'warehouse_role' => 'Warehouse Supervisor',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
         ]);
 
         DB::table('sections')->insert([
@@ -123,9 +75,9 @@ class DatabaseSeeder extends Seeder
         ]);
 
         // Populate random data for applications
-        PhoneDirectory::factory()->count(250)->create();
-        VFM::factory()->count(100)->create();
-        VFM30::factory()->count(100)->create();
-        ICS::factory()->count(100)->create();
+        // PhoneDirectory::factory()->count(250)->create();
+        // VFM::factory()->count(100)->create();
+        // VFM30::factory()->count(100)->create();
+        // ICS::factory()->count(100)->create();
     }
 }
