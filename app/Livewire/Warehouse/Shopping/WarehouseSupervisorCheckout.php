@@ -6,7 +6,7 @@ use Livewire\Component;
 use App\Models\Login\User;
 use App\Models\Warehouse\Section;
 
-class Checkout extends Component
+class WarehouseSupervisorCheckout extends Component
 {
     public $cart = [];
     public $sections;
@@ -65,7 +65,7 @@ class Checkout extends Component
 
     public function render()
     {
-        return view('Warehouse.Requestor.livewire.checkout');
+        return view('Warehouse.livewire.warehouse-supervisor-checkout');
     }
 
     public function submitForm()
@@ -79,7 +79,7 @@ class Checkout extends Component
         // e.g. dd(session()->get('cart'));
         // or create a database record, then redirect:
 
-        return redirect()->route('warehouse.requestor.confirm');
+        return redirect()->route('warehouse.warehouse-supervisor.confirm');
     }
 
 }

@@ -19,4 +19,9 @@ class OrderController extends Controller
 
         return view('Warehouse.WarehouseSupervisor.CreateOrder.checkout', compact('cart'));
     }
+
+    public function confirm()
+    {
+        dd(session()->get('cart', []));
+    }
 }

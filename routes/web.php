@@ -262,6 +262,7 @@ Route::prefix('warehouse')->group(function () use ($warehouseLoginClass, $wareho
             Route::prefix('create-order')->group(function () use ($orderClass) {
                 Route::get('/dashboard', [$orderClass, 'dashboard'])->name('warehouse.warehouse-supervisor.order.dashboard');
                 Route::get('/checkout', [$orderClass, 'checkOut'])->name('warehouse.warehouse-supervisor.order.checkout');
+                Route::get('/confirm', [$orderClass, 'confirm'])->name('warehouse.warehouse-supervisor.order.confirm');
             });
         });
 

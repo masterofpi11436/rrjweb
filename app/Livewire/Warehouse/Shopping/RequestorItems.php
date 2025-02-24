@@ -8,7 +8,7 @@ use App\Models\Warehouse\Item;
 use App\Models\Warehouse\Category;
 use Illuminate\Database\Eloquent\Builder;
 
-class Items extends Component
+class RequestorItems extends Component
 {
     use WithPagination;
 
@@ -95,7 +95,14 @@ class Items extends Component
 
     public function render()
     {
-        $query = Item::with('category:id,category');
+        // Exclude "Property" category
+        $query = Item::with('category:id,category')
+        ->where(function (Builder $q) {
+            $q->whereDoesntHave('category')
+              ->orWhereHas('category', function (Builder $cq) {
+                  $cq->where('category', '!=', 'Property');
+              });
+        });
 
         if (!empty($this->search)) {
             $query->where(function (Builder $q) {
@@ -113,10 +120,11 @@ class Items extends Component
         $items = $query->orderBy($this->sortColumn, $this->sortDirection)
                        ->paginate(12);
 
-        $categories = Category::all();
+        // Exclude "Property" category from drop down menu
+        $categories = Category::where('category', '!=', 'Property')->get();
         $cart       = session('cart', []);
 
-        return view('Warehouse.livewire.item-search', [
+        return view('Warehouse.livewire.requestor-item-search', [
             'items'      => $items,
             'categories' => $categories,
             'cart'       => $cart,
