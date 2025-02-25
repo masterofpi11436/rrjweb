@@ -10,14 +10,14 @@ class OrderController extends Controller
 {
     public function dashboard()
     {
-        return view('Warehouse.WarehouseSupervisor.CreateOrder.dashboard');
+        return view('Warehouse.WarehouseSupervisor.CreateOrder.createorder.dashboard');
     }
 
     public function checkOut()
     {
         $cart = session()->get('cart', []);
 
-        return view('Warehouse.WarehouseSupervisor.CreateOrder.checkout', compact('cart'));
+        return view('Warehouse.WarehouseSupervisor.CreateOrder.createorder.checkout', compact('cart'));
     }
 
     public function confirm()

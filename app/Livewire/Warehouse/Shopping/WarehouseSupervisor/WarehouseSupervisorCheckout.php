@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Warehouse\Shopping;
+namespace App\Livewire\Warehouse\Shopping\WarehouseSupervisor;
 
 use Livewire\Component;
 use App\Models\Login\User;
@@ -65,7 +65,7 @@ class WarehouseSupervisorCheckout extends Component
 
     public function render()
     {
-        return view('Warehouse.livewire.warehouse-supervisor-checkout');
+        return view('Warehouse.WarehouseSupervisor.CreateOrder.livewire.warehouse-supervisor-checkout');
     }
 
     public function submitForm()

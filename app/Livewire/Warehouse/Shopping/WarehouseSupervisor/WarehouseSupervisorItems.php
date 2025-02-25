@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Warehouse\Shopping;
+namespace App\Livewire\Warehouse\Shopping\WarehouseSupervisor;
 
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -116,7 +116,7 @@ class WarehouseSupervisorItems extends Component
         $categories = Category::all();
         $cart       = session('cart', []);
 
-        return view('Warehouse.livewire.warehouse-supervisor-item-search', [
+        return view('Warehouse.WarehouseSupervisor.CreateOrder.livewire.warehouse-supervisor-item-search', [
             'items'      => $items,
             'categories' => $categories,
             'cart'       => $cart,
