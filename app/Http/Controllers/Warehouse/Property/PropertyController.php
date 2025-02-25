@@ -1,23 +1,23 @@
 <?php
 
-namespace App\Http\Controllers\Warehouse\Requestor;
+namespace App\Http\Controllers\Warehouse\Property;
 
 // Base Controller
 use App\Http\Controllers\Controller;
 
 
-class RequestorController extends Controller
+class PropertyController extends Controller
 {
     public function dashboard()
     {
-        return view('Warehouse.Requestor.requestor.dashboard');
+        return view('Warehouse.Property.property.dashboard');
     }
 
     public function checkOut()
     {
         $cart = session()->get('cart', []);
 
-        return view('Warehouse.Requestor.requestor.checkout', compact('cart'));
+        return view('Warehouse.Property.property.checkout', compact('cart'));
     }
 
     public function confirm()

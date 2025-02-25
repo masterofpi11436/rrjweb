@@ -30,7 +30,8 @@ use App\Http\Controllers\Warehouse\WarehouseSupervisor\UserController;
 use App\Http\Controllers\Warehouse\WarehouseSupervisor\ReportsHistoryController;
 use App\Http\Controllers\Warehouse\WarehouseSupervisor\OrderController;
 use App\Http\Controllers\Warehouse\Requestor\RequestorController;
-
+use App\Http\Controllers\Warehouse\Supervisor\SupervisorController;
+use App\Http\Controllers\Warehouse\Property\PropertyController;
 
 // Shorthand login Classes
 $baseLoginClass = BaseLoginController::class;
@@ -59,6 +60,8 @@ $userClass = UserController::class;
 $orderClass = OrderController::class;
 $reportsHistoryClass = ReportsHistoryController::class;
 $requestorClass = RequestorController::class;
+$supervisorClass = SupervisorController::class;
+$propertyClass = PropertyController::class;
 
 // Forgot password link for all applications
 Route::get('forgot', [$baseLoginClass, 'showForgotPasswordForm'])->name('login.forgot');
@@ -209,7 +212,7 @@ Route::prefix('policy')->group(function () use ($policyClass, $policyLoginClass)
 });
 
 // ***---Warehouse Application---*** //
-Route::prefix('warehouse')->group(function () use ($warehouseLoginClass, $warehouseSupervisorClass, $requestorClass, $itemClass, $categoryClass, $sectionClass, $userClass, $reportsHistoryClass, $orderClass){
+Route::prefix('warehouse')->group(function () use ($warehouseLoginClass, $warehouseSupervisorClass, $supervisorClass, $requestorClass, $propertyClass, $itemClass, $categoryClass, $sectionClass, $userClass, $reportsHistoryClass, $orderClass){
         // Routes without middleware
         Route::get('/login', [$warehouseLoginClass, 'warehouseLoginForm'])->name('warehouse.login');
         Route::post('/login', [$warehouseLoginClass, 'login']);
@@ -269,15 +272,20 @@ Route::prefix('warehouse')->group(function () use ($warehouseLoginClass, $wareho
         // Warehouse Technician
 
         // Property
+        Route::prefix('property')->middleware('property', 'cache')->group(function () use ($propertyClass) {
+            Route::get('/dashboard', [$propertyClass, 'dashboard'])->name('warehouse.property.dashboard');
+            Route::get('/checkout', [$propertyClass, 'checkOut'])->name('warehouse.property.checkout');
+        });
 
         // Supervisors
+        Route::prefix('supervisor')->middleware('supervisor', 'cache')->group(function () use ($supervisorClass) {
+            Route::get('/dashboard', [$supervisorClass, 'dashboard'])->name('warehouse.supervisor.dashboard');
+            Route::get('/checkout', [$supervisorClass, 'checkOut'])->name('warehouse.supervisor.checkout');
+        });
 
         // Requestors
         Route::prefix('requestor')->middleware('requestor', 'cache')->group(function () use ($requestorClass) {
             Route::get('/dashboard', [$requestorClass, 'dashboard'])->name('warehouse.requestor.dashboard');
             Route::get('/checkout', [$requestorClass, 'checkOut'])->name('warehouse.requestor.checkout');
-            Route::get('/confirm', [$requestorClass, 'confirm'])->name('warehouse.requestor.confirm');
-            Route::get('/pending', [$requestorClass, 'pendingOrders'])->name('warehouse.requestor.pending');
-            Route::get('/recent', [$requestorClass, 'recentOrders'])->name('warehouse.requestor.recent');
         });
 });
