@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Livewire\Warehouse\Shopping;
+namespace App\Livewire\Warehouse\Shopping\Requestor;
 
 use Livewire\Component;
 use App\Models\Login\User;
 use App\Models\Warehouse\Section;
 
-class SupervisorCheckout extends Component
+class RequestorCheckout extends Component
 {
     public $cart = [];
     public $sections;
@@ -65,7 +65,7 @@ class SupervisorCheckout extends Component
 
     public function render()
     {
-        return view('Warehouse.Supervisor.livewire.supervisor-checkout');
+        return view('Warehouse.Requestor.livewire.requestor-checkout');
     }
 
     public function submitForm()
@@ -79,7 +79,7 @@ class SupervisorCheckout extends Component
         // e.g. dd(session()->get('cart'));
         // or create a database record, then redirect:
 
-        return redirect()->route('warehouse.supervisor.confirm');
+        return redirect()->route('warehouse.requestor.confirm');
     }
 
 }

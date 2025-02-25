@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Warehouse\Shopping;
+namespace App\Livewire\Warehouse\Shopping\Requestor;
 
 use Livewire\Component;
 use Livewire\WithPagination;

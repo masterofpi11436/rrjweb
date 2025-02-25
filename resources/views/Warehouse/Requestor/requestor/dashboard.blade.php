@@ -7,6 +7,6 @@
 @section('content')
 
 <!-- Livewire search component -->
-@livewire('warehouse.shopping.requestor-items')
+@livewire('warehouse.shopping.requestor.requestor-items')
 
 @endsection
