@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Warehouse\Shopping;
+namespace App\Livewire\Warehouse\Shopping\Property;
 
 use Livewire\Component;
 use App\Models\Login\User;
@@ -65,7 +65,7 @@ class PropertyCheckout extends Component
 
     public function render()
     {
-        return view('Warehouse.livewire.property-checkout');
+        return view('Warehouse.Property.livewire.property-checkout');
     }
 
     public function submitForm()

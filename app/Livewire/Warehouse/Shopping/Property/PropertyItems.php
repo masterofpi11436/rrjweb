@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Warehouse\Shopping;
+namespace App\Livewire\Warehouse\Shopping\Property;
 
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -116,7 +116,7 @@ class PropertyItems extends Component
         $categories = Category::all();
         $cart       = session('cart', []);
 
-        return view('Warehouse.livewire.property-item-search', [
+        return view('Warehouse.Property.livewire.property-item-search', [
             'items'      => $items,
             'categories' => $categories,
             'cart'       => $cart,

@@ -65,7 +65,7 @@ class SupervisorCheckout extends Component
 
     public function render()
     {
-        return view('Warehouse.livewire.supervisor-checkout');
+        return view('Warehouse.Supervisor.livewire.supervisor-checkout');
     }
 
     public function submitForm()

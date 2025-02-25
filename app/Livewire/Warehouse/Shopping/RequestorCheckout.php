@@ -65,7 +65,7 @@ class RequestorCheckout extends Component
 
     public function render()
     {
-        return view('Warehouse.livewire.requestor-checkout');
+        return view('Warehouse.Requestor.livewire.requestor-checkout');
     }
 
     public function submitForm()

@@ -124,7 +124,7 @@ class SupervisorItems extends Component
         $categories = Category::where('category', '!=', 'Property')->get();
         $cart       = session('cart', []);
 
-        return view('Warehouse.livewire.supervisor-item-search', [
+        return view('Warehouse.Supervisor.livewire.supervisor-item-search', [
             'items'      => $items,
             'categories' => $categories,
             'cart'       => $cart,

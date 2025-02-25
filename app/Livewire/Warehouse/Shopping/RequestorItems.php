@@ -124,7 +124,7 @@ class RequestorItems extends Component
         $categories = Category::where('category', '!=', 'Property')->get();
         $cart       = session('cart', []);
 
-        return view('Warehouse.livewire.requestor-item-search', [
+        return view('Warehouse.Requestor.livewire.requestor-item-search', [
             'items'      => $items,
             'categories' => $categories,
             'cart'       => $cart,
