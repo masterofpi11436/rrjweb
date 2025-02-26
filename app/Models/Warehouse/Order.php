@@ -18,9 +18,18 @@ class Order extends Model
     ];
 
     protected $fillable = [
-        'user_id', 'supervisor_id', 'section_id',
-        'items', 'status_id', 'approved_denied_by',
-        'approved_denied_at', 'note'
+        'user_id',
+        'user_name',
+        'supervisor_id',
+        'supervisor_name',
+        'section_id',
+        'section_name',
+        'items',
+        'status',
+        'approved_denied_by',
+        'approved_denied_by_name',
+        'approved_denied_at',
+        'note',
     ];
 
     public function user()
