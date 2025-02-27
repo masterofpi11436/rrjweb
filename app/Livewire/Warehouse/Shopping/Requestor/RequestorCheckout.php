@@ -4,7 +4,10 @@ namespace App\Livewire\Warehouse\Shopping\Requestor;
 
 use Livewire\Component;
 use App\Models\Login\User;
+use App\Models\Warehouse\Order;
 use App\Models\Warehouse\Section;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Warehouse\Enums\OrderStatus;
 
 class RequestorCheckout extends Component
 {
@@ -75,11 +78,25 @@ class RequestorCheckout extends Component
             'selectedSupervisor' => 'required|exists:users,id',
         ]);
 
-        // If validation passes, do what you need:
-        // e.g. dd(session()->get('cart'));
-        // or create a database record, then redirect:
+        $user = Auth::user();
+        $supervisor = User::find($this->selectedSupervisor);
+        $section = Section::find($this->selectedSection);
 
-        return redirect()->route('warehouse.requestor.confirm');
+        $order = Order::create([
+            'user_id'             => $user->id,
+            'user_name'           => $user->name, // Backup user name
+            'supervisor_id'       => $supervisor->id,
+            'supervisor_name'     => $supervisor->first_name . ' ' . $supervisor->last_name,
+            'section_id'          => $section->id,
+            'section_name'        => $section->section,
+            'items'               => json_encode($this->cart), // Store cart items as JSON
+            'status'              => OrderStatus::PENDING_SUPERVISOR->value, // Enum value
+        ]);
+
+        session()->forget('cart');
+
+        return redirect()->route('warehouse.requestor.dashboard')
+            ->with('success', 'Your order was successfully submitted to ' . $supervisor->last_name . ' ' . $supervisor->first_name);
     }
 
 }

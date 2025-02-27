@@ -15,7 +15,7 @@
             <nav>
                 <ul>
                     <!-- Pending Orders -->
-                    <li class="mb-3"><a href="#" class="block p-2 rounded hover:bg-blue-700">Pending Orders</a></li>
+                    <li class="mb-3"><a href="#" class="block p-2 rounded hover:bg-blue-700">Pending Orders {{ $pendingOrdersCount }}</a></li>
 
                     <!-- Recent Orders -->
                     <li class="mb-3"><a href="#" class="block p-2 rounded hover:bg-blue-700">Recent Orders</a></li>
