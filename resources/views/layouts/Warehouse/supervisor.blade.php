@@ -21,7 +21,7 @@
                     <li class="mb-3"><a href="#" class="block p-2 rounded hover:bg-blue-700">Recent Orders</a></li>
 
                     <!-- Approve Orders -->
-                    <li class="mb-3"><a href="#" class="block p-2 rounded hover:bg-blue-700">Approve Orders</a></li>
+                    <li class="mb-3"><a href="#" class="block p-2 rounded hover:bg-blue-700">Approve Order Requests</a></li>
                 </ul>
             </nav>
         </aside>
