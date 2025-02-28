@@ -31,4 +31,9 @@ class RequestorController extends Controller
 
         return view('Warehouse.Requestor.requestor.checkout', compact('cart'));
     }
+
+    public function pending()
+    {
+        return view('Warehouse.Requestor.requestor.pending');
+    }
 }

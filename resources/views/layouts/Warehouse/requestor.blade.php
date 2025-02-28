@@ -14,8 +14,11 @@
             <h1 class="text-2xl font-bold mb-5">Navigation</h1>
             <nav>
                 <ul>
+                    <!-- Create Orders -->
+                    <li class="mb-3"><a href="{{ route('warehouse.requestor.dashboard') }}" class="block p-2 rounded hover:bg-blue-700">Create Orders</a></li>
+
                     <!-- Pending Orders -->
-                    <li class="mb-3"><a href="#" class="block p-2 rounded hover:bg-blue-700">Pending Orders {{ $pendingOrdersCount }}</a></li>
+                    <li class="mb-3"><a href="{{ route('warehouse.requestor.pending') }}" class="block p-2 rounded hover:bg-blue-700">Pending Orders {{ $pendingOrdersCount }}</a></li>
 
                     <!-- Recent Orders -->
                     <li class="mb-3"><a href="#" class="block p-2 rounded hover:bg-blue-700">Recent Orders</a></li>
@@ -45,6 +48,7 @@
             <a href="#" id="back-to-top" class="back-to-top">⬆️ Back to Top</a>
 
             <script src="{{ asset('javascript/flash-message-expiry.js') }}"></script>
+            <script src="{{ asset('javascript/delete-confirmation.js') }}"></script>
             <script src="{{ asset('javascript/back-to-top.js') }}"></script>
         </div>
     </div>
