@@ -135,7 +135,7 @@ sudo chown -R $USER:www-data /opt/lampp/htdocs
 	sudo apt install composer -y
 
 ***************************
-10. Install Tailwind CSS (Project Dependent)
+10. Install Tailwind CSS and Apline.js (Project Dependent)
 
 # Execute this command in powershell if npm will not run
 
@@ -161,6 +161,15 @@ export default defineConfig({
 In ./resources/css/app.css, add these:
 @import "tailwindcss";
 @source "../views";
+
+# Alpine.js
+npm install alpinejs
+
+Add this to app.js:
+import Alpine from 'alpinejs';
+window.Alpine = Alpine;
+Alpine.start();
+
 
 Run the development build
 npm run dev

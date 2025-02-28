@@ -288,5 +288,6 @@ Route::prefix('warehouse')->group(function () use ($warehouseLoginClass, $wareho
             Route::get('/dashboard', [$requestorClass, 'dashboard'])->name('warehouse.requestor.dashboard');
             Route::get('/checkout', [$requestorClass, 'checkOut'])->name('warehouse.requestor.checkout');
             Route::get('/pending', [$requestorClass, 'pending'])->name('warehouse.requestor.pending');
+            Route::delete('/{id}', [$requestorClass, 'destroy'])->name('warehouse.requestor.destroy');
         });
 });

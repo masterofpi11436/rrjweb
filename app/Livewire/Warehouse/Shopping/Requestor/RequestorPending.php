@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Livewire\Warehouse\Shopping\Requestor;
 
 use Livewire\Component;

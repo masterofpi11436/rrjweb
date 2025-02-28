@@ -36,4 +36,14 @@ class RequestorController extends Controller
     {
         return view('Warehouse.Requestor.requestor.pending');
     }
+
+    // Delete an existing order
+    public function destroy($id)
+    {
+        $item = Order::findOrFail($id);
+        $item->delete();
+
+        session()->flash('success', 'Item deleted successfully!');
+        return redirect()->back();
+    }
 }

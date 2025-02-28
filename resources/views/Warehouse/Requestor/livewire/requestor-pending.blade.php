@@ -29,12 +29,26 @@
                                 {{ $expandedOrderId === $order->id ? 'Hide Details' : 'View Details' }}
                             </button>
 
-                            <!-- Cancel Order Button -->
-                            <button wire:click="cancelOrder({{ $order->id }})"
-                                    class="px-4 py-2 bg-red-500 text-white text-sm rounded hover:bg-red-600 transition"
-                                    onclick="return confirm('Are you sure you want to cancel this order?');">
+                            <!-- Delete Button -->
+                            <a href="{{ route('warehouse.requestor.destroy', $order->id) }}" class="px-4 py-2 bg-red-500 text-white text-sm rounded hover:bg-red-600 transition"
+                                onclick="event.preventDefault(); confirmDelete({{ $order->id }});">
                                 Cancel Order
-                            </button>
+                            </a>
+
+                            <!-- Hidden Delete Form -->
+                            <form id="delete-form-{{ $order->id }}" action="{{ route('warehouse.requestor.destroy', $order->id) }}" method="POST" style="display: none;">
+                                @csrf
+                                @method('DELETE')
+                            </form>
+
+                            <!-- Delete Confirmation Modal -->
+                            <div id="custom-confirmation-modal-{{ $order->id }}" class="confirmation-modal" style="display: none;">
+                                <div class="modal-content">
+                                    <p>Are you sure you want to delete this order?</p>
+                                    <button class="btn-confirm" onclick="deleteRecord({{ $order->id }});">Yes, Delete</button>
+                                    <button class="btn-cancel" onclick="hideModal({{ $order->id }});">Cancel</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
