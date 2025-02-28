@@ -1,6 +1,4 @@
 <div>
-    <h2 class="text-xl font-bold mb-4 text-gray-800">Pending Supervisor Orders</h2>
-
     <!-- Flash Message -->
     @if (session()->has('success'))
         <div id="flash-message" class="fixed bottom-5 right-5 bg-green-500 text-white px-4 py-3 rounded-md shadow-lg flex items-center space-x-4 animate-fade-in">
