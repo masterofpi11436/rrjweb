@@ -37,6 +37,11 @@ class RequestorController extends Controller
         return view('Warehouse.Requestor.requestor.pending');
     }
 
+    public function approved()
+    {
+        return view('Warehouse.Requestor.requestor.approved');
+    }
+
     // Delete an existing order
     public function destroy($id)
     {

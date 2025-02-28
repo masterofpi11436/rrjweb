@@ -28,7 +28,7 @@
                     </li>
 
                     <!-- Recent Orders -->
-                    <li class="mb-3"><a href="#" class="block p-2 rounded hover:bg-blue-700">Recent Orders</a></li>
+                    <li class="mb-3"><a href="{{ route('warehouse.requestor.approved') }}" class="block p-2 rounded hover:bg-blue-700">Approved Orders</a></li>
                 </ul>
             </nav>
         </aside>
