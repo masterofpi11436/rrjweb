@@ -72,14 +72,13 @@ class SupervisorCheckout extends Component
     {
         $this->validate([
             'selectedSection'    => 'required|exists:sections,id',
-            'selectedSupervisor' => 'required|exists:users,id',
         ]);
 
         // If validation passes, do what you need:
         // e.g. dd(session()->get('cart'));
         // or create a database record, then redirect:
 
-        return redirect()->route('warehouse.supervisor.confirm');
+        return redirect()->route('warehouse.supervisor.dashboard');
     }
 
 }

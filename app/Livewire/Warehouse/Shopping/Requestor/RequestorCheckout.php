@@ -82,7 +82,7 @@ class RequestorCheckout extends Component
         $supervisor = User::find($this->selectedSupervisor);
         $section = Section::find($this->selectedSection);
 
-        $order = Order::create([
+        Order::create([
             'user_id'             => $user->id,
             'user_name'           => $user->name, // Backup user name
             'supervisor_id'       => $supervisor->id,
