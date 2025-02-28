@@ -18,7 +18,13 @@
                     <li class="mb-3"><a href="{{ route('warehouse.requestor.dashboard') }}" class="block p-2 rounded hover:bg-blue-700">Create Orders</a></li>
 
                     <!-- Pending Orders -->
-                    <li class="mb-3"><a href="{{ route('warehouse.requestor.pending') }}" class="block p-2 rounded hover:bg-blue-700">Pending Orders {{ $pendingOrdersCount }}</a></li>
+                    <li class="mb-3">
+                        <a href="{{ route('warehouse.requestor.pending') }}"
+                        class="flex justify-between p-2 rounded hover:bg-blue-700">
+                            <span>Pending Orders</span>
+                            <span class="bg-blue-500 text-white px-2 py-1 rounded text-sm">{{ $pendingOrdersCount }}</span>
+                        </a>
+                    </li>
 
                     <!-- Recent Orders -->
                     <li class="mb-3"><a href="#" class="block p-2 rounded hover:bg-blue-700">Recent Orders</a></li>
