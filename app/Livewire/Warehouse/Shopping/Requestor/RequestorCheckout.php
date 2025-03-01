@@ -84,7 +84,7 @@ class RequestorCheckout extends Component
 
         Order::create([
             'user_id'             => $user->id,
-            'user_name'           => $user->name, // Backup user name
+            'user_name'           => $user->last_name . ' ' . $user->first_name, // Backup user name
             'supervisor_id'       => $supervisor->id,
             'supervisor_name'     => $supervisor->first_name . ' ' . $supervisor->last_name,
             'section_id'          => $section->id,

@@ -48,7 +48,7 @@ class RequestorController extends Controller
         $item = Order::findOrFail($id);
         $item->delete();
 
-        session()->flash('success', 'Item deleted successfully!');
+        session()->flash('success', 'Order deleted successfully!');
         return redirect()->back();
     }
 }
