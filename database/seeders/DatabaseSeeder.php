@@ -37,6 +37,63 @@ class DatabaseSeeder extends Seeder
             ],
         ]);
 
+        DB::table('users')->insert([
+            [
+                'last_name' => 'Property',
+                'first_name' => 'Property',
+                'email' => 'prop@rrjva.org',
+                'password' => Hash::make('asd'),
+                'admin' => false,
+                'phone' => false,
+                'vfm' => false,
+                'vfm30' => false,
+                'vfm_tech' => false,
+                'ics' => false,
+                'policy' => false,
+                'warehouse_role' => 'Property',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+        ]);
+
+        DB::table('users')->insert([
+            [
+                'last_name' => 'Supervisor',
+                'first_name' => 'Supervisor',
+                'email' => 'super@rrjva.org',
+                'password' => Hash::make('asd'),
+                'admin' => false,
+                'phone' => false,
+                'vfm' => false,
+                'vfm30' => false,
+                'vfm_tech' => false,
+                'ics' => false,
+                'policy' => false,
+                'warehouse_role' => 'Supervisor',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+        ]);
+
+        DB::table('users')->insert([
+            [
+                'last_name' => 'Requestor',
+                'first_name' => 'Requestor',
+                'email' => 'req@rrjva.org',
+                'password' => Hash::make('asd'),
+                'admin' => false,
+                'phone' => false,
+                'vfm' => false,
+                'vfm30' => false,
+                'vfm_tech' => false,
+                'ics' => false,
+                'policy' => false,
+                'warehouse_role' => 'Requestor',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+        ]);
+
         DB::table('sections')->insert([
             ['section' => 'Administration'],
             ['section' => 'Booking'],
