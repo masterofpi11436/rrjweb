@@ -275,6 +275,9 @@ Route::prefix('warehouse')->group(function () use ($warehouseLoginClass, $wareho
         Route::prefix('property')->middleware('property', 'cache')->group(function () use ($propertyClass) {
             Route::get('/dashboard', [$propertyClass, 'dashboard'])->name('warehouse.property.dashboard');
             Route::get('/checkout', [$propertyClass, 'checkOut'])->name('warehouse.property.checkout');
+            Route::get('/approved', [$propertyClass, 'approved'])->name('warehouse.property.approved');
+            Route::get('/pending', [$propertyClass, 'pending'])->name('warehouse.property.pending');
+            Route::delete('/{id}', [$propertyClass, 'destroy'])->name('warehouse.property.destroy');
         });
 
         // Supervisors

@@ -3,7 +3,6 @@
 namespace App\Livewire\Warehouse\Shopping\Supervisor;
 
 use Livewire\Component;
-use App\Models\Login\User;
 use App\Models\Warehouse\Order;
 use App\Models\Warehouse\Section;
 use Illuminate\Support\Facades\Auth;

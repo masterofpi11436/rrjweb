@@ -14,14 +14,24 @@
             <h1 class="text-2xl font-bold mb-5">Navigation</h1>
             <nav>
                 <ul>
+                    <!-- Create Order -->
+                    <li class="mb-3"><a href="{{ route('warehouse.property.dashboard')}}"
+                        class="block p-2 rounded hover:bg-blue-700">Create Order</a></li>
+
                     <!-- Pending Orders -->
-                    <li class="mb-3"><a href="#" class="block p-2 rounded hover:bg-blue-700">Pending Orders</a></li>
+                    <li class="mb-3">
+                        <a href="{{ route('warehouse.property.pending') }}"
+                        class="flex justify-between p-2 rounded hover:bg-blue-700">
+                            <span>Pending Orders</span>
+                            <span class="bg-blue-500 text-white px-2 py-1 rounded text-sm">{{ $pendingOrdersCount }}</span>
+                        </a>
+                    </li>
 
                     <!-- Recent Orders -->
-                    <li class="mb-3"><a href="#" class="block p-2 rounded hover:bg-blue-700">Recent Orders</a></li>
+                    <li class="mb-3"><a href="{{ route('warehouse.property.approved') }}" class="block p-2 rounded hover:bg-blue-700">Recent Orders</a></li>
 
-                    <!-- Approve Orders -->
-                    <li class="mb-3"><a href="#" class="block p-2 rounded hover:bg-blue-700">Approve Orders</a></li>
+                    <!-- Approve Staff Orders -->
+                    <li class="mb-3"><a href="#" class="block p-2 rounded hover:bg-blue-700">Approve Order Requests</a></li>
                 </ul>
             </nav>
         </aside>

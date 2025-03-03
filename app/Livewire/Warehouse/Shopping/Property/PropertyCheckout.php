@@ -3,16 +3,16 @@
 namespace App\Livewire\Warehouse\Shopping\Property;
 
 use Livewire\Component;
-use App\Models\Login\User;
+use App\Models\Warehouse\Order;
 use App\Models\Warehouse\Section;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Warehouse\Enums\OrderStatus;
 
 class PropertyCheckout extends Component
 {
     public $cart = [];
     public $sections;
-    public $supervisors;
     public $selectedSection = '';
-    public $selectedSupervisor = '';
 
     public function mount()
     {
@@ -21,11 +21,6 @@ class PropertyCheckout extends Component
 
         // Fetch all sections in alphabetical order
         $this->sections = Section::orderBy('section', 'asc')->get();
-
-        // Fetch supervisors in alphabetical order (by last_name, for example)
-        $this->supervisors = User::where('warehouse_role', 'Supervisor')
-                                 ->orderBy('last_name', 'asc')
-                                 ->get();
     }
 
     // Update quantity of an item
@@ -72,15 +67,26 @@ class PropertyCheckout extends Component
     {
         $this->validate([
             'selectedSection'    => 'required|exists:sections,id',
-            'selectedSupervisor' => 'required|exists:users,id',
         ]);
 
-        // If validation passes, do what you need:
-        // e.g. dd(session()->get('cart'));
-        // or create a database record, then redirect:
+        $user = Auth::user();
+        $section = Section::find($this->selectedSection);
 
-        return redirect()->route('warehouse.property.confirm');
+        Order::create([
+            'user_id'             => $user->id,
+            'user_name'           => $user->first_name . ' ' . $user->last_name,
+            'supervisor_id'       => $user->id,
+            'supervisor_name'     => $user->first_name . ' ' . $user->last_name,
+            'section_id'          => $section->id,
+            'section_name'        => $section->section,
+            'items'               => json_encode($this->cart), // Store cart items as JSON
+            'status'              => OrderStatus::PENDING_WAREHOUSE->value, // Enum value
+        ]);
+
+        session()->forget('cart');
+
+        return redirect()->route('warehouse.property.dashboard')
+            ->with('success', 'Your order was successfully submitted for ' . $section->section . '.');
     }
-
 }
 

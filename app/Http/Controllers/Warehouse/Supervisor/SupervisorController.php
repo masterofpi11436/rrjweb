@@ -44,13 +44,13 @@ class SupervisorController extends Controller
         return view('Warehouse.Supervisor.supervisor.approved');
     }
 
-        // Delete an existing order
-        public function destroy($id)
-        {
-            $item = Order::findOrFail($id);
-            $item->delete();
+    // Delete an existing order
+    public function destroy($id)
+    {
+        $item = Order::findOrFail($id);
+        $item->delete();
 
-            session()->flash('success', 'Order deleted successfully!');
-            return redirect()->back();
-        }
+        session()->flash('success', 'Order deleted successfully!');
+        return redirect()->back();
+    }
 }
