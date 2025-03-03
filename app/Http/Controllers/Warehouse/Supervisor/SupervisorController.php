@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Warehouse\Supervisor;
 // Base Controller
 use App\Models\Warehouse\Order;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 use App\Http\Controllers\Warehouse\Enums\OrderStatus;
 
@@ -16,7 +17,9 @@ class SupervisorController extends Controller
     public function __construct()
     {
         // Make the pendingOrdersCount available to all views
-        $this->pendingOrdersCount = Order::where('status', OrderStatus::PENDING_WAREHOUSE->value)->count();
+        $this->pendingOrdersCount = Order::where('status', OrderStatus::PENDING_WAREHOUSE->value)
+            ->where('supervisor_id', Auth::id())
+            ->count();
         View::share('pendingOrdersCount', $this->pendingOrdersCount);
     }
     public function dashboard()

@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/back-to-top.css" id="common-styles-link">
+    <link rel="stylesheet" href="/css/delete-confirmation-modal.css">
     <title>@yield('title')</title>
     @vite('resources/css/app.css')
 </head>
@@ -14,13 +15,23 @@
             <h1 class="text-2xl font-bold mb-5">Navigation</h1>
             <nav>
                 <ul>
+                    <!-- Create Order -->
+                    <li class="mb-3"><a href="{{ route('warehouse.supervisor.dashboard')}}"
+                        class="block p-2 rounded hover:bg-blue-700">Create Order</a></li>
+
                     <!-- Pending Orders -->
-                    <li class="mb-3"><a href="#" class="block p-2 rounded hover:bg-blue-700">Your Pending Orders</a></li>
+                    <li class="mb-3">
+                        <a href="{{ route('warehouse.supervisor.pending') }}"
+                        class="flex justify-between p-2 rounded hover:bg-blue-700">
+                            <span>Pending Orders</span>
+                            <span class="bg-blue-500 text-white px-2 py-1 rounded text-sm">{{ $pendingOrdersCount }}</span>
+                        </a>
+                    </li>
 
                     <!-- Recent Orders -->
                     <li class="mb-3"><a href="#" class="block p-2 rounded hover:bg-blue-700">Recent Orders</a></li>
 
-                    <!-- Approve Orders -->
+                    <!-- Approve Staff Orders -->
                     <li class="mb-3"><a href="#" class="block p-2 rounded hover:bg-blue-700">Approve Order Requests</a></li>
                 </ul>
             </nav>

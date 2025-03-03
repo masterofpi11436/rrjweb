@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Warehouse\Requestor;
 // Base Controller
 use App\Models\Warehouse\Order;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 use App\Http\Controllers\Warehouse\Enums\OrderStatus;
 
@@ -16,7 +17,9 @@ class RequestorController extends Controller
     public function __construct()
     {
         // Make the pendingOrdersCount available to all views
-        $this->pendingOrdersCount = Order::where('status', OrderStatus::PENDING_SUPERVISOR->value)->count();
+        $this->pendingOrdersCount = Order::where('status', OrderStatus::PENDING_SUPERVISOR->value)
+            ->where('user_id', Auth::id())
+            ->count();
         View::share('pendingOrdersCount', $this->pendingOrdersCount);
     }
 
