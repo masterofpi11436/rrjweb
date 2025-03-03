@@ -29,7 +29,7 @@
                     </li>
 
                     <!-- Recent Orders -->
-                    <li class="mb-3"><a href="#" class="block p-2 rounded hover:bg-blue-700">Recent Orders</a></li>
+                    <li class="mb-3"><a href="{{ route('warehouse.supervisor.approved') }}" class="block p-2 rounded hover:bg-blue-700">Recent Orders</a></li>
 
                     <!-- Approve Staff Orders -->
                     <li class="mb-3"><a href="#" class="block p-2 rounded hover:bg-blue-700">Approve Order Requests</a></li>

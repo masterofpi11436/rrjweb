@@ -6,15 +6,15 @@ use App\Models\Warehouse\Order;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Warehouse\Enums\OrderStatus;
 
-class SupervisorPending extends Component
+class SupervisorApproved extends Component
 {
-    public $pendingOrders = [];
+    public $approvedOrders = [];
     public $expandedOrderId = null; // Track which order is expanded
 
     public function mount()
     {
         // Get the logged-in user's pending orders
-        $this->pendingOrders = Order::where('status', OrderStatus::PENDING_WAREHOUSE->value)
+        $this->approvedOrders = Order::where('status', OrderStatus::APPROVED->value)
                                     ->where('supervisor_id', Auth::id()) // Only fetch the logged-in user's orders
                                     ->orderBy('created_at', 'desc')
                                     ->get();
@@ -28,8 +28,8 @@ class SupervisorPending extends Component
 
     public function render()
     {
-        return view('Warehouse.Supervisor.livewire.supervisor-pending', [
-            'pendingOrders' => $this->pendingOrders
+        return view('Warehouse.Supervisor.livewire.supervisor-approved', [
+            'approvedOrders' => $this->approvedOrders
         ]);
     }
 }
