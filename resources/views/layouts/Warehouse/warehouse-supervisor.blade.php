@@ -39,6 +39,9 @@
                     <!-- User Management -->
                     <li class="mb-3"><a href="{{ route('warehouse.warehouse-supervisor.user.dashboard')}}" class="block p-2 rounded hover:bg-blue-700">Manage Users</a></li>
 
+                    <!-- Approve Orders -->
+                    <li class="mb-3"><a href="{{ route('warehouse.warehouse-supervisor.pending.dashboard')}}" class="block p-2 rounded hover:bg-blue-700">Pending Orders</a></li>
+
                 </ul>
             </nav>
         </aside>

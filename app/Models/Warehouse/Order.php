@@ -15,6 +15,7 @@ class Order extends Model
 
     protected $casts = [
         'status' => OrderStatus::class,
+        'items' => 'array',
     ];
 
     protected $fillable = [

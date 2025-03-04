@@ -267,6 +267,13 @@ Route::prefix('warehouse')->group(function () use ($warehouseLoginClass, $wareho
                 Route::get('/checkout', [$orderClass, 'checkOut'])->name('warehouse.warehouse-supervisor.order.checkout');
                 Route::get('/confirm', [$orderClass, 'confirm'])->name('warehouse.warehouse-supervisor.order.confirm');
             });
+
+            // Order Management
+            Route::prefix('pending-orders')->group(function () use ($orderClass) {
+                Route::get('/pending', [$orderClass, 'pending'])->name('warehouse.warehouse-supervisor.pending.dashboard');
+                Route::get('/view/{id}', [$orderClass, 'show'])->name('warehouse.warehouse-supervisor.pending.show');
+                Route::put('/approve/{id}', [$orderClass, 'approve'])->name('warehouse.warehouse-supervisor.pending.approve');
+            });
         });
 
         // Warehouse Technician
