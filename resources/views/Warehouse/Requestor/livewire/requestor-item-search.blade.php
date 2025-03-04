@@ -78,6 +78,9 @@
                 <div class="p-4">
                     <h3 class="text-lg font-semibold text-gray-800">{{ $item->name }}</h3>
                     <p class="text-sm text-gray-600">{{ $item->category->category ?? 'No Category' }}</p>
+                    @if(!empty($item->description))
+                        <p class="text-sm text-gray-700 mt-2">{{ $item->description }}</p>
+                    @endif
                     <input type="number" min="1" wire:model.live="quantities.{{ $item->id }}"
                            class="w-full mt-2 p-2 border border-gray-300 rounded-md" placeholder="Enter quantity">
                     <button wire:click="addToCart({{ $item->id }})"

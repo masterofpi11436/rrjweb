@@ -9,6 +9,15 @@
             @error('name') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
         </div>
 
+        <!-- Description -->
+        <div>
+            <label for="description" class="block text-gray-700 font-medium">Description</label>
+            <textarea id="description" wire:model="description" rows="4"
+                class="w-full p-2 mt-1 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                placeholder="Enter item description..."></textarea>
+            @error('description') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+        </div>
+
         <!-- Category Selection Dropdown -->
         <div>
             <label for="category_id" class="block text-gray-700 font-medium">Category</label>

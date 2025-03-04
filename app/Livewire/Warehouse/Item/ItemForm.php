@@ -19,6 +19,7 @@ class ItemForm extends Component
     public $category_name;
     public $image;
     public $imagePreview;
+    public $description;
     public $quantity;
     public $low_stock_threshold;
     public $categories = []; // Holds all categories
@@ -41,6 +42,7 @@ class ItemForm extends Component
             $this->name = $item->name;
             $this->category_id = $item->category_id;
             $this->category_name = $item->category_name;
+            $this->description = $item->description;
             $this->quantity = $item->quantity;
             $this->low_stock_threshold = $item->low_stock_threshold;
             $this->imagePreview = $item->image ? asset('storage/' . $item->image) : asset('images/default-image.jpg');
@@ -72,6 +74,7 @@ class ItemForm extends Component
         return [
             'name' => 'required|string|max:255',
             'category_id' => 'required|exists:categories,id',
+            'description' => 'nullable|string',
             'image' => 'nullable|image|max:2048', // Allow image uploads, max size 2MB
             'quantity' => 'required|integer|min:0',
             'low_stock_threshold' => 'required|integer|min:0',
@@ -100,6 +103,7 @@ class ItemForm extends Component
         $item->name = $this->name;
         $item->category_id = $this->category_id;
         $item->category_name = $this->category_name;
+        $item->description = $this->description;
         $item->quantity = $this->quantity;
         $item->low_stock_threshold = $this->low_stock_threshold;
 
