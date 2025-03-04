@@ -20,7 +20,6 @@ return new class extends Migration
                 ->onDelete('set null');
             $table->string('category_name')->nullable(); // Backup column for category name
             $table->string('image')->nullable();
-            $table->string('decription')->nullable();
             $table->integer('quantity')->default(0);
             $table->integer('low_stock_threshold')->default(0);
             $table->timestamps();
