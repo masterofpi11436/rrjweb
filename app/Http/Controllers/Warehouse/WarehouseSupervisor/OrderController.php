@@ -35,6 +35,13 @@ class OrderController extends Controller
         return view('Warehouse.WarehouseSupervisor.Orders.orders.show', compact('order'));
     }
 
+    public function edit($id)
+    {
+        $order = Order::findOrFail($id);
+
+        return view('Warehouse.WarehouseSupervisor.Orders.orders.edit', compact('order'));
+    }
+
     public function approve($id)
     {
         $order = Order::findOrFail($id);

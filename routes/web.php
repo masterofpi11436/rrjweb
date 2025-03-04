@@ -273,6 +273,7 @@ Route::prefix('warehouse')->group(function () use ($warehouseLoginClass, $wareho
                 Route::get('/pending', [$orderClass, 'pending'])->name('warehouse.warehouse-supervisor.pending.dashboard');
                 Route::get('/view/{id}', [$orderClass, 'show'])->name('warehouse.warehouse-supervisor.pending.show');
                 Route::put('/approve/{id}', [$orderClass, 'approve'])->name('warehouse.warehouse-supervisor.pending.approve');
+                Route::get('/edit/{id}', [$orderClass, 'edit'])->name('warehouse.warehouse-supervisor.pending.edit');
             });
         });
 
