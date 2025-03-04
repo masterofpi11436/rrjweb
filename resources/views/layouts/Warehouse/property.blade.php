@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/back-to-top.css" id="common-styles-link">
+    <link rel="stylesheet" href="/css/delete-confirmation-modal.css">
     <title>@yield('title')</title>
     @vite('resources/css/app.css')
 </head>

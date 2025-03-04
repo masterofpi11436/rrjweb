@@ -28,7 +28,7 @@ class PropertyApproved extends Component
 
     public function render()
     {
-        return view('Warehouse.Supervisor.livewire.property-approved', [
+        return view('Warehouse.Property.livewire.property-approved', [
             'approvedOrders' => $this->approvedOrders
         ]);
     }

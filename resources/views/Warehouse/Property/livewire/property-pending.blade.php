@@ -34,7 +34,7 @@
                             </a>
 
                             <!-- Hidden Delete Form -->
-                            <form id="delete-form-{{ $order->id }}" action="{{ route('warehouse.supervisor.destroy', $order->id) }}" method="POST" style="display: none;">
+                            <form id="delete-form-{{ $order->id }}" action="{{ route('warehouse.property.destroy', $order->id) }}" method="POST" style="display: none;">
                                 @csrf
                                 @method('DELETE')
                             </form>
