@@ -7,7 +7,7 @@ use App\Models\Warehouse\Order;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Warehouse\Enums\OrderStatus;
 
-// CRUD operations for items available in the warehouse store
+// CRUD operations for creating an order, approving, denying, and editing an order
 class OrderController extends Controller
 {
     public function dashboard()
