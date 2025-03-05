@@ -43,6 +43,10 @@
                     </tr>
                 </thead>
                 <tbody>
+
+                    @php
+                        $items = is_array($order->items) ? $order->items : json_decode($order->items, true);
+                    @endphp
                     @foreach ($order->items as $item)
                         <tr class="text-gray-700">
                             <td class="p-2 border">{{ $item['name'] ?? 'N/A' }}</td>
