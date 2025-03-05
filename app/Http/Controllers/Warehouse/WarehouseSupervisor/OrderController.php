@@ -32,6 +32,8 @@ class OrderController extends Controller
     {
         $order = Order::findOrFail($id);
 
+        $order->items = is_array($order->items) ? $order->items : json_decode($order->items, true);
+
         return view('Warehouse.WarehouseSupervisor.Orders.orders.show', compact('order'));
     }
 
