@@ -22,7 +22,7 @@
 
                         <div class="flex space-x-2">
 
-                            <!-- Delete Button -->
+                            <!-- View Order -->
                             <a href="{{ route('warehouse.warehouse-supervisor.pending.show', ['id' => $order->id]) }}" class="px-4 py-2 bg-blue-500 text-white text-sm rounded hover:bg-blue-600 transition">
                                 View Order
                             </a>
