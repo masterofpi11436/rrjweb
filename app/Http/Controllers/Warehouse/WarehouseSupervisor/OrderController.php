@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Warehouse\WarehouseSupervisor;
 
 // Base Controller
 use App\Models\Warehouse\Order;
-use App\Http\Controllers\Warehouse\Enums;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Warehouse\Enums\OrderStatus;
 
@@ -23,6 +22,8 @@ class OrderController extends Controller
         return view('Warehouse.WarehouseSupervisor.CreateOrder.createorder.checkout', compact('cart'));
     }
 
+
+    // Managing Orders submitted to warehouse
     public function pending()
     {
         return view('Warehouse.WarehouseSupervisor.Orders.orders.pending-orders');
