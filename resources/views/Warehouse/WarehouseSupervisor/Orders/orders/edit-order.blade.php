@@ -7,6 +7,6 @@
 @section('content')
 
 <!-- Livewire search component -->
-@livewire('Warehouse.Orders.orders')
+@livewire('Warehouse.Orders.editorders', ['order' => $order->id])
 
 @endsection

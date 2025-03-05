@@ -41,7 +41,7 @@ class OrderController extends Controller
     {
         $order = Order::findOrFail($id);
 
-        return view('Warehouse.WarehouseSupervisor.Orders.orders.edit', compact('order'));
+        return view('Warehouse.WarehouseSupervisor.Orders.orders.edit-order', compact('order'));
     }
 
     public function approve($id)
