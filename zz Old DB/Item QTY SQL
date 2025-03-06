@@ -1,0 +1,2 @@
+UPDATE items
+SET random_value = FLOOR(RAND() * (1000 - 10 + 1)) + 10;
