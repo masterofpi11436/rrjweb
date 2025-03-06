@@ -2,7 +2,7 @@
 
 @section('title', 'Warehouse Store Supervisor')
 
-@section('heading', 'Warehouse Store Supervisor Pages')
+@section('heading', 'Inventory Status')
 
 @section('content')
 
