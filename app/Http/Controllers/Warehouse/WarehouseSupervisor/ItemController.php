@@ -4,11 +4,23 @@ namespace App\Http\Controllers\Warehouse\WarehouseSupervisor;
 
 // Base Controller
 use App\Models\Warehouse\Item;
+use App\Models\Warehouse\Order;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\View;
+use App\Http\Controllers\Warehouse\Enums\OrderStatus;
 
 // CRUD operations for items available in the warehouse store
 class ItemController extends Controller
 {
+    protected $pendingOrdersCount;
+
+    public function __construct()
+    {
+        // Make pending orders count available to all views
+        $this->pendingOrdersCount = Order::where('status', OrderStatus::PENDING_WAREHOUSE->value)->count();
+        View::share('pendingOrdersCount', $this->pendingOrdersCount);
+    }
+
     public function dashboard()
     {
         return view('Warehouse.WarehouseSupervisor.Item.item.dashboard');

@@ -39,9 +39,14 @@
                     <!-- User Management -->
                     <li class="mb-3"><a href="{{ route('warehouse.warehouse-supervisor.user.dashboard')}}" class="block p-2 rounded hover:bg-blue-700">Manage Users</a></li>
 
-                    <!-- Approve Orders -->
-                    <li class="mb-3"><a href="{{ route('warehouse.warehouse-supervisor.pending.dashboard')}}" class="block p-2 rounded hover:bg-blue-700">Pending Orders</a></li>
-
+                    <!-- Pending Orders -->
+                    <li class="mb-3">
+                        <a href="{{ route('warehouse.supervisor.pending') }}"
+                        class="flex justify-between p-2 rounded hover:bg-blue-700">
+                            <span>Pending Orders</span>
+                            <span class="bg-blue-500 text-white px-2 py-1 rounded text-sm">{{ $pendingOrdersCount }}</span>
+                        </a>
+                    </li>
                 </ul>
             </nav>
         </aside>
