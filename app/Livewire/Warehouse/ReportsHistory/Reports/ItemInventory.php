@@ -38,8 +38,8 @@ class ItemInventory extends Component
                 return $query->orderByRaw("
                     CASE
                         WHEN quantity <= low_stock_threshold / 2 THEN 1  -- Critical (Red)
-                        WHEN quantity <= low_stock_threshold THEN 2     -- Low (Yellow)
-                        ELSE 3                                          -- Sufficient (Green)
+                        WHEN quantity <= low_stock_threshold THEN 2      -- Low (Yellow)
+                        ELSE 3                                           -- Sufficient (Green)
                     END {$this->sortDirection}
                 ");
             }, function ($query) {
@@ -47,8 +47,8 @@ class ItemInventory extends Component
             })
             ->get();
 
-            return view('Warehouse.WarehouseSupervisor.ReportsHistory.reports.livewire.item-inventory', [
-                'items' => $items,
-            ]);
+        return view('Warehouse.WarehouseSupervisor.ReportsHistory.reports.livewire.item-inventory', [
+            'items' => $items,
+        ]);
     }
 }

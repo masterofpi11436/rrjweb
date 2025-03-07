@@ -14,6 +14,8 @@ class PropertyController extends Controller
 {
     protected $pendingOrdersCount;
 
+    protected $requestorPendingOrdersCount;
+
     public function __construct()
     {
         // Make the pendingOrdersCount available to all views
@@ -21,6 +23,12 @@ class PropertyController extends Controller
             ->where('supervisor_id', Auth::id())
             ->count();
         View::share('pendingOrdersCount', $this->pendingOrdersCount);
+
+        // Make the Property's Requestors pending order count available accross all views
+        $this->requestorPendingOrdersCount = Order::where('status', OrderStatus::PENDING_SUPERVISOR->value)
+            ->where('supervisor_id', Auth::id())
+            ->count();
+        View::share('requestorPendingOrdersCount', $this->requestorPendingOrdersCount);
     }
 
     public function dashboard()
@@ -53,5 +61,11 @@ class PropertyController extends Controller
 
         session()->flash('success', 'Order deleted successfully!');
         return redirect()->back();
+    }
+
+    // Pending Requstor Orders
+    public function requestorPending()
+    {
+        return view('Warehouse.Property.property.requestor-pending');
     }
 }

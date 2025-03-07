@@ -14,14 +14,23 @@ class SupervisorController extends Controller
 {
     protected $pendingOrdersCount;
 
+    protected $requestorPendingOrdersCount;
+
     public function __construct()
     {
-        // Make the pendingOrdersCount available to all views
+        // Make the Supervisor's pending orders count available to all views
         $this->pendingOrdersCount = Order::where('status', OrderStatus::PENDING_WAREHOUSE->value)
             ->where('supervisor_id', Auth::id())
             ->count();
         View::share('pendingOrdersCount', $this->pendingOrdersCount);
+
+        // Make the Supervisor's Requestors pending order count available accross all views
+        $this->requestorPendingOrdersCount = Order::where('status', OrderStatus::PENDING_SUPERVISOR->value)
+            ->where('supervisor_id', Auth::id())
+            ->count();
+        View::share('requestorPendingOrdersCount', $this->requestorPendingOrdersCount);
     }
+
     public function dashboard()
     {
         return view('Warehouse.Supervisor.supervisor.dashboard');
@@ -34,6 +43,7 @@ class SupervisorController extends Controller
         return view('Warehouse.Supervisor.supervisor.checkout', compact('cart'));
     }
 
+    // See supervisors warehouse pending orders.
     public function pending()
     {
         return view('Warehouse.Supervisor.supervisor.pending');
@@ -44,7 +54,7 @@ class SupervisorController extends Controller
         return view('Warehouse.Supervisor.supervisor.approved');
     }
 
-    // Delete an existing order
+    // Delete an existing order created by Requestor or Supervisor
     public function destroy($id)
     {
         $item = Order::findOrFail($id);
@@ -52,5 +62,11 @@ class SupervisorController extends Controller
 
         session()->flash('success', 'Order deleted successfully!');
         return redirect()->back();
+    }
+
+    // Pending Requstor Orders
+    public function requestorPending()
+    {
+        return view('Warehouse.Supervisor.supervisor.requestor-pending');
     }
 }

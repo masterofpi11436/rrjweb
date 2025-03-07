@@ -285,6 +285,7 @@ Route::prefix('warehouse')->group(function () use ($warehouseLoginClass, $wareho
             Route::get('/checkout', [$propertyClass, 'checkOut'])->name('warehouse.property.checkout');
             Route::get('/approved', [$propertyClass, 'approved'])->name('warehouse.property.approved');
             Route::get('/pending', [$propertyClass, 'pending'])->name('warehouse.property.pending');
+            Route::get('/requestor-pending', [$propertyClass, 'requestorPending'])->name('warehouse.property.requestor-pending');
             Route::delete('/{id}', [$propertyClass, 'destroy'])->name('warehouse.property.destroy');
         });
 
@@ -294,6 +295,7 @@ Route::prefix('warehouse')->group(function () use ($warehouseLoginClass, $wareho
             Route::get('/checkout', [$supervisorClass, 'checkOut'])->name('warehouse.supervisor.checkout');
             Route::get('/approved', [$supervisorClass, 'approved'])->name('warehouse.supervisor.approved');
             Route::get('/pending', [$supervisorClass, 'pending'])->name('warehouse.supervisor.pending');
+            Route::get('/requestor-pending', [$supervisorClass, 'requestorPending'])->name('warehouse.supervisor.requestor-pending');
             Route::delete('/{id}', [$supervisorClass, 'destroy'])->name('warehouse.supervisor.destroy');
         });
 
