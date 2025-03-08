@@ -19,7 +19,7 @@ return new class extends Migration
                 ->constrained('categories')
                 ->onDelete('set null');
             $table->string('category_name')->nullable(); // Backup column for category name
-            $table->longText('description');
+            $table->longText('description')->nullable;
             $table->string('image')->nullable();
             $table->integer('quantity')->default(0);
             $table->integer('low_stock_threshold')->default(0);
