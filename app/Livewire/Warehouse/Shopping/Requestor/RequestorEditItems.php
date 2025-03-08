@@ -26,23 +26,31 @@ class RequestorEditItems extends Component
     {
         $this->orderId = $orderId;
 
-        // Load the existing order items into session
         $cartEdit = session('cart_edit', []);
 
+        // Initialize only for existing cart items
         foreach ($cartEdit as $itemId => $item) {
-            $this->quantities[$itemId] = $item['quantity'];
+            if (!isset($this->quantities[$itemId])) {
+                $this->quantities[$itemId] = $item['quantity'];
+            }
         }
     }
+
     // Automatically called whenever a quantity changes
     // e.g., if someone changes it in the cart
     public function updatedQuantities($value, $itemId)
     {
-        $cart = session('cart_edit', []);
+        if ($value <= 0) {
+            unset($this->quantities[$itemId]);
+            return;
+        }
 
-        // If the item is already in cart, update its quantity
-        if (isset($cart[$itemId])) {
-            $cart[$itemId]['quantity'] = (int) $value;
-            session(['cart_edit' => $cart]);
+        $cartEdit = session('cart_edit', []);
+
+        // Check if item exists in cart before updating
+        if (isset($cartEdit[$itemId])) {
+            $cartEdit[$itemId]['quantity'] = (int) $value;
+            session(['cart_edit' => $cartEdit]);
         }
     }
 
@@ -52,22 +60,24 @@ class RequestorEditItems extends Component
         $item = Item::find($itemId);
         if (!$item) return;
 
-        // Get current cart from session
         $cartEdit = session('cart_edit', []);
 
-        // Default quantity to 1 if not set
-        $qty = isset($this->quantities[$itemId]) ? (int) $this->quantities[$itemId] : 1;
+        // If the item is already in the cart, just update the quantity
+        if (isset($cartEdit[$itemId])) {
+            $cartEdit[$itemId]['quantity'] += 1;
+        } else {
+            // If item is new, add it with quantity 1
+            $cartEdit[$itemId] = [
+                'id'       => $item->id,
+                'name'     => $item->name,
+                'quantity' => 1,
+            ];
+        }
 
-        // Add or update item in the cart
-        $cartEdit[$itemId] = [
-            'id'       => $item->id,
-            'name'     => $item->name,
-            'quantity' => $qty,
-        ];
-
-        // Update session and Livewire data
         session(['cart_edit' => $cartEdit]);
-        $this->quantities[$itemId] = $qty;
+
+        // Update Livewire state
+        $this->quantities[$itemId] = $cartEdit[$itemId]['quantity'];
     }
 
     public function removeFromCart($itemId)
