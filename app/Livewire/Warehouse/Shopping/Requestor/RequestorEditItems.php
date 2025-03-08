@@ -60,24 +60,28 @@ class RequestorEditItems extends Component
         $item = Item::find($itemId);
         if (!$item) return;
 
-        $cartEdit = session('cart_edit', []);
+        $cart = session('cart_edit', []);
 
-        // If the item is already in the cart, just update the quantity
-        if (isset($cartEdit[$itemId])) {
-            $cartEdit[$itemId]['quantity'] += 1;
+        // Use the quantity inputted by the user, default to 1 if not set
+        $quantity = isset($this->quantities[$itemId]) ? (int) $this->quantities[$itemId] : 1;
+
+        // If item exists in cart, update the quantity instead of incrementing by 1
+        if (isset($cart[$itemId])) {
+            $cart[$itemId]['quantity'] = $quantity;
         } else {
-            // If item is new, add it with quantity 1
-            $cartEdit[$itemId] = [
+            // If new item, set quantity
+            $cart[$itemId] = [
                 'id'       => $item->id,
                 'name'     => $item->name,
-                'quantity' => 1,
+                'quantity' => $quantity,
             ];
         }
 
-        session(['cart_edit' => $cartEdit]);
+        // Update session cart
+        session(['cart_edit' => $cart]);
 
-        // Update Livewire state
-        $this->quantities[$itemId] = $cartEdit[$itemId]['quantity'];
+        // Update Livewire property to ensure UI reflects changes
+        $this->quantities[$itemId] = $cart[$itemId]['quantity'];
     }
 
     public function removeFromCart($itemId)
