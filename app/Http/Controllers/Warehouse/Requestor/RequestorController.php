@@ -40,6 +40,17 @@ class RequestorController extends Controller
         return view('Warehouse.Requestor.requestor.pending');
     }
 
+    public function editOrder($id)
+    {
+        $order = Order::findOrFail($id);
+
+        $cartEdit = json_decode($order->items, true);
+
+        session(['cart_edit' => $cartEdit]);
+
+        return view('Warehouse.Requestor.requestor.edit-cart', ['orderId' => $id]);
+    }
+
     public function approved()
     {
         return view('Warehouse.Requestor.requestor.approved');
