@@ -17,11 +17,17 @@ class RequestorEditItems extends Component
     public $sortDirection = 'asc';
     public $selectedCategory = '';
     public $quantities = [];
+    public $cart = [];
+    public $orderId;
 
     protected $paginationTheme = 'tailwind';
 
-    public function mount()
+    public function mount($orderId, $cart)
     {
+        $this->orderId = $orderId;
+
+        $this->cart = is_array($cart) ? $cart : [];
+
         // Initialize $quantities with current cart contents
         $cart = session('cart_edit', []);
         foreach ($cart as $itemId => $item) {
@@ -122,12 +128,12 @@ class RequestorEditItems extends Component
 
         // Exclude "Property" category from drop down menu
         $categories = Category::where('category', '!=', 'Property')->get();
-        $cart       = session('cart', []);
+        $cart = session('cart_edit', []);
 
         return view('Warehouse.Requestor.livewire.requestor-edit-items', [
             'items'      => $items,
             'categories' => $categories,
-            'cart_edit'       => $cart,
+            'cart_edit'  => $cart,
         ]);
     }
 }

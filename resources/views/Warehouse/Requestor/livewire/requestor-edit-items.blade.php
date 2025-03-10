@@ -16,23 +16,11 @@
         </select>
     </div>
 
-    <script>
-        function updateLivewireBeforeCheckout() {
-            // Trigger blur event on all quantity inputs to force Livewire to update
-            document.querySelectorAll('input[name^="cart"]').forEach(input => input.blur());
-
-            // Delay navigation slightly to allow Livewire updates to complete
-            setTimeout(() => {
-                window.location.href = "{{ route('warehouse.requestor.pending') }}";
-            }, 300);
-        }
-    </script>
-
     <!-- Shopping Cart -->
     <div class="bg-white p-6 rounded-lg shadow-md mb-6">
         <h2 class="text-xl font-bold mb-4 text-gray-800">Shopping Cart</h2>
 
-        @if(count($cart) > 0)
+        @if(count((array)$cart) > 0)
             <ul class="border p-4 rounded-md bg-gray-50">
                 @foreach ($cart as $item)
                 <li class="flex justify-between items-center p-2 border-b last:border-b-0">
@@ -53,7 +41,7 @@
             @endforeach
             </ul>
 
-            <!-- Checkout Button -->
+            <!-- Confirm Edits Button -->
             <div class="mt-6 flex justify-center">
                 <a href="javascript:void(0)"
                     wire:click="updateOrder({{ $orderId }})"

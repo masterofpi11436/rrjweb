@@ -6,7 +6,7 @@
 
 @section('content')
 <!-- Livewire search component -->
-@livewire('warehouse.shopping.requestor.requestor-edit-items', ['orderId' => $orderId])
+@livewire('warehouse.shopping.requestor.requestor-edit-items', ['orderId' => $orderId, 'cart' => session('cart_edit', [])])
 
 <!-- Flash Message -->
 @if (session()->has('success'))

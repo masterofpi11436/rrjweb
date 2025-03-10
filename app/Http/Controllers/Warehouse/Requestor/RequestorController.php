@@ -48,7 +48,7 @@ class RequestorController extends Controller
 
         session(['cart_edit' => $cart]);
 
-        return view('Warehouse.Requestor.requestor.edit-cart', ['orderId' => $id]);
+        return view('Warehouse.Requestor.requestor.edit-cart', ['orderId' => $id, 'cart' => $cart]);
     }
 
     public function approved()
