@@ -5,7 +5,6 @@ namespace App\Livewire\Warehouse\Shopping\Requestor;
 use Livewire\Component;
 use Livewire\WithPagination;
 use App\Models\Warehouse\Item;
-use App\Models\Warehouse\Order;
 use App\Models\Warehouse\Category;
 use Illuminate\Database\Eloquent\Builder;
 
@@ -18,21 +17,15 @@ class RequestorEditItems extends Component
     public $sortDirection = 'asc';
     public $selectedCategory = '';
     public $quantities = [];
-    public $orderId;
 
     protected $paginationTheme = 'tailwind';
 
-    public function mount($orderId)
+    public function mount()
     {
-        $this->orderId = $orderId;
-
-        $cartEdit = session('cart_edit', []);
-
-        // Initialize only for existing cart items
-        foreach ($cartEdit as $itemId => $item) {
-            if (!isset($this->quantities[$itemId])) {
-                $this->quantities[$itemId] = $item['quantity'];
-            }
+        // Initialize $quantities with current cart contents
+        $cart = session('cart_edit', []);
+        foreach ($cart as $itemId => $item) {
+            $this->quantities[$itemId] = $item['quantity'];
         }
     }
 
@@ -40,17 +33,12 @@ class RequestorEditItems extends Component
     // e.g., if someone changes it in the cart
     public function updatedQuantities($value, $itemId)
     {
-        if ($value <= 0) {
-            unset($this->quantities[$itemId]);
-            return;
-        }
+        $cart = session('cart_edit', []);
 
-        $cartEdit = session('cart_edit', []);
-
-        // Check if item exists in cart before updating
-        if (isset($cartEdit[$itemId])) {
-            $cartEdit[$itemId]['quantity'] = (int) $value;
-            session(['cart_edit' => $cartEdit]);
+        // If the item is already in cart, update its quantity
+        if (isset($cart[$itemId])) {
+            $cart[$itemId]['quantity'] = (int) $value;
+            session(['cart_edit' => $cart]);
         }
     }
 
@@ -60,65 +48,29 @@ class RequestorEditItems extends Component
         $item = Item::find($itemId);
         if (!$item) return;
 
+        // Use the user's typed value or default to 1
+        $qty = isset($this->quantities[$itemId]) ? (int) $this->quantities[$itemId] : 1;
+
         $cart = session('cart_edit', []);
+        $cart[$itemId] = [
+            'id'       => $item->id,
+            'name'     => $item->name,
+            'quantity' => $qty,
+        ];
 
-        // Use the quantity inputted by the user, default to 1 if not set
-        $quantity = isset($this->quantities[$itemId]) ? (int) $this->quantities[$itemId] : 1;
-
-        // If item exists in cart, update the quantity instead of incrementing by 1
-        if (isset($cart[$itemId])) {
-            $cart[$itemId]['quantity'] = $quantity;
-        } else {
-            // If new item, set quantity
-            $cart[$itemId] = [
-                'id'       => $item->id,
-                'name'     => $item->name,
-                'quantity' => $quantity,
-            ];
-        }
-
-        // Update session cart
+        // Store in session and in $quantities so everything stays in sync
         session(['cart_edit' => $cart]);
-
-        // Update Livewire property to ensure UI reflects changes
-        $this->quantities[$itemId] = $cart[$itemId]['quantity'];
+        $this->quantities[$itemId] = $qty;
     }
 
     public function removeFromCart($itemId)
     {
-        $cartEdit = session('cart_edit', []);
+        $cart = session('cart_edit', []);
+        unset($cart[$itemId]);
+        session(['cart_edit' => $cart]);
 
-        // Remove the item
-        unset($cartEdit[$itemId]);
-
-        // If no items left, cancel the order
-        if (empty($cartEdit)) {
-            $this->deleteOrder();
-            return;
-        }
-
-        // Update session
-        session(['cart_edit' => $cartEdit]);
-
-        // Remove from Livewire quantities array
+        // Optionally remove from $quantities array as well
         unset($this->quantities[$itemId]);
-    }
-
-    public function deleteOrder()
-    {
-        // Find the order and delete it
-        $order = Order::find($this->orderId);
-
-        if ($order) {
-            $order->delete();
-        }
-
-        // Clear the session
-        session()->forget('cart_edit');
-
-        // Redirect with a message
-        session()->flash('error', 'Order has been canceled.');
-        return redirect()->route('warehouse.requestor.pending');
     }
 
     public function updatingSearch()
@@ -170,32 +122,12 @@ class RequestorEditItems extends Component
 
         // Exclude "Property" category from drop down menu
         $categories = Category::where('category', '!=', 'Property')->get();
-        $cart       = session('cart_edit', []);
+        $cart       = session('cart', []);
 
         return view('Warehouse.Requestor.livewire.requestor-edit-items', [
             'items'      => $items,
             'categories' => $categories,
-            'cart'       => $cart,
+            'cart_edit'       => $cart,
         ]);
     }
-
-    public function updateOrder($orderId)
-    {
-        $cartEdit = session('cart_edit', []);
-
-        if (empty($cartEdit)) {
-            $this->deleteOrder();
-            return;
-        }
-
-        $order = Order::findOrFail($orderId);
-        $order->update([
-            'items' => json_encode($cartEdit),
-        ]);
-
-        session()->forget('cart_edit');
-        session()->flash('success', 'Order updated successfully!');
-        return redirect()->route('warehouse.requestor.pending');
-    }
-
 }

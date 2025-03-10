@@ -44,9 +44,9 @@ class RequestorController extends Controller
     {
         $order = Order::findOrFail($id);
 
-        $cartEdit = json_decode($order->items, true);
+        $cart = json_decode($order->items, true);
 
-        session(['cart_edit' => $cartEdit]);
+        session(['cart_edit' => $cart]);
 
         return view('Warehouse.Requestor.requestor.edit-cart', ['orderId' => $id]);
     }

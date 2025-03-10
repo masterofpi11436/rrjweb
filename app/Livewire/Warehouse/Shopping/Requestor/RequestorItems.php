@@ -22,13 +22,10 @@ class RequestorItems extends Component
 
     public function mount()
     {
+        // Initialize $quantities with current cart contents
         $cart = session('cart', []);
-
-        // Only initialize for items already in cart
         foreach ($cart as $itemId => $item) {
-            if (!isset($this->quantities[$itemId])) {
-                $this->quantities[$itemId] = $item['quantity'];
-            }
+            $this->quantities[$itemId] = $item['quantity'];
         }
     }
 
@@ -36,14 +33,9 @@ class RequestorItems extends Component
     // e.g., if someone changes it in the cart
     public function updatedQuantities($value, $itemId)
     {
-        if ($value <= 0) {
-            unset($this->quantities[$itemId]);
-            return;
-        }
-
         $cart = session('cart', []);
 
-        // Only update if the item is in the cart
+        // If the item is already in cart, update its quantity
         if (isset($cart[$itemId])) {
             $cart[$itemId]['quantity'] = (int) $value;
             session(['cart' => $cart]);
@@ -56,24 +48,19 @@ class RequestorItems extends Component
         $item = Item::find($itemId);
         if (!$item) return;
 
+        // Use the user's typed value or default to 1
+        $qty = isset($this->quantities[$itemId]) ? (int) $this->quantities[$itemId] : 1;
+
         $cart = session('cart', []);
+        $cart[$itemId] = [
+            'id'       => $item->id,
+            'name'     => $item->name,
+            'quantity' => $qty,
+        ];
 
-        // If item exists, increment quantity instead of overwriting
-        if (isset($cart[$itemId])) {
-            $cart[$itemId]['quantity'] += 1;
-        } else {
-            // If new item, set quantity to 1
-            $cart[$itemId] = [
-                'id'       => $item->id,
-                'name'     => $item->name,
-                'quantity' => 1,
-            ];
-        }
-
+        // Store in session and in $quantities so everything stays in sync
         session(['cart' => $cart]);
-
-        // Ensure Livewire updates correctly
-        $this->quantities[$itemId] = $cart[$itemId]['quantity'];
+        $this->quantities[$itemId] = $qty;
     }
 
     public function removeFromCart($itemId)
