@@ -1,12 +1,10 @@
 <div class="max-w-6xl mx-auto p-6 bg-gray-100 shadow-md rounded-lg">
     <!-- Search Bar & Category Filter -->
     <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-6 gap-4">
-        <!-- Search Bar -->
         <input type="text" wire:model.live="search" placeholder="Search Items..."
             class="w-full sm:w-2/3 p-3 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none bg-white"
         >
 
-        <!-- Category Dropdown -->
         <select wire:model.live="selectedCategory"
             class="w-full sm:w-1/3 p-3 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none bg-white">
             <option value="">All Categories</option>
@@ -20,7 +18,7 @@
     <div class="bg-white p-6 rounded-lg shadow-md mb-6">
         <h2 class="text-xl font-bold mb-4 text-gray-800">Shopping Cart</h2>
 
-        @if(count((array)$cart) > 0)
+        @if(count($cart) > 0)
             <ul class="border p-4 rounded-md bg-gray-50">
                 @foreach ($cart as $item)
                 <li class="flex justify-between items-center p-2 border-b last:border-b-0">
@@ -30,6 +28,7 @@
                             type="number"
                             min="1"
                             wire:model.live="quantities.{{ $item['id'] }}"
+                            wire:key="quantity-{{ $item['id'] }}"
                             class="w-16 p-1 border border-gray-300 rounded"
                         >
                         <button wire:click="removeFromCart({{ $item['id'] }})"
@@ -43,11 +42,10 @@
 
             <!-- Confirm Edits Button -->
             <div class="mt-6 flex justify-center">
-                <a href="javascript:void(0)"
-                    wire:click="updateOrder({{ $orderId }})"
+                <button wire:click="updateOrder"
                     class="bg-green-500 text-white px-6 py-3 rounded-md shadow-md hover:bg-green-600 transition">
                     Confirm Edits
-                </a>
+                </button>
             </div>
 
         @else
@@ -64,11 +62,6 @@
                 <div class="p-4">
                     <h3 class="text-lg font-semibold text-gray-800">{{ $item->name }}</h3>
                     <p class="text-sm text-gray-600">{{ $item->category->category ?? 'No Category' }}</p>
-                    @if(!empty($item->description))
-                        <p class="text-sm text-gray-700 mt-2">
-                            Description: {{ Str::words($item->description, 5, '...') }}
-                        </p>
-                    @endif
                     <input type="number" min="1" wire:model.live="quantities.{{ $item->id }}"
                         wire:key="quantity-{{ $item->id }}"
                         class="w-full mt-2 p-2 border border-gray-300 rounded-md" placeholder="Enter quantity">
@@ -84,10 +77,4 @@
             </div>
         @endforelse
     </div>
-
-    <!-- Pagination with Page Numbers -->
-    <div class="mt-6 flex justify-center">
-        {{ $items->onEachSide(3)->links() }}
-    </div>
-
 </div>

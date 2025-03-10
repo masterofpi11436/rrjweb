@@ -6,6 +6,7 @@ use Livewire\Component;
 use Livewire\WithPagination;
 use App\Models\Warehouse\Item;
 use App\Models\Warehouse\Category;
+use App\Models\Warehouse\Order;
 use Illuminate\Database\Eloquent\Builder;
 
 class RequestorEditItems extends Component
@@ -13,48 +14,37 @@ class RequestorEditItems extends Component
     use WithPagination;
 
     public $search = '';
-    public $sortColumn = 'name';
-    public $sortDirection = 'asc';
     public $selectedCategory = '';
     public $quantities = [];
-    public $cart = [];
     public $orderId;
 
     protected $paginationTheme = 'tailwind';
 
-    public function mount($orderId, $cart)
+    public function mount($orderId, $cart = [])
     {
         $this->orderId = $orderId;
 
-        $this->cart = is_array($cart) ? $cart : [];
-
-        // Initialize $quantities with current cart contents
-        $cart = session('cart_edit', []);
+        // Initialize quantities from cart_edit session
         foreach ($cart as $itemId => $item) {
             $this->quantities[$itemId] = $item['quantity'];
         }
     }
 
-    // Automatically called whenever a quantity changes
-    // e.g., if someone changes it in the cart
     public function updatedQuantities($value, $itemId)
     {
         $cart = session('cart_edit', []);
 
-        // If the item is already in cart, update its quantity
         if (isset($cart[$itemId])) {
             $cart[$itemId]['quantity'] = (int) $value;
             session(['cart_edit' => $cart]);
         }
     }
 
-    // Add item to cart using the single $quantities array
     public function addToCart($itemId)
     {
         $item = Item::find($itemId);
         if (!$item) return;
 
-        // Use the user's typed value or default to 1
         $qty = isset($this->quantities[$itemId]) ? (int) $this->quantities[$itemId] : 1;
 
         $cart = session('cart_edit', []);
@@ -64,7 +54,6 @@ class RequestorEditItems extends Component
             'quantity' => $qty,
         ];
 
-        // Store in session and in $quantities so everything stays in sync
         session(['cart_edit' => $cart]);
         $this->quantities[$itemId] = $qty;
     }
@@ -74,9 +63,18 @@ class RequestorEditItems extends Component
         $cart = session('cart_edit', []);
         unset($cart[$itemId]);
         session(['cart_edit' => $cart]);
-
-        // Optionally remove from $quantities array as well
         unset($this->quantities[$itemId]);
+    }
+
+    public function updateOrder()
+    {
+        $order = Order::findOrFail($this->orderId);
+
+        // Update order items with the edited cart
+        $order->items = json_encode(session('cart_edit', []));
+        $order->save();
+
+        redirect()->route('warehouse.requestor.pending')->with('success', 'Order updated successfully!');
     }
 
     public function updatingSearch()
@@ -89,26 +87,15 @@ class RequestorEditItems extends Component
         $this->resetPage();
     }
 
-    public function sortBy($column)
-    {
-        if ($this->sortColumn === $column) {
-            $this->sortDirection = $this->sortDirection === 'asc' ? 'desc' : 'asc';
-        } else {
-            $this->sortColumn = $column;
-            $this->sortDirection = 'asc';
-        }
-    }
-
     public function render()
     {
-        // Exclude "Property" category
         $query = Item::with('category:id,category')
-        ->where(function (Builder $q) {
-            $q->whereDoesntHave('category')
-              ->orWhereHas('category', function (Builder $cq) {
-                  $cq->where('category', '!=', 'Property');
-              });
-        });
+            ->where(function (Builder $q) {
+                $q->whereDoesntHave('category')
+                  ->orWhereHas('category', function (Builder $cq) {
+                      $cq->where('category', '!=', 'Property');
+                  });
+            });
 
         if (!empty($this->search)) {
             $query->where(function (Builder $q) {
@@ -123,17 +110,15 @@ class RequestorEditItems extends Component
             $query->where('category_id', $this->selectedCategory);
         }
 
-        $items = $query->orderBy($this->sortColumn, $this->sortDirection)
-                       ->paginate(12);
+        $items = $query->orderBy('name', 'asc')->paginate(12);
 
-        // Exclude "Property" category from drop down menu
         $categories = Category::where('category', '!=', 'Property')->get();
         $cart = session('cart_edit', []);
 
         return view('Warehouse.Requestor.livewire.requestor-edit-items', [
             'items'      => $items,
             'categories' => $categories,
-            'cart_edit'  => $cart,
+            'cart'       => $cart,
         ]);
     }
 }
