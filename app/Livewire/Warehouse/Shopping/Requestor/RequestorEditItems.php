@@ -93,7 +93,7 @@ class RequestorEditItems extends Component
             ->where(function (Builder $q) {
                 $q->whereDoesntHave('category')
                   ->orWhereHas('category', function (Builder $cq) {
-                      $cq->where('category', '!=', 'Property');
+                      $cq->whereNotIn('category', ['Property', '1 for 1 Exchange']);
                   });
             });
 
@@ -111,8 +111,7 @@ class RequestorEditItems extends Component
         }
 
         $items = $query->orderBy('name', 'asc')->paginate(12);
-
-        $categories = Category::where('category', '!=', 'Property')->get();
+        $categories = Category::whereNotIn('category', ['Property', '1 for 1 Exchange'])->get();
         $cart = session('cart_edit', []);
 
         return view('Warehouse.Requestor.livewire.requestor-edit-items', [

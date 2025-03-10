@@ -13,8 +13,6 @@ class RequestorItems extends Component
     use WithPagination;
 
     public $search = '';
-    public $sortColumn = 'name';
-    public $sortDirection = 'asc';
     public $selectedCategory = '';
     public $quantities = [];
 
@@ -22,33 +20,26 @@ class RequestorItems extends Component
 
     public function mount()
     {
-        // Initialize $quantities with current cart contents
         $cart = session('cart', []);
         foreach ($cart as $itemId => $item) {
             $this->quantities[$itemId] = $item['quantity'];
         }
     }
 
-    // Automatically called whenever a quantity changes
-    // e.g., if someone changes it in the cart
     public function updatedQuantities($value, $itemId)
     {
         $cart = session('cart', []);
-
-        // If the item is already in cart, update its quantity
         if (isset($cart[$itemId])) {
             $cart[$itemId]['quantity'] = (int) $value;
             session(['cart' => $cart]);
         }
     }
 
-    // Add item to cart using the single $quantities array
     public function addToCart($itemId)
     {
         $item = Item::find($itemId);
         if (!$item) return;
 
-        // Use the user's typed value or default to 1
         $qty = isset($this->quantities[$itemId]) ? (int) $this->quantities[$itemId] : 1;
 
         $cart = session('cart', []);
@@ -58,7 +49,6 @@ class RequestorItems extends Component
             'quantity' => $qty,
         ];
 
-        // Store in session and in $quantities so everything stays in sync
         session(['cart' => $cart]);
         $this->quantities[$itemId] = $qty;
     }
@@ -69,7 +59,6 @@ class RequestorItems extends Component
         unset($cart[$itemId]);
         session(['cart' => $cart]);
 
-        // Optionally remove from $quantities array as well
         unset($this->quantities[$itemId]);
     }
 
@@ -83,26 +72,15 @@ class RequestorItems extends Component
         $this->resetPage();
     }
 
-    public function sortBy($column)
-    {
-        if ($this->sortColumn === $column) {
-            $this->sortDirection = $this->sortDirection === 'asc' ? 'desc' : 'asc';
-        } else {
-            $this->sortColumn = $column;
-            $this->sortDirection = 'asc';
-        }
-    }
-
     public function render()
     {
-        // Exclude "Property" category
         $query = Item::with('category:id,category')
-        ->where(function (Builder $q) {
-            $q->whereDoesntHave('category')
-              ->orWhereHas('category', function (Builder $cq) {
-                  $cq->where('category', '!=', 'Property');
-              });
-        });
+            ->where(function (Builder $q) {
+                $q->whereDoesntHave('category')
+                  ->orWhereHas('category', function (Builder $cq) {
+                      $cq->whereNotIn('category', ['Property', '1 for 1 Exchange']);
+                  });
+            });
 
         if (!empty($this->search)) {
             $query->where(function (Builder $q) {
@@ -117,12 +95,9 @@ class RequestorItems extends Component
             $query->where('category_id', $this->selectedCategory);
         }
 
-        $items = $query->orderBy($this->sortColumn, $this->sortDirection)
-                       ->paginate(12);
-
-        // Exclude "Property" category from drop down menu
-        $categories = Category::where('category', '!=', 'Property')->get();
-        $cart       = session('cart', []);
+        $items = $query->paginate(12);
+        $categories = Category::whereNotIn('category', ['Property', '1 for 1 Exchange'])->get();
+        $cart = session('cart', []);
 
         return view('Warehouse.Requestor.livewire.requestor-item-search', [
             'items'      => $items,
