@@ -70,6 +70,7 @@
                         </p>
                     @endif
                     <input type="number" min="1" wire:model.live="quantities.{{ $item->id }}"
+                        wire:key="quantity-{{ $item->id }}"
                         class="w-full mt-2 p-2 border border-gray-300 rounded-md" placeholder="Enter quantity">
                     <button wire:click="addToCart({{ $item->id }})"
                             class="mt-3 w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition">
