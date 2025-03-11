@@ -48,6 +48,17 @@ class PropertyController extends Controller
         return view('Warehouse.Property.property.pending');
     }
 
+    public function editOrder($id)
+    {
+        $order = Order::findOrFail($id);
+
+        $cart = json_decode($order->items, true);
+
+        session(['cart_edit' => $cart]);
+
+        return view('Warehouse.Property.property.edit-cart', ['orderId' => $id]);
+    }
+
     public function approved()
     {
         return view('Warehouse.Property.property.approved');

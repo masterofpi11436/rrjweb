@@ -6,21 +6,25 @@ use Livewire\Component;
 use Livewire\WithPagination;
 use App\Models\Warehouse\Item;
 use App\Models\Warehouse\Category;
+use App\Models\Warehouse\Order;
 use Illuminate\Database\Eloquent\Builder;
 
-class PropertyItems extends Component
+class PropertyEditItems extends Component
 {
     use WithPagination;
 
     public $search = '';
     public $selectedCategory = '';
     public $quantities = [];
+    public $orderId;
 
     protected $paginationTheme = 'tailwind';
 
-    public function mount()
+    public function mount($orderId, $cart = [])
     {
-        $cart = session('cart', []);
+        $this->orderId = $orderId;
+
+        // Initialize quantities from cart_edit session
         foreach ($cart as $itemId => $item) {
             $this->quantities[$itemId] = $item['quantity'];
         }
@@ -28,10 +32,11 @@ class PropertyItems extends Component
 
     public function updatedQuantities($value, $itemId)
     {
-        $cart = session('cart', []);
+        $cart = session('cart_edit', []);
+
         if (isset($cart[$itemId])) {
             $cart[$itemId]['quantity'] = (int) $value;
-            session(['cart' => $cart]);
+            session(['cart_edit' => $cart]);
         }
     }
 
@@ -42,24 +47,34 @@ class PropertyItems extends Component
 
         $qty = isset($this->quantities[$itemId]) ? (int) $this->quantities[$itemId] : 1;
 
-        $cart = session('cart', []);
+        $cart = session('cart_edit', []);
         $cart[$itemId] = [
             'id'       => $item->id,
             'name'     => $item->name,
             'quantity' => $qty,
         ];
 
-        session(['cart' => $cart]);
+        session(['cart_edit' => $cart]);
         $this->quantities[$itemId] = $qty;
     }
 
     public function removeFromCart($itemId)
     {
-        $cart = session('cart', []);
+        $cart = session('cart_edit', []);
         unset($cart[$itemId]);
-        session(['cart' => $cart]);
-
+        session(['cart_edit' => $cart]);
         unset($this->quantities[$itemId]);
+    }
+
+    public function updateOrder()
+    {
+        $order = Order::findOrFail($this->orderId);
+
+        // Update order items with the edited cart
+        $order->items = json_encode(session('cart_edit', []));
+        $order->save();
+
+        redirect()->route('warehouse.property.pending')->with('success', 'Order updated successfully!');
     }
 
     public function updatingSearch()
@@ -97,9 +112,9 @@ class PropertyItems extends Component
 
         $items = $query->orderBy('name', 'asc')->paginate(12);
         $categories = Category::whereNotIn('category', ['1 for 1 Exchange'])->get();
-        $cart = session('cart', []);
+        $cart = session('cart_edit', []);
 
-        return view('Warehouse.Property.livewire.property-item-search', [
+        return view('Warehouse.Property.livewire.property-edit-items', [
             'items'      => $items,
             'categories' => $categories,
             'cart'       => $cart,
