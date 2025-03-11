@@ -1,12 +1,10 @@
 <div class="max-w-6xl mx-auto p-6 bg-gray-100 shadow-md rounded-lg">
     <!-- Search Bar & Category Filter -->
     <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-6 gap-4">
-        <!-- Search Bar -->
         <input type="text" wire:model.live="search" placeholder="Search Items..."
             class="w-full sm:w-2/3 p-3 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none bg-white"
         >
 
-        <!-- Category Dropdown -->
         <select wire:model.live="selectedCategory"
             class="w-full sm:w-1/3 p-3 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none bg-white">
             <option value="">All Categories</option>
@@ -15,18 +13,6 @@
             @endforeach
         </select>
     </div>
-
-    <script>
-        function updateLivewireBeforeCheckout() {
-            // Trigger blur event on all quantity inputs to force Livewire to update
-            document.querySelectorAll('input[name^="cart"]').forEach(input => input.blur());
-
-            // Delay navigation slightly to allow Livewire updates to complete
-            setTimeout(() => {
-                window.location.href = "{{ route('warehouse.warehouse-supervisor.order.checkout') }}";
-            }, 300);
-        }
-    </script>
 
     <!-- Shopping Cart -->
     <div class="bg-white p-6 rounded-lg shadow-md mb-6">
@@ -42,12 +28,11 @@
                             type="number"
                             min="1"
                             wire:model.live="quantities.{{ $item['id'] }}"
+                            wire:key="quantity-{{ $item['id'] }}"
                             class="w-16 p-1 border border-gray-300 rounded"
                         >
-                        <button
-                            wire:click="removeFromCart({{ $item['id'] }})"
-                            class="text-red-500 hover:text-red-700 transition"
-                        >
+                        <button wire:click="removeFromCart({{ $item['id'] }})"
+                            class="text-red-500 hover:text-red-700 transition">
                             ✖
                         </button>
                     </div>
@@ -55,13 +40,12 @@
             @endforeach
             </ul>
 
-            <!-- Checkout Button -->
+            <!-- Confirm Edits Button -->
             <div class="mt-6 flex justify-center">
-                <a href="javascript:void(0)"
-                   onclick="updateLivewireBeforeCheckout()"
-                   class="bg-green-500 text-white px-6 py-3 rounded-md shadow-md hover:bg-green-600 transition">
-                    Proceed to Checkout
-                </a>
+                <button wire:click="updateOrder"
+                    class="bg-green-500 text-white px-6 py-3 rounded-md shadow-md hover:bg-green-600 transition">
+                    Confirm Edits
+                </button>
             </div>
 
         @else
@@ -79,7 +63,8 @@
                     <h3 class="text-lg font-semibold text-gray-800">{{ $item->name }}</h3>
                     <p class="text-sm text-gray-600">{{ $item->category->category ?? 'No Category' }}</p>
                     <input type="number" min="1" wire:model.live="quantities.{{ $item->id }}"
-                           class="w-full mt-2 p-2 border border-gray-300 rounded-md" placeholder="Enter quantity">
+                        wire:key="quantity-{{ $item->id }}"
+                        class="w-full mt-2 p-2 border border-gray-300 rounded-md" placeholder="Enter quantity">
                     <button wire:click="addToCart({{ $item->id }})"
                             class="mt-3 w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition">
                         Add to Cart
@@ -92,10 +77,4 @@
             </div>
         @endforelse
     </div>
-
-    <!-- Pagination with Page Numbers -->
-    <div class="mt-6 flex justify-center">
-        {{ $items->onEachSide(3)->links() }}
-    </div>
-
 </div>

@@ -7,6 +7,6 @@
 @section('content')
 
 <!-- Livewire search component -->
-@livewire('Warehouse.Orders.editorders', ['order' => $order->id])
+@livewire('warehouse.shopping.warehousesupervisor.warehousesupervisor-edit-items', ['orderId' => $orderId, 'cart' => session('cart_edit', [])])
 
 @endsection
