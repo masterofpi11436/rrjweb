@@ -295,6 +295,7 @@ Route::prefix('warehouse')->group(function () use ($warehouseLoginClass, $wareho
             Route::get('/checkout', [$supervisorClass, 'checkOut'])->name('warehouse.supervisor.checkout');
             Route::get('/approved', [$supervisorClass, 'approved'])->name('warehouse.supervisor.approved');
             Route::get('/pending', [$supervisorClass, 'pending'])->name('warehouse.supervisor.pending');
+            Route::get('/edit-order/{id}', [$supervisorClass, 'editOrder'])->name('warehouse.supervisor.edit-order');
             Route::get('/requestor-pending', [$supervisorClass, 'requestorPending'])->name('warehouse.supervisor.requestor-pending');
             Route::delete('/{id}', [$supervisorClass, 'destroy'])->name('warehouse.supervisor.destroy');
         });

@@ -43,10 +43,20 @@ class SupervisorController extends Controller
         return view('Warehouse.Supervisor.supervisor.checkout', compact('cart'));
     }
 
-    // See supervisors warehouse pending orders.
     public function pending()
     {
         return view('Warehouse.Supervisor.supervisor.pending');
+    }
+
+    public function editOrder($id)
+    {
+        $order = Order::findOrFail($id);
+
+        $cart = json_decode($order->items, true);
+
+        session(['cart_edit' => $cart]);
+
+        return view('Warehouse.Supervisor.supervisor.edit-cart', ['orderId' => $id]);
     }
 
     public function approved()
