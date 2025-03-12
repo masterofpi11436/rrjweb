@@ -70,6 +70,17 @@ class SupervisorController extends Controller
         return view('Warehouse.Supervisor.supervisor.edit-requestor-cart', ['orderId' => $id]);
     }
 
+    public function approveRequestorOrder($id)
+    {
+        $order = Order::findOrFail($id);
+
+        $order->status = OrderStatus::PENDING_WAREHOUSE;
+
+        $order->save();
+
+        return redirect()->route('warehouse.supervisor.requestor-pending')->with('success', 'Order has been approved');
+    }
+
     public function approved()
     {
         return view('Warehouse.Supervisor.supervisor.approved');

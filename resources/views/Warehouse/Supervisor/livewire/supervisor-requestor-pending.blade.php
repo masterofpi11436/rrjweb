@@ -24,20 +24,16 @@
                         <div class="flex space-x-2">
                             <!-- Toggle Order Details Button -->
                             <button wire:click="toggleOrderDetails({{ $order->id }})"
-                                    class="px-4 py-2 bg-blue-500 text-white text-sm rounded hover:bg-blue-600 transition">
+                                class="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg shadow-md hover:bg-blue-700 transition duration-300 ease-in-out">
                                 {{ $expandedOrderId === $order->id ? 'Hide Details' : 'View Details' }}
                             </button>
 
-                            <!-- Edit Order Button -->
-                            <a href="{{ route('warehouse.supervisor.edit-requestor-order', ['id' => $order->id]) }}" class="px-4 py-2 bg-yellow-500 text-white text-sm rounded hover:bg-blue-600 transition">
-                                Edit Order
-                            </a>
-
                             <!-- Delete Button -->
-                            <a href="{{ route('warehouse.supervisor.destroy', $order->id) }}" class="px-4 py-2 bg-red-500 text-white text-sm rounded hover:bg-red-600 transition"
+                            <a href="{{ route('warehouse.supervisor.destroy', $order->id) }}"
+                                class="px-4 py-2 bg-red-500 text-white text-sm font-medium rounded-lg shadow-md hover:bg-red-600 transition duration-300 ease-in-out"
                                 onclick="event.preventDefault(); confirmDelete({{ $order->id }});">
-                                Cancel Order
-                            </a>
+                                 Cancel Order
+                             </a>
 
                             <!-- Hidden Delete Form -->
                             <form id="delete-form-{{ $order->id }}" action="{{ route('warehouse.supervisor.destroy', $order->id) }}" method="POST" style="display: none;">
@@ -53,23 +49,40 @@
                                     <button class="btn-cancel" onclick="hideModal({{ $order->id }});">Cancel</button>
                                 </div>
                             </div>
+
+
                         </div>
                     </div>
 
                     <!-- Order Items (Show when expanded) -->
                     @if($expandedOrderId === $order->id)
-                        <div class="mt-3 p-3 bg-white border rounded-md">
-                            <h3 class="font-semibold text-gray-700">Order Items:</h3>
-                            <ul class="mt-2 space-y-2">
-                                @foreach (json_decode($order->items, true) as $item)
-                                    <li class="flex justify-between text-gray-600">
-                                        <span>{{ $item['name'] }}</span>
-                                        <span class="font-bold">x{{ $item['quantity'] }}</span>
-                                    </li>
-                                @endforeach
-                            </ul>
+                    <div class="mt-3 p-4 bg-white border rounded-md shadow-md">
+                        <h3 class="font-semibold text-gray-700 mb-2">Order Items:</h3>
+                        <ul class="mt-2 space-y-2">
+                            @foreach (json_decode($order->items, true) as $item)
+                                <li class="flex justify-between text-gray-600">
+                                    <span>{{ $item['name'] }}</span>
+                                    <span class="font-bold">x{{ $item['quantity'] }}</span>
+                                </li>
+                            @endforeach
+                        </ul>
+
+                        <!-- Action Buttons -->
+                        <div class="flex justify-end space-x-2 mt-4">
+                            <!-- Edit Order Button -->
+                            <a href="{{ route('warehouse.supervisor.edit-requestor-order', ['id' => $order->id]) }}"
+                                class="px-4 py-2 bg-yellow-500 text-white text-sm font-medium rounded-lg shadow-md hover:bg-yellow-600 transition duration-300 ease-in-out">
+                                Edit Order
+                            </a>
+
+                            <!-- Approve Requestor Order Button -->
+                            <a href="{{ route('warehouse.supervisor.approve', $order->id) }}"
+                                class="px-4 py-2 bg-green-600 text-white text-sm font-medium rounded-lg shadow-md hover:bg-green-700 transition duration-300 ease-in-out">
+                                Approve Order
+                            </a>
                         </div>
-                    @endif
+                    </div>
+                @endif
                 </li>
             @endforeach
         </ul>
