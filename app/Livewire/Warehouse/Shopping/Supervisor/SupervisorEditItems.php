@@ -20,13 +20,29 @@ class SupervisorEditItems extends Component
 
     protected $paginationTheme = 'tailwind';
 
-    public function mount($orderId, $cart = [])
+    public function mount($orderId)
     {
         $this->orderId = $orderId;
 
-        // Initialize quantities from cart_edit session
-        foreach ($cart as $itemId => $item) {
-            $this->quantities[$itemId] = $item['quantity'];
+        // Retrieve order items from the database
+        $order = Order::findOrFail($orderId);
+        $cart = json_decode($order->items, true) ?? [];
+
+        // Normalize consolidated orders (convert list format into associative array)
+        if (isset($cart[0]) && is_array($cart[0]) && array_key_exists('id', $cart[0])) {
+            $normalizedCart = [];
+            foreach ($cart as $item) {
+                $normalizedCart[$item['id']] = $item; // Set item ID as the key
+            }
+            $cart = $normalizedCart;
+        }
+
+        // Store in session for editing
+        session(['cart_edit' => $cart]);
+
+        // Initialize the quantities array from the loaded order items
+        foreach ($cart as $item) {
+            $this->quantities[$item['id']] = $item['quantity'];
         }
     }
 

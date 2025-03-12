@@ -42,10 +42,25 @@
                                     </a>
 
                                     <a href="{{ route('warehouse.supervisor.destroy', $order['id']) }}"
-                                        class="px-4 py-2 bg-red-500 text-white text-sm rounded hover:bg-red-600 transition"
+                                        class="px-4 py-2 bg-red-500 text-white text-sm font-medium rounded-lg shadow-md hover:bg-red-600 transition duration-300 ease-in-out"
                                         onclick="event.preventDefault(); confirmDelete({{ $order['id'] }});">
                                         Cancel Order
                                     </a>
+
+                                    <!-- Hidden Delete Form -->
+                                    <form id="delete-form-{{ $order['id'] }}" action="{{ route('warehouse.supervisor.destroy', $order['id']) }}" method="POST" style="display: none;">
+                                        @csrf
+                                        @method('DELETE')
+                                    </form>
+
+                                    <!-- Delete Confirmation Modal -->
+                                    <div id="custom-confirmation-modal-{{ $order['id'] }}" class="confirmation-modal" style="display: none;">
+                                        <div class="modal-content">
+                                            <p>Are you sure you want to delete this order?</p>
+                                            <button class="btn-confirm" onclick="deleteRecord({{ $order['id'] }});">Yes, Delete</button>
+                                            <button class="btn-cancel" onclick="hideModal({{ $order['id'] }});">Cancel</button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
