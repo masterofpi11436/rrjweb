@@ -95,7 +95,7 @@ class RequestorItems extends Component
             $query->where('category_id', $this->selectedCategory);
         }
 
-        $items = $query->paginate(12);
+        $items = $query->orderBy('name', 'asc')->paginate(12);
         $categories = Category::whereNotIn('category', ['Property', '1 for 1 Exchange'])->get();
         $cart = session('cart', []);
 
