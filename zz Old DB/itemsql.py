@@ -1,5 +1,15 @@
 import re
 
+# Mapping old item_type ID to new category IDs and names
+CATEGORY_MAPPING = {
+    1: (1, "Housekeeping Supplies"),
+    2: (2, "Office Supplies"),
+    3: (3, "Printer Ink"),
+    4: (5, "Property"),  # 'Property' is at position 5 in the seeder
+    8: (6, "1 for 1 Exchange"),
+    9: (4, "Personal Care")
+}
+
 def format_product_names(product_names):
     """Formats product names by capitalizing the first two words."""
     formatted_names = []
@@ -21,16 +31,27 @@ def format_product_names(product_names):
 
     return formatted_names
 
-def extract_item_names(sql_insert_statement):
-    """Extracts item names from the SQL INSERT statement and sets description as NULL."""
-    # Regular expression to match values inside the insert statement
-    matches = re.findall(r"\(\d+, '(.*?)',", sql_insert_statement)
+def extract_items_with_categories(sql_insert_statement):
+    """Extracts item names and item_type from the SQL INSERT statement and maps them to category_id and category_name."""
+    # Regular expression to extract (id, name, item_type, image, quantity)
+    matches = re.findall(r"\((\d+), '([^']+)', (\d+), '[^']*', \d+\)", sql_insert_statement)
 
-    # Format extracted item names
-    formatted_names = format_product_names(matches)
+    formatted_data = []
 
-    # Generate new SQL INSERT statement with description set to NULL
-    new_sql = "INSERT INTO `items` (`name`, `description`) VALUES " + ", ".join(f"('{name}', NULL)" for name in formatted_names) + ";"
+    for item_id, name, item_type in matches:
+        formatted_name = format_product_names([name])[0]
+
+        # Get category_id and category_name, default to None and 'Uncategorized' if not found
+        category_id, category_name = CATEGORY_MAPPING.get(int(item_type), (None, "Uncategorized"))
+
+        # Format category_id as NULL if it's None
+        category_id_str = "NULL" if category_id is None else str(category_id)
+
+        # Append formatted row
+        formatted_data.append(f"('{formatted_name}', {category_id_str}, '{category_name}', NULL)")
+
+    # Generate new SQL INSERT statement
+    new_sql = "INSERT INTO `items` (`name`, `category_id`, `category_name`, `description`) VALUES " + ", ".join(formatted_data) + ";"
 
     return new_sql
 
@@ -241,7 +262,7 @@ old_sql = """INSERT INTO `item` (`id`, `name`, `item_type`, `image`, `quantity`)
 (267, 'CE30a', 3, '', 0);"""
 
 # Generate the new insert statement
-new_sql = extract_item_names(old_sql)
+new_sql = extract_items_with_categories(old_sql)
 
 # Print new SQL statement
 print("\nGenerated SQL Query:\n")
