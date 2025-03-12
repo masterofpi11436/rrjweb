@@ -28,6 +28,11 @@
                                 {{ $expandedOrderId === $order->id ? 'Hide Details' : 'View Details' }}
                             </button>
 
+                            <!-- Edit Order Button -->
+                            <a href="{{ route('warehouse.supervisor.edit-requestor-order', ['id' => $order->id]) }}" class="px-4 py-2 bg-yellow-500 text-white text-sm rounded hover:bg-blue-600 transition">
+                                Edit Order
+                            </a>
+
                             <!-- Delete Button -->
                             <a href="{{ route('warehouse.supervisor.destroy', $order->id) }}" class="px-4 py-2 bg-red-500 text-white text-sm rounded hover:bg-red-600 transition"
                                 onclick="event.preventDefault(); confirmDelete({{ $order->id }});">

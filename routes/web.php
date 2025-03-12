@@ -298,6 +298,7 @@ Route::prefix('warehouse')->group(function () use ($warehouseLoginClass, $wareho
             Route::get('/pending', [$supervisorClass, 'pending'])->name('warehouse.supervisor.pending');
             Route::get('/edit-order/{id}', [$supervisorClass, 'editOrder'])->name('warehouse.supervisor.edit-order');
             Route::get('/requestor-pending', [$supervisorClass, 'requestorPending'])->name('warehouse.supervisor.requestor-pending');
+            Route::get('/edit-requestor-order/{id}', [$supervisorClass, 'editRequestorOrder'])->name('warehouse.supervisor.edit-requestor-order');
             Route::delete('/{id}', [$supervisorClass, 'destroy'])->name('warehouse.supervisor.destroy');
         });
 

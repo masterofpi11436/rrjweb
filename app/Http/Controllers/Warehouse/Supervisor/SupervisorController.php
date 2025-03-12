@@ -59,6 +59,17 @@ class SupervisorController extends Controller
         return view('Warehouse.Supervisor.supervisor.edit-cart', ['orderId' => $id]);
     }
 
+    public function editRequestorOrder($id)
+    {
+        $order = Order::findOrFail($id);
+
+        $cart = json_decode($order->items, true);
+
+        session(['cart_edit' => $cart]);
+
+        return view('Warehouse.Supervisor.supervisor.edit-requestor-cart', ['orderId' => $id]);
+    }
+
     public function approved()
     {
         return view('Warehouse.Supervisor.supervisor.approved');
