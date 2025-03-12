@@ -41,16 +41,26 @@ class SupervisorRequestorPending extends Component
             // Preserve section_id (since all orders in this section have the same section_id)
             $sectionId = $orders->first()->section_id;
 
-            // Merge items from all orders
+            // Merge items while ensuring the correct format
             $mergedItems = [];
             foreach ($orders as $order) {
                 $items = json_decode($order->items, true);
-                foreach ($items as $item) {
-                    $itemName = $item['name'];
-                    if (isset($mergedItems[$itemName])) {
-                        $mergedItems[$itemName]['quantity'] += $item['quantity'];
+
+                // Convert indexed array (from consolidated orders) into an associative array format
+                if (isset($items[0]) && is_array($items[0]) && array_key_exists('id', $items[0])) {
+                    $normalizedItems = [];
+                    foreach ($items as $item) {
+                        $normalizedItems[$item['id']] = $item;
+                    }
+                    $items = $normalizedItems;
+                }
+
+                // Merge quantities
+                foreach ($items as $itemId => $item) {
+                    if (isset($mergedItems[$itemId])) {
+                        $mergedItems[$itemId]['quantity'] += $item['quantity'];
                     } else {
-                        $mergedItems[$itemName] = $item;
+                        $mergedItems[$itemId] = $item;
                     }
                 }
             }
@@ -63,7 +73,7 @@ class SupervisorRequestorPending extends Component
                 'user_name' => $orders->first()->user_name,
                 'supervisor_name' => $orders->first()->supervisor_name,
                 'status' => OrderStatus::PENDING_SUPERVISOR->value,
-                'items' => json_encode(array_values($mergedItems)),
+                'items' => json_encode($mergedItems), // Store in associative array format
             ]);
 
             // Delete old orders
@@ -75,7 +85,6 @@ class SupervisorRequestorPending extends Component
         // Refresh orders
         $this->mount();
     }
-
 
     public function toggleOrderDetails($orderId)
     {
