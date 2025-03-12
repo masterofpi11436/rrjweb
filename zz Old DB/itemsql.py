@@ -3,35 +3,35 @@ import re
 def format_product_names(product_names):
     """Formats product names by capitalizing the first two words."""
     formatted_names = []
-    
+
     for name in product_names:
         words = name.split()
-        
+
         if not words:
             formatted_names.append(name)  # Keep empty lines unchanged
             continue
-        
+
         # Capitalize the first two words (if they exist)
         words[0] = words[0].capitalize()
         if len(words) > 1:
             words[1] = words[1].capitalize()
-        
+
         # Join the words back together
         formatted_names.append(" ".join(words))
 
     return formatted_names
 
 def extract_item_names(sql_insert_statement):
-    """Extracts item names from the SQL INSERT statement."""
+    """Extracts item names from the SQL INSERT statement and sets description as NULL."""
     # Regular expression to match values inside the insert statement
     matches = re.findall(r"\(\d+, '(.*?)',", sql_insert_statement)
-    
+
     # Format extracted item names
     formatted_names = format_product_names(matches)
-    
-    # Generate new SQL INSERT statement
-    new_sql = "INSERT INTO `items` (`name`) VALUES " + ", ".join(f"('{name}')" for name in formatted_names) + ";"
-    
+
+    # Generate new SQL INSERT statement with description set to NULL
+    new_sql = "INSERT INTO `items` (`name`, `description`) VALUES " + ", ".join(f"('{name}', NULL)" for name in formatted_names) + ";"
+
     return new_sql
 
 # Old SQL INSERT statement (paste your actual statement here)
@@ -246,4 +246,3 @@ new_sql = extract_item_names(old_sql)
 # Print new SQL statement
 print("\nGenerated SQL Query:\n")
 print(new_sql)
-
