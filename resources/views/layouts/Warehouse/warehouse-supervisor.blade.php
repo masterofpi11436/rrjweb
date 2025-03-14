@@ -15,7 +15,7 @@
             <h1 class="text-2xl font-bold mb-5">Navigation</h1>
             <nav>
                 <ul>
-                    <li class="mb-3"><a href="{{ route('warehouse.warehouse-supervisor.dashboard')}}" class="block p-2 rounded hover:bg-blue-700">Dashboard</a></li>
+                    <li class="mb-3"><a href="{{ route('warehouse.warehouse-supervisor.dashboard')}}" class="block p-2 rounded hover:bg-blue-700"><strong>Dashboard</strong></a></li>
 
                     <!-- Inventory Management Dropdown -->
                     <li class="mb-3">

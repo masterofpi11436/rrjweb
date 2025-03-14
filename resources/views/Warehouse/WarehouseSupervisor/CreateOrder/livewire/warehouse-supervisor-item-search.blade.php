@@ -2,7 +2,7 @@
     <!-- Search Bar & Category Filter -->
     <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-6 gap-4">
         <!-- Search Bar -->
-        <input type="text" wire:model.live="search" placeholder="Search Items..."
+        <input type="text" wire:model.live="search" placeholder="Search Items you need..."
             class="w-full sm:w-2/3 p-3 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none bg-white"
         >
 
@@ -87,7 +87,7 @@
                         wire:key="quantity-{{ $item->id }}"
                         class="w-full mt-2 p-2 border border-gray-300 rounded-md" placeholder="Enter quantity">
                     <button wire:click="addToCart({{ $item->id }})"
-                        class="mt-3 w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition">
+                        class="mt-3 w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-100 transition">
                         Add to Cart
                     </button>
                 </div>
