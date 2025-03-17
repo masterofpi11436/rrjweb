@@ -32,7 +32,9 @@ return new class extends Migration
             $table->enum('status', [
                 'Pending Supervisor Approval',
                 'Pending Warehouse Approval',
+                'Pending Warehouse Exchange Approval',
                 'Approved',
+                'Exchange Approved',
                 'Denied'
             ]);
             $table->foreignId('approved_denied_by')

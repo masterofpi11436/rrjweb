@@ -306,8 +306,9 @@ Route::prefix('warehouse')->group(function () use ($warehouseLoginClass, $wareho
         // Requestors
         Route::prefix('requestor')->middleware('requestor', 'cache')->group(function () use ($requestorClass) {
             Route::get('/dashboard', [$requestorClass, 'dashboard'])->name('warehouse.requestor.dashboard');
-            Route::get('/checkout', [$requestorClass, 'checkOut'])->name('warehouse.requestor.checkout');
-            Route::get('/approved', [$requestorClass, 'approved'])->name('warehouse.requestor.approved');
+            Route::get('/checkout', [$requestorClass, 'checkout'])->name('warehouse.requestor.checkout');
+            Route::get('/exchange', [$requestorClass, 'exchange'])->name('warehouse.requestor.exchange');
+            Route::get('/exchange-checkout', [$requestorClass, 'exchangeCheckout'])->name('warehouse.requestor.exchange-checkout');
             Route::get('/pending', [$requestorClass, 'pending'])->name('warehouse.requestor.pending');
             Route::get('/edit-order/{id}', [$requestorClass, 'editOrder'])->name('warehouse.requestor.edit-order');
             Route::delete('/{id}', [$requestorClass, 'destroy'])->name('warehouse.requestor.destroy');

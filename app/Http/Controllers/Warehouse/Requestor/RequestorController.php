@@ -28,7 +28,7 @@ class RequestorController extends Controller
         return view('Warehouse.Requestor.requestor.dashboard');
     }
 
-    public function checkOut()
+    public function checkout()
     {
         $cart = session()->get('cart', []);
 
@@ -51,9 +51,16 @@ class RequestorController extends Controller
         return view('Warehouse.Requestor.requestor.edit-cart', ['orderId' => $id]);
     }
 
-    public function approved()
+    public function exchange()
     {
-        return view('Warehouse.Requestor.requestor.approved');
+        return view('Warehouse.Requestor.requestor.exchange');
+    }
+
+    public function exchangeCheckout()
+    {
+        $cart = session()->get('cart_exchange', []);
+
+        return view('Warehouse.Requestor.requestor.exchange-checkout', compact('cart'));
     }
 
     // Delete an existing order
