@@ -19,6 +19,9 @@
                     <li class="mb-3 font-bold"><a href="{{ route('warehouse.supervisor.dashboard')}}"
                         class="block p-2 rounded hover:bg-blue-700">Create Order</a></li>
 
+                    <!-- 1 For 1 Exchange Orders -->
+                    <li class="mb-3 font-bold"><a href="{{ route('warehouse.supervisor.exchange') }}" class="block p-2 rounded hover:bg-blue-700">1 For 1 Exchange</a></li>
+
                     <!-- Pending Orders -->
                     <li class="mb-3 font-bold">
                         <a href="{{ route('warehouse.supervisor.pending') }}"

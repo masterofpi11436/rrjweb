@@ -27,7 +27,7 @@
                         </a>
                     </li>
 
-                    <!-- Recent Orders -->
+                    <!-- 1 For 1 Exchange Orders -->
                     <li class="mb-3 font-bold"><a href="{{ route('warehouse.requestor.exchange') }}" class="block p-2 rounded hover:bg-blue-700">1 For 1 Exchange</a></li>
                 </ul>
             </nav>

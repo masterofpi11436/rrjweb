@@ -1,16 +1,18 @@
 <?php
 
-namespace App\Livewire\Warehouse\Shopping\Requestor;
+namespace App\Livewire\Warehouse\Shopping\Supervisor;
 
 use Livewire\Component;
 use Livewire\WithPagination;
 use App\Models\Warehouse\Item;
 use App\Models\Warehouse\Order;
 
-class RequestorEditExchangeItems extends Component
+class SupervisorEditExchangeItems extends Component
 {
     use WithPagination;
 
+    public $search = '';
+    public $selectedCategory = '';
     public $quantities = [];
     public $orderId;
 

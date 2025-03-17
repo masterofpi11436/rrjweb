@@ -19,7 +19,8 @@ class SupervisorController extends Controller
     public function __construct()
     {
         // Make the Supervisor's pending orders count available to all views
-        $this->pendingOrdersCount = Order::where('status', OrderStatus::PENDING_WAREHOUSE->value)
+        $this->pendingOrdersCount = Order::where('status',
+                                        [OrderStatus::PENDING_WAREHOUSE->value, OrderStatus::PENDING_WAREHOUSE_EXCHANGE->value])
             ->where('supervisor_id', Auth::id())
             ->count();
         View::share('pendingOrdersCount', $this->pendingOrdersCount);
@@ -59,6 +60,12 @@ class SupervisorController extends Controller
         return view('Warehouse.Supervisor.supervisor.edit-cart', ['orderId' => $id]);
     }
 
+    // Pending Requstor Orders
+    public function requestorPending()
+    {
+        return view('Warehouse.Supervisor.supervisor.requestor-pending');
+    }
+
     public function editRequestorOrder($id)
     {
         $order = Order::findOrFail($id);
@@ -81,6 +88,29 @@ class SupervisorController extends Controller
         return redirect()->route('warehouse.supervisor.requestor-pending')->with('success', 'Order has been approved');
     }
 
+    public function exchange()
+    {
+        return view('Warehouse.Supervisor.supervisor.exchange');
+    }
+
+    public function exchangeCheckout()
+    {
+        $cart = session()->get('cart_exchange', []);
+
+        return view('Warehouse.Supervisor.supervisor.exchange-checkout', compact('cart'));
+    }
+
+    public function editExchangeOrder($id)
+    {
+        $order = Order::findOrFail($id);
+
+        $cart = json_decode($order->items, true);
+
+        session(['cart_exchange' => $cart]);
+
+        return view('Warehouse.Supervisor.supervisor.edit-exchange-cart', ['orderId' => $id]);
+    }
+
     public function approved()
     {
         return view('Warehouse.Supervisor.supervisor.approved');
@@ -94,11 +124,5 @@ class SupervisorController extends Controller
 
         session()->flash('success', 'Order deleted successfully!');
         return redirect()->back();
-    }
-
-    // Pending Requstor Orders
-    public function requestorPending()
-    {
-        return view('Warehouse.Supervisor.supervisor.requestor-pending');
     }
 }
