@@ -12,13 +12,13 @@
     <div class="flex h-screen bg-gray-100">
         <!-- Sidebar -->
         <aside class="w-64 bg-green-900 text-white p-5 flex flex-col h-screen fixed">
-            <h1 class="text-2xl font-bold mb-5">Navigation</h1>
+            <h1 class="text-4xl font-bold mb-5">Navigation</h1>
             <nav>
                 <ul>
-                    <li class="mb-3"><a href="{{ route('warehouse.warehouse-supervisor.dashboard')}}" class="block p-2 rounded hover:bg-blue-700"><strong>Dashboard</strong></a></li>
+                    <li class="mb-3"><a href="{{ route('warehouse.warehouse-supervisor.dashboard')}}" class="font-bold block p-2 rounded hover:bg-blue-700">Dashboard</a></li>
 
                     <!-- Inventory Management Dropdown -->
-                    <li class="mb-3">
+                    <li class="mb-3 font-bold">
                         <details class="group">
                             <summary class="block p-2 rounded hover:bg-blue-700 cursor-pointer">Inventory Management</summary>
                             <ul class="pl-4 mt-2 hidden group-open:block">
@@ -31,16 +31,16 @@
                     </li>
 
                     <!-- Reports -->
-                    <li class="mb-3"><a href="{{ route('warehouse.warehouse-supervisor.reports_history.dashboard') }}" class="block p-2 rounded hover:bg-blue-700">Reports/History</a></li>
+                    <li class="mb-3 font-bold"><a href="{{ route('warehouse.warehouse-supervisor.reports_history.dashboard') }}" class="block p-2 rounded hover:bg-blue-700">Reports/History</a></li>
 
                     <!-- Create Request -->
-                    <li class="mb-3"><a href="{{ route('warehouse.warehouse-supervisor.order.dashboard')}}" class="block p-2 rounded hover:bg-blue-700">Create Request</a></li>
+                    <li class="mb-3 font-bold"><a href="{{ route('warehouse.warehouse-supervisor.order.dashboard')}}" class="block p-2 rounded hover:bg-blue-700">Create Request</a></li>
 
                     <!-- User Management -->
-                    <li class="mb-3"><a href="{{ route('warehouse.warehouse-supervisor.user.dashboard')}}" class="block p-2 rounded hover:bg-blue-700">Manage Users</a></li>
+                    <li class="mb-3 font-bold"><a href="{{ route('warehouse.warehouse-supervisor.user.dashboard')}}" class="block p-2 rounded hover:bg-blue-700">Manage Users</a></li>
 
                     <!-- Pending Orders -->
-                    <li class="mb-3">
+                    <li class="mb-3 font-bold">
                         <a href="{{ route('warehouse.warehouse-supervisor.pending.dashboard') }}"
                         class="flex justify-between p-2 rounded hover:bg-blue-700">
                             <span>Pending Orders</span>

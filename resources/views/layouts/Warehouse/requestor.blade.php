@@ -12,14 +12,14 @@
     <div class="flex h-screen bg-gray-100">
         <!-- Sidebar -->
         <aside class="w-64 bg-green-900 text-white p-5 flex flex-col h-screen fixed">
-            <h1 class="text-2xl font-bold mb-5">Navigation</h1>
+            <h1 class="text-4xl font-bold mb-5">Navigation</h1>
             <nav>
                 <ul>
                     <!-- Create Orders -->
-                    <li class="mb-3"><a href="{{ route('warehouse.requestor.dashboard') }}" class="block p-2 rounded hover:bg-blue-700">Create Orders</a></li>
+                    <li class="mb-3 font-bold"><a href="{{ route('warehouse.requestor.dashboard') }}" class="block p-2 rounded hover:bg-blue-700">Create Orders</a></li>
 
                     <!-- Pending Orders -->
-                    <li class="mb-3">
+                    <li class="mb-3 font-bold">
                         <a href="{{ route('warehouse.requestor.pending') }}"
                         class="flex justify-between p-2 rounded hover:bg-blue-700">
                             <span>Pending Orders</span>
@@ -28,7 +28,7 @@
                     </li>
 
                     <!-- Recent Orders -->
-                    <li class="mb-3"><a href="{{ route('warehouse.requestor.approved') }}" class="block p-2 rounded hover:bg-blue-700">Approved Orders</a></li>
+                    <li class="mb-3 font-bold"><a href="{{ route('warehouse.requestor.approved') }}" class="block p-2 rounded hover:bg-blue-700">Approved Orders</a></li>
                 </ul>
             </nav>
         </aside>

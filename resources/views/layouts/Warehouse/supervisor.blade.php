@@ -12,15 +12,15 @@
     <div class="flex h-screen bg-gray-100">
         <!-- Sidebar -->
         <aside class="w-64 bg-green-900 text-white p-5 flex flex-col h-screen fixed">
-            <h1 class="text-2xl font-bold mb-5">Navigation</h1>
+            <h1 class="text-4xl font-bold mb-5">Navigation</h1>
             <nav>
                 <ul>
                     <!-- Create Order -->
-                    <li class="mb-3"><a href="{{ route('warehouse.supervisor.dashboard')}}"
+                    <li class="mb-3 font-bold"><a href="{{ route('warehouse.supervisor.dashboard')}}"
                         class="block p-2 rounded hover:bg-blue-700">Create Order</a></li>
 
                     <!-- Pending Orders -->
-                    <li class="mb-3">
+                    <li class="mb-3 font-bold">
                         <a href="{{ route('warehouse.supervisor.pending') }}"
                         class="flex justify-between p-2 rounded hover:bg-blue-700">
                             <span>Pending Orders</span>
@@ -29,10 +29,10 @@
                     </li>
 
                     <!-- Recent Orders -->
-                    <li class="mb-3"><a href="{{ route('warehouse.supervisor.approved') }}" class="block p-2 rounded hover:bg-blue-700">Recent Orders</a></li>
+                    <li class="mb-3 font-bold"><a href="{{ route('warehouse.supervisor.approved') }}" class="block p-2 rounded hover:bg-blue-700">Recent Orders</a></li>
 
                     <!-- Approve Staff Orders -->
-                    <li class="mb-3">
+                    <li class="mb-3 font-bold">
                         <a href="{{ route('warehouse.supervisor.requestor-pending') }}"
                         class="flex justify-between p-2 rounded hover:bg-blue-700">
                             <span>Pending Staff Orders</span>
