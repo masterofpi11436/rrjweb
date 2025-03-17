@@ -33,8 +33,6 @@
                                 Edit Order
                             </button>
 
-
-
                             <!-- Delete Button -->
                             <a href="{{ route('warehouse.requestor.destroy', $order->id) }}" class="px-4 py-2 bg-red-500 text-white text-sm rounded hover:bg-red-600 transition"
                                 onclick="event.preventDefault(); confirmDelete({{ $order->id }});">
