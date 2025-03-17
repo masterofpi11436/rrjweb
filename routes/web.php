@@ -311,6 +311,7 @@ Route::prefix('warehouse')->group(function () use ($warehouseLoginClass, $wareho
             Route::get('/exchange-checkout', [$requestorClass, 'exchangeCheckout'])->name('warehouse.requestor.exchange-checkout');
             Route::get('/pending', [$requestorClass, 'pending'])->name('warehouse.requestor.pending');
             Route::get('/edit-order/{id}', [$requestorClass, 'editOrder'])->name('warehouse.requestor.edit-order');
+            Route::get('/edit-exchange-order/{id}', [$requestorClass, 'editExchangeOrder'])->name('warehouse.requestor.edit-exchange-order');
             Route::delete('/{id}', [$requestorClass, 'destroy'])->name('warehouse.requestor.destroy');
         });
 });

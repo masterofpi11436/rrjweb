@@ -96,8 +96,7 @@ class RequestorCheckout extends Component
         session()->forget('cart');
 
         return redirect()->route('warehouse.requestor.dashboard')
-            ->with('success', 'Your order was successfully submitted to ' . $supervisor->last_name . ' ' . $supervisor->first_name);
+            ->with('success', 'Your order was successfully submitted to ' . $supervisor->last_name . ' ' . $supervisor->first_name . " for " . $section->section);
     }
-
 }
 

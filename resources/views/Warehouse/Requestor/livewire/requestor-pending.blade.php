@@ -28,9 +28,12 @@
                             </button>
 
                             <!-- Edit Order Button -->
-                            <a href="{{ route('warehouse.requestor.edit-order', ['id' => $order->id]) }}" class="px-4 py-2 bg-yellow-500 text-white text-sm rounded hover:bg-blue-600 transition">
+                            <button wire:click="editOrder({{ $order->id }})"
+                                    class="px-4 py-2 bg-yellow-500 text-white text-sm rounded hover:bg-yellow-600 transition">
                                 Edit Order
-                            </a>
+                            </button>
+
+
 
                             <!-- Delete Button -->
                             <a href="{{ route('warehouse.requestor.destroy', $order->id) }}" class="px-4 py-2 bg-red-500 text-white text-sm rounded hover:bg-red-600 transition"

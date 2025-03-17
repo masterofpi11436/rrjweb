@@ -17,7 +17,10 @@ class RequestorController extends Controller
     public function __construct()
     {
         // Make the pendingOrdersCount available to all views
-        $this->pendingOrdersCount = Order::where('status', OrderStatus::PENDING_SUPERVISOR->value)
+        $this->pendingOrdersCount = Order::whereIn('status', [
+                                    OrderStatus::PENDING_SUPERVISOR->value,
+                                    OrderStatus::PENDING_WAREHOUSE_EXCHANGE->value
+                                ])
             ->where('user_id', Auth::id())
             ->count();
         View::share('pendingOrdersCount', $this->pendingOrdersCount);
@@ -61,6 +64,17 @@ class RequestorController extends Controller
         $cart = session()->get('cart_exchange', []);
 
         return view('Warehouse.Requestor.requestor.exchange-checkout', compact('cart'));
+    }
+
+    public function editExchangeOrder($id)
+    {
+        $order = Order::findOrFail($id);
+
+        $cart = json_decode($order->items, true);
+
+        session(['cart_exchange' => $cart]);
+
+        return view('Warehouse.Requestor.requestor.edit-exchange-cart', ['orderId' => $id]);
     }
 
     // Delete an existing order
