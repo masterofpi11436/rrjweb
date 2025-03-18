@@ -90,7 +90,7 @@ class RequestorExchangeCheckout extends Component
             'section_id'          => $section->id,
             'section_name'        => $section->section,
             'items'               => json_encode($this->cart), // Store cart items as JSON
-            'status'              => OrderStatus::PENDING_WAREHOUSE_EXCHANGE->value, // Enum value
+            'status'              => OrderStatus::PENDING_SUPERVISOR_EXCHANGE->value, // Enum value
         ]);
 
         session()->forget('cart_exchange');
