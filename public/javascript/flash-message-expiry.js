@@ -7,5 +7,5 @@ document.addEventListener("DOMContentLoaded", function() {
         if (flashMessage) {
             flashMessage.style.display = 'none';
         }
-    }, 2000); // 2000ms = 2 seconds
+    }, 5000); // 2000ms = 2 seconds
 });

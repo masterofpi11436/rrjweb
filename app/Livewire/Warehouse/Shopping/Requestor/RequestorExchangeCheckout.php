@@ -75,7 +75,6 @@ class RequestorExchangeCheckout extends Component
     {
         $this->validate([
             'selectedSection'    => 'required|exists:sections,id',
-            'selectedSupervisor' => 'required|exists:users,id',
         ]);
 
         $user = Auth::user();
@@ -85,8 +84,6 @@ class RequestorExchangeCheckout extends Component
         Order::create([
             'user_id'             => $user->id,
             'user_name'           => $user->last_name . ' ' . $user->first_name, // Backup user name
-            'supervisor_id'       => $supervisor->id,
-            'supervisor_name'     => $supervisor->first_name . ' ' . $supervisor->last_name,
             'section_id'          => $section->id,
             'section_name'        => $section->section,
             'items'               => json_encode($this->cart), // Store cart items as JSON
@@ -96,7 +93,7 @@ class RequestorExchangeCheckout extends Component
         session()->forget('cart_exchange');
 
         return redirect()->route('warehouse.requestor.dashboard')
-            ->with('success', 'Your order was successfully submitted to ' . $supervisor->last_name . ' ' . $supervisor->first_name);
+            ->with('success', 'Order submitted. Please take your items to the warehouse to complete the order');
     }
 
 }

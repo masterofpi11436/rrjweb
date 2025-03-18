@@ -24,21 +24,6 @@
                 @enderror
             </div>
 
-            <!-- Supervisor Dropdown -->
-            <div class="mb-4">
-                <label class="block font-semibold text-gray-700">Select Supervisor:</label>
-                <select wire:model="selectedSupervisor" required
-                        class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none bg-white">
-                    <option value="" disabled>-- Select Supervisor --</option>
-                    @foreach($supervisors as $supervisor)
-                        <option value="{{ $supervisor->id }}">{{ $supervisor->last_name }} {{ $supervisor->first_name }}</option>
-                    @endforeach
-                </select>
-                @error('selectedSupervisor')
-                    <span class="text-red-500 text-sm">{{ $message }}</span>
-                @enderror
-            </div>
-
             <!-- Cart Summary -->
             <ul class="border p-4 rounded-md bg-gray-50">
                 @foreach ($cart as $item)
