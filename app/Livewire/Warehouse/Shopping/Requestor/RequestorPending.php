@@ -14,14 +14,18 @@ class RequestorPending extends Component
 
     public function mount()
     {
-        // Get the logged-in user's pending orders
         $this->pendingOrders = Order::whereIn('status', [
                                         OrderStatus::PENDING_SUPERVISOR->value,
                                         OrderStatus::PENDING_WAREHOUSE_EXCHANGE->value
                                     ])
-                                    ->where('user_id', Auth::id()) // Only fetch the logged-in user's orders
+                                    ->where('user_id', Auth::id())
                                     ->orderBy('created_at', 'desc')
-                                    ->get();
+                                    ->get()
+                                    ->map(function ($order) {
+                                        // Convert status from enum object to string
+                                        $order->status = $order->status->value;
+                                        return $order;
+                                    });
     }
 
     public function toggleOrderDetails($orderId)
@@ -71,7 +75,7 @@ class RequestorPending extends Component
     public function render()
     {
         return view('Warehouse.Requestor.livewire.requestor-pending', [
-            'pendingOrders' => collect($this->pendingOrders)
+            'pendingOrders' => collect($this->pendingOrders),
         ]);
     }
 }
