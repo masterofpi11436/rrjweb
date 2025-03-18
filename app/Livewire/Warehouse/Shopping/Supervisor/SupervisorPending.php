@@ -15,11 +15,12 @@ class SupervisorPending extends Component
 
     public function mount()
     {
+        // Fetch orders that are pending warehouse approval OR pending 1 for 1 exchange
         $orders = Order::whereIn('status', [
                 OrderStatus::PENDING_WAREHOUSE->value,
-                OrderStatus::PENDING_WAREHOUSE_EXCHANGE->value
+                OrderStatus::PENDING_WAREHOUSE_EXCHANGE->value // Add 1 for 1 exchange status
             ])
-            ->where('supervisor_id', Auth::id())
+            ->where('supervisor_id', Auth::id()) // Ensure only the supervisor's orders are fetched
             ->orderBy('created_at', 'desc')
             ->get();
 
