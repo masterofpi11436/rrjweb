@@ -32,7 +32,6 @@ return new class extends Migration
             $table->enum('status', [
                 'Pending Supervisor Approval',
                 'Pending Warehouse Approval',
-                'Pending Supervisor Exchange Approval',
                 'Pending Warehouse Exchange Approval',
                 'Approved',
                 'Exchange Approved',
