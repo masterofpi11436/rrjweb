@@ -5,7 +5,6 @@ namespace App\Models\Warehouse;
 use App\Models\Login\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use App\Http\Controllers\Warehouse\Enums\OrderStatus;
 
 class Order extends Model
 {
@@ -14,7 +13,6 @@ class Order extends Model
     protected $table = 'orders';
 
     protected $casts = [
-        'status' => OrderStatus::class,
         'items' => 'array',
     ];
 

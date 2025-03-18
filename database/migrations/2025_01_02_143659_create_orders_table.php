@@ -29,14 +29,7 @@ return new class extends Migration
                 ->onDelete('set null');
             $table->string('section_name')->nullable(); // Backup section name if section is deleted
             $table->json('items');
-            $table->enum('status', [
-                'Pending Supervisor Approval',
-                'Pending Warehouse Approval',
-                'Pending Warehouse Exchange Approval',
-                'Approved',
-                'Exchange Approved',
-                'Denied'
-            ]);
+            $table->string('status');
             $table->foreignId('approved_denied_by')
                 ->nullable()
                 ->constrained('users')

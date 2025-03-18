@@ -90,7 +90,7 @@ class RequestorCheckout extends Component
             'section_id'          => $section->id,
             'section_name'        => $section->section,
             'items'               => json_encode($this->cart), // Store cart items as JSON
-            'status'              => OrderStatus::PENDING_SUPERVISOR->value, // Enum value
+            'status'              => config('orderstatus.PENDING_SUPERVISOR'),
         ]);
 
         session()->forget('cart');

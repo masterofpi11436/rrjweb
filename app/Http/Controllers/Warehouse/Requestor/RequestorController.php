@@ -7,7 +7,6 @@ use App\Models\Warehouse\Order;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
-use App\Http\Controllers\Warehouse\Enums\OrderStatus;
 
 
 class RequestorController extends Controller
@@ -18,8 +17,8 @@ class RequestorController extends Controller
     {
         // Make the pendingOrdersCount available to all views
         $this->pendingOrdersCount = Order::whereIn('status', [
-                                    OrderStatus::PENDING_SUPERVISOR->value,
-                                    OrderStatus::PENDING_WAREHOUSE_EXCHANGE->value
+                                    'Pending Warehouse Exchange Approval',
+                                    'Pending Supervisor Approval'
                                 ])
             ->where('user_id', Auth::id())
             ->count();
