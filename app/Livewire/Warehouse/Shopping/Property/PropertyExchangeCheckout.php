@@ -3,11 +3,12 @@
 namespace App\Livewire\Warehouse\Shopping\Property;
 
 use Livewire\Component;
+use App\Models\Login\User;
 use App\Models\Warehouse\Order;
 use App\Models\Warehouse\Section;
 use Illuminate\Support\Facades\Auth;
 
-class PropertyCheckout extends Component
+class PropertyExchangeCheckout extends Component
 {
     public $cart = [];
     public $sections;
@@ -16,7 +17,7 @@ class PropertyCheckout extends Component
     public function mount()
     {
         // Retrieve cart from session
-        $this->cart = session()->get('cart', []);
+        $this->cart = session()->get('cart_exchange', []);
 
         // Fetch all sections in alphabetical order
         $this->sections = Section::orderBy('section', 'asc')->get();
@@ -30,10 +31,10 @@ class PropertyCheckout extends Component
             return;
         }
 
-        $cart = session()->get('cart', []);
+        $cart = session()->get('cart_exchange', []);
         if (isset($cart[$itemId])) {
             $cart[$itemId]['quantity'] = $quantity;
-            session()->put('cart', $cart);
+            session()->put('cart_exchange', $cart);
             $this->cart = $cart;
         }
     }
@@ -41,11 +42,11 @@ class PropertyCheckout extends Component
     // Remove an item from the cart
     public function removeFromCart($itemId)
     {
-        $cart = session()->get('cart', []);
+        $cart = session()->get('cart_exchange', []);
 
         if (isset($cart[$itemId])) {
             unset($cart[$itemId]);
-            session()->put('cart', $cart);
+            session()->put('cart_exchange', $cart);
             $this->cart = $cart;
         }
     }
@@ -53,37 +54,40 @@ class PropertyCheckout extends Component
     // Clear the entire cart
     public function clearCart()
     {
-        session()->forget('cart');
+        session()->forget('cart_exchange');
         $this->cart = [];
     }
 
     public function render()
     {
-        return view('Warehouse.Property.livewire.property-checkout');
+        return view('Warehouse.Property.livewire.property-exchange-checkout');
     }
 
     public function submitForm()
     {
         $this->validate([
-            'selectedSection'    => 'required|exists:sections,id',
+            'selectedSection' => 'required|exists:sections,id',
         ]);
 
         $user = Auth::user();
         $section = Section::find($this->selectedSection);
 
         Order::create([
+            'user_id'             => $user->id,
+            'user_name'           => $user->last_name . ' ' . $user->first_name,
             'supervisor_id'       => $user->id,
             'supervisor_name'     => $user->first_name . ' ' . $user->last_name,
             'section_id'          => $section->id,
             'section_name'        => $section->section,
-            'items'               => json_encode($this->cart), // Store cart items as JSON
-            'status'              => config('orderstatus.PENDING_WAREHOUSE') // Enum value
+            'items'               => json_encode($this->cart),
+            'status'              => config('orderstatus.PENDING_WAREHOUSE_EXCHANGE'),
         ]);
 
-        session()->forget('cart');
+        session()->forget('cart_exchange');
 
         return redirect()->route('warehouse.property.dashboard')
-            ->with('success', 'Your order was successfully submitted for ' . $section->section . '.');
+            ->with('success', 'Your order was successfully submitted to the warehouse');
     }
+
 }
 

@@ -283,10 +283,15 @@ Route::prefix('warehouse')->group(function () use ($warehouseLoginClass, $wareho
         Route::prefix('property')->middleware('property', 'cache')->group(function () use ($propertyClass) {
             Route::get('/dashboard', [$propertyClass, 'dashboard'])->name('warehouse.property.dashboard');
             Route::get('/checkout', [$propertyClass, 'checkOut'])->name('warehouse.property.checkout');
+            Route::get('/exchange', [$propertyClass, 'exchange'])->name('warehouse.property.exchange');
+            Route::get('/exchange-checkout', [$propertyClass, 'exchangeCheckout'])->name('warehouse.property.exchange-checkout');
             Route::get('/approved', [$propertyClass, 'approved'])->name('warehouse.property.approved');
             Route::get('/pending', [$propertyClass, 'pending'])->name('warehouse.property.pending');
             Route::get('/edit-order/{id}', [$propertyClass, 'editOrder'])->name('warehouse.property.edit-order');
+            Route::get('/edit-exchange-order/{id}', [$propertyClass, 'editExchangeOrder'])->name('warehouse.property.edit-exchange-order');
             Route::get('/requestor-pending', [$propertyClass, 'requestorPending'])->name('warehouse.property.requestor-pending');
+            Route::get('/edit-requestor-order/{id}', [$propertyClass, 'editRequestorOrder'])->name('warehouse.property.edit-requestor-order');
+            Route::get('/approve/{id}', [$propertyClass, 'approveRequestorOrder'])->name('warehouse.property.approve');
             Route::delete('/{id}', [$propertyClass, 'destroy'])->name('warehouse.property.destroy');
         });
 

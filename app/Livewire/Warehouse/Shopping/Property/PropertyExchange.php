@@ -1,28 +1,16 @@
 <?php
-
-namespace App\Livewire\Warehouse\Shopping\Supervisor;
+namespace App\Livewire\Warehouse\Shopping\Property;
 
 use Livewire\Component;
-use Livewire\WithPagination;
 use App\Models\Warehouse\Item;
-use App\Models\Warehouse\Order;
 
-class SupervisorEditExchangeItems extends Component
+class PropertyExchange extends Component
 {
-    use WithPagination;
-
-    public $search = '';
-    public $selectedCategory = '';
     public $quantities = [];
-    public $orderId;
 
-    protected $paginationTheme = 'tailwind';
-
-    public function mount($orderId, $cart = [])
+    public function mount()
     {
-        $this->orderId = $orderId;
-
-        // Initialize quantities from cart_exchange session
+        $cart = session('cart_exchange', []);
         foreach ($cart as $itemId => $item) {
             $this->quantities[$itemId] = $item['quantity'];
         }
@@ -31,7 +19,6 @@ class SupervisorEditExchangeItems extends Component
     public function updatedQuantities($value, $itemId)
     {
         $cart = session('cart_exchange', []);
-
         if (isset($cart[$itemId])) {
             $cart[$itemId]['quantity'] = (int) $value;
             session(['cart_exchange' => $cart]);
@@ -61,28 +48,8 @@ class SupervisorEditExchangeItems extends Component
         $cart = session('cart_exchange', []);
         unset($cart[$itemId]);
         session(['cart_exchange' => $cart]);
+
         unset($this->quantities[$itemId]);
-    }
-
-    public function updateOrder()
-    {
-        $order = Order::findOrFail($this->orderId);
-
-        // Update order items with the edited cart
-        $order->items = json_encode(session('cart_exchange', []));
-        $order->save();
-
-        redirect()->route('warehouse.requestor.pending')->with('success', 'Order updated successfully!');
-    }
-
-    public function updatingSearch()
-    {
-        $this->resetPage();
-    }
-
-    public function updatingSelectedCategory()
-    {
-        $this->resetPage();
     }
 
     public function render()
@@ -95,7 +62,7 @@ class SupervisorEditExchangeItems extends Component
         $items = $query->orderBy('name', 'asc')->paginate(12);
         $cart = session('cart_exchange', []);
 
-        return view('Warehouse.Supervisor.livewire.supervisor-edit-exchange-items', [
+        return view('Warehouse.Property.livewire.property-exchange', [
             'items'      => $items,
             'cart'       => $cart,
         ]);

@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Livewire\Warehouse\Shopping\Supervisor;
+namespace App\Livewire\Warehouse\Shopping\Property;
 
 use Livewire\Component;
 use Livewire\WithPagination;
 use App\Models\Warehouse\Item;
 use App\Models\Warehouse\Order;
 
-class SupervisorEditExchangeItems extends Component
+class PropertyEditExchangeItems extends Component
 {
     use WithPagination;
 
@@ -95,7 +95,7 @@ class SupervisorEditExchangeItems extends Component
         $items = $query->orderBy('name', 'asc')->paginate(12);
         $cart = session('cart_exchange', []);
 
-        return view('Warehouse.Supervisor.livewire.supervisor-edit-exchange-items', [
+        return view('Warehouse.Property.livewire.property-edit-exchange-items', [
             'items'      => $items,
             'cart'       => $cart,
         ]);
