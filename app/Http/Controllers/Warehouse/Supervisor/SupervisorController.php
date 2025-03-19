@@ -83,11 +83,11 @@ class SupervisorController extends Controller
     {
         $order = Order::findOrFail($id);
 
-        $order->status = config('orderstatus.PENDING_SUPERVISOR');
+        $order->status = config('orderstatus.PENDING_WAREHOUSE');
 
         $order->save();
 
-        return redirect()->route('warehouse.supervisor.requestor-pending')->with('success', 'Order has been approved');
+        return redirect()->route('warehouse.supervisor.requestor-pending')->with('success', 'Order has been approved and pending warehouse approval');
     }
 
     public function exchange()
