@@ -17,14 +17,16 @@ class SupervisorPending extends Component
         // Fetch orders that are pending warehouse approval OR pending 1 for 1 exchange
         $orders = Order::whereIn('status', [
                 config('orderstatus.PENDING_WAREHOUSE'),
-                config('orderstatus.PENDING_WAREHOUSE_EXCHANGE'), // Add 1 for 1 exchange status
+                config('orderstatus.PENDING_WAREHOUSE_EXCHANGE'),
             ])
-            ->where('supervisor_id', Auth::id()) // Ensure only the supervisor's orders are fetched
+            ->where('supervisor_id', Auth::id())
             ->orderBy('created_at', 'desc')
             ->get();
 
-        // Group orders by section
-        $this->pendingOrders = $orders->groupBy('section_name')->toArray();
+        // Group orders by section and status
+        $this->pendingOrders = $orders->groupBy(function ($order) {
+            return $order->section_name . ' - ' . $order->status;
+        })->toArray();
     }
 
     public function toggleOrderDetails($orderId)

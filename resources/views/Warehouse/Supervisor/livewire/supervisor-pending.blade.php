@@ -8,7 +8,10 @@
     @endif
 
     @if(count($pendingOrders) > 0)
-        @foreach ($pendingOrders as $sectionName => $orders)
+    @foreach ($pendingOrders as $groupKey => $orders)
+        @php
+            [$sectionName, $status] = explode(' - ', $groupKey);
+        @endphp
             <div class="border p-4 rounded-md bg-gray-50 mb-5">
                 <h3 class="text-lg font-bold text-gray-700">Section: {{ $sectionName }}</h3>
 
