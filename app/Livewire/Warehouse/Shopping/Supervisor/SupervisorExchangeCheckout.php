@@ -7,7 +7,6 @@ use App\Models\Login\User;
 use App\Models\Warehouse\Order;
 use App\Models\Warehouse\Section;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\Warehouse\Enums\OrderStatus;
 
 class SupervisorExchangeCheckout extends Component
 {
@@ -81,7 +80,7 @@ class SupervisorExchangeCheckout extends Component
             'section_id'          => $section->id,
             'section_name'        => $section->section,
             'items'               => json_encode($this->cart),
-            'status'              => OrderStatus::PENDING_WAREHOUSE_EXCHANGE->value,
+            'status'              => config('orderstatus.PENDING_WAREHOUSE_EXCHANGE'),
         ]);
 
         session()->forget('cart_exchange');

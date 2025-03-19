@@ -5,7 +5,6 @@ use Livewire\Component;
 use App\Models\Warehouse\Order;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\Warehouse\Enums\OrderStatus;
 
 class SupervisorRequestorPending extends Component
 {
@@ -15,7 +14,7 @@ class SupervisorRequestorPending extends Component
     public function mount()
     {
         // Fetch pending orders and group them by section_name
-        $orders = Order::where('status', OrderStatus::PENDING_SUPERVISOR->value)
+        $orders = Order::where('status', config('orderstatus.PENDING_SUPERVISOR'))
             ->where('supervisor_id', Auth::id())
             ->orderBy('created_at', 'desc')
             ->get();
@@ -29,7 +28,7 @@ class SupervisorRequestorPending extends Component
     {
         DB::transaction(function () use ($sectionName) {
             // Fetch orders with the same section
-            $orders = Order::where('status', OrderStatus::PENDING_SUPERVISOR->value)
+            $orders = Order::where('status', config('orderstatus.PENDING_SUPERVISOR'))
                 ->where('supervisor_id', Auth::id())
                 ->where('section_name', $sectionName)
                 ->get();
@@ -72,7 +71,7 @@ class SupervisorRequestorPending extends Component
                 'section_name' => $sectionName,
                 'user_name' => $orders->first()->user_name,
                 'supervisor_name' => $orders->first()->supervisor_name,
-                'status' => OrderStatus::PENDING_SUPERVISOR->value,
+                'status' => config('orderstatus.PENDING_SUPERVISOR'),
                 'items' => json_encode($mergedItems), // Store in associative array format
             ]);
 

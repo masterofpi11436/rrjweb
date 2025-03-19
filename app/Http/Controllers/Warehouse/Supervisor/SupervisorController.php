@@ -7,7 +7,6 @@ use App\Models\Warehouse\Order;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
-use App\Http\Controllers\Warehouse\Enums\OrderStatus;
 
 
 class SupervisorController extends Controller
@@ -19,14 +18,17 @@ class SupervisorController extends Controller
     public function __construct()
     {
         // Make the Supervisor's pending orders count available to all views
-        $this->pendingOrdersCount = Order::where('status',
-                                        [OrderStatus::PENDING_WAREHOUSE->value, OrderStatus::PENDING_WAREHOUSE_EXCHANGE->value])
+        $this->pendingOrdersCount = Order::whereIn('status', [
+                config('orderstatus.PENDING_WAREHOUSE'),
+                config('orderstatus.PENDING_WAREHOUSE_EXCHANGE'),
+            ])
             ->where('supervisor_id', Auth::id())
             ->count();
+
         View::share('pendingOrdersCount', $this->pendingOrdersCount);
 
         // Make the Supervisor's Requestors pending order count available accross all views
-        $this->requestorPendingOrdersCount = Order::where('status', OrderStatus::PENDING_SUPERVISOR->value)
+        $this->requestorPendingOrdersCount = Order::where('status', config('orderstatus.PENDING_SUPERVISOR'))
             ->where('supervisor_id', Auth::id())
             ->count();
         View::share('requestorPendingOrdersCount', $this->requestorPendingOrdersCount);
@@ -81,7 +83,7 @@ class SupervisorController extends Controller
     {
         $order = Order::findOrFail($id);
 
-        $order->status = OrderStatus::PENDING_WAREHOUSE;
+        $order->status = config('orderstatus.PENDING_SUPERVISOR');
 
         $order->save();
 
