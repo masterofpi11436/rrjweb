@@ -5,7 +5,6 @@ use Livewire\Component;
 use App\Models\Warehouse\Order;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
-use App\Http\Controllers\Warehouse\Enums\OrderStatus;
 
 class RequestorPending extends Component
 {
@@ -15,17 +14,12 @@ class RequestorPending extends Component
     public function mount()
     {
         $this->pendingOrders = Order::whereIn('status', [
-                                        OrderStatus::PENDING_SUPERVISOR->value,
-                                        OrderStatus::PENDING_WAREHOUSE_EXCHANGE->value
+                                        config('orderstatus.PENDING_SUPERVISOR'),
+                                        config('orderstatus.PENDING_WAREHOUSE_EXCHANGE'),
                                     ])
                                     ->where('user_id', Auth::id())
                                     ->orderBy('created_at', 'desc')
-                                    ->get()
-                                    ->map(function ($order) {
-                                        // Convert status from enum object to string
-                                        $order->status = $order->status->value;
-                                        return $order;
-                                    });
+                                    ->get();
     }
 
     public function toggleOrderDetails($orderId)
@@ -38,14 +32,14 @@ class RequestorPending extends Component
     {
         $order = Order::where('id', $orderId)
                       ->where('user_id', Auth::id()) // Ensure only the owner can delete
-                      ->where('status', OrderStatus::PENDING_SUPERVISOR->value) // Prevent deleting approved orders
+                      ->where('status', config('orderstatus.PENDING_SUPERVISOR')) // Prevent deleting approved orders
                       ->first();
 
         if ($order) {
             $order->delete();
 
             // Refresh the orders list after deletion
-            $this->pendingOrders = Order::where('status', OrderStatus::PENDING_SUPERVISOR->value)
+            $this->pendingOrders = Order::where('status', config('orderstatus.PENDING_SUPERVISOR'))
                                         ->where('user_id', Auth::id())
                                         ->orderBy('created_at', 'desc')
                                         ->get();
@@ -64,7 +58,7 @@ class RequestorPending extends Component
         }
 
         // Determine correct route based on order status
-        $route = $order->status === OrderStatus::PENDING_WAREHOUSE_EXCHANGE->value
+        $route = $order->status === config('orderstatus.PENDING_SUPERVISOR')
             ? 'warehouse.requestor.edit-order'
             : 'warehouse.requestor.edit-exchange-order';
 

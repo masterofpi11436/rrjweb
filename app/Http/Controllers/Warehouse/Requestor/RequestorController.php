@@ -17,8 +17,8 @@ class RequestorController extends Controller
     {
         // Make the pendingOrdersCount available to all views
         $this->pendingOrdersCount = Order::whereIn('status', [
-                                    'Pending Warehouse Exchange Approval',
-                                    'Pending Supervisor Approval'
+                                    config('orderstatus.PENDING_SUPERVISOR'),
+                                    config('orderstatus.PENDING_WAREHOUSE_EXCHANGE'),
                                 ])
             ->where('user_id', Auth::id())
             ->count();

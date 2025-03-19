@@ -16,12 +16,14 @@
                             <span class="font-semibold text-gray-700">Order #{{ $order->id }}</span>
                             <p class="text-sm text-gray-500">Section: {{ $order->section_name }}</p>
                             <p class="text-sm text-gray-500">Supervisor: {{ $order->supervisor_name }}</p>
-                            <p class="text-sm text-gray-500">Status: <span class="font-semibold text-yellow-600">{{ $order->status }}</span></p>
+                            <p class="text-sm text-gray-500">Status:
+                                                                    <span class="font-semibold text-yellow-600">
+                                                                    {{ config('orderstatus.labels.' . $order->status) }}</span>
+                            </p>
                             <p class="text-sm text-gray-500">Date: {{ $order->created_at->format('M d, Y') }}</p>
-                            @if ($order->status->value === \App\Http\Controllers\Warehouse\Enums\OrderStatus::PENDING_WAREHOUSE_EXCHANGE->value)
-                                <p class="text-sm text-red-500">You must bring the item(s) to warehouse to complete order.</p>
+                            @if ($order->status === config('orders.PENDING_WAREHOUSE_EXCHANGE'))
+                                <p class="text-sm text-red-500">You must bring the item(s) to the warehouse to complete the order.</p>
                             @endif
-
                         </div>
 
                         <div class="flex space-x-2">

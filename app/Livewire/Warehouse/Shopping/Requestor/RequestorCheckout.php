@@ -7,7 +7,6 @@ use App\Models\Login\User;
 use App\Models\Warehouse\Order;
 use App\Models\Warehouse\Section;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\Warehouse\Enums\OrderStatus;
 
 class RequestorCheckout extends Component
 {
@@ -84,7 +83,7 @@ class RequestorCheckout extends Component
 
         Order::create([
             'user_id'             => $user->id,
-            'user_name'           => $user->last_name . ' ' . $user->first_name, // Backup user name
+            'user_name'           => $user->last_name . ' ' . $user->first_name,
             'supervisor_id'       => $supervisor->id,
             'supervisor_name'     => $supervisor->first_name . ' ' . $supervisor->last_name,
             'section_id'          => $section->id,
