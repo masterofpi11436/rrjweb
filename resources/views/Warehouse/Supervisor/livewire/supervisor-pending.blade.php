@@ -16,7 +16,7 @@
                 <h3 class="text-lg font-bold text-gray-700">Section: {{ $sectionName }}</h3>
 
                 @if(count($orders) > 1)
-                    <button wire:click="consolidateOrders('{{ $sectionName }}')"
+                <button wire:click="consolidateOrders('{{ $sectionName }}', '{{ $status }}')"
                         class="px-4 py-2 bg-purple-600 text-white text-sm font-medium rounded-lg shadow-md hover:bg-purple-700 transition duration-300 ease-in-out mt-2">
                         Consolidate Orders
                     </button>

@@ -34,11 +34,11 @@ class SupervisorPending extends Component
         $this->expandedOrderId = $this->expandedOrderId === $orderId ? null : $orderId;
     }
 
-    public function consolidateOrders($sectionName)
+    public function consolidateOrders($sectionName, $status)
     {
-        DB::transaction(function () use ($sectionName) {
-            // Fetch orders with the same section
-            $orders = Order::where('status', config('orderstatus.PENDING_WAREHOUSE'))
+        DB::transaction(function () use ($sectionName, $status) {
+            // Fetch orders with the same section and status
+            $orders = Order::where('status', $status)
                 ->where('supervisor_id', Auth::id())
                 ->where('section_name', $sectionName)
                 ->get();
@@ -72,7 +72,7 @@ class SupervisorPending extends Component
                 'section_id' => $sectionId,
                 'section_name' => $sectionName,
                 'supervisor_name' => $orders->first()->supervisor_name,
-                'status' => config('orderstatus.PENDING_WAREHOUSE'),
+                'status' => $status,
                 'items' => json_encode(array_values($mergedItems)),
             ]);
 
