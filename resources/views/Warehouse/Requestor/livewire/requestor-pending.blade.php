@@ -21,8 +21,8 @@
                                                                     {{ config('orderstatus.labels.' . $order->status) }}</span>
                             </p>
                             <p class="text-sm text-gray-500">Date: {{ $order->created_at->format('M d, Y') }}</p>
-                            @if ($order->status === config('orders.PENDING_WAREHOUSE_EXCHANGE'))
-                                <p class="text-sm text-red-500">You must bring the item(s) to the warehouse to complete the order.</p>
+                            @if ($order->status === config('orderstatus.PENDING_WAREHOUSE_EXCHANGE'))
+                                <p class="text-lg text-red-500">You must bring the item(s) to the warehouse to complete the order.</p>
                             @endif
                         </div>
 
