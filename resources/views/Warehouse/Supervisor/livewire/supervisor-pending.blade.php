@@ -31,6 +31,9 @@
                                     <p class="text-sm text-gray-500">Status: <span class="font-semibold text-yellow-600">
                                         {{ config('orderstatus.labels.' . $order['status'], ucfirst(str_replace('_', ' ', $order['status']))) }}</span></p>
                                     <p class="text-sm text-gray-500">Date: {{ \Carbon\Carbon::parse($order['created_at'])->format('M d, Y') }}</p>
+                                    @if ($order['status'] === config('orderstatus.PENDING_WAREHOUSE_EXCHANGE'))
+                                        <p class="text-lg text-red-500">You must bring the item(s) to the warehouse to complete the order.</p>
+                                    @endif
                                 </div>
 
                                 <div class="flex space-x-2">
