@@ -6,7 +6,6 @@ namespace App\Http\Controllers\Warehouse\WarehouseSupervisor;
 use App\Models\Warehouse\Order;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\View;
-use App\Http\Controllers\Warehouse\Enums\OrderStatus;
 
 // CRUD operations for creating an order, approving, denying, and editing an order
 class OrderController extends Controller
@@ -16,7 +15,7 @@ class OrderController extends Controller
     public function __construct()
     {
         // Make pending orders count available to all views
-        $this->pendingOrdersCount = Order::where('status', OrderStatus::PENDING_WAREHOUSE->value)->count();
+        $this->pendingOrdersCount = Order::where('status', config('orderstatus.PENDING_WAREHOUSE'))->count();
         View::share('pendingOrdersCount', $this->pendingOrdersCount);
     }
 
@@ -60,7 +59,7 @@ class OrderController extends Controller
         $order = Order::findOrFail($id);
 
         $order->update([
-            'status' => OrderStatus::APPROVED->value,
+            'status' => config('orderstatus.APPROVED'),
         ]);
 
         return redirect()->route('warehouse.warehouse-supervisor.pending.dashboard')

@@ -7,7 +7,6 @@ use App\Models\Login\User;
 use App\Models\Warehouse\Order;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\View;
-use App\Http\Controllers\Warehouse\Enums\OrderStatus;
 
 // CRUD operations for user management. Can also send email to reset the users passwords
 class UserController extends Controller
@@ -17,7 +16,7 @@ class UserController extends Controller
     public function __construct()
     {
         // Make pending orders count available to all views
-        $this->pendingOrdersCount = Order::where('status', OrderStatus::PENDING_WAREHOUSE->value)->count();
+        $this->pendingOrdersCount = Order::where('status', config('orderstatus.PENDING_WAREHOUSE'))->count();
         View::share('pendingOrdersCount', $this->pendingOrdersCount);
     }
 
