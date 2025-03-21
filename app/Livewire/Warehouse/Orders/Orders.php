@@ -3,7 +3,6 @@ namespace App\Livewire\Warehouse\Orders;
 
 use Livewire\Component;
 use App\Models\Warehouse\Order;
-use App\Http\Controllers\Warehouse\Enums\OrderStatus;
 
 class Orders extends Component
 {
@@ -12,7 +11,7 @@ class Orders extends Component
     public function mount()
     {
         // Get the logged-in user's pending orders
-        $this->pendingOrders = Order::where('status', OrderStatus::PENDING_WAREHOUSE->value)
+        $this->pendingOrders = Order::where('status', config('orderstatus.APPROVED'))
                                     ->orderBy('created_at', 'desc')
                                     ->get();
     }
