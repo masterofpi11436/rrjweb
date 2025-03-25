@@ -6,6 +6,12 @@
 
 @section('content')
 
+<div>
+    <a href="https://rrjauthority.org/id/policy_directory.php" style="display: inline-block; padding: 0.5rem 1rem; background-color: #3b82f6; color: white; text-decoration: none; border-radius: 0.25rem;">
+        Back to RRJ Information
+    </a>
+</div><br>
+
 @php
     $ua = request()->header('User-Agent');
     $isEdge = str_contains($ua, 'Edg') || str_contains($ua, 'Edge');
