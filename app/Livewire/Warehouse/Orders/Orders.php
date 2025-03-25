@@ -12,7 +12,7 @@ class Orders extends Component
     public function mount()
     {
         // Get the logged-in user's pending orders
-        $this->pendingOrders = Order::where('status', config('orderstatus.APPROVED'))
+        $this->pendingOrders = Order::where('status', config('orderstatus.PENDING_WAREHOUSE'))
                                     ->orderBy('created_at', 'desc')
                                     ->get();
     }
