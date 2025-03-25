@@ -3,6 +3,7 @@ namespace App\Livewire\Warehouse\Orders;
 
 use Livewire\Component;
 use App\Models\Warehouse\Order;
+use Faker\Provider\ar_EG\Payment;
 
 class Orders extends Component
 {
