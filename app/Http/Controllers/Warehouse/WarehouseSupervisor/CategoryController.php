@@ -12,12 +12,15 @@ use Illuminate\Support\Facades\View;
 class CategoryController extends Controller
 {
     protected $pendingOrdersCount;
+    protected $pendingExchangeOrdersCount;
 
     public function __construct()
     {
         // Make pending orders count available to all views
         $this->pendingOrdersCount = Order::where('status', config('orderstatus.PENDING_WAREHOUSE'))->count();
-        View::share('pendingOrdersCount', $this->pendingOrdersCount);
+        $this->pendingExchangeOrdersCount = Order::where('status', config('orderstatus.PENDING_WAREHOUSE_EXCHANGE'))->count();
+        View::share(['pendingOrdersCount' => $this->pendingOrdersCount,
+                     'pendingExchangeOrdersCount' => $this->pendingExchangeOrdersCount]);
     }
 
     public function dashboard()
