@@ -6,29 +6,20 @@
 
 @section('content')
 
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const ua = window.navigator.userAgent;
-        const isEdge = ua.includes('Edg') || ua.includes('Edge');
-        const isIEMode = ua.includes('Trident') || ua.includes('MSIE');
+@php
+$ua = request()->header('User-Agent');
+$isEdge = str_contains($ua, 'Edg') || str_contains($ua, 'Edge');
+$isIE = str_contains($ua, 'Trident') || str_contains($ua, 'MSIE');
+@endphp
 
-        if (isEdge || isIEMode) {
-            const warning = document.createElement('div');
-            warning.style.position = 'fixed';
-            warning.style.top = '0';
-            warning.style.left = '0';
-            warning.style.width = '100%';
-            warning.style.backgroundColor = '#f87171'; // Tailwind red-400
-            warning.style.color = '#fff';
-            warning.style.padding = '1rem';
-            warning.style.zIndex = '9999';
-            warning.style.textAlign = 'center';
-            warning.innerText = 'This application is not supported in Microsoft Edge or Internet Explorer mode. Please use Chrome or Firefox. Please call Mark in MIU if you need Assistance';
-            document.body.prepend(warning);
-        }
-    });
-</script>
-
+@if ($isEdge || $isIE)
+    <div class="fixed top-0 left-0 w-full bg-red-500 text-white text-center py-3 z-50">
+        <p>You have opened this link in Microsoft Edge.</p>
+        <p>This application is not supported in Microsoft Edge or Internet Explorer mode. Please use Chrome or Firefox.</p>
+        <p>Please copy this web page's URL and paste it into the URL for Google Chrome or Firefox.</p>
+        <p>IF you have any problems, please contact Mark in MIU at ext 6035.</p>
+    </div>
+@endif
 
 @livewire('policy.public-policy-search')
 
