@@ -7,7 +7,7 @@
 @section('content')
 
 <div>
-    <a href="https://rrjauthority.org/id/policy_directory.php" style="display: inline-block; padding: 0.5rem 1rem; background-color: #3b82f6; color: white; text-decoration: none; border-radius: 0.25rem;">
+    <a href="https://rrjauthority.org/id/policy_directory.php" style="display: inline-block; padding: 0.5rem 1rem; background-color: #27559e; color: white; text-decoration: none; border-radius: 0.25rem;">
         Back to RRJ Information
     </a>
 </div><br>
@@ -19,16 +19,19 @@
 @endphp
 
 @if ($isEdge || $isIE)
-    <div style="position: fixed; top: 0; left: 0; width: 100%; background-color: #ef4444; color: white; text-align: center; padding: 1rem; z-index: 9999;">
-        <p style="font-weight: bold;">You have opened this link in Microsoft Edge.</p>
-        <p>This application is not supported in Microsoft Edge or Internet Explorer mode.</p>
-        <p>Please use Google Chrome or Firefox instead.</p>
-        <p>Please copy this web page's URL and paste it into the URL bar for Google Chrome or Firefox.</p>
-        <p style="margin-top: 0.5rem;">If you have any problems, please contact Mark in MIU at ext 6035.</p>
+    <div style="position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; background-color: #ef4444; color: white; text-align: center; padding: 2rem; z-index: 9999;">
+        <div>
+            <p style="font-size: 1.5rem; font-weight: bold;">You have opened this link in Microsoft Edge.</p>
+            <p>This application is not supported in Microsoft Edge or Internet Explorer mode.</p>
+            <p>Please use Google Chrome or Firefox instead.</p>
+            <p>Please copy this web page's web address and paste it into the web address for Google Chrome or Firefox.</p>
+            <p>http://rrjapps/policy-search</p>
+            <p style="margin-top: 1rem;">If you have any problems, please contact Mark in MIU at ext 6035.</p>
+        </div>
     </div>
-    <div style="height: 150px;"></div>
+@else
+    @livewire('policy.public-policy-search')
 @endif
 
-@livewire('policy.public-policy-search')
 
 @endsection
