@@ -21,11 +21,10 @@
 @if ($isEdge || $isIE)
     <div style="position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; background-color: #ef4444; color: white; text-align: center; padding: 2rem; z-index: 9999;">
         <div>
-            <p style="font-size: 1.5rem; font-weight: bold;">You have opened this link in Microsoft Edge.</p>
-            <p>This application is not supported in Microsoft Edge or Internet Explorer mode.</p>
-            <p>Please use Google Chrome or Firefox instead.</p>
-            <p>Please copy this web page's web address and paste it into the web address for Google Chrome or Firefox.</p>
-            <p>http://rrjapps/policy-search</p>
+            <p style="font-size: 40px; font-weight: bold;">You have opened this link in Microsoft Edge.</p>
+            <p>This application is not supported in Microsoft Edge.</p>
+            <p style="font-size: 40px;">Please open Google Chrome or Firefox and use this web address:</p>
+            <p style="font-size: 30px;">http://rrjapps/policy-search</p>
             <p style="margin-top: 1rem;">If you have any problems, please contact Mark in MIU at ext 6035.</p>
         </div>
     </div>
