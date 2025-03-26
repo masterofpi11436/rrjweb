@@ -16,7 +16,7 @@
                             <span class="font-semibold text-gray-700">Order #{{ $order->id }}</span>
                             <p class="text-sm text-gray-500">Section: {{ $order->section_name }}</p>
                             <p class="text-sm text-gray-500">Supervisor: {{ $order->supervisor_name }}</p>
-                            <p class="text-sm text-gray-500">Status: <span class="font-semibold text-yellow-600">{{ $order->status }}</span></p>
+                            <p class="text-sm text-gray-500">Status: <span class="font-semibold text-yellow-600">{{ config('orderstatus.labels.' . $order['status'], ucfirst(str_replace('_', ' ', $order['status']))) }}</span></p>
                             <p class="text-sm text-gray-500">Date: {{ $order->created_at->format('M d, Y') }}</p>
                         </div>
 

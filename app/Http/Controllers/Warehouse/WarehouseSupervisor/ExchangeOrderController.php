@@ -8,7 +8,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\View;
 
 // CRUD operations for creating an order, approving, denying, and editing an order
-class OrderController extends Controller
+class ExchangeOrderController extends Controller
 {
     protected $pendingOrdersCount;
     protected $pendingExchangeOrdersCount;
