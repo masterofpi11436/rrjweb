@@ -8,7 +8,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\View;
 
 // CRUD operations for creating an order, approving, denying, and editing an order
-class ExchangeOrderController extends Controller
+class OrderExchangeController extends Controller
 {
     protected $pendingOrdersCount;
     protected $pendingExchangeOrdersCount;
@@ -31,14 +31,14 @@ class ExchangeOrderController extends Controller
     {
         $cart = session()->get('cart', []);
 
-        return view('Warehouse.WarehouseSupervisor.CreateExchangeOrder.createexchangeorder.checkout', compact('cart'));
+        return view('Warehouse.WarehouseSupervisor.CreateOrder.createexchangeorder.checkout', compact('cart'));
     }
 
 
     // Managing Orders submitted to warehouse
     public function pending()
     {
-        return view('Warehouse.WarehouseSupervisor.ExchangeOrders.exchangeorders.pending-exchange-orders');
+        return view('Warehouse.WarehouseSupervisor.Orders.orders.pending-exchange-orders');
     }
 
     public function show($id)
@@ -47,14 +47,14 @@ class ExchangeOrderController extends Controller
 
         $order->items = is_array($order->items) ? $order->items : json_decode($order->items, true);
 
-        return view('Warehouse.WarehouseSupervisor.ExchangeOrders.exchangeorders.show-exchange', compact('order'));
+        return view('Warehouse.WarehouseSupervisor.Orders.orders.show', compact('order'));
     }
 
     public function edit($id)
     {
         $order = Order::findOrFail($id);
 
-        return view('Warehouse.WarehouseSupervisor.ExchangeOrders.exchangeorders.edit-exchange-order', compact('order'));
+        return view('Warehouse.WarehouseSupervisor.Orders.orders.edit-order', compact('order'));
     }
 
     public function approve($id)
