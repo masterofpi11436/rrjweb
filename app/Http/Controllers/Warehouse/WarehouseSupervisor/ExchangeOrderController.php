@@ -7,7 +7,7 @@ use App\Models\Warehouse\Order;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\View;
 
-// CRUD operations for creating an order, approving, denying, and editing an order
+// Operations that deal with approving, denying, and editing a 1 for 1 exchange order
 class ExchangeOrderController extends Controller
 {
     protected $pendingOrdersCount;
@@ -20,5 +20,10 @@ class ExchangeOrderController extends Controller
         $this->pendingExchangeOrdersCount = Order::where('status', config('orderstatus.PENDING_WAREHOUSE_EXCHANGE'))->count();
         View::share(['pendingOrdersCount' => $this->pendingOrdersCount,
                      'pendingExchangeOrdersCount' => $this->pendingExchangeOrdersCount]);
+    }
+
+    public function dashboard()
+    {
+
     }
 }
