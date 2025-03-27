@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Warehouse\WarehouseSupervisor;
 // Base Controller
 use App\Models\Warehouse\Order;
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 
 // CRUD operations for creating an order, approving, denying, and editing an order
@@ -63,6 +65,9 @@ class OrderController extends Controller
 
         $order->update([
             'status' => config('orderstatus.APPROVED'),
+            'approved_denied_by' => Auth::id(),
+            'approved_denied_by_name' => Auth::user()->first_name . ' ' . Auth::user()->last_name,
+            'approved_denied_at' => Carbon::now(),
         ]);
 
         return redirect()->route('warehouse.warehouse-supervisor.pending.dashboard')

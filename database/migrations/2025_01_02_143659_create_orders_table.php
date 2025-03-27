@@ -35,7 +35,7 @@ return new class extends Migration
                 ->constrained('users')
                 ->onDelete('set null');
             $table->string('approved_denied_by_name')->nullable(); // Backup approver name if user is deleted
-            $table->date('approved_denied_at')->nullable();
+            $table->dateTime('approved_denied_at')->nullable();
             $table->longText('note')->nullable();
             $table->timestamps();
         });
