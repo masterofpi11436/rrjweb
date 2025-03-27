@@ -270,6 +270,13 @@ Route::prefix('warehouse')->group(function () use ($warehouseLoginClass, $wareho
                 Route::get('/confirm', [$orderClass, 'confirm'])->name('warehouse.warehouse-supervisor.order.confirm');
             });
 
+            // Create an Exchange Order
+            Route::prefix('create-exchange-order')->group(function () use ($orderClass) {
+                Route::get('/dashboard', [$orderClass, 'dashboard'])->name('warehouse.warehouse-supervisor.order.dashboard');
+                Route::get('/checkout', [$orderClass, 'checkOut'])->name('warehouse.warehouse-supervisor.order.checkout');
+                Route::get('/confirm', [$orderClass, 'confirm'])->name('warehouse.warehouse-supervisor.order.confirm');
+            });
+
             // Order Management
             Route::prefix('pending-orders')->group(function () use ($orderClass) {
                 Route::get('/pending', [$orderClass, 'pending'])->name('warehouse.warehouse-supervisor.pending.dashboard');
