@@ -53,7 +53,9 @@
                         <a href="{{ route('warehouse.warehouse-supervisor.pending-exchange.dashboard') }}"
                         class="flex justify-between p-2 rounded hover:bg-blue-700">
                             <span>Pending 1 For 1 Exhchange Orders</span>
-                            <span class="bg-blue-500 text-white px-2 py-1 rounded text-sm">{{ $pendingExchangeOrdersCount }}</span>
+                            <span class="flex items-center justify-center bg-blue-500 text-white min-w-[2rem] h-[1.75rem] rounded text-sm text-center">
+                                {{ $pendingExchangeOrdersCount }}
+                            </span>
                         </a>
                     </li>
                 </ul>
