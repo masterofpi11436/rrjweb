@@ -1,12 +1,12 @@
 @extends('layouts.Warehouse.warehouse-supervisor')
 
-@section('title', 'Pending Orders')
+@section('title', 'Edit Order')
 
-@section('heading', 'Pending Orders')
+@section('heading', 'Edit Order')
 
 @section('content')
 
 <!-- Livewire search component -->
-@livewire('Warehouse.Orders.orders')
+@livewire('warehouse.orders.orders')
 
 @endsection

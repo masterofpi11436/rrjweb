@@ -279,7 +279,7 @@ Route::prefix('warehouse')->group(function () use ($warehouseLoginClass, $wareho
             });
 
             // 1 For 1 Order Management
-            Route::prefix('exchange-orders')->group(function () use ($exchangeClass) {
+            Route::prefix('pending-exchange-orders')->group(function () use ($exchangeClass) {
                 Route::get('/pending', [$exchangeClass, 'pending'])->name('warehouse.warehouse-supervisor.pending-exchange.dashboard');
                 Route::get('/view/{id}', [$exchangeClass, 'show'])->name('warehouse.warehouse-supervisor.pending-exchange.show');
                 Route::put('/approve/{id}', [$exchangeClass, 'approve'])->name('warehouse.warehouse-supervisor.pending-exchange.approve');
