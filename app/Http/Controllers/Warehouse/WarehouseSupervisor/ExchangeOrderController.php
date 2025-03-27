@@ -31,7 +31,7 @@ class ExchangeOrderController extends Controller
     {
         $cart = session()->get('cart', []);
 
-        return view('Warehouse.WarehouseSupervisor.CreateExchangeOrder.createexchangeorder.checkout', compact('cart'));
+        return view('Warehouse.WarehouseSupervisor.CreateOrder.createexchangeorder.checkout', compact('cart'));
     }
 
 
@@ -47,14 +47,14 @@ class ExchangeOrderController extends Controller
 
         $order->items = is_array($order->items) ? $order->items : json_decode($order->items, true);
 
-        return view('Warehouse.WarehouseSupervisor.ExchangeOrders.exchangeorders.show-exchange', compact('order'));
+        return view('Warehouse.WarehouseSupervisor.ExchangeOrders.exchangeorders.show', compact('order'));
     }
 
     public function edit($id)
     {
         $order = Order::findOrFail($id);
 
-        return view('Warehouse.WarehouseSupervisor.ExchangeOrders.exchangeorders.edit-exchange-order', compact('order'));
+        return view('Warehouse.WarehouseSupervisor.ExchangeOrders.exchangeorders.edit-order', compact('order'));
     }
 
     public function approve($id)
@@ -65,7 +65,7 @@ class ExchangeOrderController extends Controller
             'status' => config('orderstatus.APPROVED'),
         ]);
 
-        return redirect()->route('warehouse.warehouse-supervisor.pending.dashboard')
+        return redirect()->route('warehouse.warehouse-supervisor.pending-exchange.dashboard')
             ->with('success', 'Order approved successfully.');
     }
 }
