@@ -23,6 +23,7 @@ return new class extends Migration
                 ->constrained('users')
                 ->onDelete('set null');
             $table->string('supervisor_name')->nullable(); // Backup supervisor name if user is deleted
+            $table->string('originator')->nullable();
             $table->foreignId('section_id')
                 ->nullable()
                 ->constrained('sections')

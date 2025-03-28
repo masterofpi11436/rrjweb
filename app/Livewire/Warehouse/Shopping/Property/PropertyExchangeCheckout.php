@@ -73,10 +73,9 @@ class PropertyExchangeCheckout extends Component
         $section = Section::find($this->selectedSection);
 
         Order::create([
-            'user_id'             => $user->id,
-            'user_name'           => $user->last_name . ' ' . $user->first_name,
             'supervisor_id'       => $user->id,
             'supervisor_name'     => $user->first_name . ' ' . $user->last_name,
+            'originator'          => $user->first_name . ' ' . $user->last_name,
             'section_id'          => $section->id,
             'section_name'        => $section->section,
             'items'               => json_encode($this->cart),

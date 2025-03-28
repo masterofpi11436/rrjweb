@@ -74,6 +74,7 @@ class PropertyCheckout extends Component
         Order::create([
             'supervisor_id'       => $user->id,
             'supervisor_name'     => $user->first_name . ' ' . $user->last_name,
+            'originator'          => $user->first_name . ' ' . $user->last_name,
             'section_id'          => $section->id,
             'section_name'        => $section->section,
             'items'               => json_encode($this->cart), // Store cart items as JSON

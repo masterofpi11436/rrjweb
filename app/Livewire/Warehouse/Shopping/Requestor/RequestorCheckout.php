@@ -83,12 +83,13 @@ class RequestorCheckout extends Component
 
         Order::create([
             'user_id'             => $user->id,
-            'user_name'           => $user->last_name . ' ' . $user->first_name,
+            'user_name'           => $user->first_name . ' ' . $user->last_name,
             'supervisor_id'       => $supervisor->id,
             'supervisor_name'     => $supervisor->first_name . ' ' . $supervisor->last_name,
+            'originator'          => $user->first_name . ' ' . $user->last_name,
             'section_id'          => $section->id,
             'section_name'        => $section->section,
-            'items'               => json_encode($this->cart), // Store cart items as JSON
+            'items'               => json_encode($this->cart),
             'status'              => config('orderstatus.PENDING_SUPERVISOR'),
         ]);
 
