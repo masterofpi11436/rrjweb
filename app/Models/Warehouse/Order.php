@@ -21,6 +21,7 @@ class Order extends Model
         'user_name',
         'supervisor_id',
         'supervisor_name',
+        'originator',
         'section_id',
         'section_name',
         'items',

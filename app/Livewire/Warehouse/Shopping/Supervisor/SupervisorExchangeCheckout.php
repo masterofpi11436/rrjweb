@@ -73,8 +73,6 @@ class SupervisorExchangeCheckout extends Component
         $section = Section::find($this->selectedSection);
 
         Order::create([
-            'user_id'             => $user->id,
-            'user_name'           => $user->last_name . ' ' . $user->first_name,
             'supervisor_id'       => $user->id,
             'supervisor_name'     => $user->first_name . ' ' . $user->last_name,
             'originator'          => $user->first_name . ' ' . $user->last_name,
@@ -86,9 +84,7 @@ class SupervisorExchangeCheckout extends Component
 
         session()->forget('cart_exchange');
 
-        return redirect()->route('warehouse.supervisor.dashboard')
+        return redirect()->route('warehouse.supervisor.pending')
             ->with('success', 'Your order was successfully submitted to the warehouse');
     }
-
 }
-
