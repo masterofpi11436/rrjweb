@@ -28,8 +28,10 @@ use App\Http\Controllers\Warehouse\WarehouseSupervisor\CategoryController;
 use App\Http\Controllers\Warehouse\WarehouseSupervisor\SectionController;
 use App\Http\Controllers\Warehouse\WarehouseSupervisor\UserController;
 use App\Http\Controllers\Warehouse\WarehouseSupervisor\ReportsHistoryController;
-use App\Http\Controllers\Warehouse\WarehouseSupervisor\OrderController;
-use App\Http\Controllers\Warehouse\WarehouseSupervisor\ExchangeOrderController;
+use App\Http\Controllers\Warehouse\WarehouseSupervisor\PendingOrderController;
+use App\Http\Controllers\Warehouse\WarehouseSupervisor\PendingExchangeOrderController;
+use App\Http\Controllers\Warehouse\WarehouseSupervisor\CreateOrderController;
+use App\Http\Controllers\Warehouse\WarehouseSupervisor\CreateExchangeOrderController;
 use App\Http\Controllers\Warehouse\Requestor\RequestorController;
 use App\Http\Controllers\Warehouse\Supervisor\SupervisorController;
 use App\Http\Controllers\Warehouse\Property\PropertyController;
@@ -58,8 +60,10 @@ $itemClass = ItemController::class;
 $categoryClass = CategoryController::class;
 $sectionClass = SectionController::class;
 $userClass = UserController::class;
-$orderClass = OrderController::class;
-$exchangeClass = ExchangeOrderController::class;
+$createOrderClass = CreateOrderController::class;
+$createExchangeClass = CreateExchangeOrderController::class;
+$pendingOrderClass = PendingOrderController::class;
+$pendingExchangeOrderClass = PendingExchangeOrderController::class;
 $reportsHistoryClass = ReportsHistoryController::class;
 $requestorClass = RequestorController::class;
 $supervisorClass = SupervisorController::class;
@@ -214,7 +218,7 @@ Route::prefix('policy')->group(function () use ($policyClass, $policyLoginClass)
 });
 
 // ***---Warehouse Application---*** //
-Route::prefix('warehouse')->group(function () use ($warehouseLoginClass, $warehouseSupervisorClass, $supervisorClass, $requestorClass, $propertyClass, $itemClass, $categoryClass, $sectionClass, $userClass, $reportsHistoryClass, $orderClass, $exchangeClass){
+Route::prefix('warehouse')->group(function () use ($warehouseLoginClass, $warehouseSupervisorClass, $supervisorClass, $requestorClass, $propertyClass, $itemClass, $categoryClass, $sectionClass, $userClass, $reportsHistoryClass, $createOrderClass, $createExchangeClass, $pendingOrderClass, $pendingExchangeOrderClass){
         // Routes without middleware
         Route::get('/login', [$warehouseLoginClass, 'warehouseLoginForm'])->name('warehouse.login');
         Route::post('/login', [$warehouseLoginClass, 'login']);
@@ -223,7 +227,7 @@ Route::prefix('warehouse')->group(function () use ($warehouseLoginClass, $wareho
         Route::post('/logout', [$warehouseLoginClass, 'logout'])->name('warehouse.logout');
 
         // Warehouse Supervisor Routes
-        Route::prefix('warehouse-supervisor')->middleware('warehouseSupervisor', 'cache')->group(function () use ($warehouseSupervisorClass, $itemClass, $categoryClass, $sectionClass, $userClass, $reportsHistoryClass, $orderClass, $exchangeClass) {
+        Route::prefix('warehouse-supervisor')->middleware('warehouseSupervisor', 'cache')->group(function () use ($warehouseSupervisorClass, $itemClass, $categoryClass, $sectionClass, $userClass, $reportsHistoryClass, $createOrderClass, $createExchangeClass, $pendingOrderClass, $pendingExchangeOrderClass) {
             Route::get('/dashboard', [$warehouseSupervisorClass, 'dashboard'])->name('warehouse.warehouse-supervisor.dashboard');
 
             // User Management
@@ -264,33 +268,33 @@ Route::prefix('warehouse')->group(function () use ($warehouseLoginClass, $wareho
             });
 
             // Create an Order
-            Route::prefix('create-order')->group(function () use ($orderClass) {
-                Route::get('/dashboard', [$orderClass, 'dashboard'])->name('warehouse.warehouse-supervisor.order.dashboard');
-                Route::get('/checkout', [$orderClass, 'checkOut'])->name('warehouse.warehouse-supervisor.order.checkout');
-                Route::get('/confirm', [$orderClass, 'confirm'])->name('warehouse.warehouse-supervisor.order.confirm');
+            Route::prefix('create-order')->group(function () use ($createOrderClass) {
+                Route::get('/dashboard', [$createOrderClass, 'dashboard'])->name('warehouse.warehouse-supervisor.order.dashboard');
+                Route::get('/checkout', [$createOrderClass, 'checkOut'])->name('warehouse.warehouse-supervisor.order.checkout');
+                Route::get('/confirm', [$createOrderClass, 'confirm'])->name('warehouse.warehouse-supervisor.order.confirm');
             });
 
             // Create an Exchange Order
-            Route::prefix('create-exchange-order')->group(function () use ($orderClass) {
-                Route::get('/dashboard', [$orderClass, 'dashboard'])->name('warehouse.warehouse-supervisor.order.dashboard');
-                Route::get('/checkout', [$orderClass, 'checkOut'])->name('warehouse.warehouse-supervisor.order.checkout');
-                Route::get('/confirm', [$orderClass, 'confirm'])->name('warehouse.warehouse-supervisor.order.confirm');
+            Route::prefix('create-exchange-order')->group(function () use ($createExchangeClass) {
+                Route::get('/dashboard', [$createExchangeClass, 'dashboard'])->name('warehouse.warehouse-supervisor.order.dashboard');
+                Route::get('/checkout', [$createExchangeClass, 'checkOut'])->name('warehouse.warehouse-supervisor.order.checkout');
+                Route::get('/confirm', [$createExchangeClass, 'confirm'])->name('warehouse.warehouse-supervisor.order.confirm');
             });
 
             // Order Management
-            Route::prefix('pending-orders')->group(function () use ($orderClass) {
-                Route::get('/pending', [$orderClass, 'pending'])->name('warehouse.warehouse-supervisor.pending.dashboard');
-                Route::get('/view/{id}', [$orderClass, 'show'])->name('warehouse.warehouse-supervisor.pending.show');
-                Route::put('/approve/{id}', [$orderClass, 'approve'])->name('warehouse.warehouse-supervisor.pending.approve');
-                Route::get('/edit-order/{id}', [$orderClass, 'edit'])->name('warehouse.warehouse-supervisor.pending.edit');
+            Route::prefix('pending-orders')->group(function () use ($pendingOrderClass) {
+                Route::get('/pending', [$pendingOrderClass, 'pending'])->name('warehouse.warehouse-supervisor.pending.dashboard');
+                Route::get('/view/{id}', [$pendingOrderClass, 'show'])->name('warehouse.warehouse-supervisor.pending.show');
+                Route::put('/approve/{id}', [$pendingOrderClass, 'approve'])->name('warehouse.warehouse-supervisor.pending.approve');
+                Route::get('/edit-order/{id}', [$pendingOrderClass, 'edit'])->name('warehouse.warehouse-supervisor.pending.edit');
             });
 
             // 1 For 1 Order Management
-            Route::prefix('pending-exchange-orders')->group(function () use ($exchangeClass) {
-                Route::get('/pending', [$exchangeClass, 'pending'])->name('warehouse.warehouse-supervisor.pending-exchange.dashboard');
-                Route::get('/view/{id}', [$exchangeClass, 'show'])->name('warehouse.warehouse-supervisor.pending-exchange.show');
-                Route::put('/approve/{id}', [$exchangeClass, 'approve'])->name('warehouse.warehouse-supervisor.pending-exchange.approve');
-                Route::get('/edit-order/{id}', [$exchangeClass, 'edit'])->name('warehouse.warehouse-supervisor.pending-exchange.edit');
+            Route::prefix('pending-exchange-orders')->group(function () use ($pendingExchangeOrderClass) {
+                Route::get('/pending', [$pendingExchangeOrderClass, 'pending'])->name('warehouse.warehouse-supervisor.pending-exchange.dashboard');
+                Route::get('/view/{id}', [$pendingExchangeOrderClass, 'show'])->name('warehouse.warehouse-supervisor.pending-exchange.show');
+                Route::put('/approve/{id}', [$pendingExchangeOrderClass, 'approve'])->name('warehouse.warehouse-supervisor.pending-exchange.approve');
+                Route::get('/edit-order/{id}', [$pendingExchangeOrderClass, 'edit'])->name('warehouse.warehouse-supervisor.pending-exchange.edit');
             });
         });
 

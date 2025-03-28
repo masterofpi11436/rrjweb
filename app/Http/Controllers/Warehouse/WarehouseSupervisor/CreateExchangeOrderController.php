@@ -8,7 +8,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\View;
 
 // Operations that deal with approving, denying, and editing a 1 for 1 exchange order
-class ExchangeOrderController extends Controller
+class CreateExchangeOrderController extends Controller
 {
     protected $pendingOrdersCount;
     protected $pendingExchangeOrdersCount;
