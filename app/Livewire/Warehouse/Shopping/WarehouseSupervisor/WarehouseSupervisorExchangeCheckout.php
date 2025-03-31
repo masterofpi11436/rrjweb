@@ -38,10 +38,10 @@ class WarehouseSupervisorExchangeCheckout extends Component
             return;
         }
 
-        $cart = session()->get('cart', []);
+        $cart = session()->get('cart_exchange', []);
         if (isset($cart[$itemId])) {
             $cart[$itemId]['quantity'] = $quantity;
-            session()->put('cart', $cart);
+            session()->put('cart_exchange', $cart);
             $this->cart = $cart;
         }
     }
@@ -49,11 +49,11 @@ class WarehouseSupervisorExchangeCheckout extends Component
     // Remove an item from the cart
     public function removeFromCart($itemId)
     {
-        $cart = session()->get('cart', []);
+        $cart = session()->get('cart_exchange', []);
 
         if (isset($cart[$itemId])) {
             unset($cart[$itemId]);
-            session()->put('cart', $cart);
+            session()->put('cart_exchange', $cart);
             $this->cart = $cart;
         }
     }
@@ -61,7 +61,7 @@ class WarehouseSupervisorExchangeCheckout extends Component
     // Clear the entire cart
     public function clearCart()
     {
-        session()->forget('cart');
+        session()->forget('cart_exchange');
         $this->cart = [];
     }
 
@@ -91,7 +91,7 @@ class WarehouseSupervisorExchangeCheckout extends Component
             'status'              => config('orderstatus.EXCHANGE_APPROVED')
         ]);
 
-        session()->forget('cart');
+        session()->forget('cart_exchange');
 
         return redirect()->route('warehouse.warehouse-supervisor.create-exchange-order.dashboard')
             ->with('success', 'Order was successfully submitted for ' . $section->section . ' for the supervisor ' . $supervisor->first_name . ' ' . $supervisor->last_name);
