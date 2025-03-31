@@ -70,24 +70,30 @@
 
                     <!-- Pending Orders -->
                     <li class="mb-3 font-bold">
-                        <a href="{{ route('warehouse.warehouse-supervisor.pending.dashboard') }}"
-                        class="flex justify-between p-2 rounded hover:bg-blue-700">
-                            <span>Pending Orders</span>
-                            <span class="bg-blue-500 text-white px-2 py-1 rounded text-sm">{{ $pendingOrdersCount }}</span>
-                        </a>
-                    </li>
-
-                    <hr class="my-3 border-green-700" />
-
-                    <!-- Pending Exchange Orders -->
-                    <li class="mb-3 font-bold">
-                        <a href="{{ route('warehouse.warehouse-supervisor.pending-exchange.dashboard') }}"
-                        class="flex justify-between p-2 rounded hover:bg-blue-700">
-                            <span>Pending 1 For 1 Exhchange Orders</span>
-                            <span class="flex items-center justify-center bg-blue-500 text-white min-w-[2rem] h-[1.75rem] rounded text-sm text-center">
-                                {{ $pendingExchangeOrdersCount }}
-                            </span>
-                        </a>
+                        <details class="group">
+                            <summary class="flex items-center justify-between p-2 rounded hover:bg-blue-700 cursor-pointer">
+                                <span>Pending Orders</span>
+                                <span class="transform transition-transform duration-300 group-open:rotate-90">▶</span>
+                            </summary>
+                            <ul class="pl-4 mt-2 hidden group-open:block">
+                                <li class="mb-3 font-bold">
+                                    <a href="{{ route('warehouse.warehouse-supervisor.pending.dashboard') }}"
+                                    class="flex justify-between p-2 rounded hover:bg-blue-700">
+                                        <span>Pending Orders</span>
+                                        <span class="bg-blue-500 text-white px-2 py-1 rounded text-sm">{{ $pendingOrdersCount }}</span>
+                                    </a>
+                                </li>
+                                <li class="mb-3 font-bold">
+                                    <a href="{{ route('warehouse.warehouse-supervisor.pending-exchange.dashboard') }}"
+                                    class="flex justify-between p-2 rounded hover:bg-blue-700">
+                                        <span>Pending 1 For 1 Exhchange Orders</span>
+                                        <span class="flex items-center justify-center bg-blue-500 text-white min-w-[2rem] h-[1.75rem] rounded text-sm text-center">
+                                            {{ $pendingExchangeOrdersCount }}
+                                        </span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </details>
                     </li>
                 </ul>
             </nav>
