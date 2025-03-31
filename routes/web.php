@@ -281,7 +281,7 @@ Route::prefix('warehouse')->group(function () use ($warehouseLoginClass, $wareho
                 Route::get('/confirm', [$createExchangeClass, 'confirm'])->name('warehouse.warehouse-supervisor.create-exchange-order.confirm');
             });
 
-            // Order Management
+            // Pending Order Management
             Route::prefix('pending-orders')->group(function () use ($pendingOrderClass) {
                 Route::get('/pending', [$pendingOrderClass, 'pending'])->name('warehouse.warehouse-supervisor.pending.dashboard');
                 Route::get('/view/{id}', [$pendingOrderClass, 'show'])->name('warehouse.warehouse-supervisor.pending.show');
@@ -289,7 +289,7 @@ Route::prefix('warehouse')->group(function () use ($warehouseLoginClass, $wareho
                 Route::get('/edit-order/{id}', [$pendingOrderClass, 'edit'])->name('warehouse.warehouse-supervisor.pending.edit');
             });
 
-            // 1 For 1 Order Management
+            // Pending 1 For 1 Order Management
             Route::prefix('pending-exchange-orders')->group(function () use ($pendingExchangeOrderClass) {
                 Route::get('/pending', [$pendingExchangeOrderClass, 'pending'])->name('warehouse.warehouse-supervisor.pending-exchange.dashboard');
                 Route::get('/view/{id}', [$pendingExchangeOrderClass, 'show'])->name('warehouse.warehouse-supervisor.pending-exchange.show');

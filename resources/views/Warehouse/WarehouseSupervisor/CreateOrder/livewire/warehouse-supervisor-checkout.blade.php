@@ -1,6 +1,6 @@
 <div class="max-w-4xl mx-auto p-6 bg-white shadow-md rounded-lg">
     <!-- Back Button -->
-    <a href="{{ route('warehouse.warehouse-supervisor.order.dashboard') }}"
+    <a href="{{ route('warehouse.warehouse-supervisor.create-order.dashboard') }}"
        class="mt-4 bg-yellow-500 text-white px-6 py-3 text-lg font-semibold rounded-md hover:bg-yellow-600 transition shadow-md">
         Back
     </a>

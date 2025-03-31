@@ -9,7 +9,7 @@ use App\Models\Warehouse\Order;
 use App\Models\Warehouse\Category;
 use Illuminate\Database\Eloquent\Builder;
 
-class WarehouseSupervisorItems extends Component
+class WarehouseSupervisorExchangeItems extends Component
 {
     use WithPagination;
 
@@ -146,33 +146,15 @@ class WarehouseSupervisorItems extends Component
     public function render()
     {
         $query = Item::with('category:id,category')
-            ->where(function (Builder $q) {
-                $q->whereDoesntHave('category')
-                  ->orWhereHas('category', function (Builder $cq) {
-                      $cq->whereNotIn('category', ['1 for 1 Exchange']);
-                  });
+            ->whereHas('category', function ($q) {
+                $q->where('category', '1 for 1 Exchange');
             });
-
-        if (!empty($this->search)) {
-            $query->where(function (Builder $q) {
-                $q->where('name', 'like', '%'.$this->search.'%')
-                  ->orWhereHas('category', function (Builder $cq) {
-                      $cq->where('category', 'like', '%'.$this->search.'%');
-                  });
-            });
-        }
-
-        if (!empty($this->selectedCategory)) {
-            $query->where('category_id', $this->selectedCategory);
-        }
 
         $items = $query->orderBy('name', 'asc')->paginate(12);
-        $categories = Category::whereNotIn('category', ['1 for 1 Exchange'])->get();
-        $cart = session('cart', []);
+        $cart = session('cart_exchange', []);
 
-        return view('Warehouse.WarehouseSupervisor.CreateOrder.livewire.warehouse-supervisor-item-search', [
+        return view('Warehouse.WarehouseSupervisor.CreateOrder.livewire.warehouse-supervisor-exchange-item-search', [
             'items'      => $items,
-            'categories' => $categories,
             'cart'       => $cart,
         ]);
     }
