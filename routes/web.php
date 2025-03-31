@@ -269,16 +269,16 @@ Route::prefix('warehouse')->group(function () use ($warehouseLoginClass, $wareho
 
             // Create an Order
             Route::prefix('create-order')->group(function () use ($createOrderClass) {
-                Route::get('/dashboard', [$createOrderClass, 'dashboard'])->name('warehouse.warehouse-supervisor.order.dashboard');
-                Route::get('/checkout', [$createOrderClass, 'checkOut'])->name('warehouse.warehouse-supervisor.order.checkout');
-                Route::get('/confirm', [$createOrderClass, 'confirm'])->name('warehouse.warehouse-supervisor.order.confirm');
+                Route::get('/dashboard', [$createOrderClass, 'dashboard'])->name('warehouse.warehouse-supervisor.create-order.dashboard');
+                Route::get('/checkout', [$createOrderClass, 'checkOut'])->name('warehouse.warehouse-supervisor.create-order.checkout');
+                Route::get('/confirm', [$createOrderClass, 'confirm'])->name('warehouse.warehouse-supervisor.create-order.confirm');
             });
 
             // Create an Exchange Order
             Route::prefix('create-exchange-order')->group(function () use ($createExchangeClass) {
-                Route::get('/dashboard', [$createExchangeClass, 'dashboard'])->name('warehouse.warehouse-supervisor.order.dashboard');
-                Route::get('/checkout', [$createExchangeClass, 'checkOut'])->name('warehouse.warehouse-supervisor.order.checkout');
-                Route::get('/confirm', [$createExchangeClass, 'confirm'])->name('warehouse.warehouse-supervisor.order.confirm');
+                Route::get('/dashboard', [$createExchangeClass, 'dashboard'])->name('warehouse.warehouse-supervisor.create-exchange-order.dashboard');
+                Route::get('/checkout', [$createExchangeClass, 'checkOut'])->name('warehouse.warehouse-supervisor.create-exchange-order.checkout');
+                Route::get('/confirm', [$createExchangeClass, 'confirm'])->name('warehouse.warehouse-supervisor.create-exchange-order.confirm');
             });
 
             // Order Management

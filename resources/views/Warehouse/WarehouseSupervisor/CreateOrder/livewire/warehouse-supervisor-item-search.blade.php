@@ -23,7 +23,7 @@
 
             // Delay navigation slightly to allow Livewire updates to complete
             setTimeout(() => {
-                window.location.href = "{{ route('warehouse.warehouse-supervisor.order.checkout') }}";
+                window.location.href = "{{ route('warehouse.warehouse-supervisor.create-order.checkout') }}";
             }, 300);
         }
     </script>

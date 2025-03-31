@@ -13,14 +13,20 @@
         <!-- Sidebar -->
         <aside class="w-64 bg-green-900 text-white p-5 flex flex-col h-screen fixed">
             <h1 class="text-4xl font-bold mb-5">Navigation</h1>
+
             <nav>
                 <ul>
                     <li class="mb-3"><a href="{{ route('warehouse.warehouse-supervisor.dashboard')}}" class="font-bold block p-2 rounded hover:bg-blue-700">Dashboard</a></li>
 
+                    <hr class="my-3 border-green-700" />
+
                     <!-- Inventory Management Dropdown -->
                     <li class="mb-3 font-bold">
                         <details class="group">
-                            <summary class="block p-2 rounded hover:bg-blue-700 cursor-pointer">Inventory Management</summary>
+                            <summary class="flex items-center justify-between p-2 rounded hover:bg-blue-700 cursor-pointer">
+                                <span>Inventory Management</span>
+                                <span class="transform transition-transform duration-300 group-open:rotate-90">▶</span>
+                            </summary>
                             <ul class="pl-4 mt-2 hidden group-open:block">
                                 <li class="mb-2"><a href="{{ route('warehouse.warehouse-supervisor.item.dashboard') }}" class="block p-2 rounded hover:bg-blue-600">Manage Items</a></li>
                                 <li class="mb-2"><a href="{{ route('warehouse.warehouse-supervisor.category.dashboard') }}" class="block p-2 rounded hover:bg-blue-600">Manage Item Categories</a></li>
@@ -30,14 +36,37 @@
                         </details>
                     </li>
 
+                    <hr class="my-3 border-green-700" />
+
                     <!-- Reports -->
                     <li class="mb-3 font-bold"><a href="{{ route('warehouse.warehouse-supervisor.reports_history.dashboard') }}" class="block p-2 rounded hover:bg-blue-700">Reports/History</a></li>
 
-                    <!-- Create Request -->
-                    <li class="mb-3 font-bold"><a href="{{ route('warehouse.warehouse-supervisor.order.dashboard')}}" class="block p-2 rounded hover:bg-blue-700">Create Request</a></li>
+                    <hr class="my-3 border-green-700" />
+
+                    <!-- Create Orders -->
+                    <li class="mb-3 font-bold">
+                        <details class="group">
+                            <summary class="flex items-center justify-between p-2 rounded hover:bg-blue-700 cursor-pointer">
+                                <span>Create Orders</span>
+                                <span class="transform transition-transform duration-300 group-open:rotate-90">▶</span>
+                            </summary>
+                            <ul class="pl-4 mt-2 hidden group-open:block">
+                                <li class="mb-2">
+                                    <a href="{{ route('warehouse.warehouse-supervisor.create-order.dashboard') }}" class="block p-2 rounded hover:bg-blue-600">Regular Order</a>
+                                </li>
+                                <li class="mb-2">
+                                    <a href="warehouse.warehouse-supervisor.create-exchange-order.dashboard" class="block p-2 rounded hover:bg-blue-600">1 For 1 Exchange</a>
+                                </li>
+                            </ul>
+                        </details>
+                    </li>
+
+                    <hr class="my-3 border-green-700" />
 
                     <!-- User Management -->
                     <li class="mb-3 font-bold"><a href="{{ route('warehouse.warehouse-supervisor.user.dashboard')}}" class="block p-2 rounded hover:bg-blue-700">Manage Users</a></li>
+
+                    <hr class="my-3 border-green-700" />
 
                     <!-- Pending Orders -->
                     <li class="mb-3 font-bold">
@@ -47,6 +76,8 @@
                             <span class="bg-blue-500 text-white px-2 py-1 rounded text-sm">{{ $pendingOrdersCount }}</span>
                         </a>
                     </li>
+
+                    <hr class="my-3 border-green-700" />
 
                     <!-- Pending Exchange Orders -->
                     <li class="mb-3 font-bold">
