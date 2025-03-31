@@ -27,7 +27,7 @@ class PendingOrderController extends Controller
     // Managing Orders submitted to warehouse
     public function pending()
     {
-        return view('Warehouse.WarehouseSupervisor.Orders.orders.pending-orders');
+        return view('Warehouse.WarehouseSupervisor.PendingOrders.pendingorders.pending-orders');
     }
 
     public function show($id)
@@ -36,14 +36,14 @@ class PendingOrderController extends Controller
 
         $order->items = is_array($order->items) ? $order->items : json_decode($order->items, true);
 
-        return view('Warehouse.WarehouseSupervisor.Orders.orders.show', compact('order'));
+        return view('Warehouse.WarehouseSupervisor.PendingOrders.pendingorders.show', compact('order'));
     }
 
     public function edit($id)
     {
         $order = Order::findOrFail($id);
 
-        return view('Warehouse.WarehouseSupervisor.Orders.orders.edit-order', compact('order'));
+        return view('Warehouse.WarehouseSupervisor.PendingOrders.pendingorders.edit-order', compact('order'));
     }
 
     public function approve($id)

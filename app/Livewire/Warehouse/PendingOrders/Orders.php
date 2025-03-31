@@ -18,7 +18,7 @@ class Orders extends Component
 
     public function render()
     {
-        return view('Warehouse.WarehouseSupervisor.Orders.livewire.pending-orders', [
+        return view('Warehouse.WarehouseSupervisor.PendingOrders.livewire.pending-orders', [
             'pendingOrders' => $this->pendingOrders
         ]);
     }
