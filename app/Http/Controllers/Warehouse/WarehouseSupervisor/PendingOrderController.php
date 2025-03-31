@@ -24,19 +24,6 @@ class PendingOrderController extends Controller
                      'pendingExchangeOrdersCount' => $this->pendingExchangeOrdersCount]);
     }
 
-    public function dashboard()
-    {
-        return view('Warehouse.WarehouseSupervisor.CreateOrder.createorder.dashboard');
-    }
-
-    public function checkOut()
-    {
-        $cart = session()->get('cart', []);
-
-        return view('Warehouse.WarehouseSupervisor.CreateOrder.createorder.checkout', compact('cart'));
-    }
-
-
     // Managing Orders submitted to warehouse
     public function pending()
     {

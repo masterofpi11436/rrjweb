@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Warehouse\Orders;
+namespace App\Livewire\Warehouse\PendingExchangeOrders;
 
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -9,7 +9,7 @@ use App\Models\Warehouse\Order;
 use App\Models\Warehouse\Category;
 use Illuminate\Database\Eloquent\Builder;
 
-class EditOrders extends Component
+class EditExchangeOrders extends Component
 {
     use WithPagination;
 
