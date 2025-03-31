@@ -9,7 +9,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 
-// CRUD operations for creating an order, approving, denying, and editing an 1 for 1 exchange order
+// CRUD operations for approving, denying, and editing an 1 for 1 exchange order
 class PendingExchangeOrderController extends Controller
 {
     protected $pendingOrdersCount;
