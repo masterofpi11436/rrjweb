@@ -55,7 +55,7 @@
                                     <a href="{{ route('warehouse.warehouse-supervisor.create-order.dashboard') }}" class="block p-2 rounded hover:bg-blue-600">Regular Order</a>
                                 </li>
                                 <li class="mb-2">
-                                    <a href="warehouse.warehouse-supervisor.create-exchange-order.dashboard" class="block p-2 rounded hover:bg-blue-600">1 For 1 Exchange</a>
+                                    <a href="{{ route('warehouse.warehouse-supervisor.create-exchange-order.dashboard') }}" class="block p-2 rounded hover:bg-blue-600">1 For 1 Exchange</a>
                                 </li>
                             </ul>
                         </details>

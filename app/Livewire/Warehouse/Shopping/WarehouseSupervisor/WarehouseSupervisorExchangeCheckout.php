@@ -19,7 +19,7 @@ class WarehouseSupervisorExchangeCheckout extends Component
     public function mount()
     {
         // Retrieve cart from session
-        $this->cart = session()->get('cart', []);
+        $this->cart = session()->get('cart_exchange', []);
 
         // Fetch all sections in alphabetical order
         $this->sections = Section::orderBy('section', 'asc')->get();
@@ -67,7 +67,7 @@ class WarehouseSupervisorExchangeCheckout extends Component
 
     public function render()
     {
-        return view('Warehouse.WarehouseSupervisor.CreateOrder.livewire.warehouse-supervisor-checkout');
+        return view('Warehouse.WarehouseSupervisor.CreateExchangeOrder.livewire.warehouse-supervisor-exchange-checkout');
     }
 
     public function submitForm()
@@ -87,13 +87,13 @@ class WarehouseSupervisorExchangeCheckout extends Component
             'originator'          => $user->first_name . ' ' . $user->last_name,
             'section_id'          => $section->id,
             'section_name'        => $section->section,
-            'items'               => json_encode($this->cart), // Store cart items as JSON
-            'status'              => config('orderstatus.APPROVED') // Enum value
+            'items'               => json_encode($this->cart),
+            'status'              => config('orderstatus.EXCHANGE_APPROVED')
         ]);
 
         session()->forget('cart');
 
-        return redirect()->route('warehouse.warehouse-supervisor.create-order.dashboard')
+        return redirect()->route('warehouse.warehouse-supervisor.create-exchange-order.dashboard')
             ->with('success', 'Order was successfully submitted for ' . $section->section . ' for the supervisor ' . $supervisor->first_name . ' ' . $supervisor->last_name);
     }
 }

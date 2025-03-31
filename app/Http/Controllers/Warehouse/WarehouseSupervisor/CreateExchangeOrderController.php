@@ -24,6 +24,13 @@ class CreateExchangeOrderController extends Controller
 
     public function dashboard()
     {
+        return view('Warehouse.WarehouseSupervisor.CreateExchangeOrder.createexchangeorder.dashboard');
+    }
 
+    public function checkOut()
+    {
+        $cart = session()->get('cart', []);
+
+        return view('Warehouse.WarehouseSupervisor.CreateExchangeOrder.createexchangeorder.checkout', compact('cart'));
     }
 }
