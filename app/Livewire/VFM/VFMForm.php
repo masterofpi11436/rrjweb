@@ -3,6 +3,7 @@
 namespace App\Livewire\VFM;
 
 use App\Models\VFM\VFM;
+use App\Models\VFM\VFMVehicle;
 use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
 
@@ -46,7 +47,8 @@ class VFMForm extends Component
     public $fire_extinguisher = false;
     public $description_of_service;
 
-
+    public $vehicles = [];
+    public $selectedVehicleId;
 
     // Validation rules for the form
     protected function rules()
@@ -93,6 +95,8 @@ class VFMForm extends Component
         // Method to load existing data if editing
     public function mount($id = null)
     {
+        $this->vehicles = VFMVehicle::all();
+
         if ($id) {
             $vfm = VFM::findOrFail($id);
             $this->vfmId = $vfm->id;
@@ -132,6 +136,20 @@ class VFMForm extends Component
             $this->wiper_blades = $vfm->wiper_blades;
             $this->fire_extinguisher = $vfm->fire_extinguisher;
             $this->description_of_service = $vfm->description_of_service;
+        }
+    }
+
+    public function updatedSelectedVehicleId($id)
+    {
+        if ($id) {
+            $vehicle = VFMVehicle::find($id);
+            if ($vehicle) {
+                $this->license_plate = $vehicle->license_tag;
+                $this->vehicle_year = $vehicle->year;
+                $this->make = $vehicle->make;
+                $this->model = $vehicle->model;
+                $this->vin = $vehicle->vin;
+            }
         }
     }
 
