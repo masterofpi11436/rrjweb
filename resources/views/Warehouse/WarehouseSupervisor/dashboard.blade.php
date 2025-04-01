@@ -15,7 +15,7 @@
             <p class="text-gray-700">{{ $pendingOrdersCount }}</p>
         </div>
     </a>
-    <a href="{{ route('warehouse.warehouse-supervisor.pending.dashboard') }}">
+    <a href="{{ route('warehouse.warehouse-supervisor.pending-exchange.dashboard') }}">
         <div class="p-5 bg-yellow-500 rounded shadow">
             <h3 class="text-lg font-semibold">1 For 1 Exchange Orders</h3>
             <p class="text-gray-700">{{ $pendingExchangeOrdersCount }}</p>

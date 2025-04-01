@@ -36,7 +36,7 @@ class PendingExchangeOrderController extends Controller
 
         $order->items = is_array($order->items) ? $order->items : json_decode($order->items, true);
 
-        return view('Warehouse.WarehouseSupervisor.Orders.orders.show', compact('order'));
+        return view('Warehouse.WarehouseSupervisor.PendingExchangeOrders.pendingexchangeorders.show', compact('order'));
     }
 
     public function edit($id)
