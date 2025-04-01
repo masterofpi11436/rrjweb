@@ -6,7 +6,7 @@
 
 @section('content')
 <!-- Link to navigate back to the dashboard -->
-<a href="{{ route('vfm.dashboard') }}">Cancel</a>
+<a href="{{ route('vfm.vehicle.dashboard') }}">Cancel</a>
 
 @livewire('VFM.VFM-vehicle-form', ['id' => $vfm->id])
 

@@ -17,6 +17,8 @@
 <!-- Link to navigate to the Create page -->
 <a href="{{ route('vfm.vehicle.create') }}" class="create-link">Add New Vehicle</a>
 
+<a href="{{ route('vfm.dashboard') }}" class="create-link">Back to Inspections</a>
+
 @livewire('VFM.VFM-vehicle-search')
 
 @endsection
