@@ -15,11 +15,8 @@
 @endif
 
 <!-- Link to navigate to the Create page -->
-<a href="{{ route('vfm.vehicle.dashboard') }}" class="create-link">Create New Maintenance Ticket</a>
+<a href="{{ route('vfm.vehicle.create') }}" class="create-link">Add New Vehicle</a>
 
-<!-- Link to navigate to the Create page -->
-<a href="{{ route('vfm.create') }}" class="create-link">Create New Maintenance Ticket</a>
-
-@livewire('VFM.VFM-search')
+@livewire('VFM.VFM-vehicle-search')
 
 @endsection

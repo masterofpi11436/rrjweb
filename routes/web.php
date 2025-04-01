@@ -18,6 +18,7 @@ use App\Http\Controllers\Login\WarehouseLoginController;
 // Class Controllers
 use App\Http\Controllers\ICS\ICSController;
 use App\Http\Controllers\VFM\VFMController;
+use App\Http\Controllers\VFM\VFMVehicleController;
 use App\Http\Controllers\VFM30\VFM30Controller;
 use App\Http\Controllers\VFM\VFMTechController;
 use App\Http\Controllers\Directory\PhoneDirectoryController;
@@ -51,6 +52,7 @@ $warehouseLoginClass = WarehouseLoginController::class;
 $adminClass = AdministratorController::class;
 $phoneClass = PhoneDirectoryController::class;
 $vfmClass = VFMController::class;
+$vfmVehicleClass = VFMVehicleController::class;
 $vfm30Class = VFM30Controller::class;
 $vfmTechClass = VFMTechController::class;
 $icsClass = ICSController::class;
@@ -126,7 +128,7 @@ Route::prefix('phone')->group(function () use ($phoneClass, $phoneLoginClass){
 });
 
 // Vehicle Fleet Maintenance Application (Admins)
-Route::prefix('vfm')->group(function () use ($vfmClass, $vfmLoginClass){
+Route::prefix('vfm')->group(function () use ($vfmClass, $vfmLoginClass, $vfmVehicleClass) {
 
     // Routes without middleware
     Route::get('/login', [$vfmLoginClass, 'vfmLoginForm'])->name('vfm.login');
@@ -136,13 +138,21 @@ Route::prefix('vfm')->group(function () use ($vfmClass, $vfmLoginClass){
     Route::post('/logout', [$vfmLoginClass, 'logout'])->name('vfm.logout');
 
     // Routes with 'vfm' middleware (Admin side)
-    Route::middleware('vfm')->group(function () use ($vfmClass) {
+    Route::middleware('vfm')->group(function () use ($vfmClass, $vfmVehicleClass) {
         Route::get('/dashboard', [$vfmClass, 'dashboard'])->name('vfm.dashboard');
         Route::get('/create', [$vfmClass, 'create'])->name('vfm.create');
         Route::get('/{id}/edit', [$vfmClass, 'edit'])->name('vfm.edit');
         Route::delete('/{id}', [$vfmClass, 'destroy'])->name('vfm.destroy');
+
+        Route::prefix('vehicle')->group(function () use ($vfmVehicleClass) {
+            Route::get('/dashboard', [$vfmVehicleClass, 'dashboard'])->name('vfm.vehicle.dashboard');
+            Route::get('/create', [$vfmVehicleClass, 'create'])->name('vfm.vehicle.create');
+            Route::get('/{id}/edit', [$vfmVehicleClass, 'edit'])->name('vfm.vehicle.edit');
+            Route::delete('/{id}', [$vfmVehicleClass, 'destroy'])->name('vfm.vehicle.destroy');
+        });
     });
 });
+
 
 Route::prefix('vfm30')->group(function () use ($vfm30Class, $vfm30LoginClass){
 
