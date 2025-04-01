@@ -144,8 +144,8 @@ class VFMForm extends Component
         if ($id) {
             $vehicle = VFMVehicle::find($id);
             if ($vehicle) {
-                $this->license_plate = $vehicle->license_tag;
-                $this->vehicle_year = $vehicle->year;
+                $this->license_plate = $vehicle->license_plate;
+                $this->vehicle_year = $vehicle->vehicle_year;
                 $this->make = $vehicle->make;
                 $this->model = $vehicle->model;
                 $this->vin = $vehicle->vin;
