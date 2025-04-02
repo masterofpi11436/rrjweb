@@ -6,7 +6,7 @@
         <div class="grid-container">
             <div>
                 <label for="vfm_vehicle_id">Select Vehicle:</label>
-                <select id="vfm_vehicle_id" wire:model="vfm_vehicle_id">
+                <select id="vfm_vehicle_id" wire:model.defer="vfm_vehicle_id" wire:change="$refresh">
                     <option value="">-- Select a vehicle --</option>
                     @foreach ($vehicles as $vehicle)
                         <option value="{{ $vehicle->id }}">
