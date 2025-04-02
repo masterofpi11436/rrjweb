@@ -5,6 +5,19 @@
         <h3>Vehicle Information</h3>
         <div class="grid-container">
             <div>
+                <label for="vfm_vehicle_id">Select Vehicle:</label>
+                <select id="vfm_vehicle_id" wire:model="vfm_vehicle_id">
+                    <option value="">-- Select a vehicle --</option>
+                    @foreach ($vehicles as $vehicle)
+                        <option value="{{ $vehicle->id }}">
+                            {{ $vehicle->license_plate }}
+                        </option>
+                    @endforeach
+                </select>
+                @error('vfm_vehicle_id') <span class="error">{{ $message }}</span> @enderror
+            </div>
+
+            <div>
                 <label for="date_in">Date In:</label>
                 <input id="date_in" type="date" wire:model.defer="date_in">
                 @error('date_in') <span class="error">{{ $message }}</span> @enderror

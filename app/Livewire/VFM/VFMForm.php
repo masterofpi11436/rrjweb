@@ -43,12 +43,13 @@ class VFMForm extends Component
     public $description_of_service;
 
     public $vehicles = [];
-    public $selectedVehicleId;
+    public $vfm_vehicle_id;
 
     // Validation rules for the form
     protected function rules()
     {
         return [
+            'vfm_vehicle_id' => 'required|exists:vfm_vehicle,id',
             'date_in' => 'required',
             'date_out' => 'required',
             'state_inspection' => 'required',
@@ -89,6 +90,7 @@ class VFMForm extends Component
 
         if ($id) {
             $vfm = VFM::findOrFail($id);
+            $this->vfm_vehicle_id = $vfm->vfm_vehicle_id;
             $this->vfmId = $vfm->id;
             $this->date_in = $vfm->date_in;
             $this->date_out = $vfm->date_out;
@@ -145,6 +147,7 @@ class VFMForm extends Component
             session()->flash('create-edit-delete-message', 'VFM created successfully!');
         }
 
+        $vfm->vfm_vehicle_id = $this->vfm_vehicle_id;
         $vfm->date_in = $this->date_in;
         $vfm->date_out = $this->date_out;
         $vfm->state_inspection = $this->state_inspection;
