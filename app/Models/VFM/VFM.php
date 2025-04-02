@@ -24,4 +24,9 @@ class VFM extends Model
         'maintenance_technician',
         'description_of_service'
     ];
+
+    public function vehicle()
+    {
+        return $this->belongsTo(VFMVehicle::class, 'vfm_vehicle_id');
+    }
 }

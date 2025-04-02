@@ -13,12 +13,7 @@ class VFMForm extends Component
     public $date_in;
     public $date_out;
     public $state_inspection;
-    public $license_plate;
     public $mileage;
-    public $vehicle_year;
-    public $make;
-    public $model;
-    public $vin;
     public $air_filter = false;
     public $antifreeze = false;
     public $battery = false;
@@ -57,12 +52,7 @@ class VFMForm extends Component
             'date_in' => 'required',
             'date_out' => 'required',
             'state_inspection' => 'required',
-            'license_plate' => 'required',
             'mileage' => 'required',
-            'vehicle_year' => 'required',
-            'make' => 'required',
-            'model' => 'required',
-            'vin' => 'required',
             'air_filter' => 'boolean',
             'antifreeze' => 'boolean',
             'battery' => 'boolean',
@@ -103,12 +93,7 @@ class VFMForm extends Component
             $this->date_in = $vfm->date_in;
             $this->date_out = $vfm->date_out;
             $this->state_inspection = $vfm->state_inspection;
-            $this->license_plate = $vfm->license_plate;
             $this->mileage = $vfm->mileage;
-            $this->vehicle_year = $vfm->vehicle_year;
-            $this->make = $vfm->make;
-            $this->model = $vfm->model;
-            $this->vin = $vfm->vin;
             $this->air_filter = $vfm->air_filter;
             $this->antifreeze = $vfm->antifreeze;
             $this->battery = $vfm->battery;
@@ -139,20 +124,6 @@ class VFMForm extends Component
         }
     }
 
-    public function updatedSelectedVehicleId($id)
-    {
-        if ($id) {
-            $vehicle = VFMVehicle::find($id);
-            if ($vehicle) {
-                $this->license_plate = $vehicle->license_plate;
-                $this->vehicle_year = $vehicle->vehicle_year;
-                $this->make = $vehicle->make;
-                $this->model = $vehicle->model;
-                $this->vin = $vehicle->vin;
-            }
-        }
-    }
-
     // For live validation
     public function updated($propertyName)
     {
@@ -177,12 +148,7 @@ class VFMForm extends Component
         $vfm->date_in = $this->date_in;
         $vfm->date_out = $this->date_out;
         $vfm->state_inspection = $this->state_inspection;
-        $vfm->license_plate = $this->license_plate;
         $vfm->mileage = $this->mileage;
-        $vfm->vehicle_year = $this->vehicle_year;
-        $vfm->make = $this->make;
-        $vfm->model = $this->model;
-        $vfm->vin = $this->vin;
         $vfm->air_filter = $this->air_filter;
         $vfm->antifreeze = $this->antifreeze;
         $vfm->battery = $this->battery;

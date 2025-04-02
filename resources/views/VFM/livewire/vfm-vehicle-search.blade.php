@@ -15,9 +15,33 @@
                         </a>
                     </th>
                     <th>
-                        <a href="#" wire:click.prevent="sortBy('vehicle_year')">
+                        <a href="#" wire:click.prevent="sortBy('make')">
+                            Make
+                            @if ($sortColumn === 'make')
+                                @if ($sortDirection === 'asc') ▲ @else ▼ @endif
+                            @endif
+                        </a>
+                    </th>
+                    <th>
+                        <a href="#" wire:click.prevent="sortBy('model')">
+                            Model
+                            @if ($sortColumn === 'model')
+                                @if ($sortDirection === 'asc') ▲ @else ▼ @endif
+                            @endif
+                        </a>
+                    </th>
+                    <th>
+                        <a href="#" wire:click.prevent="sortBy('year')">
                             Year
-                            @if ($sortColumn === 'vehicle_year')
+                            @if ($sortColumn === 'year')
+                                @if ($sortDirection === 'asc') ▲ @else ▼ @endif
+                            @endif
+                        </a>
+                    </th>
+                    <th>
+                        <a href="#" wire:click.prevent="sortBy('vin')">
+                            VIN
+                            @if ($sortColumn === 'vin')
                                 @if ($sortDirection === 'asc') ▲ @else ▼ @endif
                             @endif
                         </a>
@@ -29,7 +53,10 @@
                 @foreach ($suggestions as $vehicle)
                     <tr>
                         <td>{{ $vehicle->license_plate }}</td>
+                        <td>{{ $vehicle->make }}</td>
+                        <td>{{ $vehicle->model }}</td>
                         <td>{{ $vehicle->vehicle_year }}</td>
+                        <td>{{ $vehicle->vin }}</td>
                         <td>
                             <a href="{{ route('vfm.vehicle.edit', $vehicle->id) }}">Edit</a>/
                             <div>

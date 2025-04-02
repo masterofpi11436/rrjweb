@@ -13,15 +13,14 @@ return new class extends Migration
     {
         Schema::create('vfm', function (Blueprint $table) {
             $table->id();
+
+            $table->unsignedBigInteger('vfm_vehicle_id');
+            $table->foreign('vfm_vehicle_id')->references('id')->on('vfm_vehicle');
+
             $table->date('date_in');
             $table->date('date_out');
             $table->date('state_inspection');
-            $table->string('license_plate');
             $table->integer('mileage');
-            $table->integer('vehicle_year');
-            $table->string('make');
-            $table->string('model');
-            $table->string('vin');
             $table->boolean('air_filter')->default(false);
             $table->boolean('antifreeze')->default(false);
             $table->boolean('battery')->default(false);

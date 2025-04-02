@@ -31,12 +31,7 @@ class VFMSearch extends Component
     {
         // Search for matching records
         return view('VFM.livewire.vfm-search', [
-            'suggestions' => VFM::where('vin', 'like', '%' . $this->search . '%')
-                                           ->orWhere('license_plate', 'like', '%' . $this->search . '%')
-                                           ->orWhere('make', 'like', '%' . $this->search . '%')
-                                           ->orWhere('model', 'like', '%' . $this->search . '%')
-                                           ->orWhere('vehicle_year', 'like', '%' . $this->search . '%')
-                                           ->orWhere('maintenance_technician', 'like', '%' . $this->search . '%')
+            'suggestions' => VFM::where('maintenance_technician', 'like', '%' . $this->search . '%')
                                            ->orderBy($this->sortColumn, $this->sortDirection)
                                            ->get(),
         ]);

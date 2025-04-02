@@ -18,4 +18,9 @@ class VFMVehicle extends Model
         'model',
         'vin',
     ];
+
+    public function vfms()
+    {
+        return $this->hasMany(VFM::class, 'vfm_vehicle_id');
+    }
 }

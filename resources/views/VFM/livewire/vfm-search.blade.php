@@ -15,14 +15,6 @@
                         </a>
                     </th>
                     <th>
-                        <a href="#" wire:click.prevent="sortBy('license_plate')">
-                            License Plate
-                            @if ($sortColumn === 'license_plate')
-                                @if ($sortDirection === 'asc') ▲ @else ▼ @endif
-                            @endif
-                        </a>
-                    </th>
-                    <th>
                         <a href="#" wire:click.prevent="sortBy('date_in')">
                             Date In
                             @if ($sortColumn === 'date_in')
@@ -38,14 +30,6 @@
                             @endif
                         </a>
                     </th>
-                    <th>
-                        <a href="#" wire:click.prevent="sortBy('vehicle_year')">
-                            Year
-                            @if ($sortColumn === 'vehicle_year')
-                                @if ($sortDirection === 'asc') ▲ @else ▼ @endif
-                            @endif
-                        </a>
-                    </th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -53,10 +37,8 @@
                 @foreach ($suggestions as $vehicle)
                     <tr>
                         <td>{{ $vehicle->maintenance_technician }}</td>
-                        <td>{{ $vehicle->license_plate }}</td>
                         <td>{{ $vehicle->date_in }}</td>
                         <td>{{ $vehicle->date_out }}</td>
-                        <td>{{ $vehicle->vehicle_year }}</td>
                         <td>
                             <a href="{{ route('vfm.edit', $vehicle->id) }}">Edit</a>/
                             <div>
