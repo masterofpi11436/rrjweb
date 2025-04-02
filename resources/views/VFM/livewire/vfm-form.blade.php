@@ -18,6 +18,26 @@
             </div>
 
             <div>
+                <label>Make:</label>
+                <input type="text" wire:model.defer="make" readonly>
+            </div>
+
+            <div>
+                <label>Model:</label>
+                <input type="text" wire:model.defer="model" readonly>
+            </div>
+
+            <div>
+                <label>VIN:</label>
+                <input type="text" wire:model.defer="vin" readonly>
+            </div>
+
+            <div>
+                <label>License Plate:</label>
+                <input type="text" wire:model.defer="license_plate" readonly>
+            </div>
+
+            <div>
                 <label for="date_in">Date In:</label>
                 <input id="date_in" type="date" wire:model.defer="date_in">
                 @error('date_in') <span class="error">{{ $message }}</span> @enderror
@@ -37,7 +57,7 @@
 
             <div>
                 <label for="mileage">Mileage:</label>
-                <input id="mileage" type="number" wire:model.live="mileage">
+                <input id="mileage" type="number" wire:model.defer="mileage">
                 @error('mileage') <span class="error">{{ $message }}</span> @enderror
             </div>
         </div>
@@ -90,7 +110,7 @@
     <!-- Description of Service -->
     <div>
         <label for="description_of_service">Description of Service:</label>
-        <textarea class="grid-container" id="description_of_service" wire:model.live="description_of_service"></textarea>
+        <textarea class="grid-container" id="description_of_service" wire:model.defer="description_of_service"></textarea>
     </div>
 
     <!-- Submit Button -->

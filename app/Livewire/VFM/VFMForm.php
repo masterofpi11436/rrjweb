@@ -44,6 +44,27 @@ class VFMForm extends Component
 
     public $vehicles = [];
     public $vfm_vehicle_id;
+    public $make;
+    public $model;
+    public $vin;
+    public $license_plate;
+
+    public function updatedVfmVehicleId($value)
+    {
+        $vehicle = VFMVehicle::find($value);
+
+        if ($vehicle) {
+            $this->make = $vehicle->make;
+            $this->model = $vehicle->model;
+            $this->vin = $vehicle->vin;
+            $this->license_plate = $vehicle->license_plate;
+        } else {
+            $this->make = null;
+            $this->model = null;
+            $this->vin = null;
+            $this->license_plate = null;
+        }
+    }
 
     // Validation rules for the form
     protected function rules()
@@ -87,6 +108,17 @@ class VFMForm extends Component
     public function mount($id = null)
     {
         $this->vehicles = VFMVehicle::all();
+
+        if ($id) {
+            $vfm = VFM::findOrFail($id);
+            $vehicle = $vfm->vehicle;
+            if ($vehicle) {
+                $this->make = $vehicle->make;
+                $this->model = $vehicle->model;
+                $this->vin = $vehicle->vin;
+                $this->license_plate = $vehicle->license_plate;
+            }
+        }
 
         if ($id) {
             $vfm = VFM::findOrFail($id);
