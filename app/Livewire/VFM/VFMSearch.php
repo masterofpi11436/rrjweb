@@ -29,11 +29,16 @@ class VFMSearch extends Component
 
     public function render()
     {
-        // Search for matching records
-        return view('VFM.livewire.vfm-search', [
-            'suggestions' => VFM::where('maintenance_technician', 'like', '%' . $this->search . '%')
-                                           ->orderBy($this->sortColumn, $this->sortDirection)
-                                           ->get(),
-        ]);
+        $suggestions = VFM::with('vehicle')
+            ->whereHas('vehicle', function ($query) {
+                $query->where('license_plate', 'like', '%' . $this->search . '%')
+                      ->orWhere('make', 'like', '%' . $this->search . '%')
+                      ->orWhere('model', 'like', '%' . $this->search . '%');
+            })
+            ->orWhere('maintenance_technician', 'like', '%' . $this->search . '%')
+            ->orderBy($this->sortColumn, $this->sortDirection)
+            ->get();
+
+        return view('VFM.livewire.vfm-search', compact('suggestions'));
     }
 }

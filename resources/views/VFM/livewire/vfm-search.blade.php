@@ -15,6 +15,30 @@
                         </a>
                     </th>
                     <th>
+                        <a href="#" wire:click.prevent="sortBy('license_plate')">
+                            License Plate
+                            @if ($sortColumn === 'license_plate')
+                                @if ($sortDirection === 'asc') ▲ @else ▼ @endif
+                            @endif
+                        </a>
+                    </th>
+                    <th>
+                        <a href="#" wire:click.prevent="sortBy('make')">
+                            Make
+                            @if ($sortColumn === 'make')
+                                @if ($sortDirection === 'asc') ▲ @else ▼ @endif
+                            @endif
+                        </a>
+                    </th>
+                    <th>
+                        <a href="#" wire:click.prevent="sortBy('model')">
+                            Model
+                            @if ($sortColumn === 'model')
+                                @if ($sortDirection === 'asc') ▲ @else ▼ @endif
+                            @endif
+                        </a>
+                    </th>
+                    <th>
                         <a href="#" wire:click.prevent="sortBy('date_in')">
                             Date In
                             @if ($sortColumn === 'date_in')
@@ -37,6 +61,9 @@
                 @foreach ($suggestions as $vehicle)
                     <tr>
                         <td>{{ $vehicle->maintenance_technician }}</td>
+                        <td>{{ $vehicle->vehicle->license_plate ?? 'N/A' }}</td>
+                        <td>{{ $vehicle->vehicle->make ?? 'N/A' }}</td>
+                        <td>{{ $vehicle->vehicle->model ?? 'N/A' }}</td>
                         <td>{{ $vehicle->date_in }}</td>
                         <td>{{ $vehicle->date_out }}</td>
                         <td>
