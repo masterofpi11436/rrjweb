@@ -3,20 +3,17 @@
 namespace App\Livewire\VFM;
 
 use App\Models\VFM\VFM;
+use App\Models\VFM\VFMVehicle;
 use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
 
 class VFMTechForm extends Component
 {
+    public $vfmId;
     public $date_in;
     public $date_out;
     public $state_inspection;
-    public $license_plate;
     public $mileage;
-    public $vehicle_year;
-    public $make;
-    public $model;
-    public $vin;
     public $air_filter = false;
     public $antifreeze = false;
     public $battery = false;
@@ -45,21 +42,44 @@ class VFMTechForm extends Component
     public $fire_extinguisher = false;
     public $description_of_service;
 
+    public $vehicles = [];
+    public $vfm_vehicle_id;
+    public $make;
+    public $model;
+    public $vin;
+    public $license_plate;
 
+    public function mount()
+    {
+        $this->vehicles = VFMVehicle::all();
+    }
+
+    public function updatedVfmVehicleId($value)
+    {
+        $vehicle = VFMVehicle::find($value);
+
+        if ($vehicle) {
+            $this->make = $vehicle->make;
+            $this->model = $vehicle->model;
+            $this->vin = $vehicle->vin;
+            $this->license_plate = $vehicle->license_plate;
+        } else {
+            $this->make = null;
+            $this->model = null;
+            $this->vin = null;
+            $this->license_plate = null;
+        }
+    }
 
     // Validation rules for the form
     protected function rules()
     {
         return [
+            'vfm_vehicle_id' => 'required|exists:vfm_vehicle,id',
             'date_in' => 'required',
             'date_out' => 'required',
             'state_inspection' => 'required',
-            'license_plate' => 'required',
             'mileage' => 'required',
-            'vehicle_year' => 'required',
-            'make' => 'required',
-            'model' => 'required',
-            'vin' => 'required',
             'air_filter' => 'boolean',
             'antifreeze' => 'boolean',
             'battery' => 'boolean',
@@ -80,7 +100,7 @@ class VFMTechForm extends Component
             'shocks_struts' => 'boolean',
             'tires' => 'boolean',
             'transmission_fluid' => 'boolean',
-            'vehicle_jump_starter' => 'boolean',
+            'vehicle_jump_starter'=> 'boolean',
             'washer_fluid' => 'boolean',
             'window_operation' => 'boolean',
             'windshield' => 'boolean',
@@ -89,7 +109,7 @@ class VFMTechForm extends Component
         ];
     }
 
-    // For live validation
+     // For live validation
     public function updated($propertyName)
     {
         $this->validateOnly($propertyName);
@@ -102,18 +122,14 @@ class VFMTechForm extends Component
 
         // Create new VFM
         $vfm = new VFM;
-
+        $vfm->maintenance_technician = Auth::user()->first_name . ' ' . Auth::user()->last_name;
         session()->flash('create-edit-delete-message', 'VFM created successfully!');
 
+        $vfm->vfm_vehicle_id = $this->vfm_vehicle_id;
         $vfm->date_in = $this->date_in;
         $vfm->date_out = $this->date_out;
         $vfm->state_inspection = $this->state_inspection;
-        $vfm->license_plate = $this->license_plate;
         $vfm->mileage = $this->mileage;
-        $vfm->vehicle_year = $this->vehicle_year;
-        $vfm->make = $this->make;
-        $vfm->model = $this->model;
-        $vfm->vin = $this->vin;
         $vfm->air_filter = $this->air_filter;
         $vfm->antifreeze = $this->antifreeze;
         $vfm->battery = $this->battery;
@@ -141,7 +157,6 @@ class VFMTechForm extends Component
         $vfm->wiper_blades = $this->wiper_blades;
         $vfm->fire_extinguisher = $this->fire_extinguisher;
         $vfm->description_of_service = $this->description_of_service;
-        $vfm->maintenance_technician = Auth::user()->first_name . ' ' . Auth::user()->last_name;
 
         $vfm->save();
 

@@ -5,6 +5,39 @@
         <h3>Vehicle Information</h3>
         <div class="grid-container">
             <div>
+                <label for="vfm_vehicle_id">Select Vehicle:</label>
+                <select id="vfm_vehicle_id" wire:model.defer="vfm_vehicle_id" wire:change="$refresh">
+                    <option value="">-- Select a vehicle --</option>
+                    @foreach ($vehicles as $vehicle)
+                        <option value="{{ $vehicle->id }}">
+                            {{ $vehicle->license_plate }}
+                        </option>
+                    @endforeach
+                </select>
+                @error('vfm_vehicle_id') <span class="error">{{ $message }}</span> @enderror
+            </div>
+
+            <div>
+                <label>Make:</label>
+                <input type="text" wire:model.defer="make" readonly>
+            </div>
+
+            <div>
+                <label>Model:</label>
+                <input type="text" wire:model.defer="model" readonly>
+            </div>
+
+            <div>
+                <label>VIN:</label>
+                <input type="text" wire:model.defer="vin" readonly>
+            </div>
+
+            <div>
+                <label>License Plate:</label>
+                <input type="text" wire:model.defer="license_plate" readonly>
+            </div>
+
+            <div>
                 <label for="date_in">Date In:</label>
                 <input id="date_in" type="date" wire:model.defer="date_in">
                 @error('date_in') <span class="error">{{ $message }}</span> @enderror
@@ -23,39 +56,9 @@
             </div>
 
             <div>
-                <label for="license_plate">License Plate:</label>
-                <input id="license_plate" type="text" wire:model.live="license_plate">
-                @error('license_plate') <span class="error">{{ $message }}</span> @enderror
-            </div>
-
-            <div>
                 <label for="mileage">Mileage:</label>
-                <input id="mileage" type="number" wire:model.live="mileage">
+                <input id="mileage" type="number" wire:model.defer="mileage">
                 @error('mileage') <span class="error">{{ $message }}</span> @enderror
-            </div>
-
-            <div>
-                <label for="vehicle_year">Vehicle Year:</label>
-                <input id="vehicle_year" type="number" wire:model.live="vehicle_year">
-                @error('vehicle_year') <span class="error">{{ $message }}</span> @enderror
-            </div>
-
-            <div>
-                <label for="make">Make:</label>
-                <input id="make" type="text" wire:model.live="make">
-                @error('make') <span class="error">{{ $message }}</span> @enderror
-            </div>
-
-            <div>
-                <label for="model">Model:</label>
-                <input id="model" type="text" wire:model.live="model">
-                @error('model') <span class="error">{{ $message }}</span> @enderror
-            </div>
-
-            <div>
-                <label for="vin">VIN:</label>
-                <input id="vin" type="text" wire:model.live="vin">
-                @error('vin') <span class="error">{{ $message }}</span> @enderror
             </div>
         </div>
     </div>
@@ -107,7 +110,7 @@
     <!-- Description of Service -->
     <div>
         <label for="description_of_service">Description of Service:</label>
-        <textarea class="grid-container" id="description_of_service" wire:model.live="description_of_service"></textarea>
+        <textarea class="grid-container" id="description_of_service" wire:model.defer="description_of_service"></textarea>
     </div>
 
     <!-- Submit Button -->
