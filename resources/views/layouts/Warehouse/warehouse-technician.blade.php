@@ -8,8 +8,8 @@
     <title>@yield('title')</title>
     @vite('resources/css/app.css')
 </head>
-<body class="bg-gray-100">
-    <div class="flex h-screen bg-gray-100">
+<body class="bg-gray-200">
+    <div class="flex h-screen bg-gray-200">
         <!-- Sidebar -->
         <aside class="w-64 bg-green-900 text-white p-5 flex flex-col h-screen fixed">
             <h1 class="text-2xl font-bold mb-5">Navigation</h1>
