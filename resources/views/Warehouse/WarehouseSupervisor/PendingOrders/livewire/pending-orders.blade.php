@@ -11,13 +11,13 @@
         @foreach ($pendingOrders as $section => $orders)
             <div class="mb-6">
                 <h2 class="text-lg font-bold text-gray-700 mb-2">{{ $section }}</h2>
-                @if(count($orders) > 1)
-                    <button wire:click="consolidateOrders('{{ $section }}')"
-                        class="px-4 py-2 bg-purple-600 text-white text-sm font-medium rounded-lg shadow-md hover:bg-purple-700 transition duration-300 ease-in-out mb-3">
-                        Consolidate Orders
-                    </button>
-                @endif
                 <ul class="border p-4 rounded-md bg-gray-50">
+                    @if(count($orders) > 1)
+                        <button wire:click="consolidateOrders('{{ $section }}')"
+                            class="px-4 py-2 bg-purple-600 text-white text-sm font-medium rounded-lg shadow-md hover:bg-purple-700 transition duration-300 ease-in-out mb-3">
+                            Consolidate Orders
+                        </button>
+                    @endif
                     @foreach ($orders as $order)
                         <li class="p-3 border-b last:border-b-0">
                             <div class="flex justify-between items-center">

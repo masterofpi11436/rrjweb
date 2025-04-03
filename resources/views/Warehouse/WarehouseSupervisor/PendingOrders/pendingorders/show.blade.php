@@ -52,20 +52,12 @@
                 </tbody>
             </table>
         </div>
-
-        <!-- Notes Section -->
-        @if($order->note)
-            <div class="mt-4 p-4 bg-gray-100 rounded">
-                <h3 class="text-lg font-semibold text-gray-700">Notes</h3>
-                <p class="text-gray-600">{{ $order->note }}</p>
-            </div>
-        @endif
     </div>
 </div>
 
 <!-- Action Buttons -->
 <div class="mt-6 flex space-x-2">
-    <a href="{{ route('warehouse.supervisor.edit-order', ['id' => $order->id]) }}" class="px-4 py-2 bg-yellow-500 text-white text-sm rounded hover:bg-blue-600 transition">
+    <a href="{{ route('warehouse.warehouse-supervisor.pending.edit', ['id' => $order->id]) }}" class="px-4 py-2 bg-yellow-500 text-white text-sm rounded hover:bg-blue-600 transition">
         Edit Order
     </a>
 </div>
