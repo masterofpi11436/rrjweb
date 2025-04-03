@@ -14,8 +14,18 @@ return new class extends Migration
         Schema::create('vfm', function (Blueprint $table) {
             $table->id();
 
-            $table->unsignedBigInteger('vfm_vehicle_id');
-            $table->foreign('vfm_vehicle_id')->references('id')->on('vfm_vehicle');
+            $table->foreignId('vfm_vehicle_id')
+                ->nullable()
+                ->constrained('vfm_vehicle')
+                ->onDelete('set null');
+
+            // Persist old vehicle records
+            $table->string('vehicle_make')->nullable();
+            $table->string('vehicle_model')->nullable();
+            $table->string('vehicle_vin')->nullable();
+            $table->string('vehicle_license_plate')->nullable();
+            $table->integer('vehicle_year')->nullable();
+
 
             $table->date('date_in');
             $table->date('date_out');

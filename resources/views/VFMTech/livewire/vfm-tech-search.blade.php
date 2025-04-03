@@ -15,25 +15,25 @@
                         </a>
                     </th>
                     <th>
-                        <a href="#" wire:click.prevent="sortBy('license_plate')">
+                        <a href="#" wire:click.prevent="sortBy('vehicle_license_plate')">
                             License Plate
-                            @if ($sortColumn === 'license_plate')
+                            @if ($sortColumn === 'vehicle_license_plate')
                                 @if ($sortDirection === 'asc') ▲ @else ▼ @endif
                             @endif
                         </a>
                     </th>
                     <th>
-                        <a href="#" wire:click.prevent="sortBy('make')">
+                        <a href="#" wire:click.prevent="sortBy('vehicle_make')">
                             Make
-                            @if ($sortColumn === 'make')
+                            @if ($sortColumn === 'vehicle_make')
                                 @if ($sortDirection === 'asc') ▲ @else ▼ @endif
                             @endif
                         </a>
                     </th>
                     <th>
-                        <a href="#" wire:click.prevent="sortBy('model')">
+                        <a href="#" wire:click.prevent="sortBy('vehicle_model')">
                             Model
-                            @if ($sortColumn === 'model')
+                            @if ($sortColumn === 'vehicle_model')
                                 @if ($sortDirection === 'asc') ▲ @else ▼ @endif
                             @endif
                         </a>
@@ -60,9 +60,9 @@
                 @foreach ($suggestions as $vehicle)
                     <tr>
                         <td>{{ $vehicle->maintenance_technician }}</td>
-                        <td>{{ $vehicle->vehicle->license_plate ?? 'N/A' }}</td>
-                        <td>{{ $vehicle->vehicle->make ?? 'N/A' }}</td>
-                        <td>{{ $vehicle->vehicle->model ?? 'N/A' }}</td>
+                        <td>{{ $vehicle->vehicle_license_plate }}</td>
+                        <td>{{ $vehicle->vehicle_make }}</td>
+                        <td>{{ $vehicle->vehicle_model }}</td>
                         <td>{{ $vehicle->date_in }}</td>
                         <td>{{ $vehicle->date_out }}</td>
                     </tr>

@@ -179,6 +179,14 @@ class VFMForm extends Component
             session()->flash('create-edit-delete-message', 'VFM created successfully!');
         }
 
+        // Persistent data
+        $vehicle = VFMVehicle::find($this->vfm_vehicle_id);
+        $vfm->vehicle_make = $vehicle->make;
+        $vfm->vehicle_model = $vehicle->model;
+        $vfm->vehicle_year = $vehicle->vehicle_year;
+        $vfm->vehicle_license_plate = $vehicle->license_plate;
+        $vfm->vehicle_vin = $vehicle->vin;
+
         $vfm->vfm_vehicle_id = $this->vfm_vehicle_id;
         $vfm->date_in = $this->date_in;
         $vfm->date_out = $this->date_out;

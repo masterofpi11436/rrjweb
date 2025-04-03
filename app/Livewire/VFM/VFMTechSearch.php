@@ -30,12 +30,17 @@ class VFMTechSearch extends Component
     public function render()
     {
         $suggestions = VFM::with('vehicle')
-            ->whereHas('vehicle', function ($query) {
-                $query->where('license_plate', 'like', '%' . $this->search . '%')
-                      ->orWhere('make', 'like', '%' . $this->search . '%')
-                      ->orWhere('model', 'like', '%' . $this->search . '%');
+            ->where(function ($query) {
+                $query->whereHas('vehicle', function ($sub) {
+                    $sub->where('license_plate', 'like', '%' . $this->search . '%')
+                        ->orWhere('make', 'like', '%' . $this->search . '%')
+                        ->orWhere('model', 'like', '%' . $this->search . '%');
+                })
+                ->orWhere('vehicle_license_plate', 'like', '%' . $this->search . '%')
+                ->orWhere('vehicle_make', 'like', '%' . $this->search . '%')
+                ->orWhere('vehicle_model', 'like', '%' . $this->search . '%')
+                ->orWhere('maintenance_technician', 'like', '%' . $this->search . '%');
             })
-            ->orWhere('maintenance_technician', 'like', '%' . $this->search . '%')
             ->orderBy($this->sortColumn, $this->sortDirection)
             ->get();
 

@@ -17,7 +17,12 @@ class VFM extends Model
         'state_inspection',
         'mileage',
         'maintenance_technician',
-        'description_of_service'
+        'description_of_service',
+        'vehicle_make',
+        'vehicle_model',
+        'vehicle_vin',
+        'vehicle_license_plate',
+        'vehicle_year'
     ];
 
     public function vehicle()
