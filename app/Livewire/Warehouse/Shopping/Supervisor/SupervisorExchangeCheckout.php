@@ -83,7 +83,7 @@ class SupervisorExchangeCheckout extends Component
 
         session()->forget('cart_exchange');
 
-        return redirect()->route('warehouse.supervisor.pending')
+        return redirect()->route('warehouse.supervisor.dashboard')
             ->with('success', 'Your order was successfully submitted to the warehouse');
     }
 }
