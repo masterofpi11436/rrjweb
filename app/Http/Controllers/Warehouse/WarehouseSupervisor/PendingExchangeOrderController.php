@@ -27,7 +27,7 @@ class PendingExchangeOrderController extends Controller
     // Managing Orders submitted to warehouse
     public function pending()
     {
-        return view('Warehouse.WarehouseSupervisor.Orders.orders.pending-orders');
+        return view('Warehouse.WarehouseSupervisor.PendingExchangeOrders.pendingexchangeorders.pending-exchange-orders');
     }
 
     public function show($id)

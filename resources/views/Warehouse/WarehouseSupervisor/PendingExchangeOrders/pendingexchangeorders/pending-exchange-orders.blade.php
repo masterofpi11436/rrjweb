@@ -7,6 +7,6 @@
 @section('content')
 
 <!-- Livewire search component -->
-@livewire('warehouse.orders.orders')
+@livewire('warehouse.PendingExchangeOrders.ExchangeOrders')
 
 @endsection
