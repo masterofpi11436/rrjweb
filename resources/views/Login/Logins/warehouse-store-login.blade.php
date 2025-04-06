@@ -1,8 +1,8 @@
 @extends('layouts.login')
 
-@section('title', 'Wareshouse Store Login')
+@section('title', 'Warehouse Store Login')
 
-@section('heading', 'Wareshouse Store Login')
+@section('heading', 'Warehouse Store Login')
 
 @section('content')
 
