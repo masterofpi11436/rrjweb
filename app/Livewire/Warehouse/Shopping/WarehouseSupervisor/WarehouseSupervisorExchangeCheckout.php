@@ -82,13 +82,16 @@ class WarehouseSupervisorExchangeCheckout extends Component
         $section = Section::find($this->selectedSection);
 
         Order::create([
-            'supervisor_id'       => $supervisor->id,
-            'supervisor_name'     => $supervisor->first_name . ' ' . $supervisor->last_name,
-            'originator'          => $user->first_name . ' ' . $user->last_name,
-            'section_id'          => $section->id,
-            'section_name'        => $section->section,
-            'items'               => json_encode($this->cart),
-            'status'              => config('orderstatus.EXCHANGE_APPROVED')
+            'supervisor_id'           => $supervisor->id,
+            'supervisor_name'         => $supervisor->first_name . ' ' . $supervisor->last_name,
+            'originator'              => $user->first_name . ' ' . $user->last_name,
+            'section_id'              => $section->id,
+            'section_name'            => $section->section,
+            'items'                   => json_encode($this->cart),
+            'status'                  => config('orderstatus.EXCHANGE_APPROVED'),
+            'approved_denied_by'      => $user->id,
+            'approved_denied_by_name' => $user->first_name . ' ' . $user->last_name,
+            'approved_denied_at'      => now(),
         ]);
 
         session()->forget('cart_exchange');
