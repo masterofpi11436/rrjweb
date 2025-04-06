@@ -7,8 +7,8 @@
 @section('content')
 
 <div class="mb-3 flex space-x-2">
-    <a href="{{ route('warehouse.warehouse-supervisor.pending.dashboard') }}" class="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 transition">
-        Back to Pending Orders
+    <a href="{{ route('warehouse.warehouse-supervisor.pending-exchange.dashboard') }}" class="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 transition">
+        Back to Pending Exchang Orders
     </a>
 </div>
 
@@ -75,7 +75,7 @@
 </button>
 
 <div class="mt-6">
-    <form action="{{ route('warehouse.warehouse-supervisor.pending.approve', $order->id) }}" method="POST">
+    <form action="{{ route('warehouse.warehouse-supervisor.pending-exchange.approve', $order->id) }}" method="POST">
         @csrf
         @method('PUT')
         <button type="submit" class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition">
