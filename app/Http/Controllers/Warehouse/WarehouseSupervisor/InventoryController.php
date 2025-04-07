@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\View;
 
 
 // CRUD operations for running reports. View various reports
-class ReportsHistoryController extends Controller
+class InventoryController extends Controller
 {
     protected $pendingOrdersCount;
     protected $pendingExchangeOrdersCount;
@@ -25,6 +25,6 @@ class ReportsHistoryController extends Controller
 
     public function dashboard()
     {
-        return view('Warehouse.WarehouseSupervisor.ReportsHistory.dashboard');
+        return view('Warehouse.WarehouseSupervisor.Inventory.inventory.dashboard');
     }
 }

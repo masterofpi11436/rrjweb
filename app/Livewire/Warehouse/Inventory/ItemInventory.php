@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Warehouse\ReportsHistory\Reports;
+namespace App\Livewire\Warehouse\Inventory;
 
 use Livewire\Component;
 use App\Models\Warehouse\Item;
@@ -47,7 +47,7 @@ class ItemInventory extends Component
             })
             ->get();
 
-        return view('Warehouse.WarehouseSupervisor.ReportsHistory.reports.livewire.item-inventory', [
+        return view('Warehouse.WarehouseSupervisor.Inventory.livewire.item-inventory', [
             'items' => $items,
         ]);
     }

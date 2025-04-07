@@ -31,7 +31,7 @@
                                 <li class="mb-2"><a href="{{ route('warehouse.warehouse-supervisor.item.dashboard') }}" class="block p-2 rounded hover:bg-blue-600">Manage Items</a></li>
                                 <li class="mb-2"><a href="{{ route('warehouse.warehouse-supervisor.category.dashboard') }}" class="block p-2 rounded hover:bg-blue-600">Manage Item Categories</a></li>
                                 <li class="mb-2"><a href="{{ route('warehouse.warehouse-supervisor.section.dashboard') }}" class="block p-2 rounded hover:bg-blue-600">Manage Sections</a></li>
-                                <li class="mb-2"><a href="#" class="block p-2 rounded hover:bg-blue-600">Inventory Overview</a></li>
+                                <li class="mb-2"><a href="{{ route('warehouse.warehouse-supervisor.inventory.dashboard') }}" class="block p-2 rounded hover:bg-blue-600">Inventory Overview</a></li>
                             </ul>
                         </details>
                     </li>
@@ -39,7 +39,7 @@
                     <hr class="my-3 border-green-700" />
 
                     <!-- Reports -->
-                    <li class="mb-3 font-bold"><a href="{{ route('warehouse.warehouse-supervisor.reports_history.dashboard') }}" class="block p-2 rounded hover:bg-blue-700">Reports/History</a></li>
+                    <li class="mb-3 font-bold"><a href="#" class="block p-2 rounded hover:bg-blue-700">Reports/History</a></li>
 
                     <hr class="my-3 border-green-700" />
 

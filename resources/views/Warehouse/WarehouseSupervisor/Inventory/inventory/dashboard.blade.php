@@ -6,6 +6,6 @@
 
 @section('content')
 
-@livewire('warehouse.reportshistory.reports.iteminventory')
+@livewire('Warehouse.Inventory.iteminventory')
 
 @endsection

@@ -32,8 +32,15 @@
         </div>
     </a>
 
-    <a href="{{ route('warehouse.warehouse-supervisor.user.dashboard')}}"><div class="p-5 bg-green-300 rounded shadow">
+    <a href="{{ route('warehouse.warehouse-supervisor.user.dashboard')}}">
+        <div class="p-5 bg-green-300 rounded shadow">
             <h3 class="text-lg font-semibold">Manage users</h3>
+        </div>
+    </a>
+
+    <a href="{{ route('warehouse.warehouse-supervisor.inventory.dashboard')}}">
+        <div class="p-5 bg-green-300 rounded shadow">
+            <h3 class="text-lg font-semibold">Inventory Dashboard</h3>
         </div>
     </a>
 </div>
