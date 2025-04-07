@@ -14,118 +14,83 @@ class EditOrders extends Component
     use WithPagination;
 
     public $search = '';
-    public $sortColumn = 'name';
-    public $sortDirection = 'asc';
     public $selectedCategory = '';
     public $quantities = [];
+    public $orderId;
 
     protected $paginationTheme = 'tailwind';
 
-    public $orderId = null;
-
-    public function mount($order = null)
+    public function mount($orderId)
     {
-        if ($order) {
-            $this->orderId = $order;
-            $existingOrder = Order::find($order);
+        $this->orderId = $orderId;
 
-            if ($existingOrder) {
-                // Decode items if stored as JSON
-                $orderItems = is_string($existingOrder->items) ? json_decode($existingOrder->items, true) : $existingOrder->items;
+        // Retrieve order items from the database
+        $order = Order::findOrFail($orderId);
+        $cart = json_decode($order->items, true) ?? [];
 
-                if (is_array($orderItems)) {
-                    $cart = [];
-                    foreach ($orderItems as $item) {
-                        $cart[$item['id']] = [
-                            'id'       => $item['id'],
-                            'name'     => $item['name'],
-                            'quantity' => $item['quantity'],
-                        ];
-                    }
-
-                    // Store the cart in the session
-                    session(['cart' => $cart]);
-                    $this->quantities = array_column($cart, 'quantity', 'id');
-                }
+        // Normalize consolidated orders (convert list format into associative array)
+        if (isset($cart[0]) && is_array($cart[0]) && array_key_exists('id', $cart[0])) {
+            $normalizedCart = [];
+            foreach ($cart as $item) {
+                $normalizedCart[$item['id']] = $item; // Set item ID as the key
             }
-        } else {
-            // Initialize from session if no order is being edited
-            $cart = session('cart', []);
-            foreach ($cart as $itemId => $item) {
-                $this->quantities[$itemId] = $item['quantity'];
-            }
+            $cart = $normalizedCart;
+        }
+
+        // Store in session for editing
+        session(['cart_edit' => $cart]);
+
+        // Initialize the quantities array from the loaded order items
+        foreach ($cart as $item) {
+            $this->quantities[$item['id']] = $item['quantity'];
         }
     }
 
-    public function updateOrder()
-    {
-        if (!$this->orderId) {
-            session()->flash('error', 'No order selected for editing.');
-            return;
-        }
-
-        $order = Order::findOrFail($this->orderId);
-        $cart = session('cart', []);
-
-        // Validate that there are items in the cart
-        if (empty($cart)) {
-            session()->flash('error', 'Your cart is empty. Please add items before saving.');
-            return;
-        }
-
-        // Update the order's items
-        $order->update([
-            'items' => json_encode($cart),
-        ]);
-
-        session()->forget('cart'); // Clear cart after updating order
-
-        return redirect()->route('warehouse.warehouse-supervisor.pending.dashboard')
-            ->with('success', 'Order updated successfully.');
-    }
-
-    // Automatically called whenever a quantity changes
-    // e.g., if someone changes it in the cart
     public function updatedQuantities($value, $itemId)
     {
-        $cart = session('cart', []);
+        $cart = session('cart_edit', []);
 
-        // If the item is already in cart, update its quantity
         if (isset($cart[$itemId])) {
             $cart[$itemId]['quantity'] = (int) $value;
-            session(['cart' => $cart]);
+            session(['cart_edit' => $cart]);
         }
     }
 
-    // Add item to cart using the single $quantities array
     public function addToCart($itemId)
     {
         $item = Item::find($itemId);
         if (!$item) return;
 
-        // Use the user's typed value or default to 1
         $qty = isset($this->quantities[$itemId]) ? (int) $this->quantities[$itemId] : 1;
 
-        $cart = session('cart', []);
+        $cart = session('cart_edit', []);
         $cart[$itemId] = [
             'id'       => $item->id,
             'name'     => $item->name,
             'quantity' => $qty,
         ];
 
-        // Store in session and in $quantities so everything stays in sync
-        session(['cart' => $cart]);
+        session(['cart_edit' => $cart]);
         $this->quantities[$itemId] = $qty;
     }
 
     public function removeFromCart($itemId)
     {
-        $cart = session('cart', []);
+        $cart = session('cart_edit', []);
         unset($cart[$itemId]);
-        session(['cart' => $cart]);
-
-        // Optionally remove from $quantities array as well
+        session(['cart_edit' => $cart]);
         unset($this->quantities[$itemId]);
+    }
+
+    public function updateOrder()
+    {
+        $order = Order::findOrFail($this->orderId);
+
+        // Update order items with the edited cart
+        $order->items = json_encode(session('cart_edit', []));
+        $order->save();
+
+        redirect()->route('warehouse.warehouse-supervisor.pending.dashboard')->with('success', 'Order updated successfully!');
     }
 
     public function updatingSearch()
@@ -138,19 +103,15 @@ class EditOrders extends Component
         $this->resetPage();
     }
 
-    public function sortBy($column)
-    {
-        if ($this->sortColumn === $column) {
-            $this->sortDirection = $this->sortDirection === 'asc' ? 'desc' : 'asc';
-        } else {
-            $this->sortColumn = $column;
-            $this->sortDirection = 'asc';
-        }
-    }
-
     public function render()
     {
-        $query = Item::with('category:id,category');
+        $query = Item::with('category:id,category')
+            ->where(function (Builder $q) {
+                $q->whereDoesntHave('category')
+                  ->orWhereHas('category', function (Builder $cq) {
+                      $cq->whereNotIn('category', ['1 for 1 Exchange']);
+                  });
+            });
 
         if (!empty($this->search)) {
             $query->where(function (Builder $q) {
@@ -165,13 +126,11 @@ class EditOrders extends Component
             $query->where('category_id', $this->selectedCategory);
         }
 
-        $items = $query->orderBy($this->sortColumn, $this->sortDirection)
-                       ->paginate(12);
+        $items = $query->orderBy('name', 'asc')->paginate(12);
+        $categories = Category::whereNotIn('category', ['1 for 1 Exchange'])->get();
+        $cart = session('cart_edit', []);
 
-        $categories = Category::all();
-        $cart       = session('cart', []);
-
-        return view('Warehouse.WarehouseSupervisor.Orders.livewire.edit-order', [
+        return view('Warehouse.WarehouseSupervisor.PendingOrders.livewire.edit-order', [
             'items'      => $items,
             'categories' => $categories,
             'cart'       => $cart,

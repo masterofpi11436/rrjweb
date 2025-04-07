@@ -43,7 +43,11 @@ class PendingOrderController extends Controller
     {
         $order = Order::findOrFail($id);
 
-        return view('Warehouse.WarehouseSupervisor.PendingOrders.pendingorders.edit-order', compact('order'));
+        $cart = json_decode($order->items, true);
+
+        session(['cart_edit' => $cart]);
+
+        return view('Warehouse.WarehouseSupervisor.PendingOrders.pendingorders.edit-order', ['orderId' => $id]);
     }
 
     public function approve($id)
