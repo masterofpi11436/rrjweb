@@ -43,7 +43,11 @@ class PendingExchangeOrderController extends Controller
     {
         $order = Order::findOrFail($id);
 
-        return view('Warehouse.WarehouseSupervisor.Orders.orders.edit-order', compact('order'));
+        $cart = json_decode($order->items, true);
+
+        session(['cart_edit' => $cart]);
+
+        return view('Warehouse.WarehouseSupervisor.PendingExchangeOrders.pendingexchangeorders.edit-order', ['orderId' => $id]);
     }
 
     public function approve($id)

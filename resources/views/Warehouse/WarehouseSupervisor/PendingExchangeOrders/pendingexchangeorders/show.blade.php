@@ -65,7 +65,7 @@
 
 <!-- Action Buttons -->
 <div class="mt-6 flex space-x-2">
-    <a href="{{ route('warehouse.supervisor.edit-order', ['id' => $order->id]) }}" class="px-4 py-2 bg-yellow-500 text-white text-sm rounded hover:bg-blue-600 transition">
+    <a href="{{ route('warehouse.warehouse-supervisor.pending-exchange.edit', ['id' => $order->id]) }}" class="px-4 py-2 bg-yellow-500 text-white text-sm rounded hover:bg-blue-600 transition">
         Edit Order
     </a>
 </div>

@@ -1,18 +1,4 @@
 <div class="max-w-6xl mx-auto p-6 bg-gray-100 shadow-md rounded-lg">
-    <!-- Search Bar & Category Filter -->
-    <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-6 gap-4">
-        <input type="text" wire:model.live="search" placeholder="Search Items..."
-            class="w-full sm:w-2/3 p-3 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none bg-white"
-        >
-
-        <select wire:model.live="selectedCategory"
-            class="w-full sm:w-1/3 p-3 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none bg-white">
-            <option value="">All Categories</option>
-            @foreach($categories as $category)
-                <option value="{{ $category->id }}">{{ $category->category }}</option>
-            @endforeach
-        </select>
-    </div>
 
     <!-- Shopping Cart -->
     <div class="bg-white p-6 rounded-lg shadow-md mb-6">
