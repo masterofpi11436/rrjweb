@@ -64,4 +64,19 @@ class PendingOrderController extends Controller
         return redirect()->route('warehouse.warehouse-supervisor.pending.dashboard')
             ->with('success', 'Order approved successfully.');
     }
+
+    public function deny($id)
+    {
+        $order = Order::findOrFail($id);
+
+        $order->update([
+            'status' => config('orderstatus.DENIED'),
+            'approved_denied_by' => Auth::id(),
+            'approved_denied_by_name' => Auth::user()->first_name . ' ' . Auth::user()->last_name,
+            'approved_denied_at' => Carbon::now(),
+        ]);
+
+        return redirect()->route('warehouse.warehouse-supervisor.pending.dashboard')
+            ->with('success', 'Order denied');
+    }
 }

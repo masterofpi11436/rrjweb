@@ -76,6 +76,16 @@
     </form>
 </div>
 
+<div class="mt-6">
+    <form action="{{ route('warehouse.warehouse-supervisor.pending.deny', $order->id) }}" method="POST">
+        @csrf
+        @method('PUT')
+        <button type="submit" class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition">
+            Deny Order
+        </button>
+    </form>
+</div>
+
 <script>
     function printOrder() {
         var printContent = document.getElementById("printableArea").innerHTML;

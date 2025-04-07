@@ -296,6 +296,7 @@ Route::prefix('warehouse')->group(function () use ($warehouseLoginClass, $wareho
                 Route::get('/pending', [$pendingOrderClass, 'pending'])->name('warehouse.warehouse-supervisor.pending.dashboard');
                 Route::get('/view/{id}', [$pendingOrderClass, 'show'])->name('warehouse.warehouse-supervisor.pending.show');
                 Route::put('/approve/{id}', [$pendingOrderClass, 'approve'])->name('warehouse.warehouse-supervisor.pending.approve');
+                Route::put('/deny/{id}', [$pendingOrderClass, 'deny'])->name('warehouse.warehouse-supervisor.pending.deny');
                 Route::get('/edit-order/{id}', [$pendingOrderClass, 'edit'])->name('warehouse.warehouse-supervisor.pending.edit');
             });
 
@@ -304,6 +305,7 @@ Route::prefix('warehouse')->group(function () use ($warehouseLoginClass, $wareho
                 Route::get('/pending', [$pendingExchangeOrderClass, 'pending'])->name('warehouse.warehouse-supervisor.pending-exchange.dashboard');
                 Route::get('/view/{id}', [$pendingExchangeOrderClass, 'show'])->name('warehouse.warehouse-supervisor.pending-exchange.show');
                 Route::put('/approve/{id}', [$pendingExchangeOrderClass, 'approve'])->name('warehouse.warehouse-supervisor.pending-exchange.approve');
+                Route::put('/deny/{id}', [$pendingExchangeOrderClass, 'deny'])->name('warehouse.warehouse-supervisor.pending-exchange.deny');
                 Route::get('/edit-order/{id}', [$pendingExchangeOrderClass, 'edit'])->name('warehouse.warehouse-supervisor.pending-exchange.edit');
             });
         });

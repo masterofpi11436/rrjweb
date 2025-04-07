@@ -8,6 +8,7 @@ return [
     'APPROVED' => 'approved',
     'EXCHANGE_APPROVED' => 'exchange_approved',
     'DENIED' => 'denied',
+    'EXCHANGE_DENIED' => 'exchange_denied',
 
     // Human-readable labels for UI display
     'labels' => [
@@ -17,5 +18,6 @@ return [
         'approved' => 'Approved',
         'exchange_approved' => 'Exchange Approved',
         'denied' => 'Denied',
+        'exchange_denied' => 'Exchange Denied',
     ],
 ];

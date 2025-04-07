@@ -49,7 +49,7 @@ class ExchangeOrders extends Component
             'supervisor_name' => $first->supervisor_name,
             'section_id' => $first->section_id,
             'section_name' => $sectionName,
-            'status' => config('orderstatus.PENDING_WAREHOUSE'),
+            'status' => config('orderstatus.PENDING_WAREHOUSE_EXCHANGE'),
             'items' => json_encode(array_values($mergedItems)),
         ]);
 
