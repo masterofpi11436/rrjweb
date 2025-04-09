@@ -20,8 +20,8 @@ return new class extends Migration
             $table->foreignId('role_id')
                 ->nullable()
                 ->constrained('legacy_roles');
-            $table->string('reset_token');
-            $table->dateTime('token_expirey');
+            $table->string('reset_token')->nullable();
+            $table->dateTime('token_expirey')->nullable();
             $table->integer('warehouse_role')->nullable();
         });
     }
