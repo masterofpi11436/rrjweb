@@ -39,7 +39,22 @@
                     <hr class="my-3 border-green-700" />
 
                     <!-- Reports -->
-                    <li class="mb-3 font-bold"><a href="#" class="block p-2 rounded hover:bg-blue-700">Reports/History</a></li>
+                    <li class="mb-3 font-bold">
+                        <details class="group">
+                            <summary class="flex items-center justify-between p-2 rounded hover:bg-blue-700 cursor-pointer">
+                                <span>Reports/History</span>
+                                <span class="transform transition-transform duration-300 group-open:rotate-90">▶</span>
+                            </summary>
+                            <ul class="pl-4 mt-2 hidden group-open:block">
+                                <li class="mb-2">
+                                    <a href="{{ route('warehouse.warehouse-supervisor.reports.dashboard') }}" class="block p-2 rounded hover:bg-blue-600">Reports</a>
+                                </li>
+                                <li class="mb-2">
+                                    <a href="{{ route('warehouse.warehouse-supervisor.history.dashboard') }}" class="block p-2 rounded hover:bg-blue-600">History</a>
+                                </li>
+                            </ul>
+                        </details>
+                    </li>
 
                     <hr class="my-3 border-green-700" />
 

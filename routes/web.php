@@ -29,6 +29,8 @@ use App\Http\Controllers\Warehouse\WarehouseSupervisor\CategoryController;
 use App\Http\Controllers\Warehouse\WarehouseSupervisor\SectionController;
 use App\Http\Controllers\Warehouse\WarehouseSupervisor\UserController;
 use App\Http\Controllers\Warehouse\WarehouseSupervisor\InventoryController;
+use App\Http\Controllers\Warehouse\WarehouseSupervisor\ReportsController;
+use App\Http\Controllers\Warehouse\WarehouseSupervisor\HistoryController;
 use App\Http\Controllers\Warehouse\WarehouseSupervisor\PendingOrderController;
 use App\Http\Controllers\Warehouse\WarehouseSupervisor\PendingExchangeOrderController;
 use App\Http\Controllers\Warehouse\WarehouseSupervisor\CreateOrderController;
@@ -67,6 +69,8 @@ $createExchangeClass = CreateExchangeOrderController::class;
 $pendingOrderClass = PendingOrderController::class;
 $pendingExchangeOrderClass = PendingExchangeOrderController::class;
 $inventoryClass = InventoryController::class;
+$reportsClass = ReportsController::class;
+$historyClass = HistoryController::class;
 $requestorClass = RequestorController::class;
 $supervisorClass = SupervisorController::class;
 $propertyClass = PropertyController::class;
@@ -228,7 +232,7 @@ Route::prefix('policy')->group(function () use ($policyClass, $policyLoginClass)
 });
 
 // ***---Warehouse Application---*** //
-Route::prefix('warehouse')->group(function () use ($warehouseLoginClass, $warehouseSupervisorClass, $supervisorClass, $requestorClass, $propertyClass, $itemClass, $categoryClass, $sectionClass, $userClass, $inventoryClass, $createOrderClass, $createExchangeClass, $pendingOrderClass, $pendingExchangeOrderClass){
+Route::prefix('warehouse')->group(function () use ($warehouseLoginClass, $warehouseSupervisorClass, $supervisorClass, $requestorClass, $propertyClass, $itemClass, $categoryClass, $sectionClass, $userClass, $inventoryClass, $reportsClass, $historyClass, $createOrderClass, $createExchangeClass, $pendingOrderClass, $pendingExchangeOrderClass){
         // Routes without middleware
         Route::get('/login', [$warehouseLoginClass, 'warehouseLoginForm'])->name('warehouse.login');
         Route::post('/login', [$warehouseLoginClass, 'login']);
@@ -237,7 +241,7 @@ Route::prefix('warehouse')->group(function () use ($warehouseLoginClass, $wareho
         Route::post('/logout', [$warehouseLoginClass, 'logout'])->name('warehouse.logout');
 
         // Warehouse Supervisor Routes
-        Route::prefix('warehouse-supervisor')->middleware('warehouseSupervisor', 'cache')->group(function () use ($warehouseSupervisorClass, $itemClass, $categoryClass, $sectionClass, $userClass, $inventoryClass, $createOrderClass, $createExchangeClass, $pendingOrderClass, $pendingExchangeOrderClass) {
+        Route::prefix('warehouse-supervisor')->middleware('warehouseSupervisor', 'cache')->group(function () use ($warehouseSupervisorClass, $itemClass, $categoryClass, $sectionClass, $userClass, $inventoryClass, $reportsClass, $historyClass, $createOrderClass, $createExchangeClass, $pendingOrderClass, $pendingExchangeOrderClass) {
             Route::get('/dashboard', [$warehouseSupervisorClass, 'dashboard'])->name('warehouse.warehouse-supervisor.dashboard');
 
             // User Management
@@ -304,9 +308,19 @@ Route::prefix('warehouse')->group(function () use ($warehouseLoginClass, $wareho
                 Route::get('/edit-order/{id}', [$pendingExchangeOrderClass, 'edit'])->name('warehouse.warehouse-supervisor.pending-exchange.edit');
             });
 
-            // Reports Pages
+            // Invenotry Pages
             Route::prefix('inventory')->group(function () use ($inventoryClass) {
                 Route::get('/dashboard', [$inventoryClass, 'dashboard'])->name('warehouse.warehouse-supervisor.inventory.dashboard');
+            });
+
+            // Reports pages
+            Route::prefix('reports')->group(function () use ($reportsClass) {
+                Route::get('/dashboard', [$reportsClass, 'dashboard'])->name('warehouse.warehouse-supervisor.reports.dashboard');
+            });
+
+            // Reports pages
+            Route::prefix('history')->group(function () use ($historyClass) {
+                Route::get('/dashboard', [$historyClass, 'dashboard'])->name('warehouse.warehouse-supervisor.history.dashboard');
             });
         });
 
