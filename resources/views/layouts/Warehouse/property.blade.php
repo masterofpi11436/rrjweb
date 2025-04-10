@@ -8,35 +8,44 @@
     <title>@yield('title')</title>
     @vite('resources/css/app.css')
 </head>
-<body class="bg-gray-200">
-    <div class="flex h-screen bg-gray-200">
+<body class="bg-gray-900 text-white">
+    <div class="flex h-screen bg-gray-900">
         <!-- Sidebar -->
-        <aside class="w-64 bg-green-900 text-white p-5 flex flex-col h-screen fixed">
+        <aside class="w-64 bg-green-900 text-white p-5 flex flex-col h-screen fixed overflow-y-auto scrollbar-hide">
             <h1 class="text-4xl font-bold mb-5">Navigation</h1>
             <nav>
                 <ul>
                     <!-- Create Order -->
-                    <li class="mb-3 font-bold"><a href="{{ route('warehouse.property.dashboard')}}"
-                        class="block p-2 rounded hover:bg-blue-700">Create Order</a></li>
+                    <li class="mb-3 font-bold">
+                        <a href="{{ route('warehouse.property.dashboard') }}"
+                           class="block p-2 rounded border border-blue-500 hover:bg-blue-700">
+                            Create Order
+                        </a>
+                    </li>
 
                     <!-- Pending Orders -->
                     <li class="mb-3 font-bold">
                         <a href="{{ route('warehouse.property.pending') }}"
-                        class="flex justify-between p-2 rounded hover:bg-blue-700">
+                           class="flex justify-between items-center p-2 rounded border border-blue-500 hover:bg-blue-700">
                             <span>Pending Orders</span>
-                            <span class="bg-blue-500 text-white px-2 py-1 rounded text-sm">{{ $pendingOrdersCount }}</span>
+                            <span class="bg-blue-600 text-white px-2 py-1 rounded text-sm">{{ $pendingOrdersCount }}</span>
                         </a>
                     </li>
 
                     <!-- Recent Orders -->
-                    <li class="mb-3 font-bold"><a href="{{ route('warehouse.property.approved') }}" class="block p-2 rounded hover:bg-blue-700">Recent Orders</a></li>
+                    <li class="mb-3 font-bold">
+                        <a href="{{ route('warehouse.property.approved') }}"
+                           class="block p-2 rounded border border-blue-500 hover:bg-blue-700">
+                            Recent Orders
+                        </a>
+                    </li>
 
                     <!-- Approve Staff Orders -->
                     <li class="mb-3 font-bold">
                         <a href="{{ route('warehouse.property.requestor-pending') }}"
-                        class="flex justify-between p-2 rounded hover:bg-blue-700">
+                           class="flex justify-between items-center p-2 rounded border border-blue-500 hover:bg-blue-700">
                             <span>Pending Staff Orders</span>
-                            <span class="bg-blue-500 text-white px-2 py-1 rounded text-sm">{{ $requestorPendingOrdersCount }}</span>
+                            <span class="bg-blue-600 text-white px-2 py-1 rounded text-sm">{{ $requestorPendingOrdersCount }}</span>
                         </a>
                     </li>
                 </ul>
@@ -46,13 +55,16 @@
         <!-- Main Content -->
         <div class="flex-1 flex flex-col ml-64">
             <!-- Header -->
-            <header class="bg-white p-4 shadow flex justify-between items-center sticky top-0 z-50">
-                <h2 class="text-xl font-semibold">@yield('heading')</h2>
-                <div class="flex items-center gap-4">
+            <header class="bg-gray-800 p-4 shadow flex justify-between items-center sticky top-0 z-50 border-b border-gray-700">
+                <h2 class="text-xl font-semibold text-white">@yield('heading')</h2>
+                <div class="flex items-center gap-4 text-white">
                     <h2>Welcome: {{ Auth::user()->first_name }} {{ Auth::user()->last_name }}</h2>
                     <form action="{{ route('warehouse.logout') }}" method="POST">
                         @csrf
-                        <button type="submit" class="p-2 bg-red-500 text-white rounded ml-2 transition duration-300 ease-in-out hover:bg-red-600 active:bg-red-700 hover:scale-105 active:scale-95">Logout</button>
+                        <button type="submit"
+                                class="p-2 bg-gray-900 border border-red-500 text-white rounded hover:bg-red-600 hover:border-red-600">
+                            Logout
+                        </button>
                     </form>
                 </div>
             </header>

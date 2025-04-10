@@ -8,27 +8,26 @@
     <title>@yield('title')</title>
     @vite('resources/css/app.css')
 </head>
-<body class="bg-gray-200">
-    <div class="flex h-screen bg-gray-200">
+<body class="bg-gray-900 text-gray-100">
+    <div class="flex h-screen bg-gray-900">
         <!-- Sidebar -->
-        <aside class="w-64 bg-green-900 text-white p-5 flex flex-col h-screen fixed">
+        <aside class="w-64 bg-gray-800 text-white p-5 flex flex-col h-screen fixed">
             <h1 class="text-4xl font-bold mb-5">Navigation</h1>
             <nav>
                 <ul>
-                    <!-- Create Orders -->
-                    <li class="mb-3 font-bold"><a href="{{ route('warehouse.requestor.dashboard') }}" class="block p-2 rounded hover:bg-blue-700">Create Orders</a></li>
-
-                    <!-- Pending Orders -->
+                    <li class="mb-3 font-bold">
+                        <a href="{{ route('warehouse.requestor.dashboard') }}" class="block p-2 rounded hover:bg-blue-700">Create Orders</a>
+                    </li>
                     <li class="mb-3 font-bold">
                         <a href="{{ route('warehouse.requestor.pending') }}"
-                        class="flex justify-between p-2 rounded hover:bg-blue-700">
+                           class="flex justify-between p-2 rounded hover:bg-blue-700">
                             <span>Pending Orders</span>
-                            <span class="bg-blue-500 text-white px-2 py-1 rounded text-sm">{{ $pendingOrdersCount }}</span>
+                            <span class="bg-blue-600 text-white px-2 py-1 rounded text-sm">{{ $pendingOrdersCount }}</span>
                         </a>
                     </li>
-
-                    <!-- 1 For 1 Exchange Orders -->
-                    <li class="mb-3 font-bold"><a href="{{ route('warehouse.requestor.exchange') }}" class="block p-2 rounded hover:bg-blue-700">1 For 1 Exchange</a></li>
+                    <li class="mb-3 font-bold">
+                        <a href="{{ route('warehouse.requestor.exchange') }}" class="block p-2 rounded hover:bg-blue-700">1 For 1 Exchange</a>
+                    </li>
                 </ul>
             </nav>
         </aside>
@@ -36,19 +35,21 @@
         <!-- Main Content -->
         <div class="flex-1 flex flex-col ml-64">
             <!-- Header -->
-            <header class="bg-white p-4 shadow flex justify-between items-center sticky top-0 z-50">
+            <header class="bg-gray-800 p-4 shadow flex justify-between items-center sticky top-0 z-50 text-white">
                 <h2 class="text-xl font-semibold">@yield('heading')</h2>
                 <div class="flex items-center gap-4">
                     <h2>Welcome: {{ Auth::user()->first_name }} {{ Auth::user()->last_name }}</h2>
                     <form action="{{ route('warehouse.logout') }}" method="POST">
                         @csrf
-                        <button type="submit" class="p-2 bg-red-500 text-white rounded ml-2 transition duration-300 ease-in-out hover:bg-red-600 active:bg-red-700 hover:scale-105 active:scale-95">Logout</button>
+                        <button type="submit" class="p-2 bg-red-600 text-white rounded ml-2 hover:bg-red-700 active:bg-red-800">
+                            Logout
+                        </button>
                     </form>
                 </div>
             </header>
 
             <!-- Content Area -->
-            <main class="p-6">
+            <main class="p-6 bg-gray-900 min-h-full">
                 @yield('content')
             </main>
 

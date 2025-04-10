@@ -8,30 +8,31 @@
     <title>@yield('title')</title>
     @vite('resources/css/app.css')
 </head>
-<body class="bg-gray-200">
-    <div class="flex h-screen bg-gray-200">
+<body class="bg-gray-900 text-gray-100">
+    <div class="flex h-screen bg-gray-900 text-gray-100">
         <!-- Sidebar -->
-        <aside class="w-64 bg-green-900 text-white p-5 flex flex-col h-screen fixed">
+        <aside class="w-64 bg-green-950 text-gray-100 p-5 flex flex-col h-screen fixed overflow-y-auto" style="-ms-overflow-style: none; scrollbar-width: none;">
+
             <h1 class="text-4xl font-bold mb-5">Navigation</h1>
 
             <nav>
                 <ul>
-                    <li class="mb-3"><a href="{{ route('warehouse.warehouse-supervisor.dashboard')}}" class="font-bold block p-2 rounded hover:bg-blue-700">Dashboard</a></li>
+                    <li class="mb-3"><a href="{{ route('warehouse.warehouse-supervisor.dashboard')}}" class="font-bold block p-2 rounded hover:bg-green-900">Dashboard</a></li>
 
                     <hr class="my-3 border-green-700" />
 
                     <!-- Inventory Management Dropdown -->
                     <li class="mb-3 font-bold">
                         <details class="group">
-                            <summary class="flex items-center justify-between p-2 rounded hover:bg-blue-700 cursor-pointer">
+                            <summary class="flex items-center justify-between p-2 rounded hover:bg-green-900 cursor-pointer">
                                 <span>Inventory Management</span>
                                 <span class="transform transition-transform duration-300 group-open:rotate-90">▶</span>
                             </summary>
                             <ul class="pl-4 mt-2 hidden group-open:block">
-                                <li class="mb-2"><a href="{{ route('warehouse.warehouse-supervisor.item.dashboard') }}" class="block p-2 rounded hover:bg-blue-600">Manage Items</a></li>
-                                <li class="mb-2"><a href="{{ route('warehouse.warehouse-supervisor.category.dashboard') }}" class="block p-2 rounded hover:bg-blue-600">Manage Item Categories</a></li>
-                                <li class="mb-2"><a href="{{ route('warehouse.warehouse-supervisor.section.dashboard') }}" class="block p-2 rounded hover:bg-blue-600">Manage Sections</a></li>
-                                <li class="mb-2"><a href="{{ route('warehouse.warehouse-supervisor.inventory.dashboard') }}" class="block p-2 rounded hover:bg-blue-600">Inventory Overview</a></li>
+                                <li class="mb-2"><a href="{{ route('warehouse.warehouse-supervisor.item.dashboard') }}" class="block p-2 rounded hover:bg-green-900">Manage Items</a></li>
+                                <li class="mb-2"><a href="{{ route('warehouse.warehouse-supervisor.category.dashboard') }}" class="block p-2 rounded hover:bg-green-900">Manage Item Categories</a></li>
+                                <li class="mb-2"><a href="{{ route('warehouse.warehouse-supervisor.section.dashboard') }}" class="block p-2 rounded hover:bg-green-900">Manage Sections</a></li>
+                                <li class="mb-2"><a href="{{ route('warehouse.warehouse-supervisor.inventory.dashboard') }}" class="block p-2 rounded hover:bg-green-900">Inventory Overview</a></li>
                             </ul>
                         </details>
                     </li>
@@ -41,16 +42,16 @@
                     <!-- Reports -->
                     <li class="mb-3 font-bold">
                         <details class="group">
-                            <summary class="flex items-center justify-between p-2 rounded hover:bg-blue-700 cursor-pointer">
+                            <summary class="flex items-center justify-between p-2 rounded hover:bg-green-900 cursor-pointer">
                                 <span>Reports/History</span>
                                 <span class="transform transition-transform duration-300 group-open:rotate-90">▶</span>
                             </summary>
                             <ul class="pl-4 mt-2 hidden group-open:block">
                                 <li class="mb-2">
-                                    <a href="{{ route('warehouse.warehouse-supervisor.reports.dashboard') }}" class="block p-2 rounded hover:bg-blue-600">Reports</a>
+                                    <a href="{{ route('warehouse.warehouse-supervisor.reports.dashboard') }}" class="block p-2 rounded hover:bg-green-900">Reports</a>
                                 </li>
                                 <li class="mb-2">
-                                    <a href="{{ route('warehouse.warehouse-supervisor.history.dashboard') }}" class="block p-2 rounded hover:bg-blue-600">History</a>
+                                    <a href="{{ route('warehouse.warehouse-supervisor.history.dashboard') }}" class="block p-2 rounded hover:bg-green-900">History</a>
                                 </li>
                             </ul>
                         </details>
@@ -61,16 +62,16 @@
                     <!-- Create Orders -->
                     <li class="mb-3 font-bold">
                         <details class="group">
-                            <summary class="flex items-center justify-between p-2 rounded hover:bg-blue-700 cursor-pointer">
+                            <summary class="flex items-center justify-between p-2 rounded hover:bg-green-900 cursor-pointer">
                                 <span>Create Orders</span>
                                 <span class="transform transition-transform duration-300 group-open:rotate-90">▶</span>
                             </summary>
                             <ul class="pl-4 mt-2 hidden group-open:block">
                                 <li class="mb-2">
-                                    <a href="{{ route('warehouse.warehouse-supervisor.create-order.dashboard') }}" class="block p-2 rounded hover:bg-blue-600">Regular Order</a>
+                                    <a href="{{ route('warehouse.warehouse-supervisor.create-order.dashboard') }}" class="block p-2 rounded hover:bg-green-900">Regular Order</a>
                                 </li>
                                 <li class="mb-2">
-                                    <a href="{{ route('warehouse.warehouse-supervisor.create-exchange-order.dashboard') }}" class="block p-2 rounded hover:bg-blue-600">1 For 1 Exchange</a>
+                                    <a href="{{ route('warehouse.warehouse-supervisor.create-exchange-order.dashboard') }}" class="block p-2 rounded hover:bg-green-900">1 For 1 Exchange</a>
                                 </li>
                             </ul>
                         </details>
@@ -79,28 +80,28 @@
                     <hr class="my-3 border-green-700" />
 
                     <!-- User Management -->
-                    <li class="mb-3 font-bold"><a href="{{ route('warehouse.warehouse-supervisor.user.dashboard')}}" class="block p-2 rounded hover:bg-blue-700">Manage Users</a></li>
+                    <li class="mb-3 font-bold"><a href="{{ route('warehouse.warehouse-supervisor.user.dashboard')}}" class="block p-2 rounded hover:bg-green-900">Manage Users</a></li>
 
                     <hr class="my-3 border-green-700" />
 
                     <!-- Pending Orders -->
                     <li class="mb-3 font-bold">
                         <details class="group">
-                            <summary class="flex items-center justify-between p-2 rounded hover:bg-blue-700 cursor-pointer">
+                            <summary class="flex items-center justify-between p-2 rounded hover:bg-green-900 cursor-pointer">
                                 <span>Pending Orders</span>
                                 <span class="transform transition-transform duration-300 group-open:rotate-90">▶</span>
                             </summary>
                             <ul class="pl-4 mt-2 hidden group-open:block">
                                 <li class="mb-3 font-bold">
                                     <a href="{{ route('warehouse.warehouse-supervisor.pending.dashboard') }}"
-                                    class="flex justify-between p-2 rounded hover:bg-blue-700">
+                                    class="flex justify-between p-2 rounded hover:bg-green-900">
                                         <span>Pending Orders</span>
                                         <span class="bg-blue-500 text-white px-2 py-1 rounded text-sm">{{ $pendingOrdersCount }}</span>
                                     </a>
                                 </li>
                                 <li class="mb-3 font-bold">
                                     <a href="{{ route('warehouse.warehouse-supervisor.pending-exchange.dashboard') }}"
-                                    class="flex justify-between p-2 rounded hover:bg-blue-700">
+                                    class="flex justify-between p-2 rounded hover:bg-green-900">
                                         <span>Pending 1 For 1 Exhchange Orders</span>
                                         <span class="flex items-center justify-center bg-blue-500 text-white min-w-[2rem] h-[1.75rem] rounded text-sm text-center">
                                             {{ $pendingExchangeOrdersCount }}
@@ -117,13 +118,15 @@
         <!-- Main Content -->
         <div class="flex-1 flex flex-col ml-64">
             <!-- Header -->
-            <header class="bg-white p-4 shadow flex justify-between items-center sticky top-0 z-50">
+            <header class="bg-gray-800 text-gray-100 p-4 shadow flex justify-between items-center sticky top-0 z-50">
                 <h2 class="text-xl font-semibold">@yield('heading')</h2>
                 <div class="flex items-center gap-4">
                     <h2>Welcome: {{ Auth::user()->first_name }} {{ Auth::user()->last_name }}</h2>
                     <form action="{{ route('warehouse.logout') }}" method="POST">
                         @csrf
-                        <button type="submit" class="p-2 bg-red-500 text-white rounded ml-2 transition duration-300 ease-in-out hover:bg-red-600 active:bg-red-700 hover:scale-105 active:scale-95">Logout</button>
+                        <button type="submit" class="p-2 bg-gray-900 text-white border border-red-500 rounded ml-2 hover:bg-gray-800 hover:border-red-600">
+                            Logout
+                        </button>
                     </form>
                 </div>
             </header>
