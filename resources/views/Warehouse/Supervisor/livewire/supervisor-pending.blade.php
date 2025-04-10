@@ -12,7 +12,7 @@
         @php
             [$sectionName, $status] = explode(' - ', $groupKey);
         @endphp
-        <div class="border border-gray-700 p-4 rounded-md bg-gray-800 mb-5">
+        <div class="border border-white p-4 rounded-md bg-gray-800 mb-5">
             <h3 class="text-lg font-bold text-white">Section: {{ $sectionName }}</h3>
 
             @if(count($orders) > 1)
@@ -38,17 +38,17 @@
 
                             <div class="flex space-x-2">
                                 <button wire:click="toggleOrderDetails({{ $order['id'] }})"
-                                    class="px-4 py-2 bg-blue-600 text-white text-sm rounded hover:bg-blue-700">
+                                    class="px-4 py-2 bg-blue-600 text-white text-sm rounded hover:bg-blue-700 border border-white">
                                     {{ $expandedOrderId === $order['id'] ? 'Hide Details' : 'View Details' }}
                                 </button>
 
                                 <a href="{{ route('warehouse.supervisor.edit-order', ['id' => $order['id']]) }}"
-                                    class="px-4 py-2 bg-yellow-600 text-white text-sm rounded hover:bg-yellow-700">
+                                    class="px-4 py-2 bg-yellow-600 text-white text-sm rounded hover:bg-yellow-700 border border-white">
                                     Edit Order
                                 </a>
 
                                 <a href="{{ route('warehouse.supervisor.destroy', $order['id']) }}"
-                                    class="px-4 py-2 bg-red-600 text-white text-sm font-medium rounded-lg shadow-md hover:bg-red-700"
+                                    class="px-4 py-2 bg-red-600 text-white text-sm font-medium rounded shadow-md hover:bg-red-700 border border-white"
                                     onclick="event.preventDefault(); confirmDelete({{ $order['id'] }});">
                                     Cancel Order
                                 </a>

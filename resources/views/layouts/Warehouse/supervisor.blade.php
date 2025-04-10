@@ -11,7 +11,7 @@
 <body class="bg-gray-900 text-gray-100">
     <div class="flex h-screen bg-gray-900">
         <!-- Sidebar -->
-        <aside class="w-64 bg-gray-800 text-white p-5 flex flex-col h-screen fixed">
+        <aside class="w-64 bg-green-950 text-white p-5 flex flex-col h-screen fixed">
             <h1 class="text-4xl font-bold mb-5">Navigation</h1>
             <nav>
                 <ul>
@@ -52,14 +52,13 @@
         <!-- Main Content -->
         <div class="flex-1 flex flex-col ml-64">
             <!-- Header -->
-            <header class="bg-gray-800 p-4 shadow flex justify-between items-center sticky top-0 z-50 text-white">
+            <header class="bg-gray-800 text-gray-100 p-4 shadow flex justify-between items-center sticky top-0 z-50">
                 <h2 class="text-xl font-semibold">@yield('heading')</h2>
                 <div class="flex items-center gap-4">
                     <h2>Welcome: {{ Auth::user()->first_name }} {{ Auth::user()->last_name }}</h2>
                     <form action="{{ route('warehouse.logout') }}" method="POST">
                         @csrf
-                        <button type="submit"
-                                class="p-2 bg-red-600 text-white rounded ml-2 hover:bg-red-700 active:bg-red-800">
+                        <button type="submit" class="p-2 bg-red-600 text-white border border-white rounded ml-2 hover:border-red-600">
                             Logout
                         </button>
                     </form>
@@ -67,16 +66,17 @@
             </header>
 
             <!-- Content Area -->
-            <main class="p-6 bg-gray-900 min-h-full">
+            <main class="p-6">
                 @yield('content')
             </main>
 
             <a href="#" id="back-to-top" class="back-to-top">⬆️ Back to Top</a>
 
-            <script src="{{ asset('javascript/flash-message-expiry.js') }}"></script>
             <script src="{{ asset('javascript/delete-confirmation.js') }}"></script>
+            <script src="{{ asset('javascript/flash-message-expiry.js') }}"></script>
             <script src="{{ asset('javascript/back-to-top.js') }}"></script>
         </div>
+    </div>
     </div>
 </body>
 </html>
