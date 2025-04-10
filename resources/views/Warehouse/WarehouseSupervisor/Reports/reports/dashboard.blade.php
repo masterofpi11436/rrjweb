@@ -6,90 +6,38 @@
 
 @section('content')
 
-<div class="bg-white shadow rounded p-6 mb-6">
-    <h2 class="text-lg font-bold mb-4">Filter Reports</h2>
-    <form method="GET" action="#" class="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <div>
-            <label class="font-semibold">Week</label>
-            <input type="week" name="week" class="w-full border px-2 py-1 rounded">
-        </div>
-        <div>
-            <label class="font-semibold">Month</label>
-            <input type="month" name="month" class="w-full border px-2 py-1 rounded">
-        </div>
-        <div>
-            <label class="font-semibold">Section</label>
-            <select name="section" class="w-full border px-2 py-1 rounded">
-                <option value="">All Sections</option>
-                <option>Administration</option>
-                <option>Booking</option>
-                <option>Housing Unit 1</option>
-                <option>Housing Unit 2</option>
-                <option>Housing Unit 3</option>
-                <option>Housing Unit 4</option>
-                <option>Housing Unit 5</option>
-                <option>Housing Unit 6</option>
-            </select>
-        </div>
-        <div class="flex items-end">
-            <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-800 w-full">Generate</button>
-        </div>
-    </form>
-</div>
+<div class="max-w-4xl mx-auto">
+    <h1 class="text-3xl font-bold mb-6">Reports Dashboard</h1>
 
-<div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
-    <div class="bg-white p-4 rounded shadow flex justify-between items-center">
-        <div>
-            <h3 class="text-sm font-medium text-gray-500">Last Monthly Report</h3>
-            <p class="text-lg font-semibold">March 2025</p>
-        </div>
-
-        <form class="flex flex-col justify-between items-end space-y-2">
-            <button type="submit" class="bg-blue-600 text-white px-3 py-1 text-sm rounded hover:bg-blue-800">
-                Email List
-            </button>
-            <button type="submit" class="bg-green-600 text-white px-3 py-1 text-sm rounded hover:bg-blue-800">
-                Email This Report
-            </button>
-        </form>
+    <!-- Tabs -->
+    <div class="flex space-x-4 border-b border-gray-700 mb-6">
+      <button class="py-2 px-4 border-b-2 border-blue-500 text-blue-400">Weekly</button>
+      <button class="py-2 px-4 hover:text-blue-400">Monthly</button>
+      <button class="py-2 px-4 hover:text-blue-400">Quarterly</button>
+      <button class="py-2 px-4 hover:text-blue-400">Yearly</button>
+      <button class="py-2 px-4 hover:text-blue-400">Custom Range</button>
     </div>
 
-    <div class="bg-white p-4 rounded shadow">
-        <h3 class="text-sm font-medium text-gray-500">Next Quarterly Report</h3>
-        <p class="text-lg font-semibold">July 2025</p>
+    <!-- Example Dropdown for Weekly -->
+    <div class="mb-4">
+      <label for="week" class="block mb-2 text-sm font-medium text-gray-300">Select Week</label>
+      <select id="week" class="bg-gray-800 border border-gray-700 text-gray-100 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+        <option>Week 14 (Apr 1 - Apr 7)</option>
+        <option>Week 13 (Mar 25 - Mar 31)</option>
+        <option>Week 12 (Mar 18 - Mar 24)</option>
+      </select>
     </div>
-    <div class="bg-white p-4 rounded shadow">
-        <h3 class="text-sm font-medium text-gray-500">Year-to-Date Total Items</h3>
-        <p class="text-lg font-semibold">3,220</p>
+
+    <!-- Date Range Picker for Custom -->
+    <div class="mb-6 hidden" id="custom-range">
+      <label class="block mb-2 text-sm font-medium text-gray-300">Select Date Range</label>
+      <div class="flex space-x-4">
+        <input type="date" class="bg-gray-800 border border-gray-700 text-gray-100 rounded-lg p-2.5 w-full">
+        <input type="date" class="bg-gray-800 border border-gray-700 text-gray-100 rounded-lg p-2.5 w-full">
+      </div>
     </div>
-</div><br>
 
-<table class="w-full border-collapse text-left">
-    <thead class="bg-gray-100">
-        <tr>
-            <th class="border px-2 py-2">Order #</th>
-            <th class="border px-2 py-2">Section</th>
-            <th class="border px-2 py-2">Details</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach ($orders ?? [] as $order)
-        <tr class="hover:bg-gray-50">
-            <td class="border px-2 py-2">{{ $order->id }}</td>
-            <td class="border px-2 py-2">{{ $order->section_name ?? 'N/A' }}</td>
-            <td class="border px-2 py-2">
-                <a href="#" class="text-blue-600 hover:underline">
-                    View
-                </a>
-            </td>
-        </tr>
-        @endforeach
-    </tbody>
-</table>
-
-<div class="flex justify-end space-x-2 mt-4">
-    <a href="#" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">Export to Excel</a>
-    <a href="#" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700">Export to PDF</a>
-</div>
+    <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg">Generate Report</button>
+  </div>
 
 @endsection
