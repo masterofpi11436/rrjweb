@@ -11,7 +11,7 @@
 <body class="bg-gray-900 text-gray-100">
     <div class="flex h-screen bg-gray-900">
         <!-- Sidebar -->
-        <aside class="w-64 bg-gray-800 text-white p-5 flex flex-col h-screen fixed">
+        <aside class="w-64 bg-green-950 text-white p-5 flex flex-col h-screen fixed">
             <h1 class="text-4xl font-bold mb-5">Navigation</h1>
             <nav>
                 <ul>
@@ -41,7 +41,7 @@
                     <h2>Welcome: {{ Auth::user()->first_name }} {{ Auth::user()->last_name }}</h2>
                     <form action="{{ route('warehouse.logout') }}" method="POST">
                         @csrf
-                        <button type="submit" class="p-2 bg-red-600 text-white rounded ml-2 hover:bg-red-700 active:bg-red-800">
+                        <button type="submit" class="p-2 bg-red-600 border border-white text-white rounded ml-2 hover:bg-red-700 active:bg-red-800">
                             Logout
                         </button>
                     </form>
