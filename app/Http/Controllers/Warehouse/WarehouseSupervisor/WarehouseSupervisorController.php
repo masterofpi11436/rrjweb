@@ -24,6 +24,6 @@ class WarehouseSupervisorController extends Controller
 
     public function dashboard()
     {
-        return view('Warehouse.WarehouseSupervisor.dashboard');
+        return view('Warehouse.WarehouseSupervisor.Dashboard.dashboard.dashboard');
     }
 }
