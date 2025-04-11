@@ -17,17 +17,17 @@
                 <ul>
                     <li class="mb-3 font-bold">
                         <a href="{{ route('warehouse.supervisor.dashboard') }}"
-                           class="block p-2 rounded hover:bg-blue-700">Create Order</a>
+                           class="block p-2 rounded hover:bg-green-900">Create Order</a>
                     </li>
 
                     <li class="mb-3 font-bold">
                         <a href="{{ route('warehouse.supervisor.exchange') }}"
-                           class="block p-2 rounded hover:bg-blue-700">1 For 1 Exchange</a>
+                           class="block p-2 rounded hover:bg-green-900">1 For 1 Exchange</a>
                     </li>
 
                     <li class="mb-3 font-bold">
                         <a href="{{ route('warehouse.supervisor.pending') }}"
-                           class="flex justify-between p-2 rounded hover:bg-blue-700">
+                           class="flex justify-between p-2 rounded hover:bg-green-900">
                             <span>Pending Orders</span>
                             <span class="bg-blue-600 text-white px-2 py-1 rounded text-sm">{{ $pendingOrdersCount }}</span>
                         </a>
@@ -35,12 +35,12 @@
 
                     <li class="mb-3 font-bold">
                         <a href="{{ route('warehouse.supervisor.approved') }}"
-                           class="block p-2 rounded hover:bg-blue-700">Recent Orders</a>
+                           class="block p-2 rounded hover:bg-green-900">Recent Orders</a>
                     </li>
 
                     <li class="mb-3 font-bold">
                         <a href="{{ route('warehouse.supervisor.requestor-pending') }}"
-                           class="flex justify-between p-2 rounded hover:bg-blue-700">
+                           class="flex justify-between p-2 rounded hover:bg-green-900">
                             <span>Pending Staff Orders</span>
                             <span class="bg-blue-600 text-white px-2 py-1 rounded text-sm">{{ $requestorPendingOrdersCount }}</span>
                         </a>

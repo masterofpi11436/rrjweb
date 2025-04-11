@@ -42,7 +42,9 @@
                                     {{ $expandedOrderId === $order['id'] ? 'Hide Details' : 'View Details' }}
                                 </button>
 
-                                <a href="{{ route('warehouse.supervisor.edit-order', ['id' => $order['id']]) }}"
+                                <a href="{{ $order['status'] === config('orderstatus.PENDING_WAREHOUSE_EXCHANGE')
+                                            ? route('warehouse.supervisor.edit-exchange-order', ['id' => $order['id']])
+                                            : route('warehouse.supervisor.edit-order', ['id' => $order['id']]) }}"
                                     class="px-4 py-2 bg-yellow-600 text-white text-sm rounded hover:bg-yellow-700 border border-white">
                                     Edit Order
                                 </a>
@@ -79,6 +81,7 @@
                                             <span>{{ $item['name'] }}</span>
                                             <span class="font-bold">x{{ $item['quantity'] }}</span>
                                         </li>
+                                        <hr class="my-3 border-white-700" />
                                     @endforeach
                                 </ul>
                             </div>

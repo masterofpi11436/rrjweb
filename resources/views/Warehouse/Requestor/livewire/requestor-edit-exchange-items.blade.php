@@ -1,7 +1,7 @@
 <div class="max-w-6xl mx-auto p-6 bg-gray-900 shadow-md rounded-lg text-gray-100">
 
     <!-- Shopping Cart -->
-    <div class="bg-gray-800 p-6 rounded-lg shadow-md mb-6">
+    <div class="bg-gray-800 p-6 rounded-lg shadow-md mb-6 border border-white">
         <h2 class="text-xl font-bold mb-4 text-white">Shopping Cart</h2>
 
         @if(count($cart) > 0)

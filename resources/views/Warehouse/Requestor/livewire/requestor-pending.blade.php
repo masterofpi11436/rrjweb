@@ -8,7 +8,7 @@
     @endif
 
     @if($pendingOrders->count() > 0)
-        <ul class="border border-gray-700 p-4 rounded-md bg-gray-800">
+        <ul class="border border-white p-4 rounded-md bg-gray-800">
             @foreach ($pendingOrders as $order)
                 <li class="p-3 border-b border-gray-600 last:border-b-0">
                     <div class="flex justify-between items-center">
@@ -31,19 +31,19 @@
                         <div class="flex space-x-2">
                             <!-- Toggle Order Details Button -->
                             <button wire:click="toggleOrderDetails({{ $order->id }})"
-                                    class="px-4 py-2 bg-blue-600 text-white text-sm rounded hover:bg-blue-700">
+                                    class="px-4 py-2 bg-blue-600 text-white text-sm rounded hover:bg-blue-700 border border-white">
                                 {{ $expandedOrderId === $order->id ? 'Hide Details' : 'View Details' }}
                             </button>
 
                             <!-- Edit Order Button -->
                             <button wire:click="editOrder({{ $order->id }})"
-                                    class="px-4 py-2 bg-yellow-600 text-white text-sm rounded hover:bg-yellow-700">
+                                    class="px-4 py-2 bg-yellow-600 text-white text-sm rounded hover:bg-yellow-700 border border-white">
                                 Edit Order
                             </button>
 
                             <!-- Delete Button -->
                             <a href="{{ route('warehouse.requestor.destroy', $order->id) }}"
-                               class="px-4 py-2 bg-red-600 text-white text-sm rounded hover:bg-red-700"
+                               class="px-4 py-2 bg-red-600 text-white text-sm rounded hover:bg-red-700 border border-white"
                                onclick="event.preventDefault(); confirmDelete({{ $order->id }});">
                                 Cancel Order
                             </a>
@@ -77,6 +77,7 @@
                                         <span>{{ $item['name'] }}</span>
                                         <span class="font-bold">x{{ $item['quantity'] }}</span>
                                     </li>
+                                    <hr class="my-3 border-white-700" />
                                 @endforeach
                             </ul>
                         </div>

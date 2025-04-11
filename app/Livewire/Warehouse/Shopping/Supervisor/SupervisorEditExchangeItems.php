@@ -72,7 +72,7 @@ class SupervisorEditExchangeItems extends Component
         $order->items = json_encode(session('cart_exchange', []));
         $order->save();
 
-        redirect()->route('warehouse.requestor.pending')->with('success', 'Order updated successfully!');
+        redirect()->route('warehouse.supervisor.pending')->with('success', 'Order updated successfully!');
     }
 
     public function updatingSearch()

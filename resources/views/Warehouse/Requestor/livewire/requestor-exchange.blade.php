@@ -9,11 +9,11 @@
     </script>
 
     <!-- Shopping Cart -->
-    <div class="bg-gray-800 p-6 rounded-lg shadow-md mb-6">
+    <div class="bg-gray-800 p-6 rounded-lg shadow-md mb-6 border border-white">
         <h2 class="text-xl font-bold mb-4 text-white">Shopping Cart</h2>
 
         @if(count($cart) > 0)
-            <ul class="border border-gray-700 p-4 rounded-md bg-gray-700 border border-white">
+            <ul class="p-4 rounded-md bg-gray-700 border border-white">
                 @foreach ($cart as $item)
                 <li class="flex justify-between items-center p-2 border-b border-gray-600 last:border-b-0">
                     <span class="font-medium text-gray-200">{{ $item['name'] }}</span>

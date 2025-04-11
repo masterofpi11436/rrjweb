@@ -2,11 +2,11 @@
     <!-- Search Bar & Category Filter -->
     <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-6 gap-4">
         <input type="text" wire:model.live="search" placeholder="Search Items..."
-            class="w-full sm:w-2/3 p-3 border border-gray-700 rounded-md shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none bg-gray-800 text-white placeholder-gray-400"
+            class="w-full sm:w-2/3 p-3 border border-white rounded-md shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none bg-gray-800 text-white placeholder-gray-400"
         >
 
         <select wire:model.live="selectedCategory"
-            class="w-full sm:w-1/3 p-3 border border-gray-700 rounded-md shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none bg-gray-800 text-white">
+            class="w-full sm:w-1/3 p-3 border border-white rounded-md shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none bg-gray-800 text-white">
             <option value="">All Categories</option>
             @foreach($categories as $category)
                 <option value="{{ $category->id }}">{{ $category->category }}</option>
@@ -24,11 +24,11 @@
     </script>
 
     <!-- Shopping Cart -->
-    <div class="bg-gray-800 p-6 rounded-lg shadow-md mb-6">
+    <div class="bg-gray-800 p-6 rounded-lg shadow-md mb-6 border border-white">
         <h2 class="text-xl font-bold mb-4 text-white">Shopping Cart</h2>
 
         @if(count($cart) > 0)
-            <ul class="border border-gray-700 p-4 rounded-md bg-gray-700">
+            <ul class="border border-white p-4 rounded-md bg-gray-700">
                 @foreach ($cart as $item)
                 <li class="flex justify-between items-center p-2 border-b border-gray-600 last:border-b-0">
                     <span class="font-medium text-gray-200">{{ $item['name'] }}</span>
@@ -54,7 +54,7 @@
             <div class="mt-6 flex justify-center">
                 <a href="javascript:void(0)"
                    onclick="updateLivewireBeforeCheckout()"
-                   class="bg-green-600 text-white px-6 py-3 rounded-md shadow-md hover:bg-green-700">
+                   class="bg-green-700 text-white px-6 py-3 rounded-md shadow-md hover:bg-green-800 border border-white">
                     Proceed to Checkout
                 </a>
             </div>
@@ -67,7 +67,7 @@
     <!-- Items Grid -->
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         @forelse($items as $item)
-            <div class="bg-gray-800 border border-gray-700 rounded-lg shadow-md overflow-hidden">
+            <div class="bg-gray-800 border border-white rounded-lg shadow-md overflow-hidden">
                 <img src="{{ $item->image ? asset('storage/' . $item->image) : asset('images/default-image.jpg') }}"
                      alt="{{ $item->name }}" class="w-full h-40 object-cover">
                 <div class="p-4">
@@ -85,7 +85,7 @@
                         placeholder="Enter quantity">
 
                     <button wire:click="addToCart({{ $item->id }})"
-                        class="mt-3 w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700">
+                        class="mt-3 w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 border border-white">
                         Add to Cart
                     </button>
                 </div>

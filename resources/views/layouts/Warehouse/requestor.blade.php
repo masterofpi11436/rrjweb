@@ -16,17 +16,17 @@
             <nav>
                 <ul>
                     <li class="mb-3 font-bold">
-                        <a href="{{ route('warehouse.requestor.dashboard') }}" class="block p-2 rounded hover:bg-blue-700">Create Orders</a>
+                        <a href="{{ route('warehouse.requestor.dashboard') }}" class="block p-2 rounded hover:bg-green-900">Create Orders</a>
                     </li>
                     <li class="mb-3 font-bold">
                         <a href="{{ route('warehouse.requestor.pending') }}"
-                           class="flex justify-between p-2 rounded hover:bg-blue-700">
+                           class="flex justify-between p-2 rounded hover:bg-green-900">
                             <span>Pending Orders</span>
                             <span class="bg-blue-600 text-white px-2 py-1 rounded text-sm">{{ $pendingOrdersCount }}</span>
                         </a>
                     </li>
                     <li class="mb-3 font-bold">
-                        <a href="{{ route('warehouse.requestor.exchange') }}" class="block p-2 rounded hover:bg-blue-700">1 For 1 Exchange</a>
+                        <a href="{{ route('warehouse.requestor.exchange') }}" class="block p-2 rounded hover:bg-green-900">1 For 1 Exchange</a>
                     </li>
                 </ul>
             </nav>
