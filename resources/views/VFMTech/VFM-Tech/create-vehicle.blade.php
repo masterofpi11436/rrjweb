@@ -2,7 +2,7 @@
 
 @section('title', 'VFM Tech')
 
-@section('heading', 'Add a New Vehicle')
+@section('heading', 'Add a New Vehicle Tech')
 
 @section('content')
 

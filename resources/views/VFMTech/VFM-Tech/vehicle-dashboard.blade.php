@@ -19,6 +19,6 @@
 
 <a href="{{ route('vfm-tech.dashboard') }}" class="create-link">Back to Inspections</a>
 
-@livewire('VFM.VFM-vehicle-search')
+@livewire('VFM.VFM-tech-vehicle-search')
 
 @endsection

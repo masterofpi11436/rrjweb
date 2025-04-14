@@ -7,7 +7,7 @@ use Livewire\Component;
 // Required Models
 use App\Models\VFM\VFMVehicle;
 
-class VFMVehicleSearch extends Component
+class VFMTechVehicleSearch extends Component
 {
     public $search = ''; // Default search term
     public $sortColumn = 'license_plate'; // Default sort column

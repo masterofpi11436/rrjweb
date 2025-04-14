@@ -58,11 +58,11 @@
                         <td>{{ $vehicle->vehicle_year }}</td>
                         <td>{{ $vehicle->vin }}</td>
                         <td>
-                            <a href="{{ route('vfm.vehicle.edit', $vehicle->id) }}">Edit</a>/
+                            <a href="{{ route('vfm-tech.vehicle.edit', $vehicle->id) }}">Edit</a>/
                             <div>
                                 <!-- Delete link -->
                                 <a href="#" onclick="event.preventDefault(); confirmDelete({{ $vehicle->id }});">Delete</a>
-                                <form id="delete-form-{{ $vehicle->id }}" action="{{ route('vfm.vehicle.destroy', $vehicle->id) }}" method="POST" style="display: none;">
+                                <form id="delete-form-{{ $vehicle->id }}" action="{{ route('vfm-tech.vehicle.destroy', $vehicle->id) }}" method="POST" style="display: none;">
                                     @csrf
                                     @method('DELETE')
                                 </form>
