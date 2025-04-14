@@ -85,4 +85,6 @@
     </table>
 </div>
 
+@livewire('Warehouse.History.warehousehistoryall')
+
 @endsection
