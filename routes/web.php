@@ -177,7 +177,7 @@ Route::prefix('vfm30')->group(function () use ($vfm30Class, $vfm30LoginClass){
 });
 
 // Vehicle Fleet Maintenance Application (Technicians)
-Route::prefix('vfm-tech')->group(function () use ($vfmTechClass, $vfmTechLoginClass){
+Route::prefix('vfm-tech')->group(function () use ($vfmTechClass, $vfmVehicleClass,  $vfmTechLoginClass){
 
     // Routes without middleware
     Route::get('/login', [$vfmTechLoginClass, 'VFMTechLoginForm'])->name('vfm-tech.login');
@@ -190,6 +190,14 @@ Route::prefix('vfm-tech')->group(function () use ($vfmTechClass, $vfmTechLoginCl
     Route::middleware('vfm-tech')->group(function () use ($vfmTechClass) {
         Route::get('/dashboard', [$vfmTechClass, 'dashboard'])->name('vfm-tech.dashboard');
         Route::get('/create', [$vfmTechClass, 'create'])->name('vfm-tech.create');
+    });
+
+    // Vehicle Fleet CRUD pages
+    Route::prefix('vehicle')->group(function () use ($vfmVehicleClass) {
+        Route::get('/dashboard', [$vfmVehicleClass, 'dashboard'])->name('vfm-tech.vehicle.dashboard');
+        Route::get('/create', [$vfmVehicleClass, 'create'])->name('vfm-tech.vehicle.create');
+        Route::get('/{id}/edit', [$vfmVehicleClass, 'edit'])->name('vfm-tech.vehicle.edit');
+        Route::delete('/{id}', [$vfmVehicleClass, 'destroy'])->name('vfm-tech.vehicle.destroy');
     });
 });
 

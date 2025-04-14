@@ -33,6 +33,11 @@
             </div>
 
             <div>
+                <label>Year</label>
+                <input type="text" wire:model.defer="vehicle_year">
+            </div>
+
+            <div>
                 <label>License Plate:</label>
                 <input type="text" wire:model.defer="license_plate" readonly>
             </div>
