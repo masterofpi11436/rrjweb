@@ -27,4 +27,28 @@ class HistoryController extends Controller
     {
         return view('Warehouse.WarehouseSupervisor.History.history.dashboard');
     }
+
+    // All approved regular orders
+    public function approved()
+    {
+        return view('Warehouse.WarehouseSupervisor.History.history.dashboard');
+    }
+
+    // All denied regular orders
+    public function denied()
+    {
+        return view('Warehouse.WarehouseSupervisor.History.history.dashboard');
+    }
+
+    // All approved exchange orders
+    public function approvedExchange()
+    {
+        return view('Warehouse.WarehouseSupervisor.History.history.dashboard');
+    }
+
+    // All denied exchange orders
+    public function deniedExchange()
+    {
+        return view('Warehouse.WarehouseSupervisor.History.history.dashboard');
+    }
 }

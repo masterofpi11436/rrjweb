@@ -10,7 +10,6 @@ use App\Http\Controllers\Login\VFMLoginController;
 use App\Http\Controllers\Login\BaseLoginController;
 use App\Http\Controllers\Login\AdminLoginController;
 use App\Http\Controllers\Login\PhoneLoginController;
-use App\Http\Controllers\Login\VFM30LoginController;
 use App\Http\Controllers\Login\PolicyLoginController;
 use App\Http\Controllers\Login\VFMTechLoginController;
 use App\Http\Controllers\Login\WarehouseLoginController;
@@ -20,7 +19,6 @@ use App\Http\Controllers\ICS\ICSController;
 use App\Http\Controllers\VFM\VFMController;
 use App\Http\Controllers\VFM\VFMVehicleController;
 use App\Http\Controllers\VFM\VFMTechVehicleController;
-use App\Http\Controllers\VFM30\VFM30Controller;
 use App\Http\Controllers\VFM\VFMTechController;
 use App\Http\Controllers\Directory\PhoneDirectoryController;
 use App\Http\Controllers\Administrator\AdministratorController;
@@ -45,7 +43,6 @@ $baseLoginClass = BaseLoginController::class;
 $adminLoginClass = AdminLoginController::class;
 $phoneLoginClass = PhoneLoginController::class;
 $vfmLoginClass = VFMLoginController::class;
-$vfm30LoginClass = VFM30LoginController::class;
 $vfmTechLoginClass = VFMTechLoginController::class;
 $icsLoginClass = ICSLoginController::class;
 $policyLoginClass = PolicyLoginController::class;
@@ -57,7 +54,6 @@ $phoneClass = PhoneDirectoryController::class;
 $vfmClass = VFMController::class;
 $vfmVehicleClass = VFMVehicleController::class;
 $vfmTechVehicleClass = VFMTechVehicleController::class;
-$vfm30Class = VFM30Controller::class;
 $vfmTechClass = VFMTechController::class;
 $icsClass = ICSController::class;
 $policyClass = PolicyController::class;
@@ -156,25 +152,6 @@ Route::prefix('vfm')->group(function () use ($vfmClass, $vfmLoginClass, $vfmVehi
             Route::get('/{id}/edit', [$vfmVehicleClass, 'edit'])->name('vfm.vehicle.edit');
             Route::delete('/{id}', [$vfmVehicleClass, 'destroy'])->name('vfm.vehicle.destroy');
         });
-    });
-});
-
-
-Route::prefix('vfm30')->group(function () use ($vfm30Class, $vfm30LoginClass){
-
-    // Routes without middleware
-    Route::get('/login', [$vfm30LoginClass, 'vfmLoginForm'])->name('vfm30.login');
-    Route::post('/login', [$vfm30LoginClass, 'login']);
-    Route::get('/forgot', [$vfm30LoginClass, 'vfmForgotPasswordForm'])->name('vfm30.forgot.form');
-    Route::post('/forgot', [$vfm30LoginClass, 'forgotPassword'])->name('vfm30.forgot.form.submit');
-    Route::post('/logout', [$vfm30LoginClass, 'logout'])->name('vfm30.logout');
-
-    // Routes with 'vfm' middleware (Admin side)
-    Route::middleware('vfm30')->group(function () use ($vfm30Class) {
-        Route::get('/dashboard', [$vfm30Class, 'dashboard'])->name('vfm30.dashboard');
-        Route::get('/create', [$vfm30Class, 'create'])->name('vfm30.create');
-        Route::get('/{id}/edit', [$vfm30Class, 'edit'])->name('vfm30.edit');
-        Route::delete('/{id}', [$vfm30Class, 'destroy'])->name('vfm30.destroy');
     });
 });
 
@@ -331,6 +308,10 @@ Route::prefix('warehouse')->group(function () use ($warehouseLoginClass, $wareho
             // Reports pages
             Route::prefix('history')->group(function () use ($historyClass) {
                 Route::get('/dashboard', [$historyClass, 'dashboard'])->name('warehouse.warehouse-supervisor.history.dashboard');
+                Route::get('/approved', [$historyClass, 'approved'])->name('warehouse.warehouse-supervisor.history.approved');
+                Route::get('/denied', [$historyClass, 'denied'])->name('warehouse.warehouse-supervisor.history.denied');
+                Route::get('/approved-exchange', [$historyClass, 'approvedExchange'])->name('warehouse.warehouse-supervisor.approved-exchange.');
+                Route::get('/denied-exchange', [$historyClass, 'deniedExchange'])->name('warehouse.warehouse-supervisor.denied-exchange.');
             });
         });
 
