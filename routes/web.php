@@ -19,6 +19,7 @@ use App\Http\Controllers\Login\WarehouseLoginController;
 use App\Http\Controllers\ICS\ICSController;
 use App\Http\Controllers\VFM\VFMController;
 use App\Http\Controllers\VFM\VFMVehicleController;
+use App\Http\Controllers\VFM\VFMTechVehicleController;
 use App\Http\Controllers\VFM30\VFM30Controller;
 use App\Http\Controllers\VFM\VFMTechController;
 use App\Http\Controllers\Directory\PhoneDirectoryController;
@@ -55,6 +56,7 @@ $adminClass = AdministratorController::class;
 $phoneClass = PhoneDirectoryController::class;
 $vfmClass = VFMController::class;
 $vfmVehicleClass = VFMVehicleController::class;
+$vfmTechVehicleClass = VFMTechVehicleController::class;
 $vfm30Class = VFM30Controller::class;
 $vfmTechClass = VFMTechController::class;
 $icsClass = ICSController::class;
@@ -177,7 +179,7 @@ Route::prefix('vfm30')->group(function () use ($vfm30Class, $vfm30LoginClass){
 });
 
 // Vehicle Fleet Maintenance Application (Technicians)
-Route::prefix('vfm-tech')->group(function () use ($vfmTechClass, $vfmVehicleClass,  $vfmTechLoginClass){
+Route::prefix('vfm-tech')->group(function () use ($vfmTechClass, $vfmTechVehicleClass,  $vfmTechLoginClass){
 
     // Routes without middleware
     Route::get('/login', [$vfmTechLoginClass, 'VFMTechLoginForm'])->name('vfm-tech.login');
@@ -186,18 +188,18 @@ Route::prefix('vfm-tech')->group(function () use ($vfmTechClass, $vfmVehicleClas
     Route::post('/forgot', [$vfmTechLoginClass, 'forgotPassword'])->name('vfm-tech.forgot.form.submit');
     Route::post('/logout', [$vfmTechLoginClass, 'logout'])->name('vfm-tech.logout');
 
-    // Routes with 'vfm' middleware (Admin side)
-    Route::middleware('vfm-tech')->group(function () use ($vfmTechClass) {
+    // Routes with 'vfm' middleware
+    Route::middleware('vfm-tech')->group(function () use ($vfmTechClass, $vfmTechVehicleClass) {
         Route::get('/dashboard', [$vfmTechClass, 'dashboard'])->name('vfm-tech.dashboard');
         Route::get('/create', [$vfmTechClass, 'create'])->name('vfm-tech.create');
-    });
 
-    // Vehicle Fleet CRUD pages
-    Route::prefix('vehicle')->group(function () use ($vfmVehicleClass) {
-        Route::get('/dashboard', [$vfmVehicleClass, 'dashboard'])->name('vfm-tech.vehicle.dashboard');
-        Route::get('/create', [$vfmVehicleClass, 'create'])->name('vfm-tech.vehicle.create');
-        Route::get('/{id}/edit', [$vfmVehicleClass, 'edit'])->name('vfm-tech.vehicle.edit');
-        Route::delete('/{id}', [$vfmVehicleClass, 'destroy'])->name('vfm-tech.vehicle.destroy');
+        // Vehicle Fleet CRUD pages
+        Route::prefix('vehicle')->group(function () use ($vfmTechVehicleClass) {
+            Route::get('/dashboard', [$vfmTechVehicleClass, 'dashboard'])->name('vfm-tech.vehicle.dashboard');
+            Route::get('/create', [$vfmTechVehicleClass, 'create'])->name('vfm-tech.vehicle.create');
+            Route::get('/{id}/edit', [$vfmTechVehicleClass, 'edit'])->name('vfm-tech.vehicle.edit');
+            Route::delete('/{id}', [$vfmTechVehicleClass, 'destroy'])->name('vfm-tech.vehicle.destroy');
+        });
     });
 });
 

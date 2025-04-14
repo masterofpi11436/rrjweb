@@ -39,6 +39,14 @@
                         </a>
                     </th>
                     <th>
+                        <a href="#" wire:click.prevent="sortBy('vehicle_year')">
+                            Model
+                            @if ($sortColumn === 'vehicle_year')
+                                @if ($sortDirection === 'asc') ▲ @else ▼ @endif
+                            @endif
+                        </a>
+                    </th>
+                    <th>
                         <a href="#" wire:click.prevent="sortBy('date_in')">
                             Date In
                             @if ($sortColumn === 'date_in')
@@ -63,6 +71,7 @@
                         <td>{{ $vehicle->vehicle_license_plate }}</td>
                         <td>{{ $vehicle->vehicle_make }}</td>
                         <td>{{ $vehicle->vehicle_model }}</td>
+                        <td>{{ $vehicle->vehicle_year }}</td>
                         <td>{{ $vehicle->date_in }}</td>
                         <td>{{ $vehicle->date_out }}</td>
                     </tr>
