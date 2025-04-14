@@ -16,6 +16,9 @@ php artisan migrate:refresh
 php artisan db:seed
 php artisan migrate:refresh --seed
 
+# Change starting ID number
+ALTER TABLE orders AUTO_INCREMENT = 1000;
+
 # Migrate one table
 php artisan migrate --path=/database/migrations/2025_01_28_125006_create_test_table.php
 
