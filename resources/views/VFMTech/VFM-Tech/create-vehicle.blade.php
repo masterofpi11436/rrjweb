@@ -8,6 +8,6 @@
 
 <a href="{{ route('vfm-tech.vehicle.dashboard') }}">Cancel</a>
 
-@livewire('VFM.VFM-vehicle-form')
+@livewire('VFM.VFM-tech-vehicle-form')
 
 @endsection

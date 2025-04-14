@@ -35,7 +35,7 @@ class VFMTechVehicleSearch extends Component
                                            ->orWhere('license_plate', 'like', '%' . $this->search . '%')
                                            ->orWhere('make', 'like', '%' . $this->search . '%')
                                            ->orWhere('model', 'like', '%' . $this->search . '%')
-                                           ->orWhere('vehicle_year', 'like', '%' . $this->search . '%')
+                                           ->orWhereRaw("CAST(vehicle_year AS CHAR) LIKE ?", ['%' . $this->search . '%'])
                                            ->orWhere('vin', 'like', '%' . $this->search . '%')
                                            ->orderBy($this->sortColumn, $this->sortDirection)
                                            ->get(),

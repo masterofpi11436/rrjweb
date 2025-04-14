@@ -75,6 +75,6 @@ class VFMTechVehicleForm extends Component
 
     public function render()
     {
-        return view('VFMTech.livewire.vfm-vehicle-form');
+        return view('VFMTech.livewire.vfm-tech-vehicle-form');
     }
 }

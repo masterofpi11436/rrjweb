@@ -40,7 +40,7 @@
                     </th>
                     <th>
                         <a href="#" wire:click.prevent="sortBy('vehicle_year')">
-                            Model
+                            Year
                             @if ($sortColumn === 'vehicle_year')
                                 @if ($sortDirection === 'asc') ▲ @else ▼ @endif
                             @endif

@@ -21,7 +21,7 @@ class VFMTechVehicleController extends Controller
     public function edit($id)
     {
         $vfm = VFMVehicle::findOrFail($id);
-        return view('VFMTech.VFM-Tech.edit-vehicle', ['vfm' => $vfm]);
+        return view('VFMTech.VFM-Tech.vfm-tech-edit-vehicle', ['vfm' => $vfm]);
     }
 
     public function destroy($id)
