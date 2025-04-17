@@ -46,6 +46,7 @@
                             @endif
                         </a>
                     </th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -55,6 +56,12 @@
                         <td class="p-2 border-b border-gray-700">{{ $order->created_at }}</td>
                         <td class="p-2 border-b border-gray-700">{{ $order->supervisor }}</td>
                         <td class="p-2 border-b border-gray-700">{{ $order->section }}</td>
+                        <td class="p-2 border-b border-gray-700">
+                            <a href="{{ route('warehouse.warehouse-supervisor.view-order', ['orderId' => $order->order_number, 'source' => $order->source ?? 'new']) }}"
+                               class="text-blue-400 hover:underline">
+                                {{ $order->order_number }}
+                            </a>
+                        </td>
                     </tr>
                 @empty
                     <tr>

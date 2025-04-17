@@ -51,4 +51,13 @@ class HistoryController extends Controller
     {
         return view('Warehouse.WarehouseSupervisor.History.history.denied-exchange');
     }
+
+    // View a specific order
+    public function viewOrder($orderId, $source)
+    {
+        return view('Warehouse.WarehouseSupervisor.History.history.view-order', [
+            'orderId' => $orderId,
+            'source' => $source,
+        ]);
+    }
 }
