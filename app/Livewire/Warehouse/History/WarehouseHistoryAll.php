@@ -38,7 +38,11 @@ class WarehouseHistoryAll extends Component
             )
             ->get();
 
-            $this->orders = $defaultOrders->merge($oldOrders)->sortByDesc('created_at')->values() ?? [];
+            $this->orders = $defaultOrders
+                    ->merge($oldOrders)
+                    ->sortByDesc('created_at')
+                    ->take(20)
+                    ->values();
     }
 
     public function render()
