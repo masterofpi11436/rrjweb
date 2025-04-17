@@ -1,5 +1,11 @@
 <div>
 
+    <!-- Back Button -->
+    <a href="{{ route('warehouse.warehouse-supervisor.history.dashboard') }}"
+    class="mb-4 inline-block bg-gray-800 text-white border border-red-600 px-2 py-2 text-sm font-semibold rounded-md hover:bg-gray-700">
+        Back
+    </a>
+
     <input type="text" placeholder="Search orders..." wire:model.live="search"
         class="mb-4 p-2 w-full rounded bg-gray-800 border border-gray-700 text-gray-100 placeholder-gray-400"/>
 
