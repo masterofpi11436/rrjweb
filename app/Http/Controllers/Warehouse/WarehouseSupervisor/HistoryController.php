@@ -43,12 +43,12 @@ class HistoryController extends Controller
     // All approved exchange orders
     public function approvedExchange()
     {
-        return view('Warehouse.WarehouseSupervisor.History.history.dashboard');
+        return view('Warehouse.WarehouseSupervisor.History.history.approved-exchange');
     }
 
     // All denied exchange orders
     public function deniedExchange()
     {
-        return view('Warehouse.WarehouseSupervisor.History.history.dashboard');
+        return view('Warehouse.WarehouseSupervisor.History.history.denied-exchange');
     }
 }

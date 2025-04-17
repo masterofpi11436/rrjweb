@@ -310,8 +310,8 @@ Route::prefix('warehouse')->group(function () use ($warehouseLoginClass, $wareho
                 Route::get('/dashboard', [$historyClass, 'dashboard'])->name('warehouse.warehouse-supervisor.history.dashboard');
                 Route::get('/approved', [$historyClass, 'approved'])->name('warehouse.warehouse-supervisor.history.approved');
                 Route::get('/denied', [$historyClass, 'denied'])->name('warehouse.warehouse-supervisor.history.denied');
-                Route::get('/approved-exchange', [$historyClass, 'approvedExchange'])->name('warehouse.warehouse-supervisor.approved-exchange.');
-                Route::get('/denied-exchange', [$historyClass, 'deniedExchange'])->name('warehouse.warehouse-supervisor.denied-exchange.');
+                Route::get('/approved-exchange', [$historyClass, 'approvedExchange'])->name('warehouse.warehouse-supervisor.approved-exchange');
+                Route::get('/denied-exchange', [$historyClass, 'deniedExchange'])->name('warehouse.warehouse-supervisor.denied-exchange');
             });
         });
 

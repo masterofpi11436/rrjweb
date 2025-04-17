@@ -5,7 +5,7 @@ namespace App\Livewire\Warehouse\History;
 use Livewire\Component;
 use Illuminate\Support\Facades\DB;
 
-class Denied extends Component
+class ApprovedExchange extends Component
 {
     public $orders = [];
     public $search = '';
@@ -36,7 +36,7 @@ class Denied extends Component
 
     public function loadOrders()
     {
-        $status = 'denied';
+        $status = 'exchange_approved';
         $oldStatus = config("oldorderstatus.$status");
 
         $defaultOrders = DB::connection('mysql')
@@ -103,7 +103,7 @@ class Denied extends Component
             ])
             ->values();
 
-        return view('Warehouse.WarehouseSupervisor.History.livewire.denied', [
+        return view('Warehouse.WarehouseSupervisor.History.livewire.approved-exchange', [
             'orders' => $filtered,
         ]);
     }

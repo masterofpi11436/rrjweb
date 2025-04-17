@@ -14,13 +14,13 @@
 
 
         <!-- Approved Exchange Orders Link -->
-        <a href="#" class="bg-green-600 hover:bg-green-700 p-4 rounded transition">
+        <a href="{{ route('warehouse.warehouse-supervisor.approved-exchange') }}" class="bg-green-600 hover:bg-green-700 p-4 rounded transition">
             <h2 class="text-lg font-bold text-white mb-1">Approved Exchange Orders</h2>
             <p class="text-sm text-white">View all exchange orders that have been approved.</p>
         </a>
 
         <!-- Denied Exchange Orders Link -->
-        <a href="#" class="bg-red-600 hover:bg-red-700 p-4 rounded transition">
+        <a href="{{ route('warehouse.warehouse-supervisor.denied-exchange') }}" class="bg-red-600 hover:bg-red-700 p-4 rounded transition">
             <h2 class="text-lg font-bold text-white mb-1">Denied Exchange Orders</h2>
             <p class="text-sm text-white">View all exchange orders that have been denied.</p>
         </a>
