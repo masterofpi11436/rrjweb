@@ -1,8 +1,8 @@
 @extends('layouts.Warehouse.warehouse-supervisor')
 
-@section('title', 'Apprved Orders')
+@section('title', 'Approved Orders')
 
-@section('heading', 'Apprved Orders')
+@section('heading', 'Approved Orders')
 
 @section('content')
 

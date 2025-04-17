@@ -7,7 +7,7 @@
         </a>
 
         <!-- Denied Orders Link -->
-        <a href="#" class="bg-red-600 hover:bg-red-700 p-4 rounded transition">
+        <a href="{{ route('warehouse.warehouse-supervisor.history.denied') }}" class="bg-red-600 hover:bg-red-700 p-4 rounded transition">
             <h2 class="text-lg font-bold text-white mb-1">Denied Orders</h2>
             <p class="text-sm text-white">View all orders that have been denied.</p>
         </a>
