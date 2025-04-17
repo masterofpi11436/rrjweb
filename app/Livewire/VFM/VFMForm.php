@@ -46,6 +46,7 @@ class VFMForm extends Component
     public $vfm_vehicle_id;
     public $make;
     public $model;
+    public $vehicle_year;
     public $vin;
     public $license_plate;
 
@@ -56,11 +57,13 @@ class VFMForm extends Component
         if ($vehicle) {
             $this->make = $vehicle->make;
             $this->model = $vehicle->model;
+            $this->vehicle_year = $vehicle->vehicle_year;
             $this->vin = $vehicle->vin;
             $this->license_plate = $vehicle->license_plate;
         } else {
             $this->make = null;
             $this->model = null;
+            $this->vehicle_year = null;
             $this->vin = null;
             $this->license_plate = null;
         }
