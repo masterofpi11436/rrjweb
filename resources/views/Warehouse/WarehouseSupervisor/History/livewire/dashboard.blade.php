@@ -1,7 +1,7 @@
 <div>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
         <!-- Approved Orders Link -->
-        <a href="#" class="bg-green-600 hover:bg-green-700 p-4 rounded transition">
+        <a href="{{ route('warehouse.warehouse-supervisor.history.approved') }}" class="bg-green-600 hover:bg-green-700 p-4 rounded transition">
             <h2 class="text-lg font-bold text-white mb-1">Approved Orders</h2>
             <p class="text-sm text-white">View all orders that have been approved.</p>
         </a>

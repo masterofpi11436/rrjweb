@@ -31,7 +31,7 @@ class HistoryController extends Controller
     // All approved regular orders
     public function approved()
     {
-        return view('Warehouse.WarehouseSupervisor.History.history.dashboard');
+        return view('Warehouse.WarehouseSupervisor.History.history.approved');
     }
 
     // All denied regular orders
