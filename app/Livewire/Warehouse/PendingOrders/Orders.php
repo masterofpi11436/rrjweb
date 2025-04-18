@@ -43,8 +43,8 @@ class Orders extends Component
 
         $first = $orders->first();
         Order::create([
-            'user_id' => $first->user_id,
-            'user_name' => $first->user_name,
+            'user_id' => null,
+            'user_name' => "CONSOLIDATED",
             'supervisor_id' => null,
             'supervisor_name' => "CONSOLIDATED",
             'section_id' => $first->section_id,

@@ -14,6 +14,7 @@ class SupervisorHistory extends Component
     {
         $statuses = [
             config('orderstatus.CONSOLIDATED'),
+            config('orderstatus.EXCHANGE_CONSOLIDATED'),
             config('orderstatus.APPROVED'),
             config('orderstatus.DENIED'),
             config('orderstatus.EXCHANGE_DENIED'),
