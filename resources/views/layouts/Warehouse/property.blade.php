@@ -11,22 +11,20 @@
 <body class="bg-gray-900 text-white">
     <div class="flex h-screen bg-gray-900">
         <!-- Sidebar -->
-        <aside class="w-64 bg-green-900 text-white p-5 flex flex-col h-screen fixed overflow-y-auto scrollbar-hide">
-            <h1 class="text-4xl font-bold mb-5">Navigation</h1>
+        <aside class="w-64 bg-green-950 text-white p-5 flex flex-col h-screen fixed">
+        <h1 class="text-4xl font-bold mb-5">Navigation</h1>
             <nav>
                 <ul>
                     <!-- Create Order -->
                     <li class="mb-3 font-bold">
                         <a href="{{ route('warehouse.property.dashboard') }}"
-                           class="block p-2 rounded border border-blue-500 hover:bg-blue-700">
-                            Create Order
-                        </a>
+                           class="block p-2 rounded hover:bg-green-900">Create Order</a>
                     </li>
 
                     <!-- Pending Orders -->
                     <li class="mb-3 font-bold">
                         <a href="{{ route('warehouse.property.pending') }}"
-                           class="flex justify-between items-center p-2 rounded border border-blue-500 hover:bg-blue-700">
+                           class="flex justify-between p-2 rounded hover:bg-green-900">
                             <span>Pending Orders</span>
                             <span class="bg-blue-600 text-white px-2 py-1 rounded text-sm">{{ $pendingOrdersCount }}</span>
                         </a>
@@ -35,15 +33,13 @@
                     <!-- Recent Orders -->
                     <li class="mb-3 font-bold">
                         <a href="{{ route('warehouse.property.approved') }}"
-                           class="block p-2 rounded border border-blue-500 hover:bg-blue-700">
-                            Recent Orders
-                        </a>
+                           class="block p-2 rounded hover:bg-green-900">Recent Orders</a>
                     </li>
 
                     <!-- Approve Staff Orders -->
                     <li class="mb-3 font-bold">
                         <a href="{{ route('warehouse.property.requestor-pending') }}"
-                           class="flex justify-between items-center p-2 rounded border border-blue-500 hover:bg-blue-700">
+                           class="flex justify-between p-2 rounded hover:bg-green-900">
                             <span>Pending Staff Orders</span>
                             <span class="bg-blue-600 text-white px-2 py-1 rounded text-sm">{{ $requestorPendingOrdersCount }}</span>
                         </a>

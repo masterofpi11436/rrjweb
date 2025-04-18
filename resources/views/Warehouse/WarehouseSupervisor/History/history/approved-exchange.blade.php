@@ -6,6 +6,6 @@
 
 @section('content')
 
-@livewire('Warehouse.History.approvedexchange')
+@livewire('Warehouse.History.ApprovedExchange')
 
 @endsection

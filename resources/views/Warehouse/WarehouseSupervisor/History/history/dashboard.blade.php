@@ -6,6 +6,6 @@
 
 @section('content')
 
-@livewire('Warehouse.History.warehousehistoryall')
+@livewire('Warehouse.History.WarehouseHistoryAll')
 
 @endsection

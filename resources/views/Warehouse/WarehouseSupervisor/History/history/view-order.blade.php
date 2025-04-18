@@ -6,6 +6,6 @@
 
 @section('content')
 
-@livewire('warehouse.history.view-order', ['orderId' => $orderId, 'source' => $source])
+@livewire('warehouse.History.ViewOrder', ['orderId' => $orderId, 'source' => $source])
 
 @endsection
