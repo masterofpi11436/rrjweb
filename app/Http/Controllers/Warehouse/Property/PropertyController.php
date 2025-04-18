@@ -113,9 +113,10 @@ class PropertyController extends Controller
         return view('Warehouse.Property.property.edit-exchange-cart', ['orderId' => $id]);
     }
 
-    public function approved()
+    // View all approved or denied orders
+    public function history()
     {
-        return view('Warehouse.Property.property.approved');
+        return view('Warehouse.Property.property.history');
     }
 
     // Delete an existing order created by Requestor or  Property Supervisor

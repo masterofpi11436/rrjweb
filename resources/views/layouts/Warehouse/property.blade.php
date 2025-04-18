@@ -32,7 +32,7 @@
 
                     <!-- Recent Orders -->
                     <li class="mb-3 font-bold">
-                        <a href="{{ route('warehouse.property.approved') }}"
+                        <a href="{{ route('warehouse.property.history') }}"
                            class="block p-2 rounded hover:bg-green-900">Recent Orders</a>
                     </li>
 
