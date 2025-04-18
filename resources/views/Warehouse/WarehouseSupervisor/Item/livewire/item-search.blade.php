@@ -15,6 +15,7 @@
         <table class="w-full bg-gray-800 text-white border border-gray-700 rounded-md shadow-sm">
             <thead>
                 <tr class="bg-gray-700 border-b border-gray-600 text-left">
+                    <th></th>
                     <th class="p-3">
                         <a href="#" wire:click.prevent="sortBy('name')" class="text-blue-400 hover:text-blue-300 underline">
                             Item
@@ -45,6 +46,13 @@
             <tbody>
                 @forelse($items as $item)
                     <tr class="border-b border-gray-700 hover:bg-gray-700">
+                        <td class="p-3 flex items-center space-x-3">
+                            <img src="{{ $item->image ? asset('storage/' . $item->image) : asset('images/default-image.jpg') }}"
+                                 alt="{{ $item->name }}"
+                                 class="w-10 h-10 object-cover rounded-md border border-gray-600">
+                            <span>{{ $item->name }}</span>
+                        </td>
+
                         <td class="p-3">{{ $item->name }}</td>
                         <td class="p-3">{{ $item->category->category ?? 'No Category' }}</td>
                         <td class="p-3">{{ $item->quantity }}</td>
