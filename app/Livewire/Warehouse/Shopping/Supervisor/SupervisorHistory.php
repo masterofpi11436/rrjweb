@@ -5,16 +5,21 @@ use Livewire\Component;
 use App\Models\Warehouse\Order;
 use Illuminate\Support\Facades\Auth;
 
-class SupervisorApproved extends Component
+class SupervisorHistory extends Component
 {
     public $approvedOrders = [];
     public $expandedOrderId = null; // Track which order is expanded
 
     public function mount()
     {
-        // Get the logged-in user's pending orders
-        $this->approvedOrders = Order::where('status', config('orderstatus.APPROVED'))
-                                    ->where('supervisor_id', Auth::id()) // Only fetch the logged-in user's orders
+        $statuses = [
+            config('orderstatus.APPROVED'),
+            config('orderstatus.DENIED'),
+            config('orderstatus.EXCHANGE_DENIED'),
+        ];
+
+        $this->approvedOrders = Order::whereIn('status', $statuses)
+                                    ->where('supervisor_id', Auth::id())
                                     ->orderBy('created_at', 'desc')
                                     ->get();
     }
@@ -27,7 +32,7 @@ class SupervisorApproved extends Component
 
     public function render()
     {
-        return view('Warehouse.Supervisor.livewire.supervisor-approved', [
+        return view('Warehouse.Supervisor.livewire.supervisor-history', [
             'approvedOrders' => $this->approvedOrders
         ]);
     }

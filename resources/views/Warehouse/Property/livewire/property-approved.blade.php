@@ -19,6 +19,9 @@
                             <p class="text-sm text-gray-400">
                                 Status: <span class="font-semibold text-yellow-400">{{ $order->status }}</span>
                             </p>
+                            @if ($order->note)
+                                <p class="text-lg font-semibold text-red-400">Note: {{ $order->note }}</p>
+                            @endif
                             <p class="text-sm text-gray-400">Date: {{ $order->created_at->format('M d, Y') }}</p>
                         </div>
 

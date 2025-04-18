@@ -34,7 +34,7 @@
                     </li>
 
                     <li class="mb-3 font-bold">
-                        <a href="{{ route('warehouse.supervisor.approved') }}"
+                        <a href="{{ route('warehouse.supervisor.history') }}"
                            class="block p-2 rounded hover:bg-green-900">Recent Orders</a>
                     </li>
 

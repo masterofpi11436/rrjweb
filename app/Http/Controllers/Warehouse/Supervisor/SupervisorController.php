@@ -113,9 +113,9 @@ class SupervisorController extends Controller
         return view('Warehouse.Supervisor.supervisor.edit-exchange-cart', ['orderId' => $id]);
     }
 
-    public function approved()
+    public function history()
     {
-        return view('Warehouse.Supervisor.supervisor.approved');
+        return view('Warehouse.Supervisor.supervisor.history');
     }
 
     // Delete an existing order created by Requestor or Supervisor
