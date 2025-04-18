@@ -45,15 +45,18 @@ class Orders extends Component
         Order::create([
             'user_id' => $first->user_id,
             'user_name' => $first->user_name,
-            'supervisor_id' => $first->supervisor_id,
-            'supervisor_name' => $first->supervisor_name,
+            'supervisor_id' => null,
+            'supervisor_name' => "CONSOLIDATED",
             'section_id' => $first->section_id,
             'section_name' => $sectionName,
             'status' => config('orderstatus.PENDING_WAREHOUSE'),
             'items' => json_encode(array_values($mergedItems)),
         ]);
 
-        Order::whereIn('id', $orders->pluck('id'))->delete();
+        Order::whereIn('id', $orders->pluck('id'))->update([
+            'status' => config('orderstatus.CONSOLIDATED'),
+            'note' => 'This order was consolidated into a single merged request for the ' . $sectionName . ' section.',
+        ]);
 
         session()->flash('success', 'Orders successfully consolidated.');
         $this->mount(); // refresh

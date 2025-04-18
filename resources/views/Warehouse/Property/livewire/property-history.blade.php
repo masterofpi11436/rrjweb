@@ -17,7 +17,7 @@
                             <p class="text-sm text-gray-400">Section: {{ $order->section_name }}</p>
                             <p class="text-sm text-gray-400">Supervisor: {{ $order->supervisor_name }}</p>
                             <p class="text-sm text-gray-400">
-                                Status: <span class="font-semibold text-yellow-400">{{ $order->status }}</span>
+                                Status: <span class="font-semibold text-yellow-400">{{ ucfirst($order->status) }}</span>
                             </p>
                             @if ($order->note)
                                 <p class="text-lg font-semibold text-red-400">Note: {{ $order->note }}</p>

@@ -13,6 +13,7 @@ class SupervisorHistory extends Component
     public function mount()
     {
         $statuses = [
+            config('orderstatus.CONSOLIDATED'),
             config('orderstatus.APPROVED'),
             config('orderstatus.DENIED'),
             config('orderstatus.EXCHANGE_DENIED'),
