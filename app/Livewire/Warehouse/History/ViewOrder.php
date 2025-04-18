@@ -11,6 +11,7 @@ class ViewOrder extends Component
     public $order;
     public $source;
     public $items;
+    public $note;
 
     public function mount($orderId, $source)
     {
@@ -30,6 +31,7 @@ class ViewOrder extends Component
                     'orders.id as order_number',
                     'orders.created_at',
                     'orders.status',
+                    'orders.note',
                     DB::raw("COALESCE(orders.supervisor_name, 'Unknown') as supervisor"),
                     DB::raw("orders.section_name as section"), 'orders.items'
                 )
@@ -46,7 +48,8 @@ class ViewOrder extends Component
                 'orders.status',
                 DB::raw("COALESCE(CONCAT(user.first_name, ' ', user.last_name), 'Unknown') as supervisor"),
                 DB::raw("COALESCE(section.name, 'Unknown') as section"),
-                'orders.items'
+                'orders.items',
+                'orders.note'
             )
             ->first();
         }

@@ -48,7 +48,10 @@ class Denied extends Component
                 DB::raw("COALESCE(orders.supervisor_name, 'Unknown') as supervisor"),
                 DB::raw("orders.section_name as section")
             )
-            ->get();
+            ->get()
+            ->each(function ($order) {
+                $order->source = 'new';
+            });
 
         $oldOrders = collect();
         if ($oldStatus) {
@@ -63,7 +66,10 @@ class Denied extends Component
                     DB::raw("CONCAT(user.first_name, ' ', user.last_name) as supervisor"),
                     'section.name as section'
                 )
-                ->get();
+                ->get()
+                ->each(function ($order) {
+                    $order->source = 'old';
+                });
         }
 
         $this->orders = $defaultOrders

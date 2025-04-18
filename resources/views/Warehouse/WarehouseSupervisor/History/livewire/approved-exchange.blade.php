@@ -24,7 +24,7 @@
                     </th>
                     <th>
                         <a href="#" wire:click.prevent="sortBy('created_at')">
-                            created_at
+                            Created
                             @if ($sortField === 'created_at')
                                 @if ($sortDirection === 'asc') ▲ @else ▼ @endif
                             @endif
@@ -32,7 +32,7 @@
                     </th>
                     <th>
                         <a href="#" wire:click.prevent="sortBy('supervisor')">
-                            supervisor
+                            Supervisor
                             @if ($sortField === 'supervisor')
                                 @if ($sortDirection === 'asc') ▲ @else ▼ @endif
                             @endif
@@ -40,7 +40,7 @@
                     </th>
                     <th>
                         <a href="#" wire:click.prevent="sortBy('section')">
-                            section
+                            Section
                             @if ($sortField === 'section')
                                 @if ($sortDirection === 'asc') ▲ @else ▼ @endif
                             @endif
@@ -59,7 +59,7 @@
                         <td class="p-2 border-b border-gray-700">
                             <a href="{{ route('warehouse.warehouse-supervisor.view-order', ['orderId' => $order->order_number, 'source' => $order->source ?? 'new']) }}"
                                class="text-blue-400 hover:underline">
-                                {{ $order->order_number }}
+                                View
                             </a>
                         </td>
                     </tr>

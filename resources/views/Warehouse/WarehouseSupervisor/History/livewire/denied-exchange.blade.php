@@ -24,7 +24,7 @@
                     </th>
                     <th>
                         <a href="#" wire:click.prevent="sortBy('created_at')">
-                            created_at
+                            Created
                             @if ($sortField === 'created_at')
                                 @if ($sortDirection === 'asc') ▲ @else ▼ @endif
                             @endif
@@ -32,7 +32,7 @@
                     </th>
                     <th>
                         <a href="#" wire:click.prevent="sortBy('supervisor')">
-                            supervisor
+                            Supervisor
                             @if ($sortField === 'supervisor')
                                 @if ($sortDirection === 'asc') ▲ @else ▼ @endif
                             @endif
@@ -40,12 +40,13 @@
                     </th>
                     <th>
                         <a href="#" wire:click.prevent="sortBy('section')">
-                            section
+                            Section
                             @if ($sortField === 'section')
                                 @if ($sortDirection === 'asc') ▲ @else ▼ @endif
                             @endif
                         </a>
                     </th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -55,6 +56,12 @@
                         <td class="p-2 border-b border-gray-700">{{ $order->created_at }}</td>
                         <td class="p-2 border-b border-gray-700">{{ $order->supervisor }}</td>
                         <td class="p-2 border-b border-gray-700">{{ $order->section }}</td>
+                        <td class="p-2 border-b border-gray-700">
+                            <a href="{{ route('warehouse.warehouse-supervisor.view-order', ['orderId' => $order->order_number, 'source' => $order->source ?? 'new']) }}"
+                               class="text-blue-400 hover:underline">
+                               View
+                            </a>
+                        </td>
                     </tr>
                 @empty
                     <tr>
