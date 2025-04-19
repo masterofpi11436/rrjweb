@@ -22,21 +22,24 @@ class WarehouseHistoryAll extends Component
             'orders.id as order_number',
             'orders.created_at',
             DB::raw("COALESCE(orders.supervisor_name, 'Unknown') as supervisor"),
-            DB::raw("orders.section_name as section")
+            DB::raw("orders.section_name as section"),
+            DB::raw("'new' as source") // Add source tag
         )
         ->get();
 
-        $oldOrders = DB::connection('old_db')
-            ->table('orders')
-            ->leftJoin('user', 'orders.supervisor_id', '=', 'user.id')
-            ->leftJoin('section', 'orders.section_id', '=', 'section.id')
-            ->select(
-                'orders.id as order_number',
-                'orders.created_at',
-                DB::raw("CONCAT(user.first_name, ' ', user.last_name) as supervisor"),
-                'section.name as section'
-            )
-            ->get();
+    $oldOrders = DB::connection('old_db')
+        ->table('orders')
+        ->leftJoin('user', 'orders.supervisor_id', '=', 'user.id')
+        ->leftJoin('section', 'orders.section_id', '=', 'section.id')
+        ->select(
+            'orders.id as order_number',
+            'orders.created_at',
+            DB::raw("CONCAT(user.first_name, ' ', user.last_name) as supervisor"),
+            'section.name as section',
+            DB::raw("'old' as source") // Add source tag
+        )
+        ->get();
+
 
             $this->orders = $defaultOrders
                     ->merge($oldOrders)
