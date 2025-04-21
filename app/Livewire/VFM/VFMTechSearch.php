@@ -39,6 +39,7 @@ class VFMTechSearch extends Component
                 ->orWhere('vehicle_license_plate', 'like', '%' . $this->search . '%')
                 ->orWhere('vehicle_make', 'like', '%' . $this->search . '%')
                 ->orWhere('vehicle_model', 'like', '%' . $this->search . '%')
+                ->orWhere('state_inspection', 'like', '%' . $this->search . '%')
                 ->orWhere('maintenance_technician', 'like', '%' . $this->search . '%');
             })
             ->orderBy($this->sortColumn, $this->sortDirection)
