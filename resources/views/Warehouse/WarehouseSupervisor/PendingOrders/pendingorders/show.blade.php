@@ -14,7 +14,7 @@
 </div>
 
 <div id="printableArea">
-    <div class="bg-gray-900 text-white shadow-md rounded-lg p-6 border border-gray-700">
+    <div class="bg-gray-900 text-white shadow-md rounded-lg p-6">
         <h2 class="text-xl font-semibold mb-4">Order #{{ $order->id }}</h2>
 
         <div class="grid grid-cols-2 gap-4">
