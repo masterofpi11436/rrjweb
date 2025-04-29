@@ -76,7 +76,7 @@ class PendingExchangeOrderController extends Controller
             'approved_denied_at' => Carbon::now(),
         ]);
 
-        return redirect()->route('warehouse.warehouse-supervisor.pending.dashboard')
+        return redirect()->route('warehouse.warehouse-supervisor.pending-exchange.dashboard')
             ->with('success', 'Order denied');
     }
 }

@@ -60,7 +60,7 @@
 
 <!-- Action Buttons -->
 <div class="mt-6 flex flex-wrap gap-2">
-    <a href="{{ route('warehouse.warehouse-supervisor.pending.edit', ['id' => $order->id]) }}"
+    <a href="{{ route('warehouse.warehouse-supervisor.pending-exchange.edit', ['id' => $order->id]) }}"
        class="px-4 py-2 bg-yellow-600 text-white text-sm border border-yellow-500 rounded hover:bg-yellow-700">
         Edit Order
     </a>
@@ -72,7 +72,7 @@
 </div>
 
 <div class="mt-6">
-    <form action="{{ route('warehouse.warehouse-supervisor.pending.approve', $order->id) }}" method="POST">
+    <form action="{{ route('warehouse.warehouse-supervisor.pending-exchange.approve', $order->id) }}" method="POST">
         @csrf
         @method('PUT')
         <button type="submit"
@@ -83,7 +83,7 @@
 </div>
 
 <div class="mt-4">
-    <form action="{{ route('warehouse.warehouse-supervisor.pending.deny', $order->id) }}" method="POST">
+    <form action="{{ route('warehouse.warehouse-supervisor.pending-exchange.deny', $order->id) }}" method="POST">
         @csrf
         @method('PUT')
         <button type="submit"
