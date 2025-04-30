@@ -1,10 +1,10 @@
-<div class="p-6 bg-gray-50 min-h-screen">
+<div class="max-w-6xl mx-auto p-6 bg-gray-900 text-white shadow-md rounded-lg border border-gray-700 min-h-screen">
     <!-- Search Bar -->
     <div class="flex justify-center mb-6">
         <div class="relative w-full md:w-2/3">
             <input type="text" wire:model.live="search"
                    placeholder="Search items..."
-                   class="w-full p-3 pl-10 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                   class="w-full p-3 pl-10 bg-gray-800 text-white border border-gray-600 rounded-md shadow-sm focus:outline-none focus:border-blue-500 placeholder-gray-400">
             <span class="absolute left-3 top-3 text-gray-400">
                 🔍
             </span>
@@ -13,32 +13,40 @@
 
     <!-- Inventory Table -->
     <div class="overflow-x-auto">
-        <table class="min-w-full bg-white border border-gray-200 shadow-lg rounded-lg">
+        <table class="min-w-full bg-gray-800 text-white border border-gray-700 rounded-md shadow-sm">
             <thead>
-                <tr class="bg-gray-100 text-gray-700">
-                    <th class="border px-6 py-3 cursor-pointer text-left" wire:click="sortBy('name')">
-                        Name
-                        @if ($sortColumn === 'name')
-                            <span>{{ $sortDirection === 'asc' ? '⬆️' : '⬇️' }}</span>
-                        @endif
+                <tr class="bg-gray-700 border-b border-gray-600 text-left">
+                    <th class="p-3 cursor-pointer" wire:click="sortBy('name')">
+                        <a href="#" class="text-blue-400 hover:text-blue-300 underline">
+                            Name
+                            @if ($sortColumn === 'name')
+                                {{ $sortDirection === 'asc' ? '▲' : '▼' }}
+                            @endif
+                        </a>
                     </th>
-                    <th class="border px-6 py-3 cursor-pointer text-left" wire:click="sortBy('category_id')">
-                        Category
-                        @if ($sortColumn === 'category_id')
-                            <span>{{ $sortDirection === 'asc' ? '⬆️' : '⬇️' }}</span>
-                        @endif
+                    <th class="p-3 cursor-pointer" wire:click="sortBy('category_id')">
+                        <a href="#" class="text-blue-400 hover:text-blue-300 underline">
+                            Category
+                            @if ($sortColumn === 'category_id')
+                                {{ $sortDirection === 'asc' ? '▲' : '▼' }}
+                            @endif
+                        </a>
                     </th>
-                    <th class="border px-6 py-3 cursor-pointer text-left" wire:click="sortBy('quantity')">
-                        Quantity
-                        @if ($sortColumn === 'quantity')
-                            <span>{{ $sortDirection === 'asc' ? '⬆️' : '⬇️' }}</span>
-                        @endif
+                    <th class="p-3 cursor-pointer" wire:click="sortBy('quantity')">
+                        <a href="#" class="text-blue-400 hover:text-blue-300 underline">
+                            Quantity
+                            @if ($sortColumn === 'quantity')
+                                {{ $sortDirection === 'asc' ? '▲' : '▼' }}
+                            @endif
+                        </a>
                     </th>
-                    <th class="border px-6 py-3 cursor-pointer text-left" wire:click="sortBy('stock_status')">
-                        Stock Status
-                        @if ($sortColumn === 'stock_status')
-                            <span>{{ $sortDirection === 'asc' ? '⬆️' : '⬇️' }}</span>
-                        @endif
+                    <th class="p-3 cursor-pointer" wire:click="sortBy('stock_status')">
+                        <a href="#" class="text-blue-400 hover:text-blue-300 underline">
+                            Stock Status
+                            @if ($sortColumn === 'stock_status')
+                                {{ $sortDirection === 'asc' ? '▲' : '▼' }}
+                            @endif
+                        </a>
                     </th>
                 </tr>
             </thead>
@@ -46,21 +54,20 @@
             <tbody>
                 @forelse ($items as $item)
                     @php
-                        // Determine row color based on stock levels
                         if ($item->quantity <= $item->low_stock_threshold / 2) {
-                            $status = ['bg-red-100 text-red-800 border-red-400', '❌ Critical'];
+                            $status = ['bg-red-800 text-red-300 border-red-500', '❌ Critical'];
                         } elseif ($item->quantity <= $item->low_stock_threshold) {
-                            $status = ['bg-yellow-100 text-yellow-800 border-yellow-400', '⚠️ Low'];
+                            $status = ['bg-yellow-700 text-yellow-200 border-yellow-500', '⚠️ Low'];
                         } else {
-                            $status = ['bg-green-100 text-green-800 border-green-400', '✅ Sufficient'];
+                            $status = ['bg-green-800 text-green-300 border-green-500', '✅ Sufficient'];
                         }
                     @endphp
 
-                    <tr class="border-b hover:bg-gray-50 transition">
-                        <td class="border px-6 py-3">{{ $item->name }}</td>
-                        <td class="border px-6 py-3">{{ $item->category->category ?? 'N/A' }}</td>
-                        <td class="border px-6 py-3">{{ $item->quantity }}</td>
-                        <td class="border px-6 py-3">
+                    <tr class="border-b border-gray-700 hover:bg-gray-700 transition">
+                        <td class="p-3">{{ $item->name }}</td>
+                        <td class="p-3">{{ $item->category->category ?? 'N/A' }}</td>
+                        <td class="p-3">{{ $item->quantity }}</td>
+                        <td class="p-3">
                             <span class="px-3 py-1 text-sm font-semibold rounded-full border {{ $status[0] }}">
                                 {{ $status[1] }}
                             </span>
@@ -68,11 +75,10 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="4" class="text-center py-6 text-gray-500">No items found.</td>
+                        <td colspan="4" class="p-5 text-center text-gray-400">No items found.</td>
                     </tr>
                 @endforelse
             </tbody>
-
         </table>
     </div>
 </div>
