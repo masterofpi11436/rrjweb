@@ -60,4 +60,12 @@ class HistoryController extends Controller
             'source' => $source,
         ]);
     }
+
+    // Edit an approved order
+    public function editApprovedOrder($orderId)
+    {
+        return view('Warehouse.WarehouseSupervisor.History.history.edit-approved-order', [
+            'orderId' => $orderId
+        ]);
+    }
 }

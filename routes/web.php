@@ -313,6 +313,7 @@ Route::prefix('warehouse')->group(function () use ($warehouseLoginClass, $wareho
                 Route::get('/approved-exchange', [$historyClass, 'approvedExchange'])->name('warehouse.warehouse-supervisor.approved-exchange');
                 Route::get('/denied-exchange', [$historyClass, 'deniedExchange'])->name('warehouse.warehouse-supervisor.denied-exchange');
                 Route::get('/view-order/{orderId}/{source}', [$historyClass, 'viewOrder'])->name('warehouse.warehouse-supervisor.view-order');
+                Route::get('/edit-approved-order/{orderId}', [$historyClass, 'editApprovedOrder'])->name('warehouse.warehouse-supervisor.edit-approved-order');
             });
         });
 

@@ -52,8 +52,8 @@
     </div>
 
     <div class="mt-4 flex flex-wrap gap-4">
-        @if ($this->source === 'new')
-            <a href="#"
+        @if ($this->source === 'new' && $this->order?->status === 'approved')
+            <a href="{{ route('warehouse.warehouse-supervisor.edit-approved-order', ['orderId' => $this->orderId]) }}"
                class="w-32 text-center px-4 py-2 bg-yellow-600 text-white text-sm border border-yellow-500 rounded hover:bg-yellow-700">
                 Edit Order
             </a>
