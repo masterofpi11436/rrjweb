@@ -19,7 +19,9 @@
 
         <div class="grid grid-cols-2 gap-4">
             <div>
-                <p><strong class="text-gray-300">Requested By:</strong> {{ $order->user_name }}</p>
+                @if ($order->user_name !== null)
+                    <p><strong class="text-gray-300">Requested By:</strong> {{ $order->user_name }}</p>
+                @endif
                 <p><strong class="text-gray-300">Supervisor:</strong> {{ $order->supervisor_name }}</p>
                 <p><strong class="text-gray-300">Section:</strong> {{ $order->section_name }}</p>
                 <p><strong class="text-gray-300">Status:</strong>
