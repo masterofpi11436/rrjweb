@@ -82,15 +82,44 @@
     </form>
 </div>
 
+<!-- Deny Order Button -->
 <div class="mt-4">
-    <form action="{{ route('warehouse.warehouse-supervisor.pending-exchange.deny', $order->id) }}" method="POST">
+    <button type="button"
+            onclick="showThisModal({{ $order->id }})"
+            class="w-full md:w-auto px-4 py-2 bg-red-700 text-white border border-red-600 rounded hover:bg-red-800 hover:border-red-700">
+        Deny Order
+    </button>
+
+    <!-- Hidden Deny Form -->
+    <form id="deny-form-{{ $order->id }}"
+          action="{{ route('warehouse.warehouse-supervisor.pending-exchange.deny', $order->id) }}"
+          method="POST" class="hidden">
         @csrf
         @method('PUT')
-        <button type="submit"
-                class="w-full md:w-auto px-4 py-2 bg-red-700 text-white border border-red-600 rounded hover:bg-red-800 hover:border-red-700">
-            Deny Order
-        </button>
+        <input type="hidden" name="note" id="deny-note-input-{{ $order->id }}">
     </form>
+
+    <!-- Modal Background and Centered Content -->
+    <div id="deny-confirmation-modal-{{ $order->id }}"
+         class="fixed inset-0 hidden items-center justify-center bg-black/50 z-50">
+        <div class="bg-gray-800 text-white rounded-lg shadow-lg w-full max-w-md p-6">
+            <h2 class="text-xl font-semibold mb-4">Enter reason for denial</h2>
+            <textarea id="deny-note-{{ $order->id }}"
+                      class="w-full p-2 rounded bg-gray-700 border border-gray-600 focus:outline-none focus:ring focus:ring-red-500"
+                      rows="4"
+                      placeholder="Reason for denying the order..."></textarea>
+            <div class="mt-6 flex justify-end gap-2">
+                <button onclick="submitThisDeny({{ $order->id }})"
+                        class="px-4 py-2 bg-red-600 border border-red-500 rounded hover:bg-red-700">
+                    Submit Denial
+                </button>
+                <button type="button" onclick="hideThisModal({{ $order->id }})"
+                    class="px-4 py-2 bg-gray-600 border border-gray-500 rounded hover:bg-gray-700">
+                        Cancel
+                </button>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script>

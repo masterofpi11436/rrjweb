@@ -3,9 +3,10 @@
 namespace App\Http\Controllers\Warehouse\WarehouseSupervisor;
 
 // Base Controller
+use Carbon\Carbon;
+use Illuminate\Http\Request;
 use App\Models\Warehouse\Order;
 use App\Http\Controllers\Controller;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 
@@ -65,12 +66,13 @@ class PendingExchangeOrderController extends Controller
             ->with('success', 'Order approved successfully.');
     }
 
-    public function deny($id)
+    public function deny(Request $request, $id)
     {
         $order = Order::findOrFail($id);
 
         $order->update([
             'status' => config('orderstatus.EXCHANGE_DENIED'),
+            'note' => $request->note,
             'approved_denied_by' => Auth::id(),
             'approved_denied_by_name' => Auth::user()->first_name . ' ' . Auth::user()->last_name,
             'approved_denied_at' => Carbon::now(),
