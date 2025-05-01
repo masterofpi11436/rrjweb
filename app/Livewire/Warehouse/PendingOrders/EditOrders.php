@@ -16,6 +16,7 @@ class EditOrders extends Component
     public $search = '';
     public $selectedCategory = '';
     public $quantities = [];
+    public $note;
     public $orderId;
 
     protected $paginationTheme = 'tailwind';
@@ -88,6 +89,8 @@ class EditOrders extends Component
 
         // Update order items with the edited cart
         $order->items = json_encode(session('cart_edit', []));
+        $order->note = $this->note;
+
         $order->save();
 
         redirect()->route('warehouse.warehouse-supervisor.pending.dashboard')->with('success', 'Order updated successfully!');

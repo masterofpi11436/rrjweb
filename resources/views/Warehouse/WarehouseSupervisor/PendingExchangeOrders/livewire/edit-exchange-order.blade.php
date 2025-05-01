@@ -28,11 +28,51 @@
 
             <!-- Confirm Edits Button -->
             <div class="mt-6 flex justify-center">
-                <button wire:click="updateOrder"
+                <button type="button"
+                    onclick="showConfirmEditModal()"
                     class="bg-green-700 text-white border border-green-600 px-6 py-3 rounded-md hover:bg-green-800 hover:border-green-700">
                     Confirm Edits
                 </button>
             </div>
+            <!-- Edit Confirmation Modal -->
+            <div id="edit-confirmation-modal"
+                class="fixed inset-0 hidden items-center justify-center bg-black/50 z-50">
+                <div class="bg-gray-800 text-white rounded-lg shadow-lg w-full max-w-md p-6">
+                    <h2 class="text-xl font-semibold mb-4">Enter a note for this edit</h2>
+                    <textarea wire:model.defer="note"
+                            class="w-full p-2 rounded bg-gray-700 border border-gray-600 focus:outline-none focus:ring focus:ring-green-500"
+                            rows="4"></textarea>
+                    <div class="mt-6 flex justify-end gap-2">
+                        <button onclick="submitEditConfirmation()"
+                                class="px-4 py-2 bg-green-600 border border-green-500 rounded hover:bg-green-700">
+                            Submit
+                        </button>
+                        <button type="button" onclick="hideConfirmEditModal()"
+                                class="px-4 py-2 bg-gray-600 border border-gray-500 rounded hover:bg-gray-700">
+                            Cancel
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <script>
+                function showConfirmEditModal() {
+                    const modal = document.getElementById('edit-confirmation-modal');
+                    modal.classList.remove('hidden');
+                    modal.classList.add('flex');
+                }
+
+                function hideConfirmEditModal() {
+                    const modal = document.getElementById('edit-confirmation-modal');
+                    modal.classList.remove('flex');
+                    modal.classList.add('hidden');
+                }
+
+                function submitEditConfirmation() {
+                    @this.call('updateOrder');
+                    hideConfirmEditModal();
+                }
+            </script>
         @else
             <p class="text-gray-400">Your cart is empty.</p>
         @endif
