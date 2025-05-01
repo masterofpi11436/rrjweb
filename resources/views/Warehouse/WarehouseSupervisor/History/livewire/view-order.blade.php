@@ -21,14 +21,11 @@
         <p><strong>Supervisor:</strong> {{ $order->supervisor }}</p>
         <p><strong>Section:</strong> {{ $order->section }}</p>
         @if (property_exists($order, 'note') && !empty($order->note))
-        <div class="mt-6 bg-gray-800 border border-gray-700 rounded p-4">
-            <h3 class="text-lg font-semibold text-yellow-400 mb-2">Note</h3>
-            <p class="text-sm text-gray-300 whitespace-pre-line">{{ $order->note }}</p>
-        </div>
-    @endif
-
-
-
+            <div class="mt-6 bg-gray-800 border border-gray-700 rounded p-4">
+                <h3 class="text-lg font-semibold text-yellow-400 mb-2">Note</h3>
+                <p class="text-sm text-gray-300 whitespace-pre-line">{{ $order->note }}</p>
+            </div>
+        @endif
 
         @if (!empty($items))
             <h3 class="text-xl font-semibold mt-6 mb-2">Items in this Order</h3>

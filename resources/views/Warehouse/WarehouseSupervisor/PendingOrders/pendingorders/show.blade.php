@@ -30,9 +30,12 @@
                     </span>
                 </p>
                 <p><strong class="text-gray-300">Date Created:</strong> {{ $order->created_at->format('M d, Y') }}</p>
-                @if($order->approved_denied_by_name)
-                    <p><strong class="text-gray-300">Approved/Denied By:</strong> {{ $order->approved_denied_by_name }}</p>
-                    <p><strong class="text-gray-300">Decision Date:</strong> {{ optional($order->approved_denied_at)->format('M d, Y') }}</p>
+
+                @if ($order->note)
+                    <div class="mt-6 bg-gray-800 border border-gray-700 rounded p-4">
+                        <h3 class="text-lg font-semibold text-yellow-400 mb-2">Note</h3>
+                        <p class="text-sm text-gray-300 whitespace-pre-line">{{ $order->note }}</p>
+                    </div>
                 @endif
             </div>
         </div>
