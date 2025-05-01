@@ -259,7 +259,11 @@ old_sql = """INSERT INTO `item` (`id`, `name`, `item_type`, `image`, `quantity`)
 (264, 'Inmate Flex Pen (ea)', 2, '', 0),
 (265, 'Mop Bucket (ea)', 1, '', 0),
 (266, 'HP148a/ HP148x', 3, '', 0),
-(267, 'CE30a', 3, '', 0);"""
+(267, 'CE30a', 3, '', 0),
+(268, 'Bra\'s Size 48 (ea)', 4, '', 120),
+(269, 'Bra\'s Size 50 (ea)', 4, '', 120),
+(271, 'Bra\'s Size 52 (ea)', 4, '', 120),
+(272, 'Bra\'s Size 54 (ea)', 4, '', 120);"""
 
 # Generate the new insert statement
 new_sql = extract_items_with_categories(old_sql)
