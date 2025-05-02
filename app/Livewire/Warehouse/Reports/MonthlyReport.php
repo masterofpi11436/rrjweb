@@ -93,21 +93,21 @@ class MonthlyReport extends Component
 
     public function sendMonthlyReport()
     {
-        // Generate filename
         $filename = "monthly_report_{$this->selectedYear}_{$this->selectedMonth}.csv";
         $csvData = $this->buildCsvFromReport();
+        $monthName = \Carbon\Carbon::create()->month($this->selectedMonth)->format('F');
 
         // Store CSV temporarily
         Storage::put($filename, $csvData);
 
         // Get recipients
-        $recipients = DB::table('report_recipients')->pluck('email');
+        $recipients = DB::table('monthly_report_recipients')->pluck('email');
 
         foreach ($recipients as $email) {
-            Mail::to($email)->send(new MonthlyReportCsv($filename));
+            Mail::to($email)->send(new MonthlyReportCsv($filename, $monthName, $this->selectedYear));
         }
 
-        // Optionally delete after sending
+        // Optionally delete file
         Storage::delete($filename);
 
         session()->flash('message', 'Report sent successfully.');
