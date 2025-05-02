@@ -9,36 +9,61 @@ class WarehouseReports extends Component
 {
     public $orders = [];
 
+    public $timeframe = 'month';
+    public $selectedMonth;
+    public $selectedYear;
+    public $reportData = [];
+
     public function mount()
     {
-        $this->loadOrders();
+        $this->selectedYear = now()->year;
+        $this->selectedMonth = now()->month;
+        $this->loadReportData();
     }
 
-    public function loadOrders()
+    public function loadReportData()
     {
-        $defaultOrders = DB::connection('mysql')
-        ->table('orders')
-        ->select(
-            'orders.id as order_number',
-            'orders.created_at',
-            DB::raw("COALESCE(orders.supervisor_name, 'Unknown') as supervisor"),
-            DB::raw("orders.section_name as section")
-        )
-        ->get();
-
-        $oldOrders = DB::connection('old_db')
-            ->table('orders')
-            ->leftJoin('user', 'orders.supervisor_id', '=', 'user.id')
-            ->leftJoin('section', 'orders.section_id', '=', 'section.id')
-            ->select(
-                'orders.id as order_number',
-                'orders.created_at',
-                DB::raw("CONCAT(user.first_name, ' ', user.last_name) as supervisor"),
-                'section.name as section'
+        $orders = DB::connection('old_db')->table('orders')
+            ->join('section', 'orders.section_id', '=', 'section.id')
+            ->join('user', 'orders.supervisor_id', '=', 'user.id')
+            ->select('orders.items', 'section.name as section_name', DB::raw("CONCAT(user.first_name, ' ', user.last_name) as supervisor_name"), 'orders.created_at')
+            ->when($this->timeframe === 'month', fn($q) =>
+                $q->whereYear('orders.created_at', $this->selectedYear)
+                ->whereMonth('orders.created_at', $this->selectedMonth)
             )
             ->get();
 
-            $this->orders = $defaultOrders->merge($oldOrders)->sortByDesc('created_at')->values() ?? [];
+        $grouped = [];
+
+        foreach ($orders as $order) {
+            $items = json_decode($order->items, true);
+
+            if (!is_array($items)) continue;
+
+            foreach ($items as $item) {
+                $name = $item['name'] ?? 'Unnamed Item';
+                $qty = (int) ($item['quantity'] ?? 0);
+                $section = $order->section_name ?? 'Unknown';
+
+                if (!isset($grouped[$name])) {
+                    $grouped[$name] = [];
+                }
+
+                if (!isset($grouped[$name][$section])) {
+                    $grouped[$name][$section] = 0;
+                }
+
+                $grouped[$name][$section] += $qty;
+            }
+        }
+
+        $this->reportData = collect($grouped)
+            ->sortKeys()
+            ->map(function ($sectionData) {
+                return collect($sectionData)->map(fn($qty, $section) => ['section' => $section, 'quantity' => $qty])->values();
+        });
+
+        $this->orders = $orders;
     }
 
     public function render()
