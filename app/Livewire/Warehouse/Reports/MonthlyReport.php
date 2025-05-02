@@ -73,10 +73,9 @@ class MonthlyReport extends Component
     {
         $sections = collect($this->orders)->pluck('section_name')->filter()->unique()->sort()->values()->all();
 
-        // Use temp memory stream
         $stream = fopen('php://temp', 'r+');
 
-        // Write header row
+        // Write the header
         fputcsv($stream, array_merge(['Item Name'], $sections, ['Total']));
 
         foreach ($this->reportData as $item => $entries) {
@@ -86,14 +85,15 @@ class MonthlyReport extends Component
                 $row[] = $sectionCounts[$section] ?? 0;
             }
             $row[] = $sectionCounts->sum();
-            fputcsv($stream, $row);
+
+            fputcsv($stream, $row); // This is key: ensures quoting and escaping
         }
 
         rewind($stream);
-        $csvData = stream_get_contents($stream);
+        $csv = stream_get_contents($stream);
         fclose($stream);
 
-        return $csvData;
+        return $csv;
     }
 
     public function sendMonthlyReport()
