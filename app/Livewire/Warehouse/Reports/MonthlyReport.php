@@ -69,13 +69,17 @@ class MonthlyReport extends Component
         $this->orders = $orders;
     }
 
-    private function buildCsvFromReport(): string
+    private function buildCsvFromReport()
     {
+        $csv = [];
+
+        // Header row
         $sections = collect($this->orders)->pluck('section_name')->filter()->unique()->sort()->values()->all();
 
+        // Use temp memory stream
         $stream = fopen('php://temp', 'r+');
 
-        // Write the header
+        // Write header row
         fputcsv($stream, array_merge(['Item Name'], $sections, ['Total']));
 
         foreach ($this->reportData as $item => $entries) {
@@ -85,15 +89,14 @@ class MonthlyReport extends Component
                 $row[] = $sectionCounts[$section] ?? 0;
             }
             $row[] = $sectionCounts->sum();
-
-            fputcsv($stream, $row); // This is key: ensures quoting and escaping
+            fputcsv($stream, $row);
         }
 
         rewind($stream);
-        $csv = stream_get_contents($stream);
+        $csvData = stream_get_contents($stream);
         fclose($stream);
 
-        return $csv;
+        return $csvData;
     }
 
     public function sendMonthlyReport()
@@ -115,7 +118,7 @@ class MonthlyReport extends Component
         Storage::disk('public')->put($relativePath, $csvData);
 
         // Format month name
-        $monthName = \Carbon\Carbon::create()->month((int) $this->selectedMonth)->format('F');
+        $monthName = \Carbon\Carbon::create()->month($this->selectedMonth)->format('F');
 
         // Get recipients
         $recipients = DB::table('monthly_report_recipients')->pluck('email');
