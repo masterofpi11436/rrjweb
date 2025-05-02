@@ -46,7 +46,7 @@ class PendingExchangeOrderController extends Controller
 
         $cart = json_decode($order->items, true);
 
-        session(['cart_edit' => $cart]);
+        session(['cart_exchange' => $cart]);
 
         return view('Warehouse.WarehouseSupervisor.PendingExchangeOrders.pendingexchangeorders.edit-exchange-order', ['orderId' => $id]);
     }

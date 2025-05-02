@@ -19,11 +19,12 @@ class EditExchangeOrders extends Component
 
     protected $paginationTheme = 'tailwind';
 
-    public function mount($orderId, $cart = [])
+    public function mount($orderId)
     {
         $this->orderId = $orderId;
 
-        // Initialize quantities from cart_exchange session
+        $cart = session('cart_exchange', []);
+
         foreach ($cart as $itemId => $item) {
             $this->quantities[$itemId] = $item['quantity'];
         }
