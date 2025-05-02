@@ -110,7 +110,7 @@ class MonthlyReport extends Component
         Storage::disk('public')->put($relativePath, $csvData);
 
         // Format month name
-        $monthName = \Carbon\Carbon::create()->month($this->selectedMonth)->format('F');
+        $monthName = \Carbon\Carbon::create()->month((int) $this->selectedMonth)->format('F');
 
         // Get recipients
         $recipients = DB::table('monthly_report_recipients')->pluck('email');
