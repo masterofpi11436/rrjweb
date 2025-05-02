@@ -3,7 +3,10 @@
 namespace App\Livewire\Warehouse\Reports;
 
 use Livewire\Component;
+use App\Mail\MonthlyReportCsv;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 
 class MonthlyReport extends Component
 {
@@ -64,6 +67,50 @@ class MonthlyReport extends Component
         });
 
         $this->orders = $orders;
+    }
+
+    private function buildCsvFromReport()
+    {
+        $csv = [];
+
+        // Header row
+        $sections = collect($this->orders)->pluck('section_name')->filter()->unique()->sort()->values()->all();
+        $csv[] = array_merge(['Item Name'], $sections, ['Total']);
+
+        foreach ($this->reportData as $item => $entries) {
+            $sectionCounts = $entries->groupBy('section')->map->sum('quantity');
+            $row = [$item];
+            foreach ($sections as $section) {
+                $row[] = $sectionCounts[$section] ?? 0;
+            }
+            $row[] = $sectionCounts->sum();
+            $csv[] = $row;
+        }
+
+        // Convert to CSV string
+        return collect($csv)->map(fn($row) => implode(',', $row))->implode("\n");
+    }
+
+    public function sendMonthlyReport()
+    {
+        // Generate filename
+        $filename = "monthly_report_{$this->selectedYear}_{$this->selectedMonth}.csv";
+        $csvData = $this->buildCsvFromReport();
+
+        // Store CSV temporarily
+        Storage::put($filename, $csvData);
+
+        // Get recipients
+        $recipients = DB::table('report_recipients')->pluck('email');
+
+        foreach ($recipients as $email) {
+            Mail::to($email)->send(new MonthlyReportCsv($filename));
+        }
+
+        // Optionally delete after sending
+        Storage::delete($filename);
+
+        session()->flash('message', 'Report sent successfully.');
     }
 
     public function render()

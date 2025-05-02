@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\Warehouse\WarehouseSupervisor;
 
 // Base Controller
+use Illuminate\Http\Request;
 use App\Models\Warehouse\Order;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\View;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 // Reports pages to run weekly, monthly, quarterly, and yearly reports
 class ReportsController extends Controller
@@ -26,6 +29,62 @@ class ReportsController extends Controller
     public function monthlyReport()
     {
         return view('Warehouse.WarehouseSupervisor.Reports.reports.monthly');
+    }
+
+    // Download the monthly report to user's computer
+    public function downloadMonthlyReport(Request $request): StreamedResponse
+    {
+        $year = (int) $request->input('year');
+        $month = (int) $request->input('month');
+
+        $orders = DB::connection('old_db')->table('orders')
+            ->join('section', 'orders.section_id', '=', 'section.id')
+            ->join('user', 'orders.supervisor_id', '=', 'user.id')
+            ->select('orders.items', 'section.name as section_name', DB::raw("CONCAT(user.first_name, ' ', user.last_name) as supervisor_name"), 'orders.created_at')
+            ->whereYear('orders.created_at', $year)
+            ->whereMonth('orders.created_at', $month)
+            ->get();
+
+        $grouped = [];
+
+        foreach ($orders as $order) {
+            $items = json_decode($order->items, true);
+            if (!is_array($items)) continue;
+
+            foreach ($items as $item) {
+                $name = $item['name'] ?? 'Unnamed Item';
+                $qty = (int) ($item['quantity'] ?? 0);
+                $section = $order->section_name ?? 'Unknown';
+
+                $grouped[$name][$section] = ($grouped[$name][$section] ?? 0) + $qty;
+            }
+        }
+
+        $sections = collect($orders)->pluck('section_name')->filter()->unique()->sort()->values()->all();
+
+        $filename = "monthly_report_{$year}_{$month}.csv";
+
+        return response()->streamDownload(function () use ($grouped, $sections) {
+            $output = fopen('php://output', 'w');
+
+            fputcsv($output, array_merge(['Item Name'], $sections, ['Total']));
+
+            foreach (collect($grouped)->sortKeys() as $item => $counts) {
+                $row = [$item];
+                $total = 0;
+
+                foreach ($sections as $section) {
+                    $qty = $counts[$section] ?? 0;
+                    $row[] = $qty;
+                    $total += $qty;
+                }
+
+                $row[] = $total;
+                fputcsv($output, $row);
+            }
+
+            fclose($output);
+        }, $filename);
     }
 
     // Calander Year report

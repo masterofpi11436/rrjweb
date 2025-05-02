@@ -19,6 +19,20 @@
         </button>
     </div>
 
+    <button wire:click="sendMonthlyReport"
+        class="px-4 py-2 bg-green-700 text-white rounded hover:bg-green-800">
+        Email Monthyly Report
+    </button>
+
+    {{-- Download the monthly report --}}
+    <form method="POST" action="{{ route('warehouse.warehouse-supervisor.reports.monthly.download') }}">
+        @csrf
+        <input type="hidden" name="year" value="{{ $selectedYear }}">
+        <input type="hidden" name="month" value="{{ $selectedMonth }}">
+        <button type="submit" class="px-4 py-2 bg-blue-700 text-white rounded hover:bg-blue-800">
+            Download Monthly Report (CSV)
+        </button>
+    </form>
 
     <!-- Report Table -->
     <div class="overflow-x-auto">
