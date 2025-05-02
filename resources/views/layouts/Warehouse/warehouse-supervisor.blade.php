@@ -43,7 +43,7 @@
                     <li class="mb-3 font-bold">
                         <details class="group">
                             <summary class="flex items-center justify-between p-2 rounded hover:bg-green-900 cursor-pointer">
-                                <span>Reports/History</span>
+                                <span>Reports</span>
                                 <span class="transform transition-transform duration-300 group-open:rotate-90">▶</span>
                             </summary>
                             <ul class="pl-4 mt-2 hidden group-open:block">
@@ -56,8 +56,37 @@
                                 <li class="mb-2">
                                     <a href="{{ route('warehouse.warehouse-supervisor.reports.fiscal-year') }}" class="block p-2 rounded hover:bg-green-900">Fiscal Year</a>
                                 </li>
+                            </ul>
+                        </details>
+                    </li>
+
+                    <hr class="my-3 border-green-700" />
+
+                    <!-- History -->
+                    <li class="mb-3 font-bold">
+                        <details class="group">
+                            <summary class="flex items-center justify-between p-2 rounded cursor-pointer">
+                                <span class="flex-1 text-left">
+                                    <a href="{{ route('warehouse.warehouse-supervisor.history.dashboard') }}"
+                                       class="block w-full bg-green-600 hover:bg-green-700 text-white text-center px-3 py-2 rounded">
+                                        History
+                                    </a>
+                                </span>
+                                <span class="ml-2 transform transition-transform duration-300 group-open:rotate-90">▶</span>
+                            </summary>
+
+                            <ul class="pl-4 mt-2 hidden group-open:block">
                                 <li class="mb-2">
-                                    <a href="{{ route('warehouse.warehouse-supervisor.history.dashboard') }}" class="block p-2 rounded hover:bg-green-900">History</a>
+                                    <a href="{{ route('warehouse.warehouse-supervisor.history.approved') }}" class="block p-2 rounded hover:bg-green-900">Approved</a>
+                                </li>
+                                <li class="mb-2">
+                                    <a href="{{ route('warehouse.warehouse-supervisor.history.denied') }}" class="block p-2 rounded hover:bg-green-900">Denied</a>
+                                </li>
+                                <li class="mb-2">
+                                    <a href="{{ route('warehouse.warehouse-supervisor.approved-exchange') }}" class="block p-2 rounded hover:bg-green-900">Approved Exchange</a>
+                                </li>
+                                <li class="mb-2">
+                                    <a href="{{ route('warehouse.warehouse-supervisor.denied-exchange') }}" class="block p-2 rounded hover:bg-green-900">Denied Exchange</a>
                                 </li>
                             </ul>
                         </details>
