@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 30, 2025 at 08:31 PM
+-- Generation Time: May 02, 2025 at 10:15 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -596,7 +596,8 @@ INSERT INTO `monthly` (`id`, `first_name`, `last_name`, `email`) VALUES
 (15, 'LaKeisha', 'Mason', 'lmason@rrjva.org'),
 (17, 'Michelle', 'Coleman', 'mcoleman@rrjva.org'),
 (18, 'Jeffrey', 'Dillman', 'dillmanj@rrjva.org'),
-(19, 'Montrell', 'Beasley', 'beasley.montrell@rrjva.org');
+(19, 'Montrell', 'Beasley', 'beasley.montrell@rrjva.org'),
+(20, 'Adam', 'Mears', 'mears.adam@rrjva.org');
 
 -- --------------------------------------------------------
 
@@ -1387,7 +1388,14 @@ INSERT INTO `orders` (`id`, `user_id`, `supervisor_id`, `section_id`, `items`, `
 (837, 75, 75, 7, '{\"15\":{\"id\":15,\"name\":\"SPRAY HEAD f\\/BT (ea) \",\"item_type\":1,\"image\":\"\\/public\\/images\\/sprayhead.jpg\",\"quantity\":2},\"14\":{\"id\":14,\"name\":\"SPRAY BOTTLE 1 QT (ea) \",\"item_type\":1,\"image\":\"\\/public\\/images\\/spraybottle.jpg\",\"quantity\":2}}', 'approved', '2025-04-29 11:00:18', '2025-04-29 11:00:24', 37, ''),
 (838, 73, 73, 4, '{\"110\":{\"id\":110,\"name\":\"Straw Broom (ea)\",\"item_type\":1,\"image\":\"\\/public\\/images\\/strawbroom.jpg\",\"quantity\":2}}', 'approved', '2025-04-29 11:01:09', '2025-04-29 11:01:16', 37, ''),
 (839, 67, 67, 12, '{\"247\":{\"id\":247,\"name\":\"Nitrile Gloves\",\"item_type\":1,\"image\":\"\",\"quantity\":2}}', 'approved', '2025-04-29 11:01:50', '2025-04-29 11:01:56', 37, ''),
-(840, 99, 80, 6, '{\"68\":{\"id\":68,\"name\":\"LASER LABELS 1\\/3 CUT (pk)\",\"item_type\":2,\"image\":\"\\/public\\/images\\/laserlabels.jpg\",\"quantity\":1}}', 'pending supervisor approval', '2025-04-30 13:54:05', NULL, NULL, '');
+(840, 99, 80, 6, '{\"68\":{\"id\":68,\"name\":\"LASER LABELS 1\\/3 CUT (pk)\",\"item_type\":2,\"image\":\"\\/public\\/images\\/laserlabels.jpg\",\"quantity\":1}}', 'pending supervisor approval', '2025-04-30 13:54:05', NULL, NULL, ''),
+(841, 174, 174, 19, '{\"90\":{\"id\":90,\"name\":\"BANKER BOX, LTR, sm (ea)\",\"item_type\":2,\"image\":\"\\/public\\/images\\/bankerbox.jpg\",\"quantity\":1}}', 'approved', '2025-04-30 15:14:33', '2025-05-01 06:52:36', 193, ''),
+(842, 135, 135, 13, '{\"117\":{\"id\":117,\"name\":\"STRIPPER (gl)\",\"item_type\":1,\"image\":\"\",\"quantity\":4},\"116\":{\"id\":116,\"name\":\"SEALER WAY (gl)\",\"item_type\":1,\"image\":\"\",\"quantity\":4}}', 'approved', '2025-05-01 06:55:38', '2025-05-01 07:14:23', 193, '1 case of gloves given on 4/29/25'),
+(843, 81, 81, 9, '{\"29\":{\"id\":29,\"name\":\"VINYL, GLOVES, PF, XL (cs)\",\"item_type\":1,\"image\":\"\\/public\\/images\\/gloves.png\",\"quantity\":1},\"27\":{\"id\":27,\"name\":\"VINYL, GLOVES, PF,MED (cs)\",\"item_type\":1,\"image\":\"\\/public\\/images\\/gloves.png\",\"quantity\":1},\"18\":{\"id\":18,\"name\":\"TRASH BAGS LG (bx) \",\"item_type\":1,\"image\":\"\\/public\\/images\\/trashbagsmall.jpg\",\"quantity\":2},\"17\":{\"id\":17,\"name\":\"TRASH BAGS MED (bx) \",\"item_type\":1,\"image\":\"\\/public\\/images\\/trashbagsmall.jpg\",\"quantity\":2},\"15\":{\"id\":15,\"name\":\"SPRAY HEAD f\\/BT (ea) \",\"item_type\":1,\"image\":\"\\/public\\/images\\/sprayhead.jpg\",\"quantity\":3}}', 'approved', '2025-05-01 09:49:27', '2025-05-01 09:49:33', 37, ''),
+(844, 75, 75, 7, '{\"21\":{\"id\":21,\"name\":\"BUFF PAD CHAMPAGINE (ea)\",\"item_type\":1,\"image\":\"\\/public\\/images\\/buffpadchamp.jpg\",\"quantity\":5},\"23\":{\"id\":23,\"name\":\"STRIP PAD BLACK (ea)\",\"item_type\":1,\"image\":\"\",\"quantity\":5},\"22\":{\"id\":22,\"name\":\"POLISHING PAD WHITE (ea) \",\"item_type\":1,\"image\":\"\",\"quantity\":5},\"18\":{\"id\":18,\"name\":\"TRASH BAGS LG (bx) \",\"item_type\":1,\"image\":\"\\/public\\/images\\/trashbagsmall.jpg\",\"quantity\":1},\"17\":{\"id\":17,\"name\":\"TRASH BAGS MED (bx) \",\"item_type\":1,\"image\":\"\\/public\\/images\\/trashbagsmall.jpg\",\"quantity\":1},\"27\":{\"id\":27,\"name\":\"VINYL, GLOVES, PF,MED (cs)\",\"item_type\":1,\"image\":\"\\/public\\/images\\/gloves.png\",\"quantity\":1},\"45\":{\"id\":45,\"name\":\"SCUM B GONE (bt)\",\"item_type\":1,\"image\":\"\\/public\\/images\\/scum_b_gone.jpg\",\"quantity\":3},\"117\":{\"id\":117,\"name\":\"STRIPPER (gl)\",\"item_type\":1,\"image\":\"\",\"quantity\":2},\"260\":{\"id\":260,\"name\":\"Spray Buff (gl)\",\"item_type\":1,\"image\":\"\",\"quantity\":2},\"64\":{\"id\":64,\"name\":\"HIGHLITER YEL (ea) \",\"item_type\":2,\"image\":\"\\/public\\/images\\/highlighter-yellow.jpg\",\"quantity\":4}}', 'approved', '2025-05-01 13:31:06', '2025-05-01 13:45:17', 193, 'adjusted due to items not approved per 319'),
+(845, 75, 75, 7, '{\"116\":{\"id\":116,\"name\":\"SEALER WAY (gl)\",\"item_type\":1,\"image\":\"\",\"quantity\":8}}', 'approved', '2025-05-01 14:27:39', '2025-05-01 14:27:44', 37, ''),
+(846, 135, 135, 13, '{\"23\":{\"id\":23,\"name\":\"STRIP PAD BLACK (ea)\",\"item_type\":1,\"image\":\"\",\"quantity\":5},\"37\":{\"id\":37,\"name\":\"SANITARY NAPKINS (bx)\",\"item_type\":9,\"image\":\"\\/public\\/images\\/sanitary_napkin.jpg\",\"quantity\":1},\"16\":{\"id\":16,\"name\":\"TRASH BAGS SM (ro) \",\"item_type\":1,\"image\":\"\\/public\\/images\\/trashbagsmall.jpg\",\"quantity\":6}}', 'approved', '2025-05-02 07:59:32', '2025-05-02 08:01:24', 37, ''),
+(847, 183, 183, 5, '{\"6\":{\"id\":6,\"name\":\"DECK BRUSH 10\\\" (ea)\",\"item_type\":1,\"image\":\"\\/public\\/images\\/deckbrush.jpg\",\"quantity\":1},\"256\":{\"id\":256,\"name\":\"Scrub Brush\",\"item_type\":8,\"image\":\"\",\"quantity\":1},\"259\":{\"id\":259,\"name\":\"Toilet Brush\",\"item_type\":8,\"image\":\"\",\"quantity\":1},\"10\":{\"id\":10,\"name\":\"CLOTH RAG (ea)\",\"item_type\":1,\"image\":\"\\/public\\/images\\/clothrag.jpg\",\"quantity\":10},\"9\":{\"id\":9,\"name\":\"MOP HEAD f\\/SEALER (ea) \",\"item_type\":1,\"image\":\"\\/public\\/images\\/mophead.jpg\",\"quantity\":2}}', 'approved', '2025-05-02 11:19:51', '2025-05-02 11:20:06', 193, '');
 
 -- --------------------------------------------------------
 
@@ -2168,13 +2176,13 @@ ALTER TABLE `mailroom`
 -- AUTO_INCREMENT for table `monthly`
 --
 ALTER TABLE `monthly`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=841;
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=848;
 
 --
 -- AUTO_INCREMENT for table `phone`
