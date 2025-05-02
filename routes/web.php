@@ -302,7 +302,9 @@ Route::prefix('warehouse')->group(function () use ($warehouseLoginClass, $wareho
 
             // Reports pages
             Route::prefix('reports')->group(function () use ($reportsClass) {
-                Route::get('/dashboard', [$reportsClass, 'dashboard'])->name('warehouse.warehouse-supervisor.reports.dashboard');
+                Route::get('/monthly', [$reportsClass, 'monthlyReport'])->name('warehouse.warehouse-supervisor.reports.monthly');
+                Route::get('/calendar-year', [$reportsClass, 'calendarYearReport'])->name('warehouse.warehouse-supervisor.reports.calendar-year');
+                Route::get('/fiscal-year', [$reportsClass, 'fiscalYearReport'])->name('warehouse.warehouse-supervisor.reports.fiscal-year');
             });
 
             // Reports pages

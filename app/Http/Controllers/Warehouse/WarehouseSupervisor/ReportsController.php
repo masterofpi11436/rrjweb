@@ -22,9 +22,21 @@ class ReportsController extends Controller
                      'pendingExchangeOrdersCount' => $this->pendingExchangeOrdersCount]);
     }
 
-    // Managing Orders submitted to warehouse
-    public function dashboard()
+    // Monthly report
+    public function monthlyReport()
     {
-        return view('Warehouse.WarehouseSupervisor.Reports.reports.dashboard');
+        return view('Warehouse.WarehouseSupervisor.Reports.reports.monthly');
+    }
+
+    // Calander Year report
+    public function calendarYearReport()
+    {
+        return view('Warehouse.WarehouseSupervisor.Reports.reports.calendar-year');
+    }
+
+    // Calander Year report
+    public function fiscalYearReport()
+    {
+        return view('Warehouse.WarehouseSupervisor.Reports.reports.fiscal-year');
     }
 }

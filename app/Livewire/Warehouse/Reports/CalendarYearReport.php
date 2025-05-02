@@ -5,7 +5,7 @@ namespace App\Livewire\Warehouse\Reports;
 use Livewire\Component;
 use Illuminate\Support\Facades\DB;
 
-class WarehouseReports extends Component
+class CalendarYearReport extends Component
 {
     public $orders = [];
 
@@ -27,10 +27,10 @@ class WarehouseReports extends Component
             ->join('section', 'orders.section_id', '=', 'section.id')
             ->join('user', 'orders.supervisor_id', '=', 'user.id')
             ->select('orders.items', 'section.name as section_name', DB::raw("CONCAT(user.first_name, ' ', user.last_name) as supervisor_name"), 'orders.created_at')
-            ->when($this->timeframe === 'month', fn($q) =>
-                $q->whereYear('orders.created_at', $this->selectedYear)
-                ->whereMonth('orders.created_at', $this->selectedMonth)
-            )
+            ->whereBetween('orders.created_at', [
+                \Carbon\Carbon::create($this->selectedYear, 1, 1)->startOfDay(),
+                \Carbon\Carbon::create($this->selectedYear, 12, 31)->endOfDay(),
+            ])
             ->get();
 
         $grouped = [];
@@ -68,6 +68,6 @@ class WarehouseReports extends Component
 
     public function render()
     {
-        return view('Warehouse.WarehouseSupervisor.Reports.livewire.dashboard');
+        return view('Warehouse.WarehouseSupervisor.Reports.livewire.calendar-year');
     }
 }
