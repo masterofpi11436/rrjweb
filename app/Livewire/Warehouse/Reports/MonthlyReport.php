@@ -69,13 +69,15 @@ class MonthlyReport extends Component
         $this->orders = $orders;
     }
 
-    private function buildCsvFromReport()
+    private function buildCsvFromReport(): string
     {
-        $csv = [];
-
-        // Header row
         $sections = collect($this->orders)->pluck('section_name')->filter()->unique()->sort()->values()->all();
-        $csv[] = array_merge(['Item Name'], $sections, ['Total']);
+
+        // Use temp memory stream
+        $stream = fopen('php://temp', 'r+');
+
+        // Write header row
+        fputcsv($stream, array_merge(['Item Name'], $sections, ['Total']));
 
         foreach ($this->reportData as $item => $entries) {
             $sectionCounts = $entries->groupBy('section')->map->sum('quantity');
@@ -84,11 +86,14 @@ class MonthlyReport extends Component
                 $row[] = $sectionCounts[$section] ?? 0;
             }
             $row[] = $sectionCounts->sum();
-            $csv[] = $row;
+            fputcsv($stream, $row);
         }
 
-        // Convert to CSV string
-        return collect($csv)->map(fn($row) => implode(',', $row))->implode("\n");
+        rewind($stream);
+        $csvData = stream_get_contents($stream);
+        fclose($stream);
+
+        return $csvData;
     }
 
     public function sendMonthlyReport()
