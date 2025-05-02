@@ -7,6 +7,6 @@
 @section('content')
 
 <!-- Livewire search component -->
-@livewire('Warehouse.PendingOrders.editorders', ['orderId' => $orderId, 'cart' => session('cart_edit', [])])
+@livewire('Warehouse.PendingOrders.EditOrders', ['orderId' => $orderId, 'cart' => session('cart_edit', [])])
 
 @endsection

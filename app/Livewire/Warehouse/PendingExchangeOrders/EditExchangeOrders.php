@@ -98,7 +98,7 @@ class EditExchangeOrders extends Component
         $items = $query->orderBy('name', 'asc')->paginate(12);
         $cart = session('cart_exchange', []);
 
-        return view('Warehouse.WarehouseSupervisor.PendingExchangeorders.livewire.edit-exchange-order', [
+        return view('Warehouse.WarehouseSupervisor.PendingExchangeOrders.livewire.edit-exchange-order', [
             'items'      => $items,
             'cart'       => $cart,
         ]);

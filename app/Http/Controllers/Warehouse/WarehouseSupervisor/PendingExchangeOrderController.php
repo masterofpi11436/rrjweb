@@ -48,7 +48,7 @@ class PendingExchangeOrderController extends Controller
 
         session(['cart_edit' => $cart]);
 
-        return view('Warehouse.WarehouseSupervisor.PendingExchangeOrders.pendingexchangeorders.edit-order', ['orderId' => $id]);
+        return view('Warehouse.WarehouseSupervisor.PendingExchangeOrders.pendingexchangeorders.edit-exchange-order', ['orderId' => $id]);
     }
 
     public function approve($id)
