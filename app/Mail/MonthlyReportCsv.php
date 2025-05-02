@@ -39,7 +39,7 @@ class MonthlyReportCsv extends Mailable
     public function attachments(): array
     {
         return [
-            \Illuminate\Mail\Mailables\Attachment::fromPath(storage_path("app/{$this->filePath}"))
+            \Illuminate\Mail\Mailables\Attachment::fromPath($this->filePath)
         ];
     }
 }

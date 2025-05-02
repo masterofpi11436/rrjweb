@@ -94,21 +94,33 @@ class MonthlyReport extends Component
     public function sendMonthlyReport()
     {
         $filename = "monthly_report_{$this->selectedYear}_{$this->selectedMonth}.csv";
-        $csvData = $this->buildCsvFromReport();
-        $monthName = \Carbon\Carbon::create()->month($this->selectedMonth)->format('F');
+        $relativePath = "monthlyCSV/{$filename}"; // relative to 'app/public'
+        $fullPath = storage_path("app/public/{$relativePath}");
 
-        // Store CSV temporarily
-        Storage::put($filename, $csvData);
+        // Make sure directory exists
+        $directory = storage_path('app/public/monthlyCSV');
+        if (!file_exists($directory)) {
+            mkdir($directory, 0775, true);
+        }
+
+        // Build CSV
+        $csvData = $this->buildCsvFromReport();
+
+        // Store CSV
+        Storage::disk('public')->put($relativePath, $csvData);
+
+        // Format month name
+        $monthName = \Carbon\Carbon::create()->month($this->selectedMonth)->format('F');
 
         // Get recipients
         $recipients = DB::table('monthly_report_recipients')->pluck('email');
 
         foreach ($recipients as $email) {
-            Mail::to($email)->send(new MonthlyReportCsv($filename, $monthName, $this->selectedYear));
+            Mail::to($email)->send(new MonthlyReportCsv($fullPath, $monthName, $this->selectedYear));
         }
 
-        // Optionally delete file
-        Storage::delete($filename);
+        // Delete file after emailing
+        Storage::disk('public')->delete($relativePath);
 
         session()->flash('message', 'Report sent successfully.');
     }
