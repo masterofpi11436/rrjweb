@@ -16,6 +16,12 @@ php artisan migrate:refresh
 php artisan db:seed
 php artisan migrate:refresh --seed
 
+# Tables to Save
+policies
+vfm
+vfm_vehicle
+users (Save the users Flexon, Fuery, Payne, McDaniel)
+
 # Change starting ID number
 ALTER TABLE orders AUTO_INCREMENT = 1000;
 
