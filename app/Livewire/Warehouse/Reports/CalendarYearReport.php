@@ -23,37 +23,64 @@ class CalendarYearReport extends Component
 
     public function loadReportData()
     {
-        $orders = DB::connection('old_db')->table('orders')
+        // OLD DB orders
+        $oldOrders = DB::connection('old_db')->table('orders')
             ->join('section', 'orders.section_id', '=', 'section.id')
             ->join('user', 'orders.supervisor_id', '=', 'user.id')
             ->select('orders.items', 'section.name as section_name', DB::raw("CONCAT(user.first_name, ' ', user.last_name) as supervisor_name"), 'orders.created_at')
+            ->where('orders.status', 'APPROVED')
             ->whereBetween('orders.created_at', [
                 \Carbon\Carbon::create($this->selectedYear, 1, 1)->startOfDay(),
                 \Carbon\Carbon::create($this->selectedYear, 12, 31)->endOfDay(),
             ])
             ->get();
 
+        // NEW DB orders
+        $newOrders = DB::connection('mysql')->table('orders')
+            ->select('items', 'section_name', 'supervisor_name', 'created_at')
+            ->where('status', 'APPROVED')
+            ->whereBetween('created_at', [
+                \Carbon\Carbon::create($this->selectedYear, 1, 1)->startOfDay(),
+                \Carbon\Carbon::create($this->selectedYear, 12, 31)->endOfDay(),
+            ])
+            ->get();
+
+        $allOrders = $oldOrders->merge($newOrders);
+
         $grouped = [];
 
-        foreach ($orders as $order) {
-            $items = json_decode($order->items, true);
+        foreach ($allOrders as $order) {
+            // Decode items, supporting double-encoded JSON
+            $raw = $order->items ?? '[]';
+            $decoded = json_decode($raw, true);
+            if (is_string($decoded)) {
+                $decoded = json_decode($decoded, true);
+            }
 
-            if (!is_array($items)) continue;
+            if (!is_array($decoded) || empty($decoded)) {
+                logger()->warning('Invalid items JSON in calendar report', ['raw' => $order->items]);
+                continue;
+            }
+
+            $items = $decoded;
 
             foreach ($items as $item) {
-                $name = $item['name'] ?? 'Unnamed Item';
+                $name = trim(strtolower($item['name'] ?? 'Unnamed Item'));
                 $qty = (int) ($item['quantity'] ?? 0);
-                $section = $order->section_name ?? 'Unknown';
+                $section = trim(strtolower($order->section_name ?? 'Unknown'));
 
-                if (!isset($grouped[$name])) {
-                    $grouped[$name] = [];
+                $displayName = ucwords($name);
+                $displaySection = ucwords($section);
+
+                if (!isset($grouped[$displayName])) {
+                    $grouped[$displayName] = [];
                 }
 
-                if (!isset($grouped[$name][$section])) {
-                    $grouped[$name][$section] = 0;
+                if (!isset($grouped[$displayName][$displaySection])) {
+                    $grouped[$displayName][$displaySection] = 0;
                 }
 
-                $grouped[$name][$section] += $qty;
+                $grouped[$displayName][$displaySection] += $qty;
             }
         }
 
@@ -61,9 +88,9 @@ class CalendarYearReport extends Component
             ->sortKeys()
             ->map(function ($sectionData) {
                 return collect($sectionData)->map(fn($qty, $section) => ['section' => $section, 'quantity' => $qty])->values();
-        });
+            });
 
-        $this->orders = $orders;
+        $this->orders = $allOrders;
     }
 
     public function render()
