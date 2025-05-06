@@ -26,37 +26,71 @@ class MonthlyReport extends Component
 
     public function loadReportData()
     {
-        $orders = DB::connection('old_db')->table('orders')
+        // OLD DB orders (assumes status is stored in 'orders.status')
+        $oldOrders = DB::connection('old_db')->table('orders')
             ->join('section', 'orders.section_id', '=', 'section.id')
             ->join('user', 'orders.supervisor_id', '=', 'user.id')
-            ->select('orders.items', 'section.name as section_name', DB::raw("CONCAT(user.first_name, ' ', user.last_name) as supervisor_name"), 'orders.created_at')
+            ->select(
+                'orders.items',
+                'section.name as section_name',
+                DB::raw("CONCAT(user.first_name, ' ', user.last_name) as supervisor_name"),
+                'orders.created_at'
+            )
+            ->where('orders.status', 'APPROVED')
             ->when($this->timeframe === 'month', fn($q) =>
                 $q->whereYear('orders.created_at', $this->selectedYear)
-                ->whereMonth('orders.created_at', $this->selectedMonth)
+                  ->whereMonth('orders.created_at', $this->selectedMonth)
             )
             ->get();
 
+        // NEW DB orders
+        $newOrders = DB::connection('mysql')->table('orders')
+            ->select('items', 'section_name', 'supervisor_name', 'created_at')
+            ->where('status', 'APPROVED')
+            ->when($this->timeframe === 'month', fn($q) =>
+                $q->whereYear('created_at', $this->selectedYear)
+                  ->whereMonth('created_at', $this->selectedMonth)
+            )
+            ->get();
+
+        // Merge both
+        $allOrders = $oldOrders->merge($newOrders);
+
         $grouped = [];
 
-        foreach ($orders as $order) {
-            $items = json_decode($order->items, true);
+        foreach ($allOrders as $order) {
+            $raw = $order->items ?? '[]';
+            $decoded = json_decode($raw, true);
 
-            if (!is_array($items)) continue;
+            // Handle double-encoded JSON
+            if (is_string($decoded)) {
+                $decoded = json_decode($decoded, true);
+            }
+
+            if (!is_array($decoded) || empty($decoded)) {
+                logger()->warning('Invalid items JSON', ['raw' => $order->items]);
+                continue;
+            }
+
+            $items = $decoded;
 
             foreach ($items as $item) {
-                $name = $item['name'] ?? 'Unnamed Item';
+                $name = trim(strtolower($item['name'] ?? 'Unnamed Item'));
                 $qty = (int) ($item['quantity'] ?? 0);
-                $section = $order->section_name ?? 'Unknown';
+                $section = trim(strtolower($order->section_name ?? 'Unknown'));
 
-                if (!isset($grouped[$name])) {
-                    $grouped[$name] = [];
+                $displayName = ucwords($name);
+                $displaySection = ucwords($section);
+
+                if (!isset($grouped[$displayName])) {
+                    $grouped[$displayName] = [];
                 }
 
-                if (!isset($grouped[$name][$section])) {
-                    $grouped[$name][$section] = 0;
+                if (!isset($grouped[$displayName][$displaySection])) {
+                    $grouped[$displayName][$displaySection] = 0;
                 }
 
-                $grouped[$name][$section] += $qty;
+                $grouped[$displayName][$displaySection] += $qty;
             }
         }
 
@@ -64,9 +98,9 @@ class MonthlyReport extends Component
             ->sortKeys()
             ->map(function ($sectionData) {
                 return collect($sectionData)->map(fn($qty, $section) => ['section' => $section, 'quantity' => $qty])->values();
-        });
+            });
 
-        $this->orders = $orders;
+        $this->orders = $allOrders;
     }
 
     private function buildCsvFromReport()
