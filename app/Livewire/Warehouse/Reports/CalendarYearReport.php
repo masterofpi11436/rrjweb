@@ -29,9 +29,9 @@ class CalendarYearReport extends Component
             ->join('user', 'orders.supervisor_id', '=', 'user.id')
             ->select('orders.items', 'section.name as section_name', DB::raw("CONCAT(user.first_name, ' ', user.last_name) as supervisor_name"), 'orders.created_at')
             ->where('orders.status', 'APPROVED')
-            ->whereBetween('orders.created_at', [
-                \Carbon\Carbon::create($this->selectedYear, 1, 1)->startOfDay(),
-                \Carbon\Carbon::create($this->selectedYear, 12, 31)->endOfDay(),
+            ->whereBetween('orders.approved_denied_at', [
+                \Carbon\Carbon::create(2025, 1, 1)->startOfDay(),
+                \Carbon\Carbon::create(2025, 12, 31)->endOfDay(),
             ])
             ->get();
 
@@ -55,11 +55,6 @@ class CalendarYearReport extends Component
             $decoded = json_decode($raw, true);
             if (is_string($decoded)) {
                 $decoded = json_decode($decoded, true);
-            }
-
-            if (!is_array($decoded) || empty($decoded)) {
-                logger()->warning('Invalid items JSON in calendar report', ['raw' => $order->items]);
-                continue;
             }
 
             $items = $decoded;
