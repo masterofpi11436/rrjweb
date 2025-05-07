@@ -124,7 +124,7 @@ class MonthlyReport extends Component
             $row = [ucwords($this->displayNames[$itemKey] ?? $itemKey)];
 
             foreach ($sections as $section) {
-                $row[] = $sectionCounts[$section] ?? 0;
+                $row[] = ($sectionCounts[$section] ?? 0) > 0 ? $sectionCounts[$section] : '';
             }
 
             $row[] = $sectionCounts->sum();
