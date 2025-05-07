@@ -75,8 +75,8 @@ class ReportsController extends Controller
 
                 foreach ($sections as $section) {
                     $qty = $counts[$section] ?? 0;
-                    $row[] = $qty;
-                    $total += $qty;
+                    $row[] = $qty > 0 ? $qty : '';  // Write blank if zero
+                    $total += $qty;                 // Still include zero in total
                 }
 
                 $row[] = $total;
