@@ -16,6 +16,7 @@ class MonthlyReport extends Component
     public $selectedMonth;
     public $selectedYear;
     public $reportData = [];
+    public $displayNames;
 
     public function mount()
     {
@@ -60,45 +61,46 @@ class MonthlyReport extends Component
         $grouped = [];
 
         foreach ($allOrders as $order) {
-            $raw = $order->items ?? '[]';
-            $decoded = json_decode($raw, true);
-
-            // Handle double-encoded JSON
+            $decoded = json_decode($order->items ?? '[]', true);
             if (is_string($decoded)) {
                 $decoded = json_decode($decoded, true);
             }
 
             if (!is_array($decoded) || empty($decoded)) {
-                logger()->warning('Invalid items JSON', ['raw' => $order->items]);
+                logger()->warning('Invalid items JSON in monthly report', ['raw' => $order->items]);
                 continue;
             }
 
-            $items = $decoded;
-
-            foreach ($items as $item) {
+            foreach ($decoded as $item) {
+                $rawName = $item['name'] ?? 'Unnamed Item';
+                $nameKey = strtolower(trim($rawName)); // normalized
+                $displayName = trim($rawName);
+                $section = trim($order->section_name ?? 'Unknown');
                 $qty = (int) ($item['quantity'] ?? 0);
-                $displayName = trim($item['name'] ?? 'Unnamed Item');
-                $displaySection = trim($order->section_name ?? 'Unknown');
 
-                if (!isset($grouped[$displayName])) {
-                    $grouped[$displayName] = [];
+                if (!isset($grouped[$nameKey])) {
+                    $grouped[$nameKey] = [
+                        'display' => $displayName,
+                        'sections' => []
+                    ];
                 }
 
-                if (!isset($grouped[$displayName][$displaySection])) {
-                    $grouped[$displayName][$displaySection] = 0;
+                if (!isset($grouped[$nameKey]['sections'][$section])) {
+                    $grouped[$nameKey]['sections'][$section] = 0;
                 }
 
-                $grouped[$displayName][$displaySection] += $qty;
+                $grouped[$nameKey]['sections'][$section] += $qty;
             }
         }
 
-        $this->reportData = collect($grouped)
-            ->sortKeys()
-            ->map(function ($sectionData) {
-                return collect($sectionData)->map(fn($qty, $section) => ['section' => $section, 'quantity' => $qty])->values();
-            });
+        $this->reportData = collect($grouped)->sortKeys()
+            ->map(fn($entry) =>
+                collect($entry['sections'])->map(
+                    fn($qty, $section) => ['section' => $section, 'quantity' => $qty]
+                )->values()
+            );
 
-        $this->orders = $allOrders;
+        $this->displayNames = collect($grouped)->mapWithKeys(fn($entry, $key) => [$key => $entry['display']]);
     }
 
     private function buildCsvFromReport()

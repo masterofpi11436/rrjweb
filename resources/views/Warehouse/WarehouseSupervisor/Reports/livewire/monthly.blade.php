@@ -54,7 +54,7 @@
             <tbody>
                 @foreach ($reportData as $item => $entries)
                     <tr class="bg-gray-900">
-                        <td class="border border-gray-600 p-2 font-semibold">{{ $item }}</td>
+                        <td class="border border-gray-600 p-2 font-semibold">{{ \Illuminate\Support\Str::title($displayNames[$item] ?? $item) }}</td>
                         @php
                             $sectionCounts = $entries->groupBy('section')->map->sum('quantity');
                             $total = $sectionCounts->sum();

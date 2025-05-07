@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Warehouse\Reports;
 
+use Carbon\Carbon;
 use Livewire\Component;
 use Illuminate\Support\Facades\DB;
 
@@ -13,6 +14,7 @@ class FiscalYearReport extends Component
     public $selectedMonth;
     public $selectedYear;
     public $reportData = [];
+    public $displayNames;
 
     public function mount()
     {
@@ -23,26 +25,22 @@ class FiscalYearReport extends Component
 
     public function loadReportData()
     {
-        // OLD DB orders
+        $start = \Carbon\Carbon::create($this->selectedYear, 7, 1)->startOfDay();
+        $end = \Carbon\Carbon::create($this->selectedYear + 1, 6, 30)->endOfDay();
+
+        // OLD DB
         $oldOrders = DB::connection('old_db')->table('orders')
             ->join('section', 'orders.section_id', '=', 'section.id')
-            ->join('user', 'orders.supervisor_id', '=', 'user.id')
-            ->select('orders.items', 'section.name as section_name', DB::raw("CONCAT(user.first_name, ' ', user.last_name) as supervisor_name"), 'orders.created_at')
+            ->select('orders.items', 'section.name as section_name', 'orders.approved_denied_at')
             ->where('orders.status', 'APPROVED')
-            ->whereBetween('orders.approved_denied_at', [
-                \Carbon\Carbon::create($this->selectedYear, 7, 1)->startOfDay(),
-                \Carbon\Carbon::create($this->selectedYear + 1, 6, 30)->endOfDay(),
-            ])
+            ->whereBetween('orders.approved_denied_at', [$start, $end])
             ->get();
 
-        // NEW DB orders
+        // NEW DB
         $newOrders = DB::connection('mysql')->table('orders')
-            ->select('items', 'section_name', 'supervisor_name', 'created_at')
+            ->select('items', 'section_name', 'approved_denied_at')
             ->where('status', 'APPROVED')
-            ->whereBetween('created_at', [
-                \Carbon\Carbon::create($this->selectedYear, 7, 1)->startOfDay(),
-                \Carbon\Carbon::create($this->selectedYear + 1, 6, 30)->endOfDay(),
-            ])
+            ->whereBetween('approved_denied_at', [$start, $end])
             ->get();
 
         $allOrders = $oldOrders->merge($newOrders);
@@ -50,47 +48,45 @@ class FiscalYearReport extends Component
         $grouped = [];
 
         foreach ($allOrders as $order) {
-            // Decode items, supporting double-encoded JSON
-            $raw = $order->items ?? '[]';
-            $decoded = json_decode($raw, true);
+            $decoded = json_decode($order->items ?? '[]', true);
             if (is_string($decoded)) {
                 $decoded = json_decode($decoded, true);
             }
 
             if (!is_array($decoded) || empty($decoded)) {
-                logger()->warning('Invalid items JSON in fiscal report', ['raw' => $order->items]);
                 continue;
             }
 
-            $items = $decoded;
-
-            foreach ($items as $item) {
-                $name = trim(strtolower($item['name'] ?? 'Unnamed Item'));
+            foreach ($decoded as $item) {
+                $rawName = $item['name'] ?? 'Unnamed Item';
+                $nameKey = strtolower(trim($rawName)); // normalize
+                $displayName = trim($rawName);         // first appearance used for display
+                $section = trim($order->section_name ?? 'Unknown');
                 $qty = (int) ($item['quantity'] ?? 0);
-                $section = trim(strtolower($order->section_name ?? 'Unknown'));
 
-                $displayName = ucwords($name);
-                $displaySection = ucwords($section);
-
-                if (!isset($grouped[$displayName])) {
-                    $grouped[$displayName] = [];
+                if (!isset($grouped[$nameKey])) {
+                    $grouped[$nameKey] = [
+                        'display' => $displayName,
+                        'sections' => []
+                    ];
                 }
 
-                if (!isset($grouped[$displayName][$displaySection])) {
-                    $grouped[$displayName][$displaySection] = 0;
+                if (!isset($grouped[$nameKey]['sections'][$section])) {
+                    $grouped[$nameKey]['sections'][$section] = 0;
                 }
 
-                $grouped[$displayName][$displaySection] += $qty;
+                $grouped[$nameKey]['sections'][$section] += $qty;
             }
         }
 
-        $this->reportData = collect($grouped)
-            ->sortKeys()
-            ->map(function ($sectionData) {
-                return collect($sectionData)->map(fn($qty, $section) => ['section' => $section, 'quantity' => $qty])->values();
-            });
+        $this->reportData = collect($grouped)->sortKeys()
+            ->map(fn($entry) =>
+                collect($entry['sections'])->map(
+                    fn($qty, $section) => ['section' => $section, 'quantity' => $qty]
+                )->values()
+            );
 
-        $this->orders = $allOrders;
+        $this->displayNames = collect($grouped)->mapWithKeys(fn($entry, $key) => [$key => $entry['display']]);
     }
 
     public function render()
