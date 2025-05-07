@@ -5,12 +5,13 @@ namespace App\Http\Controllers\Warehouse\WarehouseSupervisor;
 // Base Controller
 use Illuminate\Http\Request;
 use App\Models\Warehouse\Order;
+use App\Models\Warehouse\MonthlyRecipients;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\View;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
-// Reports pages to run weekly, monthly, quarterly, and yearly reports
+// Reports pages to run monthly, quarterly, and yearly reports
 class ReportsController extends Controller
 {
     protected $pendingOrdersCount;
@@ -29,6 +30,35 @@ class ReportsController extends Controller
     public function monthlyReport()
     {
         return view('Warehouse.WarehouseSupervisor.Reports.reports.monthly');
+    }
+
+    // CRUD for monthly report recipients
+    public function dashboard()
+    {
+        return view('Warehouse.WarehouseSupervisor.Reports.reports.dashboard');
+    }
+
+    // Create new entry
+    public function create()
+    {
+        return view('Warehouse.WarehouseSupervisor.Reports.reports.create');
+    }
+
+    // Display the form to edit an existing recipient
+    public function edit($id)
+    {
+        $recipient = MonthlyRecipients::findOrFail($id);
+        return view('Warehouse.WarehouseSupervisor.Reports.reports.edit', ['recipient' => $recipient]);
+    }
+
+    // Delete an existing category
+    public function destroy($id)
+    {
+        $recipient = MonthlyRecipients::findOrFail($id);
+        $recipient->delete();
+
+        session()->flash('create-edit-delete-message', 'Recipient deleted successfully!');
+        return redirect()->back();
     }
 
     // Download the monthly report to user's computer

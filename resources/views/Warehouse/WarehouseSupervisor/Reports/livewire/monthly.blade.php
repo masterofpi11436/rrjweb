@@ -24,6 +24,11 @@
         Email Monthyly Report
     </button>
 
+    <a href="{{ route('warehouse.warehouse-supervisor.reports.monthly.dashboard') }}"
+        class="px-4 py-2 bg-blue-700 text-white border border-blue-600 rounded-md hover:bg-blue-800 hover:border-blue-700">
+        Recipient List
+    </a>
+
     {{-- Download the monthly report --}}
     <form method="POST" action="{{ route('warehouse.warehouse-supervisor.reports.monthly.download') }}">
         @csrf

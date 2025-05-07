@@ -306,6 +306,14 @@ Route::prefix('warehouse')->group(function () use ($warehouseLoginClass, $wareho
                 Route::get('/calendar-year', [$reportsClass, 'calendarYearReport'])->name('warehouse.warehouse-supervisor.reports.calendar-year');
                 Route::get('/fiscal-year', [$reportsClass, 'fiscalYearReport'])->name('warehouse.warehouse-supervisor.reports.fiscal-year');
                 Route::post('/download', [$reportsClass, 'downloadMonthlyReport'])->withoutMiddleware('cache')->name('warehouse.warehouse-supervisor.reports.monthly.download');
+
+                // Reports pages
+                Route::prefix('recipients')->group(function () use ($reportsClass) {
+                    Route::get('/dashboard', [$reportsClass, 'dashboard'])->name('warehouse.warehouse-supervisor.reports.monthly.dashboard');
+                    Route::get('/create', [$reportsClass, 'create'])->name('warehouse.warehouse-supervisor.reports.monthly.create');
+                    Route::get('/{id}/edit', [$reportsClass, 'edit'])->name('warehouse.warehouse-supervisor.reports.monthly.edit');
+                    Route::post('/destroy', [$reportsClass, 'destroy'])->name('warehouse.warehouse-supervisor.reports.monthly.destroy');
+                });
             });
 
             // Reports pages
