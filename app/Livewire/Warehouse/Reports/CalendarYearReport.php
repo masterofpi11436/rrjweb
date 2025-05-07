@@ -30,7 +30,7 @@ class CalendarYearReport extends Component
             ->select('orders.items', 'section.name as section_name', DB::raw("CONCAT(user.first_name, ' ', user.last_name) as supervisor_name"), 'orders.created_at')
             ->where('orders.status', 'APPROVED')
             ->whereBetween('orders.approved_denied_at', [
-                \Carbon\Carbon::create(2025, 1, 1)->startOfDay(),
+                \Carbon\Carbon::create(2024, 12, 31)->startOfDay(),
                 \Carbon\Carbon::create(2025, 12, 31)->endOfDay(),
             ])
             ->get();

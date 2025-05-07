@@ -38,8 +38,8 @@ class MonthlyReport extends Component
             )
             ->where('orders.status', 'APPROVED')
             ->when($this->timeframe === 'month', fn($q) =>
-                $q->whereYear('orders.created_at', $this->selectedYear)
-                  ->whereMonth('orders.created_at', $this->selectedMonth)
+                $q->whereYear('orders.approved_denied_at', $this->selectedYear)
+                ->whereMonth('orders.approved_denied_at', $this->selectedMonth)
             )
             ->get();
 
@@ -48,9 +48,10 @@ class MonthlyReport extends Component
             ->select('items', 'section_name', 'supervisor_name', 'created_at')
             ->where('status', 'APPROVED')
             ->when($this->timeframe === 'month', fn($q) =>
-                $q->whereYear('created_at', $this->selectedYear)
-                  ->whereMonth('created_at', $this->selectedMonth)
+                $q->whereYear('approved_denied_at', $this->selectedYear)
+                ->whereMonth('approved_denied_at', $this->selectedMonth)
             )
+
             ->get();
 
         // Merge both
@@ -75,12 +76,9 @@ class MonthlyReport extends Component
             $items = $decoded;
 
             foreach ($items as $item) {
-                $name = trim(strtolower($item['name'] ?? 'Unnamed Item'));
                 $qty = (int) ($item['quantity'] ?? 0);
-                $section = trim(strtolower($order->section_name ?? 'Unknown'));
-
-                $displayName = ucwords($name);
-                $displaySection = ucwords($section);
+                $displayName = trim($item['name'] ?? 'Unnamed Item');
+                $displaySection = trim($order->section_name ?? 'Unknown');
 
                 if (!isset($grouped[$displayName])) {
                     $grouped[$displayName] = [];
@@ -105,8 +103,6 @@ class MonthlyReport extends Component
 
     private function buildCsvFromReport()
     {
-        $csv = [];
-
         // Header row
         $sections = collect($this->orders)->pluck('section_name')->filter()->unique()->sort()->values()->all();
 

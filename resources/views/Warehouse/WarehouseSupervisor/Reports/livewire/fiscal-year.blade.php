@@ -26,7 +26,7 @@
             <thead class="bg-gray-800">
                 <tr>
                     <th class="border border-gray-600 p-2">Item Name</th>
-                    @foreach (collect($orders)->pluck('section_name')->filter()->unique() as $section)
+                    @foreach (collect($orders)->pluck('section_name')->filter()->sort()->unique() as $section)
                         <th class="border border-gray-600 p-2">{{ $section }}</th>
                     @endforeach
                     <th class="border border-gray-600 p-2">Total</th>

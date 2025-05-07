@@ -40,10 +40,15 @@
             <thead class="bg-gray-800">
                 <tr>
                     <th class="border border-gray-600 p-2">Item Name</th>
-                    @foreach (collect($orders)->pluck('section_name')->filter()->unique() as $section)
-                        <th class="border border-gray-600 p-2">{{ $section }}</th>
+                    @php
+                        $allSections = collect($reportData)->flatMap(function ($entries) {
+                            return collect($entries)->pluck('section');
+                        })->unique()->sort()->values();
+                    @endphp
+                    @foreach ($allSections as $section)
+                        <th class="border border-gray-600 p-2 text-center">{{ $section }}</th>
                     @endforeach
-                    <th class="border border-gray-600 p-2">Total</th>
+                    <th class="border border-gray-600 p-2 text-center">Total</th>
                 </tr>
             </thead>
             <tbody>
@@ -54,7 +59,7 @@
                             $sectionCounts = $entries->groupBy('section')->map->sum('quantity');
                             $total = $sectionCounts->sum();
                         @endphp
-                        @foreach (collect($orders)->pluck('section_name')->filter()->unique() as $section)
+                        @foreach ($allSections as $section)
                             <td class="border border-gray-600 p-2 text-center">
                                 {{ $sectionCounts[$section] ?? '' }}
                             </td>
