@@ -105,8 +105,13 @@ class MonthlyReport extends Component
 
     private function buildCsvFromReport()
     {
-        // Header row
-        $sections = collect($this->orders)->pluck('section_name')->filter()->unique()->sort()->values()->all();
+        // Get all unique sections from the report data
+        $sections = collect($this->reportData)
+            ->flatMap(fn($entries) => collect($entries)->pluck('section'))
+            ->unique()
+            ->sort()
+            ->values()
+            ->all();
 
         // Use temp memory stream
         $stream = fopen('php://temp', 'r+');
@@ -114,12 +119,14 @@ class MonthlyReport extends Component
         // Write header row
         fputcsv($stream, array_merge(['Item Name'], $sections, ['Total']));
 
-        foreach ($this->reportData as $item => $entries) {
-            $sectionCounts = $entries->groupBy('section')->map->sum('quantity');
-            $row = [$item];
+        foreach ($this->reportData as $itemKey => $entries) {
+            $sectionCounts = collect($entries)->groupBy('section')->map->sum('quantity');
+            $row = [ucwords($this->displayNames[$itemKey] ?? $itemKey)];
+
             foreach ($sections as $section) {
                 $row[] = $sectionCounts[$section] ?? 0;
             }
+
             $row[] = $sectionCounts->sum();
             fputcsv($stream, $row);
         }
