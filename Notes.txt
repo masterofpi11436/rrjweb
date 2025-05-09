@@ -1,3 +1,0 @@
-Warehouse Store
-
-Log when users log in to the application
