@@ -20,7 +20,7 @@ php artisan migrate:refresh --seed
 policies
 vfm
 vfm_vehicle
-users (Save the users Flexon, Fuery, Payne, McDaniel)
+users
 
 # Change starting ID number
 ALTER TABLE orders AUTO_INCREMENT = 1000;
