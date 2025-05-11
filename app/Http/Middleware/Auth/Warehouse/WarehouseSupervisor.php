@@ -9,7 +9,7 @@ class WarehouseSupervisor extends BaseAuth
     protected function hasAccess($user): bool
     {
         // Check if the user is authenticated and is an admin
-        return $user && ($user->warehouse_role === 'Warehouse Supervisor' || $user->admin === 1);
+        return $user && ($user->warehouse_role === 'Warehouse Supervisor');
     }
 
     protected function getRedirectRoute(): string
