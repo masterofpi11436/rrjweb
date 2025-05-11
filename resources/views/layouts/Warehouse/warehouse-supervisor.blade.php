@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="/css/back-to-top.css" id="common-styles-link">
     <title>@yield('title')</title>
     @vite('resources/css/app.css')
+    @vite('resources/js/app.js')
 </head>
 <body class="bg-gray-900 text-gray-100">
     <div class="flex h-screen bg-gray-900 text-gray-100">
