@@ -70,7 +70,7 @@
                             </form>
 
                             <!-- Delete Confirmation Modal -->
-                            <div id="custom-confirmation-modal-{{ $recipient->id }}" class="confirmation-modal hidden fixed inset-0 bg-black bg-opacity-50 items-center justify-center z-50">
+                            <div id="custom-confirmation-modal-{{ $recipient->id }}" class="confirmation-modal" style="display: none;">
                                 <div class="modal-content bg-gray-800 text-white p-4 rounded border border-red-500">
                                     <p class="mb-4">Are you sure you want to delete this recipient?</p>
                                     <button class="px-3 py-1 bg-red-600 text-white rounded border border-red-700 hover:bg-red-700"

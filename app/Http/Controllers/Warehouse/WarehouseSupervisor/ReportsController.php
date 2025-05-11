@@ -51,7 +51,7 @@ class ReportsController extends Controller
         return view('Warehouse.WarehouseSupervisor.Reports.reports.edit', ['recipient' => $recipient]);
     }
 
-    // Delete an existing category
+    // Delete an existing recipient
     public function destroy($id)
     {
         $recipient = MonthlyRecipients::findOrFail($id);

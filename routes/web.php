@@ -312,7 +312,7 @@ Route::prefix('warehouse')->group(function () use ($warehouseLoginClass, $wareho
                     Route::get('/dashboard', [$reportsClass, 'dashboard'])->name('warehouse.warehouse-supervisor.reports.monthly.dashboard');
                     Route::get('/create', [$reportsClass, 'create'])->name('warehouse.warehouse-supervisor.reports.monthly.create');
                     Route::get('/{id}/edit', [$reportsClass, 'edit'])->name('warehouse.warehouse-supervisor.reports.monthly.edit');
-                    Route::post('/destroy', [$reportsClass, 'destroy'])->name('warehouse.warehouse-supervisor.reports.monthly.destroy');
+                    Route::delete('/{id}', [$reportsClass, 'destroy'])->name('warehouse.warehouse-supervisor.reports.monthly.destroy');
                 });
             });
 

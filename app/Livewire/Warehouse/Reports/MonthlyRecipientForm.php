@@ -37,7 +37,7 @@ class MonthlyRecipientForm extends Component
         return [
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
-            'email' => 'required|email|max:255',
+            'email' => 'required|email|ends_with:rrjva.org|max:255',
         ];
     }
 
