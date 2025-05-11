@@ -1,16 +1,27 @@
 <div class="p-6 space-y-4">
 
     <!-- Filters -->
-    <div class="flex gap-4 flex-wrap">
-        <select wire:model="selectedYear">
-            @foreach ($availableYears ?? [] as $year)
-                <option class="text-black" value="{{ $year }}">{{ $year }} – {{ $year + 1 }}</option>
-            @endforeach
-        </select>
+    <div class="bg-gray-800 p-4 rounded-md shadow-sm border border-gray-700">
+        <h2 class="text-lg font-semibold text-white mb-4">Filter by Month & Year</h2>
 
-        <button wire:click="loadReportData" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-800">
-            Filter
-        </button>
+        <div class="flex flex-wrap gap-4 items-end">
+            <!-- Year Dropdown -->
+            <div>
+                <label for="year" class="block text-sm text-gray-300 mb-1">Year</label>
+                <select id="year" wire:model="selectedYear" class="p-2 rounded bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring focus:border-blue-500">
+                    @for ($y = now()->year; $y >= now()->year - 4; $y--)
+                        <option value="{{ $y }}">{{ $y }}</option>
+                    @endfor
+                </select>
+            </div>
+
+            <!-- Filter Button -->
+            <div>
+                <button wire:click="loadReportData" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+                    Apply Filter
+                </button>
+            </div>
+        </div>
     </div>
 
     <p class="text-sm text-gray-400">
