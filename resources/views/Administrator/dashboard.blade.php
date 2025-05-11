@@ -26,4 +26,9 @@
     <button>ICS Restricted Tablets</button>
 </form>
 
+<!-- Link to navigate to the Wareouse Store App as Warehouse Supervisor login -->
+<form action="{{ route('warehouse.warehouse-supervisor.dashboard') }}">
+    <button>Warehouse Supervisor Dashboard</button>
+</form>
+
 @endsection
