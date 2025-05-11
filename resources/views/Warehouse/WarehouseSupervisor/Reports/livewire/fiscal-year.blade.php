@@ -3,9 +3,9 @@
     <!-- Filters -->
     <div class="flex gap-4 flex-wrap">
         <select wire:model="selectedYear">
-            @for ($y = now()->year; $y >= now()->year - 4; $y--)
-                <option class="text-black" value="{{ $y }}">{{ $y }} – {{ $y + 1 }}</option>
-            @endfor
+            @foreach ($availableYears ?? [] as $year)
+                <option class="text-black" value="{{ $year }}">{{ $year }} – {{ $year + 1 }}</option>
+            @endforeach
         </select>
 
         <button wire:click="loadReportData" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-800">

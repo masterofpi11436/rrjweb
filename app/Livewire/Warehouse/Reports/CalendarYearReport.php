@@ -14,12 +14,34 @@ class CalendarYearReport extends Component
     public $selectedYear;
     public $reportData = [];
     public $displayNames;
+    public $availableYears = [];
 
     public function mount()
     {
         $this->selectedYear = now()->year;
         $this->selectedMonth = now()->month;
+        $this->loadAvailableYears();
         $this->loadReportData();
+    }
+
+    // Gets all the years there is data
+    public function loadAvailableYears()
+    {
+        $oldYears = DB::connection('old_db')->table('orders')
+            ->select('approved_denied_at')
+            ->where('status', 'APPROVED')
+            ->whereNotNull('approved_denied_at')
+            ->pluck('approved_denied_at')
+            ->map(fn($date) => \Carbon\Carbon::parse($date)->year);
+
+        $newYears = DB::connection('mysql')->table('orders')
+            ->select('approved_denied_at')
+            ->where('status', 'APPROVED')
+            ->whereNotNull('approved_denied_at')
+            ->pluck('approved_denied_at')
+            ->map(fn($date) => \Carbon\Carbon::parse($date)->year);
+
+        $this->availableYears = $oldYears->merge($newYears)->unique()->sortDesc()->values();
     }
 
     public function loadReportData()

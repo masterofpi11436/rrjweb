@@ -15,12 +15,45 @@ class FiscalYearReport extends Component
     public $selectedYear;
     public $reportData = [];
     public $displayNames;
+    public $availableYears = [];
 
     public function mount()
     {
-        $this->selectedYear = now()->year;
+        $currentDate = now();
+
+        $this->selectedYear = $currentDate->month < 7
+            ? $currentDate->year -1
+            : $currentDate->year;
+
+        $this->loadAvailableYears();
         $this->selectedMonth = now()->month;
         $this->loadReportData();
+    }
+
+    // Gets all the years there is data (fiscally)
+    public function loadAvailableYears()
+    {
+        $oldYears = DB::connection('old_db')->table('orders')
+            ->select('approved_denied_at')
+            ->where('status', 'APPROVED')
+            ->whereNotNull('approved_denied_at')
+            ->pluck('approved_denied_at')
+            ->map(function ($date) {
+                $parsed = Carbon::parse($date);
+                return $parsed->month < 7 ? $parsed->year - 1 : $parsed->year;
+            });
+
+        $newYears = DB::connection('mysql')->table('orders')
+            ->select('approved_denied_at')
+            ->where('status', 'APPROVED')
+            ->whereNotNull('approved_denied_at')
+            ->pluck('approved_denied_at')
+            ->map(function ($date) {
+                $parsed = Carbon::parse($date);
+                return $parsed->month < 7 ? $parsed->year - 1 : $parsed->year;
+            });
+
+        $this->availableYears = $oldYears->merge($newYears)->unique()->sortDesc()->values();
     }
 
     public function loadReportData()
