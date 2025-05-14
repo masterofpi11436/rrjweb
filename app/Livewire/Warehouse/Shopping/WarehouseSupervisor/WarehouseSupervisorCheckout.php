@@ -25,7 +25,7 @@ class WarehouseSupervisorCheckout extends Component
         $this->sections = Section::orderBy('section', 'asc')->get();
 
         // Fetch supervisors in alphabetical order (by last_name, for example)
-        $this->supervisors = User::whereIN('warehouse_role', ['Supervisor', 'Property'])
+        $this->supervisors = User::whereIN('warehouse_role', ['Supervisor', 'Property', 'Warehouse Supervisor'])
                                  ->orderBy('last_name', 'asc')
                                  ->get();
     }
