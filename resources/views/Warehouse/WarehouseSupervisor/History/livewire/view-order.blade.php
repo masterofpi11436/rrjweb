@@ -4,11 +4,11 @@
     @if ($order->status === 'approved')
         <a href="{{ route('warehouse.warehouse-supervisor.history.approved') }}" class="mb-4 inline-block bg-gray-800 text-white border border-red-600 px-2 py-2 text-sm font-semibold rounded-md hover:bg-gray-700">Back</a>
     @elseif ($order->status === 'exchange_approved')
-        <a href="{{ route('warehouse.warehouse-supervisor.history.exchange-approved') }}" class="mb-4 inline-block bg-gray-800 text-white border border-red-600 px-2 py-2 text-sm font-semibold rounded-md hover:bg-gray-700">Back</a>
+        <a href="{{ route('warehouse.warehouse-supervisor.approved-exchange') }}" class="mb-4 inline-block bg-gray-800 text-white border border-red-600 px-2 py-2 text-sm font-semibold rounded-md hover:bg-gray-700">Back</a>
     @elseif ($order->status === 'denied')
         <a href="{{ route('warehouse.warehouse-supervisor.history.denied') }}" class="mb-4 inline-block bg-gray-800 text-white border border-red-600 px-2 py-2 text-sm font-semibold rounded-md hover:bg-gray-700">Back</a>
     @elseif ($order->status === 'exchange_denied')
-        <a href="{{ route('warehouse.warehouse-supervisor.history.exchange-denied') }}" class="mb-4 inline-block bg-gray-800 text-white border border-red-600 px-2 py-2 text-sm font-semibold rounded-md hover:bg-gray-700">Back</a>
+        <a href="{{ route('warehouse.warehouse-supervisor.denied-exchange') }}" class="mb-4 inline-block bg-gray-800 text-white border border-red-600 px-2 py-2 text-sm font-semibold rounded-md hover:bg-gray-700">Back</a>
     @else
         <a href="{{ url()->previous() }}" class="mb-4 inline-block bg-gray-800 text-white border border-red-600 px-2 py-2 text-sm font-semibold rounded-md hover:bg-gray-700">Back</a>
     @endif
