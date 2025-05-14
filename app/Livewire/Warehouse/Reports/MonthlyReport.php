@@ -169,7 +169,7 @@ class MonthlyReport extends Component
         // Delete file after emailing
         Storage::disk('public')->delete($relativePath);
 
-        session()->flash('message', 'Report sent successfully.');
+        session()->flash('success', 'Report sent successfully.');
     }
 
     public function render()
