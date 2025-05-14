@@ -170,7 +170,7 @@ class MonthlyReport extends Component
         // Delete file after emailing
         Storage::disk('public')->delete($relativePath);
 
-        $this->successMessage = 'Report sent successfully.';
+        return redirect()->route('warehouse.warehouse-supervisor.reports.monthly')->with('success', 'Report sent successfully.');
     }
 
     public function render()
