@@ -151,23 +151,18 @@ class MonthlyReport extends Component
             mkdir($directory, 0775, true);
         }
 
-        // Build CSV
         $csvData = $this->buildCsvFromReport();
 
-        // Store CSV
         Storage::disk('public')->put($relativePath, $csvData);
 
-        // Format month name
         $monthName = \Carbon\Carbon::create()->month((int) $this->selectedMonth)->format('F');
 
-        // Get recipients
         $recipients = DB::table('monthly_report_recipients')->pluck('email');
 
         foreach ($recipients as $email) {
             Mail::to($email)->send(new MonthlyReportCsv($fullPath, $monthName, $this->selectedYear));
         }
 
-        // Delete file after emailing
         Storage::disk('public')->delete($relativePath);
 
         return redirect()->route('warehouse.warehouse-supervisor.reports.monthly')->with('success', 'Report sent successfully.');

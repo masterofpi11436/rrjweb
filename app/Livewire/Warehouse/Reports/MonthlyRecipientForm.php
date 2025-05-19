@@ -16,7 +16,7 @@ class MonthlyRecipientForm extends Component
     {
         if ($id) {
             $this->recipientId = $id;
-            $this->loadRecipient(); // Corrected method name
+            $this->loadRecipient();
         }
     }
 
@@ -31,7 +31,6 @@ class MonthlyRecipientForm extends Component
         }
     }
 
-    // Validation rules for the form
     protected function rules()
     {
         return [
@@ -41,13 +40,11 @@ class MonthlyRecipientForm extends Component
         ];
     }
 
-    // For live validation
     public function updated($propertyName)
     {
         $this->validateOnly($propertyName);
     }
 
-    // Handle the form submission
     public function submitForm()
     {
         $this->validate();

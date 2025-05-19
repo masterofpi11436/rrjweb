@@ -24,7 +24,7 @@ class CalendarYearReport extends Component
         $this->loadReportData();
     }
 
-    // Gets all the years there is data
+    // Gets all the years if there is data
     public function loadAvailableYears()
     {
         $oldYears = DB::connection('old_db')->table('orders')
@@ -46,7 +46,6 @@ class CalendarYearReport extends Component
 
     public function loadReportData()
     {
-        // OLD DB orders
         $oldOrders = DB::connection('old_db')->table('orders')
             ->join('section', 'orders.section_id', '=', 'section.id')
             ->join('user', 'orders.supervisor_id', '=', 'user.id')
@@ -58,7 +57,6 @@ class CalendarYearReport extends Component
             ])
             ->get();
 
-        // NEW DB orders
         $newOrders = DB::connection('mysql')->table('orders')
             ->select('items', 'section_name', 'supervisor_name', 'approved_denied_at')
             ->where('status', 'APPROVED')
@@ -84,8 +82,8 @@ class CalendarYearReport extends Component
 
                 foreach ($decoded as $item) {
                     $rawName = $item['name'] ?? 'Unnamed Item';
-                    $nameKey = strtolower(trim($rawName)); // normalize
-                    $displayName = trim($rawName);         // first appearance used for display
+                    $nameKey = strtolower(trim($rawName));
+                    $displayName = trim($rawName);
                     $section = trim($order->section_name ?? 'Unknown');
                     $qty = (int) ($item['quantity'] ?? 0);
 

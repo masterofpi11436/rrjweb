@@ -61,7 +61,6 @@ class FiscalYearReport extends Component
         $start = \Carbon\Carbon::create($this->selectedYear, 7, 1)->startOfDay();
         $end = \Carbon\Carbon::create($this->selectedYear + 1, 6, 30)->endOfDay();
 
-        // OLD DB
         $oldOrders = DB::connection('old_db')->table('orders')
             ->join('section', 'orders.section_id', '=', 'section.id')
             ->select('orders.items', 'section.name as section_name', 'orders.approved_denied_at')
@@ -69,7 +68,6 @@ class FiscalYearReport extends Component
             ->whereBetween('orders.approved_denied_at', [$start, $end])
             ->get();
 
-        // NEW DB
         $newOrders = DB::connection('mysql')->table('orders')
             ->select('items', 'section_name', 'approved_denied_at')
             ->where('status', 'APPROVED')
