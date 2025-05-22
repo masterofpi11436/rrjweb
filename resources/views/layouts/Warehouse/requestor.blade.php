@@ -16,12 +16,12 @@
             <nav>
                 <ul>
                     <li class="mb-3 font-bold">
-                        <a href="{{ route('warehouse.requestor.dashboard') }}" class="block p-2 rounded hover:bg-green-900">Create Orders</a>
+                        <a href="{{ route('warehouse.requestor.dashboard') }}" class="block p-2 rounded hover:bg-green-900">Create Order</a>
                     </li>
                     <li class="mb-3 font-bold">
                         <a href="{{ route('warehouse.requestor.pending') }}"
                            class="flex justify-between p-2 rounded hover:bg-green-900">
-                            <span>Pending Orders</span>
+                            <span>Pending Order(s)</span>
                             <span class="bg-blue-600 text-white px-2 py-1 rounded text-sm">{{ $pendingOrdersCount }}</span>
                         </a>
                     </li>

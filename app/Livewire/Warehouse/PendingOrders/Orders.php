@@ -55,7 +55,7 @@ class Orders extends Component
 
         Order::whereIn('id', $orders->pluck('id'))->update([
             'status' => config('orderstatus.CONSOLIDATED'),
-            'note' => 'This order was consolidated into a single merged request for the ' . $sectionName . ' section.',
+            'note' => 'This order was consolidated for the ' . $sectionName . ' section.',
         ]);
 
         session()->flash('success', 'Orders successfully consolidated.');

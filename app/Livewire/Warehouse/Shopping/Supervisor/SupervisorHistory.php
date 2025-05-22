@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 class SupervisorHistory extends Component
 {
     public $approvedOrders = [];
-    public $expandedOrderId = null; // Track which order is expanded
+    public $expandedOrderId = null;
 
     public function mount()
     {
