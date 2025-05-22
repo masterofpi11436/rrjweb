@@ -9,9 +9,19 @@ class JurisdictionTimeLog extends Model
 {
     use HasFactory;
 
-    protected $table = 'jurisdictions';
+    protected $table = 'jurisdiction_time_log';
 
-    protected $fillable = ['name'];
+    protected $fillable = [
+        'jurisdiction_id',
+        'date_of_visit',
+        'arrival_time',
+        'departure_time',
+        'magistrate_start',
+        'magistrate_end',
+        'nurse_start',
+        'nurse_end',
+        'did_not_get_committed',
+    ];
 
     public function jurisdiction()
     {

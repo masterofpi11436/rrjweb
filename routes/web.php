@@ -391,6 +391,7 @@ Route::prefix('jurisdiction')->group(function () use ($jurisdictionClass){
     Route::get('/destroy/{id}', [$jurisdictionClass, 'destroy'])->name('jurisdiction.destroy');
 
     // Time Log CRUD
+    Route::get('/time-logs', [$jurisdictionClass, 'timeLogs'])->name('jurisdiction.time-logs');
     Route::get('/create-time-log', [$jurisdictionClass, 'createTimeLog'])->name('jurisdiction.create-time-log');
     Route::get('/edit-time-log/{id}', [$jurisdictionClass, 'editTimeLog'])->name('jurisdiction.edit-time-log');
     Route::get('/destroy-time-log/{id}', [$jurisdictionClass, 'destroyTimeLog'])->name('jurisdiction.destroy-time-log');

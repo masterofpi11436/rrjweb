@@ -15,7 +15,7 @@ class JurisdictionForm extends Component
     public $name;
 
     protected $rules = [
-        'name' => 'max:255',
+        'name' => 'max:255|required',
     ];
 
     // Method to load existing data if editing

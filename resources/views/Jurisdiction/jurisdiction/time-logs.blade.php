@@ -1,8 +1,8 @@
 @extends('layouts.jurisdiction')
 
-@section('title', 'Jurisdiction Compliance Times')
+@section('title', 'Jurisdiction Time Logs')
 
-@section('heading', 'Jurisdiction Compliance Times')
+@section('heading', 'Jurisdiction Time Logs')
 
 @section('content')
 
@@ -14,10 +14,9 @@
     </div>
 @endif
 
-<a href="{{ route('jurisdiction.create')}}">Create Jurisdiction</a>
-<a href="{{ route('jurisdiction.time-logs')}}">Time Logs</a>
+<a href="{{ route('jurisdiction.create-time-log')}}">Create Jurisdiction</a>
 
 <!-- Livewire search component -->
-@livewire('Jurisdiction.Jurisdiction')
+@livewire('Jurisdiction.TimeLogs')
 
 @endsection
