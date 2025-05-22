@@ -381,6 +381,17 @@ Route::prefix('warehouse')->group(function () use ($warehouseLoginClass, $wareho
 
 // Jurisdiction Application
 Route::prefix('jurisdiction')->group(function () use ($jurisdictionClass){
+
     // Routes without middleware
     Route::get('/dashboard', [$jurisdictionClass, 'dashboard'])->name('jurisdiction.dashboard');
+
+    // Jurisdiction CRUD
+    Route::get('/create', [$jurisdictionClass, 'create'])->name('jurisdiction.create');
+    Route::get('/edit/{id}', [$jurisdictionClass, 'edit'])->name('jurisdiction.edit');
+    Route::get('/destroy/{id}', [$jurisdictionClass, 'destroy'])->name('jurisdiction.destroy');
+
+    // Time Log CRUD
+    Route::get('/create-time-log', [$jurisdictionClass, 'createTimeLog'])->name('jurisdiction.create-time-log');
+    Route::get('/edit-time-log/{id}', [$jurisdictionClass, 'editTimeLog'])->name('jurisdiction.edit-time-log');
+    Route::get('/destroy-time-log/{id}', [$jurisdictionClass, 'destroyTimeLog'])->name('jurisdiction.destroy-time-log');
 });

@@ -38,19 +38,19 @@ class JurisdictionController extends Controller
     // CRUD for Jurisdiction Time Logs
     public function createTimeLog()
     {
-        return view('Jurisdiction.jurisdiction.create');
+        return view('Jurisdiction.jurisdiction.create-time-log');
     }
 
     public function editTimeLog($id)
     {
-        $jurisdiction = Jurisdiction::findOrFail($id);
-        return view('Jurisdiction.jurisdiction.edit', ['jurisdiction' => $jurisdiction]);
+        $jurisdictionTimeLog = JurisdictionTimeLog::findOrFail($id);
+        return view('Jurisdiction.jurisdiction.edit-time-log', ['jurisdictionTimeLog' => $jurisdictionTimeLog]);
     }
 
     public function destroyTimeLog($id)
     {
-        $jurisdiction = Jurisdiction::findOrFail($id);
-        $jurisdiction->delete();
+        $jurisdictionTimeLog = JurisdictionTimeLog::findOrFail($id);
+        $jurisdictionTimeLog->delete();
 
         session()->flash('create-edit-delete-message', 'Record deleted successfully!');
         return redirect()->back();
