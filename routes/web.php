@@ -21,6 +21,7 @@ use App\Http\Controllers\VFM\VFMVehicleController;
 use App\Http\Controllers\VFM\VFMTechVehicleController;
 use App\Http\Controllers\VFM\VFMTechController;
 use App\Http\Controllers\Directory\PhoneDirectoryController;
+use App\Http\Controllers\Jurisdiction\JurisdictionController;
 use App\Http\Controllers\Administrator\AdministratorController;
 use App\Http\Controllers\Warehouse\WarehouseSupervisor\WarehouseSupervisorController;
 use App\Http\Controllers\Warehouse\WarehouseSupervisor\ItemController;
@@ -57,6 +58,7 @@ $vfmTechVehicleClass = VFMTechVehicleController::class;
 $vfmTechClass = VFMTechController::class;
 $icsClass = ICSController::class;
 $policyClass = PolicyController::class;
+$jurisdictionClass = JurisdictionController::class;
 $warehouseSupervisorClass = WarehouseSupervisorController::class;
 $itemClass = ItemController::class;
 $categoryClass = CategoryController::class;
@@ -83,7 +85,7 @@ Route::view('/login/success', 'Login.Resets.success')->name('login.success');
 
 // Default Redirect Route for testing
 Route::get('/', function () {
-    return redirect()->route('warehouse.login');
+    return redirect()->route('jurisdiction.dashboard');
 });
 
 // Public Routes
@@ -375,4 +377,10 @@ Route::prefix('warehouse')->group(function () use ($warehouseLoginClass, $wareho
             Route::get('/edit-exchange-order/{id}', [$requestorClass, 'editExchangeOrder'])->name('warehouse.requestor.edit-exchange-order');
             Route::delete('/{id}', [$requestorClass, 'destroy'])->name('warehouse.requestor.destroy');
         });
+});
+
+// Jurisdiction Application
+Route::prefix('jurisdiction')->group(function () use ($jurisdictionClass){
+    // Routes without middleware
+    Route::get('/dashboard', [$jurisdictionClass, 'dashboard'])->name('jurisdiction.dashboard');
 });
