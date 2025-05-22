@@ -7,6 +7,6 @@
 @section('content')
 
 <!-- Livewire search component -->
-@livewire('warehouse.shopping.supervisor.supervisor-reorder', ['orderId' => $orderId])
+@livewire('warehouse.shopping.supervisor.supervisor-reorder')
 
 @endsection

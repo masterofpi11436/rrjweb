@@ -16,11 +16,20 @@ class SupervisorReorder extends Component
     public $search = '';
     public $selectedCategory = '';
     public $quantities = [];
+    public $cart = [];
 
     protected $paginationTheme = 'tailwind';
 
-    public function mount($orderId)
+    public function mount($orderId = null)
     {
+        // If cart already exists, use it
+        if (session()->has('cart_reorder')) {
+            $this->cart = session('cart_reorder');
+            $this->quantities = collect($this->cart)->pluck('quantity', 'id')->toArray();
+            return;
+        }
+
+        // Otherwise, load from the old order
         $order = Order::findOrFail($orderId);
         $items = json_decode($order->items, true);
 
@@ -28,14 +37,15 @@ class SupervisorReorder extends Component
 
         foreach ($items as $item) {
             $cart[$item['id']] = [
-                'id' => $item['id'],
-                'name' => $item['name'],
+                'id'       => $item['id'],
+                'name'     => $item['name'],
                 'quantity' => $item['quantity'],
             ];
             $this->quantities[$item['id']] = $item['quantity'];
         }
 
         session(['cart_reorder' => $cart]);
+        $this->cart = $cart;
     }
 
     public function updatedQuantities($value, $itemId)

@@ -353,7 +353,7 @@ Route::prefix('warehouse')->group(function () use ($warehouseLoginClass, $wareho
             Route::get('/exchange', [$supervisorClass, 'exchange'])->name('warehouse.supervisor.exchange');
             Route::get('/exchange-checkout', [$supervisorClass, 'exchangeCheckout'])->name('warehouse.supervisor.exchange-checkout');
             Route::get('/history', [$supervisorClass, 'history'])->name('warehouse.supervisor.history');
-            Route::get('/reorder/{id}', [$supervisorClass, 'reorder'])->name('warehouse.supervisor.reorder');
+            Route::get('/reorder/{id?}', [$supervisorClass, 'reorder'])->name('warehouse.supervisor.reorder');
             Route::get('/reorder-checkout', [$supervisorClass, 'reorderCheckout'])->name('warehouse.supervisor.reorder-checkout');
             Route::get('/pending', [$supervisorClass, 'pending'])->name('warehouse.supervisor.pending');
             Route::get('/edit-order/{id}', [$supervisorClass, 'editOrder'])->name('warehouse.supervisor.edit-order');

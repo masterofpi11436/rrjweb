@@ -45,10 +45,12 @@
                                 @endforeach
                             </ul>
                         </div>
-                        <a href="{{ route('warehouse.supervisor.reorder', ['id' => $order->id]) }}"
-                        class="px-4 py-2 bg-green-600 text-white text-sm rounded hover:bg-green-700">
-                            Reorder
-                        </a>
+                        <div class="mt-4 flex justify-end">
+                            <a href="{{ route('warehouse.supervisor.reorder', ['id' => $order->id]) }}"
+                            class="inline-block px-5 py-2 text-sm font-semibold bg-green-600 text-white rounded-md border border-white hover:bg-green-700 hover:shadow-lg transition">
+                                Reorder
+                            </a>
+                        </div>
                     @endif
                 </li>
             @endforeach

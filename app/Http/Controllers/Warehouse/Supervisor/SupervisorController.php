@@ -118,14 +118,26 @@ class SupervisorController extends Controller
         return view('Warehouse.Supervisor.supervisor.history');
     }
 
-    public function reorder($orderId)
+    public function reorder($orderId = null)
     {
-        $order = Order::findOrFail($orderId);
+        if (session()->has('cart_reorder')) {
+            return view('Warehouse.Supervisor.supervisor.reorder');
+        }
 
+        // Load from order
+        $order = Order::findOrFail($orderId);
         $cart = json_decode($order->items, true);
 
         session(['cart_reorder' => $cart]);
-        return view('Warehouse.Supervisor.supervisor.reorder', ['orderId' => $orderId]);
+
+        return view('Warehouse.Supervisor.supervisor.reorder');
+    }
+
+    public function reorderCheckout()
+    {
+        $cart = session()->get('cart_reorder', []);
+
+        return view('Warehouse.Supervisor.supervisor.reorder-checkout', compact('cart'));
     }
 
     // Delete an existing order created by Requestor or Supervisor

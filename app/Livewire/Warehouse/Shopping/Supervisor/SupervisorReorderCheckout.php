@@ -7,7 +7,7 @@ use App\Models\Warehouse\Order;
 use App\Models\Warehouse\Section;
 use Illuminate\Support\Facades\Auth;
 
-class SupervisorCheckout extends Component
+class SupervisorReorderCheckout extends Component
 {
     public $cart = [];
     public $sections;
