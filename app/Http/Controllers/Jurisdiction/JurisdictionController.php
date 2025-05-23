@@ -38,7 +38,7 @@ class JurisdictionController extends Controller
     // CRUD for Jurisdiction Time Logs
     public function timeLogs()
     {
-        return view('Jurisdiction.jurisdiction.create-time-log');
+        return view('Jurisdiction.jurisdiction.time-logs');
     }
 
     public function createTimeLog()

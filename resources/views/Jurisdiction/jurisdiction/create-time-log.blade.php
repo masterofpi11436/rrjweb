@@ -6,7 +6,7 @@
 
 @section('content')
 
-<a href="{{ route('jurisdiction.dashboard') }}">Back</a>
+<a href="{{ route('jurisdiction.create-time-log') }}">Back</a>
 
 {{-- @livewire('Jurisdiction.jurisdiction-time-log-form') --}}
 
