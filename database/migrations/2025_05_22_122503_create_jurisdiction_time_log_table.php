@@ -25,7 +25,7 @@ return new class extends Migration
             $table->time('nurse_start')->nullable();
             $table->time('nurse_end')->nullable();
             $table->boolean('did_not_get_committed')->default(false);
-            $table->string('note');
+            $table->string('note')->nullable();
             $table->timestamps();
         });
     }

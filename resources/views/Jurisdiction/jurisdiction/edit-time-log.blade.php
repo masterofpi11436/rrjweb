@@ -8,6 +8,6 @@
 
 <a href="{{ route('jurisdiction.time-logs') }}">Back</a>
 
-@livewire('jurisdiction.jurisdiction-time-log-form')
+@livewire('jurisdiction.jurisdiction-time-log-form', ['id' => $id])
 
 @endsection

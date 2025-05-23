@@ -21,6 +21,7 @@ class JurisdictionTimeLog extends Model
         'nurse_start',
         'nurse_end',
         'did_not_get_committed',
+        'note',
     ];
 
     public function jurisdiction()

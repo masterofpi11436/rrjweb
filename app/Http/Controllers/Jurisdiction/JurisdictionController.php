@@ -49,7 +49,7 @@ class JurisdictionController extends Controller
     public function editTimeLog($id)
     {
         $jurisdictionTimeLog = JurisdictionTimeLog::findOrFail($id);
-        return view('Jurisdiction.jurisdiction.edit-time-log', ['jurisdictionTimeLog' => $jurisdictionTimeLog]);
+        return view('Jurisdiction.jurisdiction.edit-time-log', ['id' => $jurisdictionTimeLog->id]);
     }
 
     public function destroyTimeLog($id)

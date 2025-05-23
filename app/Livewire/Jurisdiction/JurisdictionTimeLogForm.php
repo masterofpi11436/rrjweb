@@ -22,6 +22,7 @@ class JurisdictionTimeLogForm extends Component
     public $nurse_start;
     public $nurse_end;
     public $did_not_get_committed = false;
+    public $note;
 
     protected $rules = [
         'jurisdiction_id' => 'required|exists:jurisdictions,id',
@@ -33,6 +34,7 @@ class JurisdictionTimeLogForm extends Component
         'nurse_start' => 'nullable',
         'nurse_end' => 'nullable',
         'did_not_get_committed' => 'boolean',
+        'note' => 'nullable|string',
     ];
 
     public function mount($id = null)
@@ -58,11 +60,11 @@ class JurisdictionTimeLogForm extends Component
             session()->flash('create-edit-delete-message', 'Time log created successfully.');
         }
 
-        return redirect()->route('time-log.dashboard');
+        return redirect()->route('jurisdiction.time-logs');
     }
 
     public function render()
     {
-        return view('livewire.jurisdiction-time-log-form');
+        return view('Jurisdiction.livewire.jurisdiction-time-log-form');
     }
 }

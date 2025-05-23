@@ -42,5 +42,10 @@
         <label><input type="checkbox" wire:model="did_not_get_committed"> Rejected</label>
     </div>
 
+    <div>
+        <label>Note</label>
+        <textarea wire:model="note"></textarea>
+    </div>
+
     <button type="submit">{{ $logId ? 'Update' : 'Create' }} Time Log</button>
 </form>
