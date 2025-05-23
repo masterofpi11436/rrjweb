@@ -37,6 +37,13 @@ class JurisdictionForm extends Component
         $this->name = $jurisdiction->name;
     }
 
+    public function deleteJurisdiction($id)
+    {
+        $jurisdiction = Jurisdiction::findOrFail($id);
+        $jurisdiction->delete();
+        $this->jurisdictions = Jurisdiction::orderBy('name')->get();
+    }
+
     // Required for live validation
     public function updated($propertyName)
     {
@@ -51,17 +58,11 @@ class JurisdictionForm extends Component
         if ($this->jurisdictionId) {
             $jurisdiction = Jurisdiction::findOrFail($this->jurisdictionId);
             $jurisdiction->update($validatedData);
-            session()->flash('create-edit-delete-message', "Jurisdiction '{$jurisdiction->name}' updated successfully!");
         } else {
             $jurisdiction = Jurisdiction::create($validatedData);
-            session()->flash('create-edit-delete-message', "Jurisdiction '{$jurisdiction->name}' added successfully!");
         }
 
-        // Reset form fields
-        $this->reset(['name']);
-
-        // Redirect to index
-        return redirect()->route('jurisdiction.dashboard');
+        return redirect()->route('jurisdiction.create');
     }
 
     public function render()
