@@ -16,14 +16,16 @@ class TimeLogs extends Component
 
     public function loadLogs()
     {
-        $this->logs = JurisdictionTimeLog::with('jurisdiction')->latest()->get();
+        $this->logs = JurisdictionTimeLog::with('jurisdiction')
+            ->orderByDesc('date_of_visit')
+            ->get();
     }
 
     public function deleteLog($id)
     {
         JurisdictionTimeLog::findOrFail($id)->delete();
         session()->flash('create-edit-delete-message', 'Time log deleted.');
-        $this->loadLogs(); // refresh list
+        $this->loadLogs();
     }
 
     public function render()

@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="{{ asset('css/water-dark.css') }}" id="theme-link" >
     <link rel="stylesheet" href="/css/common-styles-light.css" id="common-styles-link">
     <title>@yield('title')</title>
-    @livewireStyles
+    @vite('resources/css/app.css')
 </head>
 <body>
 
