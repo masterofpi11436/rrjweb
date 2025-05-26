@@ -14,7 +14,6 @@
     </div>
 @endif
 
-<a href="{{ route('jurisdiction.create')}}">Create Jurisdiction</a>
 <a href="{{ route('jurisdiction.time-logs')}}">Time Logs</a>
 
 <!-- Livewire search component -->
