@@ -8,9 +8,11 @@
                 <th>Visit Date</th>
                 <th>Arrival</th>
                 <th>Departure</th>
+                <th>Booking</th>
                 <th>Magistrate</th>
                 <th>Nurse</th>
                 <th>Rejected</th>
+                <th>Inmates Received</th>
                 <th>Note</th>
                 <th>Actions</th>
             </tr>
@@ -23,12 +25,16 @@
                     <td>{{ $log->arrival_time }}</td>
                     <td>{{ $log->departure_time }}</td>
                     <td>
+                        {{ $log->booking_start ?? '-' }} – {{ $log->booking_end ?? '-' }}
+                    </td>
+                    <td>
                         {{ $log->magistrate_start ?? '-' }} – {{ $log->magistrate_end ?? '-' }}
                     </td>
                     <td>
                         {{ $log->nurse_start ?? '-' }} – {{ $log->nurse_end ?? '-' }}
                     </td>
                     <td >{{ $log->did_not_get_committed ? 'Yes' : 'No' }}</td>
+                    <td>{{ $log->inmate_count }}</td>
                     <td >{{ $log->note ?? '-' }}</td>
                     <td>
                         <a href="{{ route('jurisdiction.edit-time-log', $log->id) }}">Edit</a>

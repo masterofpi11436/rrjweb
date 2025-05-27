@@ -17,10 +17,13 @@ class JurisdictionTimeLogForm extends Component
     public $date_of_visit;
     public $arrival_time;
     public $departure_time;
+    public $booking_start;
+    public $booking_end;
     public $magistrate_start;
     public $magistrate_end;
     public $nurse_start;
     public $nurse_end;
+    public $inmate_count;
     public $did_not_get_committed = false;
     public $note;
 
@@ -29,10 +32,13 @@ class JurisdictionTimeLogForm extends Component
         'date_of_visit' => 'required|date',
         'arrival_time' => 'required',
         'departure_time' => 'required',
+        'booking_start' => 'nullable',
+        'booking_end' => 'nullable',
         'magistrate_start' => 'nullable',
         'magistrate_end' => 'nullable',
         'nurse_start' => 'nullable',
         'nurse_end' => 'nullable',
+        'inmate_count' => 'integer|nullable',
         'did_not_get_committed' => 'boolean',
         'note' => 'nullable|string',
     ];
@@ -45,6 +51,7 @@ class JurisdictionTimeLogForm extends Component
             $log = JurisdictionTimeLog::findOrFail($id);
             $this->logId = $log->id;
             $this->fill($log->toArray());
+            $this->did_not_get_committed = (bool) $log->did_not_get_committed;
         }
     }
 

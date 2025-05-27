@@ -30,6 +30,14 @@
                 <input type="time" id="departure_time" wire:model="departure_time" class="mt-1 block w-full p-2 border border-gray-300 rounded-md dark:bg-gray-800">
             </div>
             <div>
+                <label for="booking_start" class="block text-sm font-medium">Booking Start</label>
+                <input type="time" id="booking_start" wire:model="booking_start" class="mt-1 block w-full p-2 border border-gray-300 rounded-md dark:bg-gray-800">
+            </div>
+            <div>
+                <label for="booking_end" class="block text-sm font-medium">Booking End</label>
+                <input type="time" id="booking_end" wire:model="booking_end" class="mt-1 block w-full p-2 border border-gray-300 rounded-md dark:bg-gray-800">
+            </div>
+            <div>
                 <label for="magistrate_start" class="block text-sm font-medium">Magistrate Start</label>
                 <input type="time" id="magistrate_start" wire:model="magistrate_start" class="mt-1 block w-full p-2 border border-gray-300 rounded-md dark:bg-gray-800">
             </div>
@@ -47,9 +55,14 @@
             </div>
         </div>
 
+        <div>
+            <label for="inmate_count" class="block text-sm font-medium">Inmate Count</label>
+            <input type="number" id="inmate_count" wire:model="inmate_count" class="mt-1 block w-full p-2 border border-gray-300 rounded-md dark:bg-gray-800">
+        </div>
+
         <!-- Checkbox -->
         <div class="flex items-center">
-            <input id="did_not_get_committed" type="checkbox" wire:model="did_not_get_committed" class="h-4 w-4 text-blue-600 border-gray-300 rounded">
+            <input id="did_not_get_committed" type="checkbox" wire:model.defer="did_not_get_committed" class="h-4 w-4 text-blue-600 border-gray-300 rounded">
             <label for="did_not_get_committed" class="ml-2 block text-sm font-medium">Not Comitted</label>
         </div>
 
