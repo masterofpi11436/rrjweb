@@ -50,7 +50,7 @@
         <!-- Checkbox -->
         <div class="flex items-center">
             <input id="did_not_get_committed" type="checkbox" wire:model="did_not_get_committed" class="h-4 w-4 text-blue-600 border-gray-300 rounded">
-            <label for="did_not_get_committed" class="ml-2 block text-sm font-medium">Rejected</label>
+            <label for="did_not_get_committed" class="ml-2 block text-sm font-medium">Not Comitted</label>
         </div>
 
         <!-- Note -->
