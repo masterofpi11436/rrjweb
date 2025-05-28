@@ -26,6 +26,8 @@ return new class extends Migration
             $table->time('magistrate_end')->nullable();
             $table->time('nurse_start')->nullable();
             $table->time('nurse_end')->nullable();
+            $table->time('officer_start')->nullable();
+            $table->time('officer_end')->nullable();
             $table->integer('inmate_count')->nullable();
             $table->boolean('did_not_get_committed')->default(false);
             $table->string('note')->nullable();

@@ -22,6 +22,8 @@ class JurisdictionTimeLog extends Model
         'magistrate_end',
         'nurse_start',
         'nurse_end',
+        'officer_start',
+        'officer_end',
         'inmate_count',
         'did_not_get_committed',
         'note',

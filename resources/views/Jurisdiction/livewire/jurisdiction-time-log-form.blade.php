@@ -53,6 +53,14 @@
                 <label for="booking_end" class="block text-sm font-medium">Booking End</label>
                 <input type="time" id="booking_end" wire:model="booking_end" class="mt-1 block w-full p-2 border border-gray-300 rounded-md dark:bg-gray-800">
             </div>
+            <div>
+                <label for="officer_start" class="block text-sm font-medium">Officer Start</label>
+                <input type="time" id="officer_start" wire:model="officer_start" class="mt-1 block w-full p-2 border border-gray-300 rounded-md dark:bg-gray-800">
+            </div>
+            <div>
+                <label for="officer_end" class="block text-sm font-medium">Officer End</label>
+                <input type="time" id="officer_end" wire:model="officer_end" class="mt-1 block w-full p-2 border border-gray-300 rounded-md dark:bg-gray-800">
+            </div>
         </div>
 
         <div>

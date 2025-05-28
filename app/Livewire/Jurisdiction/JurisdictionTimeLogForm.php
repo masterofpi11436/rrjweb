@@ -23,6 +23,8 @@ class JurisdictionTimeLogForm extends Component
     public $magistrate_end;
     public $nurse_start;
     public $nurse_end;
+    public $officer_start;
+    public $officer_end;
     public $inmate_count;
     public $did_not_get_committed = false;
     public $note;
@@ -38,6 +40,8 @@ class JurisdictionTimeLogForm extends Component
         'magistrate_end' => 'nullable',
         'nurse_start' => 'nullable',
         'nurse_end' => 'nullable',
+        'officer_start' => 'nullable',
+        'officer_end' => 'nullable',
         'inmate_count' => 'integer|nullable',
         'did_not_get_committed' => 'boolean',
         'note' => 'nullable|string',
