@@ -12,7 +12,7 @@
                 <th>Magistrate</th>
                 <th>Nurse</th>
                 <th>Officer</th>
-                <th>Rejected</th>
+                <th>Not Committed</th>
                 <th>Inmates Received</th>
                 <th>Note</th>
                 <th>Actions</th>
