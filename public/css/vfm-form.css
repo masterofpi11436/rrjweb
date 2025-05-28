@@ -22,6 +22,36 @@
     gap: 8px;
 }
 
+.checkbox-item-disabled {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.checkbox-item-disabled input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    background-color: transparent;
+    position: relative;
+    cursor: default;
+}
+
+.checkbox-item-disabled input[type="checkbox"]:checked {
+    background-color: blue;
+    border-color: blue;
+}
+
+.checkbox-item-disabled input[type="checkbox"]:checked::after {
+    content: '✓';
+    position: absolute;
+    top: 0;
+    left: 4px;
+    font-size: 8 px;
+    color: white;
+    pointer-events: none;
+}
+
+
 /* Error message styling */
 .error {
     color: red;

@@ -48,8 +48,13 @@
 
 @foreach ($inspectionItems as $field => $label)
     @if ($VFM->$field)
-        <div class="checkbox-item">
+        <div class="checkbox-item-disabled">
             <input type="checkbox" id="{{ $field }}" disabled checked>
+            <label for="{{ $field }}">{{ $label }}</label>
+        </div>
+    @else
+        <div class="checkbox-item">
+            <input type="checkbox" id="{{ $field }}" disabled>
             <label for="{{ $field }}">{{ $label }}</label>
         </div>
     @endif
