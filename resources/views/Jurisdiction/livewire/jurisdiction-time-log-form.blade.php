@@ -30,14 +30,6 @@
                 <input type="time" id="departure_time" wire:model="departure_time" class="mt-1 block w-full p-2 border border-gray-300 rounded-md dark:bg-gray-800">
             </div>
             <div>
-                <label for="booking_start" class="block text-sm font-medium">Booking Start</label>
-                <input type="time" id="booking_start" wire:model="booking_start" class="mt-1 block w-full p-2 border border-gray-300 rounded-md dark:bg-gray-800">
-            </div>
-            <div>
-                <label for="booking_end" class="block text-sm font-medium">Booking End</label>
-                <input type="time" id="booking_end" wire:model="booking_end" class="mt-1 block w-full p-2 border border-gray-300 rounded-md dark:bg-gray-800">
-            </div>
-            <div>
                 <label for="magistrate_start" class="block text-sm font-medium">Magistrate Start</label>
                 <input type="time" id="magistrate_start" wire:model="magistrate_start" class="mt-1 block w-full p-2 border border-gray-300 rounded-md dark:bg-gray-800">
             </div>
@@ -52,6 +44,14 @@
             <div>
                 <label for="nurse_end" class="block text-sm font-medium">Nurse End</label>
                 <input type="time" id="nurse_end" wire:model="nurse_end" class="mt-1 block w-full p-2 border border-gray-300 rounded-md dark:bg-gray-800">
+            </div>
+            <div>
+                <label for="booking_start" class="block text-sm font-medium">Booking Start</label>
+                <input type="time" id="booking_start" wire:model="booking_start" class="mt-1 block w-full p-2 border border-gray-300 rounded-md dark:bg-gray-800">
+            </div>
+            <div>
+                <label for="booking_end" class="block text-sm font-medium">Booking End</label>
+                <input type="time" id="booking_end" wire:model="booking_end" class="mt-1 block w-full p-2 border border-gray-300 rounded-md dark:bg-gray-800">
             </div>
         </div>
 
