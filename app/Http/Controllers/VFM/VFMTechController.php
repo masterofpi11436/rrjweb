@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\VFM;
 
 // Base Controller
+use App\Models\VFM\VFM;
 use App\Http\Controllers\Controller;
 
 class VFMTechController extends Controller
@@ -17,8 +18,10 @@ class VFMTechController extends Controller
         return view('VFMTech.VFM-Tech.vfm-tech-create');
     }
 
-    public function show()
+    public function show($id)
     {
-        return view('VFMTech.VFM-Tech.show');
+        $VFM = VFM::findOrFail($id);
+
+        return view('VFMTech.VFM-Tech.show', compact('VFM'));
     }
 }
