@@ -16,4 +16,9 @@ class VFMTechController extends Controller
     {
         return view('VFMTech.VFM-Tech.vfm-tech-create');
     }
+
+    public function show()
+    {
+        return view('VFMTech.VFM-Tech.show');
+    }
 }

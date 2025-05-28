@@ -70,6 +70,7 @@
                             @endif
                         </a>
                     </th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -83,6 +84,9 @@
                         <td>{{ $vehicle->state_inspection }}</td>
                         <td>{{ $vehicle->date_in }}</td>
                         <td>{{ $vehicle->date_out }}</td>
+                        <td>
+                            <a href="{{ route('vfm-tech.show', $vehicle->id) }}">View</a>
+                        </td>
                     </tr>
                 @endforeach
             </tbody>

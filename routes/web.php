@@ -171,6 +171,7 @@ Route::prefix('vfm-tech')->group(function () use ($vfmTechClass, $vfmTechVehicle
     Route::middleware('vfm-tech')->group(function () use ($vfmTechClass, $vfmTechVehicleClass) {
         Route::get('/dashboard', [$vfmTechClass, 'dashboard'])->name('vfm-tech.dashboard');
         Route::get('/create', [$vfmTechClass, 'create'])->name('vfm-tech.create');
+        Route::get('/show/{id}', [$vfmTechClass, 'show'])->name('vfm-tech.show');
 
         // Vehicle Fleet CRUD pages
         Route::prefix('vehicle')->group(function () use ($vfmTechVehicleClass) {

@@ -81,6 +81,6 @@
             </tbody>
         </table>
     @else
-        <h1>No Record Foundssssssssssssssssssssssssssssssssssss.</h1>
+        <h1>No Record Found</h1>
     @endif
 </div>
