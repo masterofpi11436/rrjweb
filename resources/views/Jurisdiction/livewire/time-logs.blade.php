@@ -11,6 +11,7 @@
                 <th>Booking</th>
                 <th>Magistrate</th>
                 <th>Nurse</th>
+                <th>Officer</th>
                 <th>Rejected</th>
                 <th>Inmates Received</th>
                 <th>Note</th>
@@ -32,6 +33,9 @@
                     </td>
                     <td>
                         {{ $log->nurse_start ?? '-' }} – {{ $log->nurse_end ?? '-' }}
+                    </td>
+                    <td>
+                        {{ $log->officer_start ?? '-' }} – {{ $log->officer_end ?? '-' }}
                     </td>
                     <td >{{ $log->did_not_get_committed ? 'Yes' : 'No' }}</td>
                     <td>{{ $log->inmate_count }}</td>
