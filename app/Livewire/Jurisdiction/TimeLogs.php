@@ -8,16 +8,45 @@ use App\Models\Jurisdiction\JurisdictionTimeLog;
 class TimeLogs extends Component
 {
     public $logs;
+    public $search = '';
+    public $sortColumn = 'date_of_visit';
+    public $sortDirection = 'desc';
 
     public function mount()
     {
         $this->loadLogs();
     }
 
+    public function updatedSearch()
+    {
+        $this->loadLogs();
+    }
+
+    public function sortBy($column)
+    {
+        if ($this->sortColumn === $column) {
+            $this->sortDirection = $this->sortDirection === 'asc' ? 'desc' : 'asc';
+        } else {
+            $this->sortColumn = $column;
+            $this->sortDirection = 'asc';
+        }
+
+        $this->loadLogs();
+    }
+
     public function loadLogs()
     {
-        $this->logs = JurisdictionTimeLog::with('jurisdiction')
-            ->orderByDesc('date_of_visit')
+        $this->logs = JurisdictionTimeLog::query()
+            ->join('jurisdictions', 'jurisdictions.id', '=', 'jurisdiction_time_log.jurisdiction_id')
+            ->select('jurisdiction_time_log.*', 'jurisdictions.name as jurisdiction_name')
+            ->where(function ($query) {
+                $query->where('jurisdictions.name', 'like', '%' . $this->search . '%')
+                    ->orWhere('jurisdiction_time_log.arrival_time', 'like', '%' . $this->search . '%')
+                    ->orWhere('jurisdiction_time_log.note', 'like', '%' . $this->search . '%')
+                    ->orWhere('jurisdiction_time_log.inmate_count', 'like', '%' . $this->search . '%');
+            })
+            ->orderBy($this->sortColumn, $this->sortDirection)
+            ->with('jurisdiction')
             ->get();
     }
 

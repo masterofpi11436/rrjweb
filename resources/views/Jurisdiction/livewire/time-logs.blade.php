@@ -1,20 +1,60 @@
 <div>
+
+    <div>
+        <input type="text" wire:model.debounce.300ms="search" placeholder="Search jurisdiction or note..." />
+    </div>
+
     <h1>Time Log Table</h1>
 
     <table>
         <thead>
             <tr>
-                <th>Jurisdiction</th>
-                <th>Visit Date</th>
-                <th>Arrival</th>
+                <th>
+                    <a href="#" wire:click.prevent="sortBy('jurisdictions.name')">
+                            Jurisdiction
+                        @if ($sortColumn === 'jurisdictions.name')
+                            @if ($sortDirection === 'asc') ▲ @else ▼ @endif
+                        @endif
+                    </a>
+                </th>
+                <th>
+                    <a href="#" wire:click.prevent="sortBy('date_of_visit')">
+                        Visit Date
+                        @if ($sortColumn === 'date_of_visit')
+                            @if ($sortDirection === 'asc') ▲ @else ▼ @endif
+                        @endif
+                    </a>
+                </th>
+                <th>
+                    <a href="#" wire:click.prevent="sortBy('arrival_time')">
+                        Arrival
+                        @if ($sortColumn === 'arrival_time')
+                            @if ($sortDirection === 'asc') ▲ @else ▼ @endif
+                        @endif
+                    </a>
+                </th>
                 <th>Departure</th>
                 <th>Booking</th>
                 <th>Magistrate</th>
                 <th>Nurse</th>
                 <th>Officer</th>
                 <th>Not Committed</th>
-                <th>Inmates Received</th>
-                <th>Note</th>
+                <th>
+                    <a href="#" wire:click.prevent="sortBy('inmate_count')">
+                        Inmates Received
+                        @if ($sortColumn === 'inmate_count')
+                            @if ($sortDirection === 'asc') ▲ @else ▼ @endif
+                        @endif
+                    </a>
+                </th>
+                <th>
+                    <a href="#" wire:click.prevent="sortBy('note')">
+                        Note
+                        @if ($sortColumn === 'note')
+                            @if ($sortDirection === 'asc') ▲ @else ▼ @endif
+                        @endif
+                    </a>
+                </th>
                 <th>Actions</th>
             </tr>
         </thead>
