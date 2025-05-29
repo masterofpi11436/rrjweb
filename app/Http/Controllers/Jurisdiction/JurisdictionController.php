@@ -11,7 +11,18 @@ class JurisdictionController extends Controller
 {
     public function dashboard()
     {
-        return view('Jurisdiction.jurisdiction.dashboard');
+        $data = JurisdictionTimeLog::selectRaw('
+            jurisdictions.name as jurisdiction_name,
+            AVG(TIMESTAMPDIFF(MINUTE, arrival_time, departure_time)) as avg_minutes')
+            ->join('jurisdictions', 'jurisdictions.id', '=', 'jurisdiction_time_log.jurisdiction_id')
+            ->groupBy('jurisdictions.name')
+            ->orderBy('jurisdictions.name')
+            ->get();
+
+        $labels = $data->pluck('jurisdiction_name');
+        $values = $data->pluck('avg_minutes');
+
+        return view('Jurisdiction.jurisdiction.dashboard', ['labels' => $labels, 'values' => $values]);
     }
 
     // CRUD for Jurisdictions
