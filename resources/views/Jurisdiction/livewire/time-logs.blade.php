@@ -1,7 +1,7 @@
 <div>
 
     <div>
-        <input type="text" wire:model.debounce.300ms="search" placeholder="Search jurisdiction or note..." />
+        <input type="text" wire:model.live="search" placeholder="Search jurisdiction or note..." />
     </div>
 
     <h1>Time Log Table</h1>

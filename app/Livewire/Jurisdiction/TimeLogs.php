@@ -41,6 +41,7 @@ class TimeLogs extends Component
             ->select('jurisdiction_time_log.*', 'jurisdictions.name as jurisdiction_name')
             ->where(function ($query) {
                 $query->where('jurisdictions.name', 'like', '%' . $this->search . '%')
+                    ->orWhere('jurisdiction_time_log.date_of_visit', 'like', $this->search . '%')
                     ->orWhere('jurisdiction_time_log.arrival_time', 'like', '%' . $this->search . '%')
                     ->orWhere('jurisdiction_time_log.note', 'like', '%' . $this->search . '%')
                     ->orWhere('jurisdiction_time_log.inmate_count', 'like', '%' . $this->search . '%');
