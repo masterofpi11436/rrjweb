@@ -1,22 +1,14 @@
 @extends('layouts.jurisdiction')
 
-@section('title', 'Jurisdiction Compliance Times')
+@section('title', 'Jurisdiction Visit Times')
 
-@section('heading', 'Jurisdiction Compliance Times')
+@section('heading', 'Jurisdiction Visit Times')
 
 @section('content')
 
-<!-- Flash Message -->
-@if (session()->has('create-edit-delete-message'))
-        <div id="flash-message" class="flash-message">
-        <button class="close-btn" onclick="this.parentElement.style.display='none';">&times;</button>
-        {{ session('create-edit-delete-message') }}
-    </div>
-@endif
-
 <a href="{{ route('jurisdiction.time-logs')}}">Time Logs</a>
 
-<canvas id="complianceChart" width="400" height="200"></canvas>
+<canvas id="timeLogChart" width="400" height="200"></canvas>
 
 @endsection
 
@@ -24,7 +16,7 @@
 <script>
     window.addEventListener('load', function () {
 
-        const canvas = document.getElementById('complianceChart');
+        const canvas = document.getElementById('timeLogChart');
 
         const ctx = canvas.getContext('2d');
         new Chart(ctx, {
@@ -40,19 +32,27 @@
                 }]
             },
             options: {
+                onClick: function (evt, elements) {
+                    if (elements.length > 0) {
+                        const index = elements[0].index;
+                        const label = this.data.labels[index];
+                        const encodedLabel = encodeURIComponent(label);
+                        window.location.href = `/jurisdiction/${encodedLabel}`;
+                    }
+                },
                 responsive: true,
                 plugins: {
                     title: {
                         display: true,
                         text: 'Average Time per Jurisdiction',
                         font: {
-                            size: 20 // ← title font size
+                            size: 20
                         }
                     },
                     legend: {
                         labels: {
                             font: {
-                                size: 16 // ← legend label size
+                                size: 16
                             }
                         }
                     }
@@ -64,24 +64,25 @@
                             display: true,
                             text: 'Minutes',
                             font: {
-                                size: 16 // ← y-axis title size
+                                size: 16
                             }
                         },
                         ticks: {
                             font: {
-                                size: 14 // ← y-axis tick label size
+                                size: 14
                             }
                         }
                     },
                     x: {
                         ticks: {
                             font: {
-                                size: 14 // ← x-axis tick label size
+                                size: 14
                             }
                         }
                     }
                 }
             }
+
         });
     });
 </script>

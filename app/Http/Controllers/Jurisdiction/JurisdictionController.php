@@ -25,6 +25,47 @@ class JurisdictionController extends Controller
         return view('Jurisdiction.jurisdiction.dashboard', ['labels' => $labels, 'values' => $values]);
     }
 
+    public function jurisdictionGraph($label)
+    {
+        $jurisdiction = Jurisdiction::where('name', $label)->firstOrFail();
+
+        $logs = JurisdictionTimeLog::where('jurisdiction_id', $jurisdiction->id)->get();
+
+        // Compute averages for each time span
+        $avg_overall = round($logs->avg(fn($log) =>
+            $log->arrival_time && $log->departure_time
+                ? \Carbon\Carbon::parse($log->arrival_time)->diffInMinutes($log->departure_time)
+                : null
+        ));
+
+        $avg_magistrate = round($logs->avg(fn($log) =>
+            $log->magistrate_start && $log->magistrate_end
+                ? \Carbon\Carbon::parse($log->magistrate_start)->diffInMinutes($log->magistrate_end)
+                : null
+        ));
+
+        $avg_nurse = round($logs->avg(fn($log) =>
+            $log->nurse_start && $log->nurse_end
+                ? \Carbon\Carbon::parse($log->nurse_start)->diffInMinutes($log->nurse_end)
+                : null
+        ));
+
+        $avg_officer = round($logs->avg(fn($log) =>
+            $log->officer_start && $log->officer_end
+                ? \Carbon\Carbon::parse($log->officer_start)->diffInMinutes($log->officer_end)
+                : null
+        ));
+
+        $labels = ['Overall', 'Magistrate', 'Nurse', 'Officer'];
+        $values = [$avg_overall, $avg_magistrate, $avg_nurse, $avg_officer];
+
+        return view('Jurisdiction.jurisdiction.jurisdiction-graph', [
+            'jurisdictionName' => $jurisdiction->name,
+            'labels' => $labels,
+            'values' => $values
+        ]);
+    }
+
     // CRUD for Jurisdictions
     public function create()
     {
