@@ -37,7 +37,7 @@
                         const index = elements[0].index;
                         const label = this.data.labels[index];
                         const encodedLabel = encodeURIComponent(label);
-                        window.location.href = `/jurisdiction/${encodedLabel}`;
+                        window.location.href = `/jurisdiction/jurisdiction-graph/${encodedLabel}`;
                     }
                 },
                 responsive: true,

@@ -385,7 +385,7 @@ Route::prefix('jurisdiction')->group(function () use ($jurisdictionClass){
 
     // Routes without middleware
     Route::get('/dashboard', [$jurisdictionClass, 'dashboard'])->name('jurisdiction.dashboard');
-    Route::get('/{label}', [$jurisdictionClass, 'jurisdictionGraph'])->name('jurisdiction.jurisdiction-graph');
+    Route::get('/jurisdiction-graph/{label}', [$jurisdictionClass, 'jurisdictionGraph'])->name('jurisdiction.jurisdiction-graph');
 
     // Jurisdiction CRUD
     Route::get('/create', [$jurisdictionClass, 'create'])->name('jurisdiction.create');
@@ -397,4 +397,5 @@ Route::prefix('jurisdiction')->group(function () use ($jurisdictionClass){
     Route::get('/create-time-log', [$jurisdictionClass, 'createTimeLog'])->name('jurisdiction.create-time-log');
     Route::get('/edit-time-log/{id}', [$jurisdictionClass, 'editTimeLog'])->name('jurisdiction.edit-time-log');
     Route::get('/destroy-time-log/{id}', [$jurisdictionClass, 'destroyTimeLog'])->name('jurisdiction.destroy-time-log');
+
 });
