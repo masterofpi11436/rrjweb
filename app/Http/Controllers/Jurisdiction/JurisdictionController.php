@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Jurisdiction;
 
 // Base Controller
+use Carbon\Carbon;
 use App\Http\Controllers\Controller;
 use App\Models\Jurisdiction\Jurisdiction;
 use App\Models\Jurisdiction\JurisdictionTimeLog;
@@ -11,18 +12,43 @@ class JurisdictionController extends Controller
 {
     public function dashboard()
     {
-        $data = JurisdictionTimeLog::selectRaw('
-            jurisdictions.name as jurisdiction_name,
-            AVG(TIMESTAMPDIFF(MINUTE, arrival_time, departure_time)) as avg_minutes')
+        $logs = JurisdictionTimeLog::select(
+                'jurisdictions.name as jurisdiction_name',
+                'jurisdiction_time_log.arrival_time',
+                'jurisdiction_time_log.departure_time',
+                'jurisdiction_time_log.date_of_visit'
+            )
             ->join('jurisdictions', 'jurisdictions.id', '=', 'jurisdiction_time_log.jurisdiction_id')
-            ->groupBy('jurisdictions.name')
-            ->orderBy('jurisdictions.name')
-            ->get();
+            ->get()
+            ->groupBy('jurisdiction_name');
 
-        $labels = $data->pluck('jurisdiction_name');
-        $values = $data->pluck('avg_minutes');
+        $labels = [];
+        $values = [];
 
-        return view('Jurisdiction.jurisdiction.dashboard', ['labels' => $labels, 'values' => $values]);
+        foreach ($logs as $jurisdiction => $entries) {
+            $totalMinutes = 0;
+            $count = 0;
+
+            foreach ($entries as $log) {
+                $arrival = Carbon::parse($log->date_of_visit . ' ' . $log->arrival_time);
+                $departure = Carbon::parse($log->date_of_visit . ' ' . $log->departure_time);
+
+                if ($departure->lt($arrival)) {
+                    $departure->addDay(); // Handle overnight
+                }
+
+                $totalMinutes += $arrival->diffInMinutes($departure);
+                $count++;
+            }
+
+            $labels[] = $jurisdiction;
+            $values[] = $count ? round($totalMinutes / $count, 2) : 0;
+        }
+
+        return view('Jurisdiction.jurisdiction.dashboard', [
+            'labels' => $labels,
+            'values' => $values,
+        ]);
     }
 
     public function jurisdictionGraph($label)
@@ -31,30 +57,45 @@ class JurisdictionController extends Controller
 
         $logs = JurisdictionTimeLog::where('jurisdiction_id', $jurisdiction->id)->get();
 
-        // Compute averages for each time span
-        $avg_overall = round($logs->avg(fn($log) =>
-            $log->arrival_time && $log->departure_time
-                ? \Carbon\Carbon::parse($log->arrival_time)->diffInMinutes($log->departure_time)
-                : null
-        ));
+        $avg_overall = round($logs->avg(function ($log) {
+            if ($log->arrival_time && $log->departure_time) {
+                $start = Carbon::parse($log->date_of_visit . ' ' . $log->arrival_time);
+                $end = Carbon::parse($log->date_of_visit . ' ' . $log->departure_time);
+                if ($end->lt($start)) $end->addDay();
+                return $start->diffInMinutes($end);
+            }
+            return null;
+        }));
 
-        $avg_magistrate = round($logs->avg(fn($log) =>
-            $log->magistrate_start && $log->magistrate_end
-                ? \Carbon\Carbon::parse($log->magistrate_start)->diffInMinutes($log->magistrate_end)
-                : null
-        ));
+        $avg_magistrate = round($logs->avg(function ($log) {
+            if ($log->magistrate_start && $log->magistrate_end) {
+                $start = Carbon::parse($log->date_of_visit . ' ' . $log->magistrate_start);
+                $end = Carbon::parse($log->date_of_visit . ' ' . $log->magistrate_end);
+                if ($end->lt($start)) $end->addDay();
+                return $start->diffInMinutes($end);
+            }
+            return null;
+        }));
 
-        $avg_nurse = round($logs->avg(fn($log) =>
-            $log->nurse_start && $log->nurse_end
-                ? \Carbon\Carbon::parse($log->nurse_start)->diffInMinutes($log->nurse_end)
-                : null
-        ));
+        $avg_nurse = round($logs->avg(function ($log) {
+            if ($log->nurse_start && $log->nurse_end) {
+                $start = Carbon::parse($log->date_of_visit . ' ' . $log->nurse_start);
+                $end = Carbon::parse($log->date_of_visit . ' ' . $log->nurse_end);
+                if ($end->lt($start)) $end->addDay();
+                return $start->diffInMinutes($end);
+            }
+            return null;
+        }));
 
-        $avg_officer = round($logs->avg(fn($log) =>
-            $log->officer_start && $log->officer_end
-                ? \Carbon\Carbon::parse($log->officer_start)->diffInMinutes($log->officer_end)
-                : null
-        ));
+        $avg_officer = round($logs->avg(function ($log) {
+            if ($log->officer_start && $log->officer_end) {
+                $start = Carbon::parse($log->date_of_visit . ' ' . $log->officer_start);
+                $end = Carbon::parse($log->date_of_visit . ' ' . $log->officer_end);
+                if ($end->lt($start)) $end->addDay();
+                return $start->diffInMinutes($end);
+            }
+            return null;
+        }));
 
         $labels = ['Overall', 'Magistrate', 'Nurse', 'Officer'];
         $values = [$avg_overall, $avg_magistrate, $avg_nurse, $avg_officer];
