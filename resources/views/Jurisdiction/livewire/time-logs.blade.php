@@ -33,11 +33,11 @@
                         @endif
                     </a>
                 </th>
-                <th>Departure</th>
-                <th>Booking</th>
                 <th>Magistrate</th>
                 <th>Nurse</th>
+                <th>Booking</th>
                 <th>Officer</th>
+                <th>Departure</th>
                 <th>Not Committed</th>
                 <th>
                     <a href="#" wire:click.prevent="sortBy('inmate_count')">
@@ -64,10 +64,6 @@
                     <td>{{ $log->jurisdiction->name ?? 'N/A' }}</td>
                     <td>{{ $log->date_of_visit }}</td>
                     <td>{{ $log->arrival_time }}</td>
-                    <td>{{ $log->departure_time }}</td>
-                    <td>
-                        {{ $log->booking_start ?? '-' }} – {{ $log->booking_end ?? '-' }}
-                    </td>
                     <td>
                         {{ $log->magistrate_start ?? '-' }} – {{ $log->magistrate_end ?? '-' }}
                     </td>
@@ -75,8 +71,12 @@
                         {{ $log->nurse_start ?? '-' }} – {{ $log->nurse_end ?? '-' }}
                     </td>
                     <td>
+                        {{ $log->booking_start ?? '-' }} – {{ $log->booking_end ?? '-' }}
+                    </td>
+                    <td>
                         {{ $log->officer_start ?? '-' }} – {{ $log->officer_end ?? '-' }}
                     </td>
+                    <td>{{ $log->departure_time }}</td>
                     <td >{{ $log->did_not_get_committed ? 'Yes' : 'No' }}</td>
                     <td>{{ $log->inmate_count }}</td>
                     <td >{{ $log->note ?? '-' }}</td>
