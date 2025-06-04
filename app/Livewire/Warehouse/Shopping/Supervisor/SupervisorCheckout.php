@@ -90,8 +90,8 @@ class SupervisorCheckout extends Component
         Mail::to($user->email)->send(new WarehouseOrderConfirmation($user, $section, $cart));
 
         // Get all warehouse supervisors and email
-        $supervisors = User::where('warehouse_role', 'warehouse_supervisor')->get();
-        foreach ($supervisors as $supervisor) {
+        $warehouseSupervisors = User::where('warehouse_role', 'Warehouse Supervisor')->get();
+        foreach ($warehouseSupervisors as $supervisor) {
             Mail::to($supervisor->email)->send(new WarehouseOrderSubmission($supervisor, $user, $section));
         }
 
