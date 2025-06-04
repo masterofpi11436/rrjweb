@@ -164,6 +164,13 @@
                             Logout
                         </button>
                     </form>
+
+                    @if(Auth::user()->admin === 1)
+                        <form action="{{ route('admin.dashboard') }}">
+                        <button class="p-2 bg-gray-900 text-white border border-red-500 rounded ml-2 hover:bg-gray-800 hover:border-red-600">
+                            Admin Dashboard</button>
+                    </form>
+                    @endif
                 </div>
             </header>
 
