@@ -27,13 +27,13 @@
                 </label>
                 <span class="theme-label">Light/Dark Theme</span>
             </div>
-        </div>
 
-        @if(Auth::user()->admin === 1)
-            <form action="{{ route('admin.dashboard') }}">
-                <button>Admin Dashboard</button>
-            </form>
-        @endif
+            @if(Auth::user()->admin === 1)
+                <form action="{{ route('admin.dashboard') }}">
+                    <button>Admin Dashboard</button>
+                </form>
+            @endif
+        </div>
     </header>
 
     <a href="#" id="back-to-top" class="back-to-top">⬆️ Back to Top</a>
