@@ -31,4 +31,14 @@
     <button>Warehouse Supervisor Dashboard</button>
 </form>
 
+<!-- Navigate to Policy pages -->
+<form action="{{ route('policy.dashboard') }}">
+    <button>Policies</button>
+</form>
+
+<!-- Jurisidction Time Logs -->
+<form action="{{ route('jurisdiction.dashboard') }}">
+    <button>Jurisdiction Time Logs</button>
+</form>
+
 @endsection
