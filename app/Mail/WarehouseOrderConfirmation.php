@@ -44,6 +44,7 @@ class WarehouseOrderConfirmation extends Mailable
     {
         return new Content(
             view: 'emails.warehouse-order-confirmation',
+            html: 'emails.warehouse-order-confirmation',
         );
     }
 

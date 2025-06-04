@@ -6,18 +6,17 @@
     <title>Document</title>
 </head>
 <body>
-    <h2>Hello {{ $user->first_name}},</h2>
+    <h2>Hello {{ $user->first_name }},</h2>
 
-    <p>Your order was successfully submitted to the warehouse for the section <strong>{{ $section->section }}</strong></p>
+    <p>Your order for the <strong>{{ $section->section }}</strong> section has been submitted to the warehouse.</p>
 
-    <h3>Order Summary</h3>
+    <h3>Order Summary:</h3>
+    <ul>
+        @foreach ($cart as $item)
+            <li>{{ $item['name'] }} — {{ $item['quantity'] }}</li>
+        @endforeach
+    </ul>
 
-    @foreach ($cart as $item)
-        <li>{{ $item-['name']}} - {{ $item['quantity'] }}</li>
-    @endforeach
-
-    <p>Please reach out to the warehouse if you have anything concerning your order.</p>
-
-    <p>Thank you</p>
+    <p>Thank you!</p>
 </body>
 </html>
