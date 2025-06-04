@@ -27,14 +27,28 @@ class WarehouseOrderConfirmation extends Mailable
         $this->cart = $cart;
     }
 
-    public function build()
+    /**
+     * Get the message envelope.
+     */
+    public function envelope(): Envelope
     {
-        return $this->subject('Warehouse Order Confirmation')
-                    ->html(view('emails.warehouse-order-confirmation', [
-                        'user' => $this->user,
-                        'section' => $this->section,
-                        'cart' => $this->cart,
-                    ])->render());
+        return new Envelope(
+            subject: 'Warehouse Order Confirmation',
+        );
+    }
+
+    /**
+     * Get the message content definition.
+     */
+    public function content(): Content
+    {
+        return new Content(
+            view: 'emails.warehouse-order-confirmation',
+                with: [
+                    'user' => $this->user,
+                    'section' => $this->section,
+                    'cart' => $this->cart,
+                ]);
     }
 
     /**
