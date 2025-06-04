@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Mail;
+namespace App\Mail\Warehouse;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -9,16 +9,22 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class WarehouseOrderSubmission extends Mailable
+class WarehouseOrderConfirmation extends Mailable
 {
     use Queueable, SerializesModels;
+
+    public $user;
+    public $section;
+    public $cart;
 
     /**
      * Create a new message instance.
      */
-    public function __construct()
+    public function __construct($user, $section, $cart)
     {
-        //
+        $this->user = $user;
+        $this->section = $section;
+        $this->cart = $cart;
     }
 
     /**
@@ -27,7 +33,7 @@ class WarehouseOrderSubmission extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Warehouse Order Submission',
+            subject: 'Warehouse Order Confirmation',
         );
     }
 
@@ -37,8 +43,12 @@ class WarehouseOrderSubmission extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'view.name',
-        );
+            view: 'emails.Warehouse.warehouse-order-confirmation',
+                with: [
+                    'user' => $this->user,
+                    'section' => $this->section,
+                    'cart' => $this->cart,
+                ]);
     }
 
     /**

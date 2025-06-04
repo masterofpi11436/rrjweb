@@ -13,7 +13,7 @@
     <h3>Order Summary</h3>
 
     @foreach ($cart as $item)
-        <li>{{ $item['name']}} - {{ $item['quantity'] }}</li>
+        <li>{{ $item['name']}} x {{ $item['quantity'] }}</li>
     @endforeach
 
     <p>Please reach out to the warehouse if you have anything concerning your order.</p>

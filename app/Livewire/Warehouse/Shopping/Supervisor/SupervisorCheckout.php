@@ -3,11 +3,13 @@
 namespace App\Livewire\Warehouse\Shopping\Supervisor;
 
 use Livewire\Component;
+use App\Models\Login\User;
 use App\Models\Warehouse\Order;
 use App\Models\Warehouse\Section;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
-use App\Mail\WarehouseOrderConfirmation;
+use App\Mail\Warehouse\WarehouseOrderSubmission;
+use App\Mail\Warehouse\WarehouseOrderConfirmation;
 
 class SupervisorCheckout extends Component
 {
@@ -84,7 +86,14 @@ class SupervisorCheckout extends Component
             'status'              => config('orderstatus.PENDING_WAREHOUSE') // Enum value
         ]);
 
+        // Email confirmation for supervisors
         Mail::to($user->email)->send(new WarehouseOrderConfirmation($user, $section, $cart));
+
+        // Get all warehouse supervisors and email
+        $supervisors = User::where('warehouse_role', 'warehouse_supervisor')->get();
+        foreach ($supervisors as $supervisor) {
+            Mail::to($supervisor->email)->send(new WarehouseOrderSubmission($supervisor, $user, $section));
+        }
 
         session()->forget('cart');
 
