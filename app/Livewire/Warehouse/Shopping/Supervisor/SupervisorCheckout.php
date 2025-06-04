@@ -6,6 +6,8 @@ use Livewire\Component;
 use App\Models\Warehouse\Order;
 use App\Models\Warehouse\Section;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\WarehouseOrderConfirmation;
 
 class SupervisorCheckout extends Component
 {
@@ -70,6 +72,7 @@ class SupervisorCheckout extends Component
 
         $user = Auth::user();
         $section = Section::find($this->selectedSection);
+        $cart = $this->cart;
 
         Order::create([
             'supervisor_id'       => $user->id,
@@ -80,6 +83,8 @@ class SupervisorCheckout extends Component
             'items'               => json_encode($this->cart), // Store cart items as JSON
             'status'              => config('orderstatus.PENDING_WAREHOUSE') // Enum value
         ]);
+
+        Mail::to($user->email)->send(new WarehouseOrderConfirmation($user, $section, $cart));
 
         session()->forget('cart');
 
