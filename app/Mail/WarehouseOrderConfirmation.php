@@ -30,7 +30,11 @@ class WarehouseOrderConfirmation extends Mailable
     public function build()
     {
         return $this->subject('Warehouse Order Confirmation')
-                    ->view('emails.warehouse-order-confirmation');
+                    ->html(view('emails.warehouse-order-confirmation', [
+                        'user' => $this->user,
+                        'section' => $this->section,
+                        'cart' => $this->cart,
+                    ])->render());
     }
 
     /**
