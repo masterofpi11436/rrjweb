@@ -380,7 +380,7 @@ Route::prefix('warehouse')->group(function () use ($warehouseLoginClass, $wareho
         });
 });
 
-// Jurisdiction Application
+// Jurisdiction Time Log Application
 Route::prefix('jurisdiction')->group(function () use ($jurisdictionClass){
 
     // Routes without middleware
