@@ -45,7 +45,7 @@ class WarehouseOrderApproved extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'emails.Warehouse.warehouse-order-confirmation',
+            view: 'emails.Warehouse.warehouse-order-approved',
                 with: [
                     'supervisor' => $this->supervisor,
                     'section' => $this->section,
