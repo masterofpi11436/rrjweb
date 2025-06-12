@@ -66,11 +66,10 @@ class PendingOrderController extends Controller
         ]);
 
         $supervisor = $order->supervisor;
-        $section = $order->section_name;
         $cart = json_decode($order->items, true);
 
         if (config('mail.enabled')) {
-            Mail::to($supervisor->email)->send(new WarehouseOrderApproved($supervisor, $section, $cart));
+            Mail::to($supervisor->email)->send(new WarehouseOrderApproved($supervisor, $order->section_name, $cart));
         }
 
         return redirect()->route('warehouse.warehouse-supervisor.pending.dashboard')
@@ -91,12 +90,11 @@ class PendingOrderController extends Controller
         ]);
 
         $supervisor = $order->supervisor;
-        $section = $order->section_name;
         $cart = json_decode($order->items, true);
         $note = $request->note;
 
         if (config('mail.enabled')) {
-        Mail::to($supervisor->email)->send(new WarehouseOrderDenied($supervisor, $section, $cart, $note));
+        Mail::to($supervisor->email)->send(new WarehouseOrderDenied($supervisor, $order->section_name, $cart, $note));
     }
 
         return redirect()->route('warehouse.warehouse-supervisor.pending.dashboard')
