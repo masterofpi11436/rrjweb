@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>New Order Received</title>
 </head>
 <body>
     <h2>Hello {{ $warehouse_manager->first_name}},</h2>

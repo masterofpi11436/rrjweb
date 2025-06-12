@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Mail;
+namespace App\Mail\Warehouse;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -10,16 +10,23 @@ use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
 // Notice of Warehouse order was approved
-class WarehouseOrderDenied extends Mailable
+
+class WarehouseOrderApproved extends Mailable
 {
     use Queueable, SerializesModels;
+
+    public $supervisor;
+    public $section;
+    public $cart;
 
     /**
      * Create a new message instance.
      */
-    public function __construct()
+    public function __construct($supervisor, $section, $cart)
     {
-        //
+        $this->supervisor = $supervisor;
+        $this->section = $section;
+        $this->cart = $cart;
     }
 
     /**
@@ -28,7 +35,7 @@ class WarehouseOrderDenied extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Warehouse Order Denied',
+            subject: 'Warehouse Order Approved',
         );
     }
 
@@ -38,8 +45,12 @@ class WarehouseOrderDenied extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'view.name',
-        );
+            view: 'emails.Warehouse.warehouse-order-confirmation',
+                with: [
+                    'supervisor' => $this->supervisor,
+                    'section' => $this->section,
+                    'cart' => $this->cart,
+                ]);
     }
 
     /**

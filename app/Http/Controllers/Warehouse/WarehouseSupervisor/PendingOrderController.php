@@ -64,15 +64,18 @@ class PendingOrderController extends Controller
             'approved_denied_at' => Carbon::now(),
         ]);
 
-        $order->items = json_decode($order->items, true);
+        $supervisor = $order->supervisor;
+        $section = $order->section_name;
+        $cart = json_decode($order->items, true);
 
         if (config('mail.enabled')) {
-            Mail::to($order->supervisor->email)->send(new WarehouseOrderApproved($order));
+            Mail::to($supervisor->email)->send(new WarehouseOrderApproved($supervisor, $section, $cart));
         }
 
         return redirect()->route('warehouse.warehouse-supervisor.pending.dashboard')
             ->with('success', 'Order approved successfully.');
     }
+
 
     public function deny(Request $request, $id)
     {
