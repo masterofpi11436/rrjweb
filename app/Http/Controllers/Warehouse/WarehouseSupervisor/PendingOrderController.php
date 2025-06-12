@@ -7,10 +7,11 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\Warehouse\Order;
 use App\Http\Controllers\Controller;
-use App\Mail\Warehouse\WarehouseOrderApproved;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\View;
+use App\Mail\Warehouse\WarehouseOrderDenied;
+use App\Mail\Warehouse\WarehouseOrderApproved;
 
 // CRUD operations for approving, denying, and editing an order
 class PendingOrderController extends Controller
@@ -88,6 +89,15 @@ class PendingOrderController extends Controller
             'approved_denied_by_name' => Auth::user()->first_name . ' ' . Auth::user()->last_name,
             'approved_denied_at' => Carbon::now(),
         ]);
+
+        $supervisor = $order->supervisor;
+        $section = $order->section_name;
+        $cart = json_decode($order->items, true);
+        $note = $request->note;
+
+        if (config('mail.enabled')) {
+        Mail::to($supervisor->email)->send(new WarehouseOrderDenied($supervisor, $section, $cart, $note));
+    }
 
         return redirect()->route('warehouse.warehouse-supervisor.pending.dashboard')
             ->with('success', 'Order denied');
