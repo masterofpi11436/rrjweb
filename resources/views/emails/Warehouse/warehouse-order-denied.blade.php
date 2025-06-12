@@ -8,7 +8,7 @@
 <body>
     <h2>Hello {{ $supervisor->first_name }},</h2>
 
-    <p>Your order for section <strong>{{ $section->section }}</strong> was <strong>denied</strong> by the warehouse.</p>
+    <p>Your order for section <strong>{{ $section }}</strong> was <strong>denied</strong> by the warehouse.</p>
 
     <h3>Order Summary</h3>
     @foreach ($cart as $item)
