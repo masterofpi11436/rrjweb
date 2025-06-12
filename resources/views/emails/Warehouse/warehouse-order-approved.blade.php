@@ -17,7 +17,7 @@
     @endforeach
 
     @if ($note)
-        <h3>Note from Supervisor:</h3>
+        <h3>Note from Warehouse:</h3>
         <p>{{ $note }}</p>
     @endif
 
