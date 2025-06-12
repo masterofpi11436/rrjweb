@@ -113,4 +113,7 @@ return [
         'name' => env('MAIL_FROM_NAME', 'Example'),
     ],
 
+    // Enable Any and all email functionality from the .env file
+    'enabled' => env('MAIL_ENABLED'),
+
 ];

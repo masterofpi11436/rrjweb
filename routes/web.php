@@ -222,6 +222,12 @@ Route::prefix('policy')->group(function () use ($policyClass, $policyLoginClass)
 });
 
 // ***---Warehouse Application---*** //
+
+// Reroute for users to enter in the web URL
+Route::get('/warehouse', function () {
+    return redirect()->route('warehouse.login');
+});
+
 Route::prefix('warehouse')->group(function () use ($warehouseLoginClass, $warehouseSupervisorClass, $supervisorClass, $requestorClass, $propertyClass, $itemClass, $categoryClass, $sectionClass, $userClass, $inventoryClass, $reportsClass, $historyClass, $createOrderClass, $createExchangeClass, $pendingOrderClass, $pendingExchangeOrderClass){
         // Routes without middleware
         Route::get('/login', [$warehouseLoginClass, 'warehouseLoginForm'])->name('warehouse.login');

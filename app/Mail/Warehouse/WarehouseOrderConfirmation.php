@@ -9,6 +9,9 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
+
+// Send confirmation email to the supervisor or property accouint that submitted the order.
+
 class WarehouseOrderConfirmation extends Mailable
 {
     use Queueable, SerializesModels;

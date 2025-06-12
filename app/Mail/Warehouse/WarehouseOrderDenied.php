@@ -9,6 +9,8 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
+// Notice of Warehouse order was denied
+
 class WarehouseOrderDenied extends Mailable
 {
     use Queueable, SerializesModels;

@@ -9,6 +9,8 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
+// Email notification to the warehouse supervisors
+
 class WarehouseOrderSubmission extends Mailable
 {
     use Queueable, SerializesModels;
@@ -43,7 +45,7 @@ class WarehouseOrderSubmission extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'emails.Warehouse.warehouse-order-submission',
+            view: 'emails.Warehouse.supervisor-order-submission',
                 with: [
                     'user' => $this->user,
                     'section' => $this->section,

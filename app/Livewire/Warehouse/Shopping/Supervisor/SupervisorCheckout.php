@@ -87,12 +87,14 @@ class SupervisorCheckout extends Component
         ]);
 
         // Email confirmation for supervisors
-        Mail::to($user->email)->send(new WarehouseOrderConfirmation($user, $section, $cart));
+        if (config('mail.enabled')) {
+            Mail::to($user->email)->send(new WarehouseOrderConfirmation($user, $section, $cart));
 
-        // Get all warehouse supervisors and email
-        $warehouseSupervisors = User::where('warehouse_role', 'Warehouse Supervisor')->get();
-        foreach ($warehouseSupervisors as $supervisor) {
-            Mail::to($supervisor->email)->send(new WarehouseOrderSubmission($supervisor, $user, $section));
+            // Get all warehouse supervisors and email
+            $warehouseSupervisors = User::where('warehouse_role', 'Warehouse Supervisor')->get();
+            foreach ($warehouseSupervisors as $supervisor) {
+                Mail::to($supervisor->email)->send(new WarehouseOrderSubmission($supervisor, $user, $section));
+            }
         }
 
         session()->forget('cart');

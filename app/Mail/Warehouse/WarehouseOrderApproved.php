@@ -9,7 +9,8 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class WarehouseOrderApproved extends Mailable
+// Notice of Warehouse order was approved
+class WarehouseOrderDenied extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -27,7 +28,7 @@ class WarehouseOrderApproved extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Warehouse Order Approved',
+            subject: 'Warehouse Order Denied',
         );
     }
 
