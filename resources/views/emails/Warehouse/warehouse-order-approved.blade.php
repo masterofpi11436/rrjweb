@@ -8,7 +8,7 @@
 <body>
     <h2>Hello {{ $supervisor->first_name}},</h2>
 
-    <p>Your order was approved by the warehouse for the section <strong>{{ $section->section }}</strong></p>
+    <p>Your order was approved by the warehouse for the section <strong>{{ $section }}</strong></p>
 
     <h3>Order Summary</h3>
 
