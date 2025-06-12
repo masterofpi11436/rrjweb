@@ -67,9 +67,10 @@ class PendingOrderController extends Controller
 
         $supervisor = $order->supervisor;
         $cart = json_decode($order->items, true);
+        $note = $order->note;
 
         if (config('mail.enabled')) {
-            Mail::to($supervisor->email)->send(new WarehouseOrderApproved($supervisor, $order->section_name, $cart));
+            Mail::to($supervisor->email)->send(new WarehouseOrderApproved($supervisor, $order->section_name, $cart, $note));
         }
 
         return redirect()->route('warehouse.warehouse-supervisor.pending.dashboard')

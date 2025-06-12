@@ -16,6 +16,11 @@
         <li>{{ $item['name']}} x {{ $item['quantity'] }}</li>
     @endforeach
 
+    @if ($note)
+        <h3>Note from Supervisor:</h3>
+        <p>{{ $note }}</p>
+    @endif
+
     <p>Please reach out to the warehouse if you have anything concerning your order.</p>
 
     <p>Thank you</p>

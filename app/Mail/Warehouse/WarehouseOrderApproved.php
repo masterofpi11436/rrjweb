@@ -18,15 +18,17 @@ class WarehouseOrderApproved extends Mailable
     public $supervisor;
     public $section;
     public $cart;
+    public $note;
 
     /**
      * Create a new message instance.
      */
-    public function __construct($supervisor, $section, $cart)
+    public function __construct($supervisor, $section, $cart, $note)
     {
         $this->supervisor = $supervisor;
         $this->section = $section;
         $this->cart = $cart;
+        $this->note = $note;
     }
 
     /**
