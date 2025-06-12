@@ -3,9 +3,13 @@
 namespace App\Livewire\Warehouse\Shopping\Supervisor;
 
 use Livewire\Component;
+use App\Models\Login\User;
 use App\Models\Warehouse\Order;
 use App\Models\Warehouse\Section;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\Warehouse\WarehouseOrderSubmission;
+use App\Mail\Warehouse\WarehouseOrderConfirmation;
 
 class SupervisorReorderCheckout extends Component
 {
@@ -70,6 +74,7 @@ class SupervisorReorderCheckout extends Component
 
         $user = Auth::user();
         $section = Section::find($this->selectedSection);
+        $cart = $this->cart;
 
         Order::create([
             'supervisor_id'       => $user->id,
@@ -80,6 +85,17 @@ class SupervisorReorderCheckout extends Component
             'items'               => json_encode($this->cart), // Store cart items as JSON
             'status'              => config('orderstatus.PENDING_WAREHOUSE') // Enum value
         ]);
+
+        // Email confirmation for supervisors
+        if (config('mail.enabled')) {
+            Mail::to($user->email)->send(new WarehouseOrderConfirmation($user, $section, $cart));
+
+            // Get all warehouse supervisors and email
+            $warehouseSupervisors = User::where('warehouse_role', 'Warehouse Supervisor')->get();
+            foreach ($warehouseSupervisors as $supervisor) {
+                Mail::to($supervisor->email)->send(new WarehouseOrderSubmission($supervisor, $user, $section));
+            }
+        }
 
         session()->forget('cart_reorder');
 
