@@ -6,6 +6,9 @@ use Carbon\Carbon;
 use App\Models\Warehouse\Order;
 use Illuminate\Console\Command;
 
+/* This class is used to a status of order submitted by a Requestor to be pending_warehouse_approval
+   in case the Supervisor does not acknowledge the order
+*/
 class PromoteStaleOrders extends Command
 {
     protected $signature = 'orders:promote-stale';
