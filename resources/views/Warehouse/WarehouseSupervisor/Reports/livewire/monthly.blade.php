@@ -55,6 +55,17 @@
                 Download Monthly Report (CSV)
             </button>
         </form>
+
+        <!-- View Graph Button -->
+        <form method="GET" action="{{ route('warehouse.warehouse-supervisor.reports.monthly-graph') }}">
+            <input type="hidden" name="month" value="{{ $selectedMonth }}">
+            <input type="hidden" name="year" value="{{ $selectedYear }}">
+            <button type="submit"
+                class="px-4 py-2 bg-purple-700 text-white rounded hover:bg-purple-800">
+                View Monthly Graph
+            </button>
+        </form>
+
     </div>
 
     <!-- Report Table -->

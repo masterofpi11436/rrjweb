@@ -78,6 +78,18 @@ class ReportsController extends Controller
         ]);
     }
 
+    // Calander Year report
+    public function calendarYearReport()
+    {
+        return view('Warehouse.WarehouseSupervisor.Reports.reports.calendar-year');
+    }
+
+    // Calander Year report
+    public function fiscalYearReport()
+    {
+        return view('Warehouse.WarehouseSupervisor.Reports.reports.fiscal-year');
+    }
+
     // CRUD for monthly report recipients
     public function dashboard()
     {
@@ -161,17 +173,5 @@ class ReportsController extends Controller
 
             fclose($output);
         }, $filename);
-    }
-
-    // Calander Year report
-    public function calendarYearReport()
-    {
-        return view('Warehouse.WarehouseSupervisor.Reports.reports.calendar-year');
-    }
-
-    // Calander Year report
-    public function fiscalYearReport()
-    {
-        return view('Warehouse.WarehouseSupervisor.Reports.reports.fiscal-year');
     }
 }
