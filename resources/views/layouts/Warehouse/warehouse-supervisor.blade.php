@@ -187,5 +187,6 @@
             <script src="{{ asset('javascript/back-to-top.js') }}"></script>
         </div>
     </div>
+    @stack('scripts')
 </body>
 </html>

@@ -32,6 +32,52 @@ class ReportsController extends Controller
         return view('Warehouse.WarehouseSupervisor.Reports.reports.monthly');
     }
 
+    // Graphical version of the monthly report
+    public function monthlyReportGraph()
+    {
+        $selectedYear = request('year', now()->year);
+        $selectedMonth = request('month', now()->month);
+
+        // Fetch old orders
+        $oldOrders = DB::connection('old_db')->table('orders')
+            ->join('section', 'orders.section_id', '=', 'section.id')
+            ->select('orders.items', 'section.name as section_name')
+            ->where('orders.status', 'APPROVED')
+            ->whereYear('orders.approved_denied_at', $selectedYear)
+            ->whereMonth('orders.approved_denied_at', $selectedMonth)
+            ->get();
+
+        // Fetch new orders
+        $newOrders = DB::connection('mysql')->table('orders')
+            ->select('items', 'section_name')
+            ->where('status', 'APPROVED')
+            ->whereYear('approved_denied_at', $selectedYear)
+            ->whereMonth('approved_denied_at', $selectedMonth)
+            ->get();
+
+        $allOrders = $oldOrders->merge($newOrders);
+        $totals = [];
+
+        foreach ($allOrders as $order) {
+            $items = json_decode($order->items ?? '[]', true);
+            if (is_string($items)) $items = json_decode($items, true);
+
+            foreach ($items as $item) {
+                $name = trim($item['name'] ?? 'Unnamed Item');
+                $totals[$name] = ($totals[$name] ?? 0) + ((int) $item['quantity'] ?? 0);
+            }
+        }
+
+        ksort($totals);
+
+        return view('Warehouse.WarehouseSupervisor.Reports.reports.monthly-graph', [
+            'labels' => array_keys($totals),
+            'values' => array_values($totals),
+            'selectedMonth' => $selectedMonth,
+            'selectedYear' => $selectedYear,
+        ]);
+    }
+
     // CRUD for monthly report recipients
     public function dashboard()
     {
