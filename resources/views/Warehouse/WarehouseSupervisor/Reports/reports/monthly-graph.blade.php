@@ -57,13 +57,18 @@
                     borderColor: 'rgba(54, 162, 235, 1)',
                     borderWidth: 1,
                     categoryPercentage: 1.0,
-                    barPercentage: 0.6
+                    barPercentage: 0.5
                 }]
             },
             options: {
                 indexAxis: 'y',
                 responsive: true,
                 maintainAspectRatio: false,
+                layout: {
+                    padding: {
+                        right: 40
+                    }
+                },
                 plugins: {
                     title: {
                         display: true,
