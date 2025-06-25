@@ -34,7 +34,9 @@
         </div>
     </form>
 
-    <canvas id="monthlyReportChart" width="600" height="300"></canvas>
+    <div style="overflow-x: auto;">
+        <canvas id="monthlyReportChart" style="width: 100%; height: {{ count($labels) * 30 }}px;"></canvas>
+    </div>
 
 @endsection
 
@@ -53,36 +55,66 @@
                     data: {!! json_encode($values) !!},
                     backgroundColor: 'rgba(54, 162, 235, 0.6)',
                     borderColor: 'rgba(54, 162, 235, 1)',
-                    borderWidth: 1
+                    borderWidth: 1,
+                    categoryPercentage: 1.0,
+                    barPercentage: 0.6
                 }]
             },
             options: {
+                indexAxis: 'y',
                 responsive: true,
+                maintainAspectRatio: false,
                 plugins: {
                     title: {
                         display: true,
                         text: 'Monthly Item Quantities',
                         font: { size: 20 }
                     },
-                    legend: {
-                        labels: { font: { size: 16 } }
-                    }
+                    legend: { display: false }
                 },
                 scales: {
-                    y: {
+                    x: {
                         beginAtZero: true,
+                        ticks: { font: { size: 14 } },
                         title: {
                             display: true,
                             text: 'Quantity',
                             font: { size: 16 }
-                        },
-                        ticks: { font: { size: 14 } }
+                        }
                     },
-                    x: {
-                        ticks: { font: { size: 14 } }
+                    y: {
+                        offset: true,
+                        ticks: {
+                            autoSkip: false,
+                            font: { size: 14 }
+                        }
                     }
                 }
-            }
+            },
+            plugins: [
+                {
+                    id: 'barValueLabels',
+                    afterDatasetsDraw(chart) {
+                        const { ctx } = chart;
+                        const dataset = chart.data.datasets[0];
+                        const meta = chart.getDatasetMeta(0);
+
+                        ctx.save();
+                        ctx.fillStyle = '#fff';
+                        ctx.font = 'bold 14px sans-serif';
+                        ctx.textAlign = 'left';
+
+                        meta.data.forEach((bar, index) => {
+                            const value = dataset.data[index];
+                            const x = bar.x + 6;
+                            const y = bar.y + bar.height / 2 + 5;
+                            ctx.fillText(value, x, y);
+                        });
+
+                        ctx.restore();
+                    }
+                }
+            ]
         });
     });
 </script>

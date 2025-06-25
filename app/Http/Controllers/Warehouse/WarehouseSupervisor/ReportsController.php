@@ -68,7 +68,7 @@ class ReportsController extends Controller
             }
         }
 
-        ksort($totals);
+        arsort($totals);
 
         return view('Warehouse.WarehouseSupervisor.Reports.reports.monthly-graph', [
             'labels' => array_keys($totals),
