@@ -85,7 +85,7 @@ Route::view('/login/success', 'Login.Resets.success')->name('login.success');
 
 // Default Redirect Route for testing
 Route::get('/', function () {
-    return redirect()->route('jurisdiction.dashboard');
+    return redirect()->route('warehouse.login');
 });
 
 // Public Routes
