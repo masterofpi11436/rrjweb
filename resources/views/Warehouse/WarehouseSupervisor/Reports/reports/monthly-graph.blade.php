@@ -35,7 +35,9 @@
     </form>
 
     <div style="overflow-x: auto;">
-        <canvas id="monthlyReportChart" style="width: 100%; height: {{ count($labels) * 30 }}px;"></canvas>
+        <div style="height: {{ max(count($labels) * 30, 300) }}px;">
+            <canvas id="monthlyReportChart" style="width: 100%; height: 100%;"></canvas>
+        </div>
     </div>
 
 @endsection
