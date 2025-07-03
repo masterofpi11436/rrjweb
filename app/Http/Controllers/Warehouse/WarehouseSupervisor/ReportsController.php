@@ -78,6 +78,12 @@ class ReportsController extends Controller
         ]);
     }
 
+    // Statistics for 1 particular item
+    public function monthlyItem($id)
+    {
+
+    }
+
     // Calander Year report
     public function calendarYearReport()
     {
