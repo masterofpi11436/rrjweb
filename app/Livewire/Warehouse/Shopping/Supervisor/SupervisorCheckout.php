@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\Warehouse\WarehouseOrderSubmission;
 use App\Mail\Warehouse\WarehouseOrderConfirmation;
+use Throwable;
 
 class SupervisorCheckout extends Component
 {
@@ -88,12 +89,17 @@ class SupervisorCheckout extends Component
 
         // Email confirmation for supervisors
         if (config('mail.enabled')) {
-            Mail::to($user->email)->send(new WarehouseOrderConfirmation($user, $section, $cart));
+            try {
+                Mail::to($user->email)->send(new WarehouseOrderConfirmation($user, $section, $cart));
 
-            // Get all warehouse supervisors and email
-            $warehouseSupervisors = User::where('warehouse_role', 'Warehouse Supervisor')->get();
-            foreach ($warehouseSupervisors as $supervisor) {
-                Mail::to($supervisor->email)->send(new WarehouseOrderSubmission($supervisor, $user, $section));
+                // Get all warehouse supervisors and email
+                $warehouseSupervisors = User::where('warehouse_role', 'Warehouse Supervisor')->get();
+                foreach ($warehouseSupervisors as $supervisor) {
+                    Mail::to($supervisor->email)->send(new WarehouseOrderSubmission($supervisor, $user, $section));
+                }
+            }
+            catch (Throwable $e) {
+                // Do nothing so app can run normally
             }
         }
 
@@ -103,4 +109,3 @@ class SupervisorCheckout extends Component
             ->with('success', 'Your order was successfully submitted for ' . $section->section . '.');
     }
 }
-

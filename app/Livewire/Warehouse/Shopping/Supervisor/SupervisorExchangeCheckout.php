@@ -3,9 +3,14 @@
 namespace App\Livewire\Warehouse\Shopping\Supervisor;
 
 use Livewire\Component;
+use App\Models\Login\User;
 use App\Models\Warehouse\Order;
 use App\Models\Warehouse\Section;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\Warehouse\WarehouseOrderSubmission;
+use App\Mail\Warehouse\WarehouseOrderConfirmation;
+use Throwable;
 
 class SupervisorExchangeCheckout extends Component
 {
@@ -70,6 +75,7 @@ class SupervisorExchangeCheckout extends Component
 
         $user = Auth::user();
         $section = Section::find($this->selectedSection);
+        $cart = $this->cart;
 
         Order::create([
             'supervisor_id'       => $user->id,
@@ -80,6 +86,22 @@ class SupervisorExchangeCheckout extends Component
             'items'               => json_encode($this->cart),
             'status'              => config('orderstatus.PENDING_WAREHOUSE_EXCHANGE'),
         ]);
+
+        // Email confirmation for supervisors
+        if (config('mail.enabled')) {
+            try {
+                Mail::to($user->email)->send(new WarehouseOrderConfirmation($user, $section, $cart));
+
+                // Get all warehouse supervisors and email
+                $warehouseSupervisors = User::where('warehouse_role', 'Warehouse Supervisor')->get();
+                foreach ($warehouseSupervisors as $supervisor) {
+                    Mail::to($supervisor->email)->send(new WarehouseOrderSubmission($supervisor, $user, $section));
+                }
+            }
+            catch (Throwable $e) {
+                // Do nothing so app can run normally
+            }
+        }
 
         session()->forget('cart_exchange');
 
