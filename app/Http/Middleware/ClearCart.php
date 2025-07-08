@@ -15,7 +15,7 @@ class ClearCart
      */
     public function handle(Request $request, Closure $next): Response
     {
-        session()->forget('cart');
+        session()->forget('cart', 'cart_edit');
 
         return $next($request);
     }
