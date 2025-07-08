@@ -46,12 +46,22 @@ class PendingOrderController extends Controller
     public function edit($id)
     {
         $order = Order::findOrFail($id);
+        $cart = json_decode($order->items, true) ?? [];
 
-        $cart = json_decode($order->items, true);
+        // Normalize if needed
+        if (isset($cart[0]) && is_array($cart[0]) && array_key_exists('id', $cart[0])) {
+            $normalizedCart = [];
+            foreach ($cart as $item) {
+                $normalizedCart[$item['id']] = $item;
+            }
+            $cart = $normalizedCart;
+        }
 
         session(['cart_edit' => $cart]);
 
-        return view('Warehouse.WarehouseSupervisor.PendingOrders.pendingorders.edit-order', ['orderId' => $id]);
+        return view('Warehouse.WarehouseSupervisor.PendingOrders.pendingorders.edit-order', [
+            'orderId' => $id,
+        ]);
     }
 
     public function approve($id)

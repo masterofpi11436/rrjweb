@@ -23,27 +23,10 @@ class EditOrders extends Component
 
     public function mount($orderId)
     {
-        session()->forget('cart_edit');
-
         $this->orderId = $orderId;
 
-        // Retrieve order items from the database
-        $order = Order::findOrFail($orderId);
-        $cart = json_decode($order->items, true) ?? [];
+        $cart = session('cart_edit', []);
 
-        // Normalize consolidated orders (convert list format into associative array)
-        if (isset($cart[0]) && is_array($cart[0]) && array_key_exists('id', $cart[0])) {
-            $normalizedCart = [];
-            foreach ($cart as $item) {
-                $normalizedCart[$item['id']] = $item; // Set item ID as the key
-            }
-            $cart = $normalizedCart;
-        }
-
-        // Store in session for editing
-        session(['cart_edit' => $cart]);
-
-        // Initialize the quantities array from the loaded order items
         foreach ($cart as $item) {
             $this->quantities[$item['id']] = $item['quantity'];
         }
