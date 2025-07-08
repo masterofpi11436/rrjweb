@@ -7,7 +7,6 @@ use Livewire\WithPagination;
 use App\Models\Warehouse\Item;
 use App\Models\Warehouse\Order;
 use App\Models\Warehouse\Category;
-use Illuminate\Cache\Console\ForgetCommand;
 use Illuminate\Database\Eloquent\Builder;
 
 class EditOrders extends Component
@@ -139,7 +138,7 @@ class EditOrders extends Component
         return view('Warehouse.WarehouseSupervisor.PendingOrders.livewire.edit-order', [
             'items'      => $items,
             'categories' => $categories,
-            'cart'       => $cart,
+            'cart_edit'       => $cart,
         ]);
     }
 }
