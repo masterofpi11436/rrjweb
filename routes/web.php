@@ -38,6 +38,7 @@ use App\Http\Controllers\Warehouse\WarehouseSupervisor\CreateExchangeOrderContro
 use App\Http\Controllers\Warehouse\Requestor\RequestorController;
 use App\Http\Controllers\Warehouse\Supervisor\SupervisorController;
 use App\Http\Controllers\Warehouse\Property\PropertyController;
+use GuzzleHttp\Middleware;
 
 // Shorthand login Classes
 $baseLoginClass = BaseLoginController::class;
@@ -288,7 +289,7 @@ Route::prefix('warehouse')->group(function () use ($warehouseLoginClass, $wareho
 
             // Pending Order Management
             Route::prefix('pending-orders')->group(function () use ($pendingOrderClass) {
-                Route::get('/pending', [$pendingOrderClass, 'pending'])->name('warehouse.warehouse-supervisor.pending.dashboard');
+                Route::get('/pending', [$pendingOrderClass, 'pending'])->middleware('clear-cart')->name('warehouse.warehouse-supervisor.pending.dashboard');
                 Route::get('/view/{id}', [$pendingOrderClass, 'show'])->name('warehouse.warehouse-supervisor.pending.show');
                 Route::put('/approve/{id}', [$pendingOrderClass, 'approve'])->name('warehouse.warehouse-supervisor.pending.approve');
                 Route::put('/deny/{id}', [$pendingOrderClass, 'deny'])->name('warehouse.warehouse-supervisor.pending.deny');
