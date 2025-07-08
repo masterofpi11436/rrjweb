@@ -138,7 +138,7 @@ class EditOrders extends Component
         return view('Warehouse.WarehouseSupervisor.PendingOrders.livewire.edit-order', [
             'items'      => $items,
             'categories' => $categories,
-            'cart_edit'  => $cart,
+            'cart'  => $cart,
         ]);
     }
 }
