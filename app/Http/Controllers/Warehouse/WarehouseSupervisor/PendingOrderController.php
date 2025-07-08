@@ -45,8 +45,6 @@ class PendingOrderController extends Controller
 
     public function edit($id)
     {
-        session()->forget('cart_edit');
-
         $order = Order::findOrFail($id);
 
         $cart = json_decode($order->items, true);

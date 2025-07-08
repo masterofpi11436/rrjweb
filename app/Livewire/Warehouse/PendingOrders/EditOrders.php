@@ -7,6 +7,7 @@ use Livewire\WithPagination;
 use App\Models\Warehouse\Item;
 use App\Models\Warehouse\Order;
 use App\Models\Warehouse\Category;
+use Illuminate\Cache\Console\ForgetCommand;
 use Illuminate\Database\Eloquent\Builder;
 
 class EditOrders extends Component
@@ -23,6 +24,8 @@ class EditOrders extends Component
 
     public function mount($orderId)
     {
+        session()->forget('cart_edit');
+
         $this->orderId = $orderId;
 
         // Retrieve order items from the database
