@@ -2,11 +2,14 @@
 
 namespace App\Livewire\Warehouse\Shopping\Requestor;
 
+use Throwable;
 use Livewire\Component;
 use App\Models\Login\User;
 use App\Models\Warehouse\Order;
 use App\Models\Warehouse\Section;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\Warehouse\WarehouseOrderSupervisorSubmission;
 
 class RequestorCheckout extends Component
 {
@@ -80,6 +83,7 @@ class RequestorCheckout extends Component
         $user = Auth::user();
         $supervisor = User::find($this->selectedSupervisor);
         $section = Section::find($this->selectedSection);
+        $cart = $this->cart;
 
         Order::create([
             'user_id'             => $user->id,
@@ -92,6 +96,17 @@ class RequestorCheckout extends Component
             'items'               => json_encode($this->cart),
             'status'              => config('orderstatus.PENDING_SUPERVISOR'),
         ]);
+
+        // Email confirmation for requestors to supervisors
+        if (config('mail.enabled')) {
+            try {
+                Mail::to($supervisor->email)->send(
+                    new WarehouseOrderSupervisorSubmission($supervisor, $user, $section, $cart)
+                );
+            } catch (Throwable $e) {
+                // Do nothing so app can run normally
+            }
+        }
 
         session()->forget('cart');
 
