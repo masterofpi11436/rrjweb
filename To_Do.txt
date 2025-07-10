@@ -1,0 +1,13 @@
+*** Warehouse Store ***
+
+* Reports *
+1. Fiscal year Graph
+    1a. Breakdown of Section when Item is selected.
+2. Clander Year Graph
+    2a. Breakdown of Section when Item is selected.
+3. Monthly Reports
+    3a. Breakdown of Section when Item is selected.
+
+* Emails *
+1. Approve emails try.catch statements
+2. Deny emails try.catch statements with note.
