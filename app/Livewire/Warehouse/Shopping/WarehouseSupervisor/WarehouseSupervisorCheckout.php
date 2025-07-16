@@ -2,11 +2,14 @@
 
 namespace App\Livewire\Warehouse\Shopping\WarehouseSupervisor;
 
+use Throwable;
 use Livewire\Component;
 use App\Models\Login\User;
 use App\Models\Warehouse\Order;
 use App\Models\Warehouse\Section;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\Warehouse\WarehouseSubmittedOrder;
 
 class WarehouseSupervisorCheckout extends Component
 {
@@ -80,6 +83,7 @@ class WarehouseSupervisorCheckout extends Component
         $user = Auth::user();
         $supervisor = User::find($this->selectedSupervisor);
         $section = Section::find($this->selectedSection);
+        $cart = $this->cart;
 
         Order::create([
             'supervisor_id'           => $supervisor->id,
@@ -93,6 +97,16 @@ class WarehouseSupervisorCheckout extends Component
             'approved_denied_by_name' => $user->first_name . ' ' . $user->last_name,
             'approved_denied_at'      => now(),
         ]);
+
+        // Email supervisor an order was submitted on their behalf
+        // if (config('mail.enabled')) {
+        //     try {
+        //         Mail::to($supervisor->email)->send(new WarehouseSubmittedOrder($supervisor, $section, $cart, $originator));
+        //     }
+        //     catch (Throwable $e) {
+        //         // Do nothing so app can run normally
+        //     }
+        // }
 
         session()->forget('cart');
 
