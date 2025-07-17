@@ -8,7 +8,7 @@
 <body>
     <h2>Hello {{ $supervisor->first_name }},</h2>
 
-    <p>The warehouse has submitted the following order on your behalf for the <strong>{{ $section->section }}</strong> section.</p>
+    <p>An order has been submitted on your behalf by <strong>{{ $originator }}</strong> for the <strong>{{ $section->section }}</strong> section.</p>
 
     <h3>Order Summary</h3>
     <ul>
