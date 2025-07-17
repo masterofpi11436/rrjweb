@@ -84,6 +84,7 @@ class WarehouseSupervisorCheckout extends Component
         $supervisor = User::find($this->selectedSupervisor);
         $section = Section::find($this->selectedSection);
         $cart = $this->cart;
+        $originator = $user->first_name . ' ' . $user->last_name;
 
         Order::create([
             'supervisor_id'           => $supervisor->id,
@@ -99,14 +100,14 @@ class WarehouseSupervisorCheckout extends Component
         ]);
 
         // Email supervisor an order was submitted on their behalf
-        // if (config('mail.enabled')) {
-        //     try {
-        //         Mail::to($supervisor->email)->send(new WarehouseSubmittedOrder($supervisor, $section, $cart, $originator));
-        //     }
-        //     catch (Throwable $e) {
-        //         // Do nothing so app can run normally
-        //     }
-        // }
+        if (config('mail.enabled')) {
+            try {
+                Mail::to($supervisor->email)->send(new WarehouseSubmittedOrder($supervisor, $section, $cart, $originator));
+            }
+            catch (Throwable $e) {
+                // Do nothing so app can run normally
+            }
+        }
 
         session()->forget('cart');
 
