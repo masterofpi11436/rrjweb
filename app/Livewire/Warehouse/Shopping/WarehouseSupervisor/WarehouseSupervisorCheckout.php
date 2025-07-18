@@ -102,7 +102,7 @@ class WarehouseSupervisorCheckout extends Component
         // Email supervisor an order was submitted on their behalf
         if (config('mail.enabled')) {
             try {
-                Mail::to($supervisor->email)->send(new WarehouseSubmittedOrder($supervisor, $section, $cart, $originator));
+                Mail::to($supervisor->email)->queue(new WarehouseSubmittedOrder($supervisor, $section, $cart, $originator));
             }
             catch (Throwable $e) {
                 // Do nothing so app can run normally

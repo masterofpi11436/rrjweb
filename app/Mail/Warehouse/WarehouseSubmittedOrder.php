@@ -11,7 +11,7 @@ use Illuminate\Queue\SerializesModels;
 
 // Notice of Warehouse order was approved
 
-class WarehouseSubmittedOrder extends Mailable
+class WarehouseSubmittedOrder extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 
