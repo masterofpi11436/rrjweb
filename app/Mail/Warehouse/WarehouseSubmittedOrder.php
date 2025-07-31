@@ -9,7 +9,7 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-// Notice of Warehouse order was approved
+// Notice to the supervisor/property the order was submitted by the Warehouse on their behalf
 
 class WarehouseSubmittedOrder extends Mailable implements ShouldQueue
 {
