@@ -9,7 +9,7 @@ use App\Models\Warehouse\Order;
 use App\Models\Warehouse\Section;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
-use App\Mail\Warehouse\WarehouseOrderSupervisorSubmission;
+use App\Mail\Warehouse\RequestorOrderAlert;
 
 class RequestorCheckout extends Component
 {
@@ -97,11 +97,11 @@ class RequestorCheckout extends Component
             'status'              => config('orderstatus.PENDING_SUPERVISOR'),
         ]);
 
-        // Email confirmation for requestors to supervisors
+        // Email confirmation for supervisors from requestors
         if (config('mail.enabled')) {
             try {
                 Mail::to($supervisor->email)->send(
-                    new WarehouseOrderSupervisorSubmission($supervisor, $user, $section, $cart)
+                    new RequestorOrderAlert($supervisor, $user, $section, $cart)
                 );
             } catch (Throwable $e) {
                 // Do nothing so app can run normally

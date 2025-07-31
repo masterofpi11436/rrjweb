@@ -2,11 +2,16 @@
 
 namespace App\Livewire\Warehouse\Shopping\Requestor;
 
+use Throwable;
 use Livewire\Component;
 use App\Models\Login\User;
 use App\Models\Warehouse\Order;
 use App\Models\Warehouse\Section;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\Warehouse\ExchangeOrderSubmission;
+use App\Mail\Warehouse\ExchangeOrderConfirmation;
+use App\Livewire\Warehouse\PendingExchangeOrders\ExchangeOrders;
 
 class RequestorExchangeCheckout extends Component
 {
@@ -77,7 +82,6 @@ class RequestorExchangeCheckout extends Component
         ]);
 
         $user = Auth::user();
-        $supervisor = User::find($this->selectedSupervisor);
         $section = Section::find($this->selectedSection);
 
         Order::create([
@@ -89,6 +93,21 @@ class RequestorExchangeCheckout extends Component
             'items'               => json_encode($this->cart), // Store cart items as JSON
             'status'              => config('orderstatus.PENDING_WAREHOUSE_EXCHANGE'),
         ]);
+
+        // Send email to warehouse
+        if (config('mail.enabled')) {
+            try {
+                $warehouseSupervisors = User::where('warehouse_role', 'Warehouse Supervisor')->get();
+                foreach ($warehouseSupervisors as $supervisor) {
+                    Mail::to($supervisor->email)->send(new ExchangeOrderSubmission($supervisor, $user, $section));
+                }
+
+                Mail::to($user->email)->send(new ExchangeOrderConfirmation($user, $section));
+
+            } catch (Throwable $e) {
+                // Do nothing so app can run normally
+            }
+        }
 
         session()->forget('cart_exchange');
 
