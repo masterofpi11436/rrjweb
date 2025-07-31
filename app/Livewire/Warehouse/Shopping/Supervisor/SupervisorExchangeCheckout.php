@@ -2,15 +2,16 @@
 
 namespace App\Livewire\Warehouse\Shopping\Supervisor;
 
+use Throwable;
 use Livewire\Component;
 use App\Models\Login\User;
 use App\Models\Warehouse\Order;
 use App\Models\Warehouse\Section;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use App\Mail\Warehouse\ExchangeOrderSubmission;
 use App\Mail\Warehouse\WarehouseOrderSubmission;
-use App\Mail\Warehouse\WarehouseOrderConfirmation;
-use Throwable;
+use App\Mail\Warehouse\ExchangeOrderConfirmation;
 
 class SupervisorExchangeCheckout extends Component
 {
@@ -90,12 +91,12 @@ class SupervisorExchangeCheckout extends Component
         // Email confirmation for supervisors
         if (config('mail.enabled')) {
             try {
-                Mail::to($user->email)->send(new WarehouseOrderConfirmation($user, $section, $cart));
+                Mail::to($user->email)->send(new ExchangeOrderConfirmation($user, $section, $cart));
 
                 // Get all warehouse supervisors and email
                 $warehouseSupervisors = User::where('warehouse_role', 'Warehouse Supervisor')->get();
                 foreach ($warehouseSupervisors as $supervisor) {
-                    Mail::to($supervisor->email)->send(new WarehouseOrderSubmission($supervisor, $user, $section));
+                    Mail::to($supervisor->email)->send(new ExchangeOrderSubmission($supervisor, $user, $section));
                 }
             }
             catch (Throwable $e) {
