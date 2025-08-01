@@ -3,12 +3,13 @@
 namespace App\Http\Controllers\Warehouse\WarehouseSupervisor;
 
 // Base Controller
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\Warehouse\Order;
-use App\Models\Warehouse\MonthlyRecipients;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\View;
+use App\Models\Warehouse\MonthlyRecipients;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 // Reports pages to run monthly, quarterly, and yearly reports
@@ -78,22 +79,122 @@ class ReportsController extends Controller
         ]);
     }
 
-    // Statistics for 1 particular item
-    public function monthlyItem($id)
+    // Section orders for 1 item for selected month
+    public function monthlyReportItemGraph($id)
     {
 
     }
 
-    // Calander Year report
+    // Calendar Year report
     public function calendarYearReport()
     {
         return view('Warehouse.WarehouseSupervisor.Reports.reports.calendar-year');
     }
 
-    // Calander Year report
+    // Calendar Graph
+    public function calendarReportGraph()
+    {
+        $selectedYear = request('year', now()->year);
+
+        // Fetch old orders
+        $oldOrders = DB::connection('old_db')->table('orders')
+            ->join('section', 'orders.section_id', '=', 'section.id')
+            ->select('orders.items', 'section.name as section_name')
+            ->where('orders.status', 'APPROVED')
+            ->whereYear('orders.approved_denied_at', $selectedYear)
+            ->get();
+
+        // Fetch new orders
+        $newOrders = DB::connection('mysql')->table('orders')
+            ->select('items', 'section_name')
+            ->where('status', 'APPROVED')
+            ->whereYear('approved_denied_at', $selectedYear)
+            ->get();
+
+        $allOrders = $oldOrders->merge($newOrders);
+        $totals = [];
+
+        foreach ($allOrders as $order) {
+            $items = json_decode($order->items ?? '[]', true);
+            if (is_string($items)) $items = json_decode($items, true);
+
+            foreach ($items as $item) {
+                $name = trim($item['name'] ?? 'Unnamed Item');
+                $totals[$name] = ($totals[$name] ?? 0) + ((int) $item['quantity'] ?? 0);
+            }
+        }
+
+        arsort($totals);
+
+        return view('Warehouse.WarehouseSupervisor.Reports.reports.calendar-year-graph', [
+            'labels' => array_keys($totals),
+            'values' => array_values($totals),
+            'selectedYear' => $selectedYear,
+        ]);
+    }
+
+    // Section orders for 1 item for selected year
+    public function calendarReportItemGraph()
+    {
+
+    }
+
+    // Fiscal Year report
     public function fiscalYearReport()
     {
         return view('Warehouse.WarehouseSupervisor.Reports.reports.fiscal-year');
+    }
+
+    // Fiscal Year Graph
+    public function fiscalYearReportGraph()
+    {
+        $selectedYear = request('year', now()->year);
+
+        // Define fiscal year start and end dates
+        $fiscalStart = Carbon::create($selectedYear, 7, 1)->startOfDay();
+        $fiscalEnd = Carbon::create($selectedYear + 1, 6, 30)->endOfDay();
+
+        // Fetch old orders
+        $oldOrders = DB::connection('old_db')->table('orders')
+            ->join('section', 'orders.section_id', '=', 'section.id')
+            ->select('orders.items', 'section.name as section_name')
+            ->where('orders.status', 'APPROVED')
+            ->whereBetween('orders.approved_denied_at', [$fiscalStart, $fiscalEnd])
+            ->get();
+
+        // Fetch new orders
+        $newOrders = DB::connection('mysql')->table('orders')
+            ->select('items', 'section_name')
+            ->where('status', 'APPROVED')
+            ->whereBetween('approved_denied_at', [$fiscalStart, $fiscalEnd])
+            ->get();
+
+        $allOrders = $oldOrders->merge($newOrders);
+        $totals = [];
+
+        foreach ($allOrders as $order) {
+            $items = json_decode($order->items ?? '[]', true);
+            if (is_string($items)) $items = json_decode($items, true);
+
+            foreach ($items as $item) {
+                $name = trim($item['name'] ?? 'Unnamed Item');
+                $totals[$name] = ($totals[$name] ?? 0) + ((int) $item['quantity'] ?? 0);
+            }
+        }
+
+        arsort($totals);
+
+        return view('Warehouse.WarehouseSupervisor.Reports.reports.fiscal-year-graph', [
+            'labels' => array_keys($totals),
+            'values' => array_values($totals),
+            'selectedYear' => $selectedYear,
+        ]);
+    }
+
+    // Section orders for 1 item for selected fiscal year
+    public function fiscalYearReportItemGraph()
+    {
+
     }
 
     // CRUD for monthly report recipients

@@ -9,5 +9,5 @@
     3a. Breakdown of Section when Item is selected.
 
 * Emails *
-1. Approve emails try.catch statements
-2. Deny emails try.catch statements with note.
+1. Warehouse emails with try.catch.
+2. Recipient list error sending email handing

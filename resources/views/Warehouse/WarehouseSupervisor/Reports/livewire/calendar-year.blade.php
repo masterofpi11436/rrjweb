@@ -22,6 +22,17 @@
                 </button>
             </div>
         </div>
+
+        <!-- View Graph Button -->
+        <div class="flex flex-wrap justify-end gap-4 mt-4">
+            <form method="GET" action="{{ route('warehouse.warehouse-supervisor.reports.calendar-year-graph') }}">
+                <input type="hidden" name="year" value="{{ $selectedYear }}">
+                <button type="submit"
+                    class="px-4 py-2 bg-purple-700 text-white rounded hover:bg-purple-800">
+                    View Calendar Year Graph
+                </button>
+            </form>
+        </div>
     </div>
 
     <!-- Report Table -->

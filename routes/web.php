@@ -314,9 +314,16 @@ Route::prefix('warehouse')->group(function () use ($warehouseLoginClass, $wareho
             Route::prefix('reports')->group(function () use ($reportsClass) {
                 Route::get('/monthly', [$reportsClass, 'monthlyReport'])->name('warehouse.warehouse-supervisor.reports.monthly');
                 Route::get('/monthly-graph', [$reportsClass, 'monthlyReportGraph'])->name('warehouse.warehouse-supervisor.reports.monthly-graph');
-                Route::get('/monthly-graph/{id}', [$reportsClass, 'monthlyItem'])->name('warehouse.warehouse-supervisor.reports.monthly-item');
+                Route::get('/monthly-graph/{id}', [$reportsClass, 'monthlyReportItemGraph'])->name('warehouse.warehouse-supervisor.reports.monthly-graph-item');
+
                 Route::get('/calendar-year', [$reportsClass, 'calendarYearReport'])->name('warehouse.warehouse-supervisor.reports.calendar-year');
+                Route::get('/calendar-year-graph', [$reportsClass, 'calendarReportGraph'])->name('warehouse.warehouse-supervisor.reports.calendar-year-graph');
+                Route::get('/calendar-year-graph/{id}', [$reportsClass, 'calendarReportGraph'])->name('warehouse.warehouse-supervisor.reports.calendar-year-graph-item');
+
                 Route::get('/fiscal-year', [$reportsClass, 'fiscalYearReport'])->name('warehouse.warehouse-supervisor.reports.fiscal-year');
+                Route::get('/fiscal-year-graph', [$reportsClass, 'fiscalYearReportGraph'])->name('warehouse.warehouse-supervisor.reports.fiscal-year-graph');
+                Route::get('/fiscal-year-graph/{id}', [$reportsClass, 'fiscalYearReportItemGraph'])->name('warehouse.warehouse-supervisor.reports.fiscal-year-graph-item');
+
                 Route::post('/download', [$reportsClass, 'downloadMonthlyReport'])->withoutMiddleware('cache')->name('warehouse.warehouse-supervisor.reports.monthly.download');
 
                 // Reports pages
