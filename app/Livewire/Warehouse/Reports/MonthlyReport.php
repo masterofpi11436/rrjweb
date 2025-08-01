@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Warehouse\Reports;
 
+use Throwable;
 use Livewire\Component;
 use App\Mail\MonthlyReportCsv;
 use Illuminate\Support\Facades\DB;
@@ -160,7 +161,12 @@ class MonthlyReport extends Component
         $recipients = DB::table('monthly_report_recipients')->pluck('email');
 
         foreach ($recipients as $email) {
-            Mail::to($email)->send(new MonthlyReportCsv($fullPath, $monthName, $this->selectedYear));
+            try {
+                Mail::to($email)->send(new MonthlyReportCsv($fullPath, $monthName, $this->selectedYear));
+            }
+            catch (Throwable $e){
+                continue;
+            }
         }
 
         Storage::disk('public')->delete($relativePath);
