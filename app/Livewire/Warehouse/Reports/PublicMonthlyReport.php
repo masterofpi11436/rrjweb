@@ -178,6 +178,6 @@ class PublicMonthlyReport extends Component
 
     public function render()
     {
-        return view('Warehouse.WarehouseSupervisor.Reports.public.livewire.monthly');
+        return view('Warehouse.WarehouseSupervisor.Reports.Public.livewire.monthly');
     }
 }
