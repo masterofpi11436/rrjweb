@@ -53,83 +53,94 @@
 <script src="{{ asset('js/chart.umd.js') }}"></script>
 <script>
     window.addEventListener('load', function () {
-        const ctx = document.getElementById('monthlyReportChart').getContext('2d');
+    const ctx = document.getElementById('monthlyReportChart').getContext('2d');
 
-        new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: {!! json_encode($labels) !!},
-                datasets: [{
-                    label: 'Total Quantity Ordered',
-                    data: {!! json_encode($values) !!},
-                    backgroundColor: 'rgba(54, 162, 235, 0.6)',
-                    borderColor: 'rgba(54, 162, 235, 1)',
-                    borderWidth: 1,
-                    categoryPercentage: 1.0,
-                    barPercentage: 0.5
-                }]
+    const chart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: {!! json_encode($labels) !!},
+            datasets: [{
+                label: 'Total Quantity Ordered',
+                data: {!! json_encode($values) !!},
+                backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1,
+                categoryPercentage: 1.0,
+                barPercentage: 0.5
+            }]
+        },
+        options: {
+            indexAxis: 'y',
+            responsive: true,
+            maintainAspectRatio: false,
+            layout: {
+                padding: { right: 40 }
             },
-            options: {
-                indexAxis: 'y',
-                responsive: true,
-                maintainAspectRatio: false,
-                layout: {
-                    padding: {
-                        right: 40
-                    }
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Monthly Item Quantities',
+                    font: { size: 20 }
                 },
-                plugins: {
+                legend: { display: false }
+            },
+            onClick: function(event, elements) {
+                if (elements.length > 0) {
+                    const index = elements[0].index;
+                    const itemName = chart.data.labels[index];
+                    const encodedItemName = encodeURIComponent(itemName);
+                    const year = {{ $selectedYear }};
+                    const month = {{ $selectedMonth }};
+
+                    const url = `{{ url('warehouse/warehouse-supervisor/reports/monthly-graph') }}/${encodedItemName}?year=${year}&month=${month}`;
+                    window.location.href = url;
+                }
+            },
+            scales: {
+                x: {
+                    beginAtZero: true,
+                    ticks: { font: { size: 14 } },
                     title: {
                         display: true,
-                        text: 'Monthly Item Quantities',
-                        font: { size: 20 }
-                    },
-                    legend: { display: false }
+                        text: 'Quantity',
+                        font: { size: 16 }
+                    }
                 },
-                scales: {
-                    x: {
-                        beginAtZero: true,
-                        ticks: { font: { size: 14 } },
-                        title: {
-                            display: true,
-                            text: 'Quantity',
-                            font: { size: 16 }
-                        }
-                    },
-                    y: {
-                        offset: true,
-                        ticks: {
-                            autoSkip: false,
-                            font: { size: 14 }
-                        }
+                y: {
+                    offset: true,
+                    ticks: {
+                        autoSkip: false,
+                        font: { size: 14 }
                     }
                 }
-            },
-            plugins: [
-                {
-                    id: 'barValueLabels',
-                    afterDatasetsDraw(chart) {
-                        const { ctx } = chart;
-                        const dataset = chart.data.datasets[0];
-                        const meta = chart.getDatasetMeta(0);
+            }
+        },
+        plugins: [
+            {
+                id: 'barValueLabels',
+                afterDatasetsDraw(chart) {
+                    const { ctx } = chart;
+                    const dataset = chart.data.datasets[0];
+                    const meta = chart.getDatasetMeta(0);
 
-                        ctx.save();
-                        ctx.fillStyle = '#fff';
-                        ctx.font = 'bold 14px sans-serif';
-                        ctx.textAlign = 'left';
+                    ctx.save();
+                    ctx.fillStyle = '#fff';
+                    ctx.font = 'bold 14px sans-serif';
+                    ctx.textAlign = 'left';
 
-                        meta.data.forEach((bar, index) => {
-                            const value = dataset.data[index];
-                            const x = bar.x + 6;
-                            const y = bar.y + bar.height / 2 + 5;
-                            ctx.fillText(value, x, y);
-                        });
+                    meta.data.forEach((bar, index) => {
+                        const value = dataset.data[index];
+                        const x = bar.x + 6;
+                        const y = bar.y + bar.height / 2 + 5;
+                        ctx.fillText(value, x, y);
+                    });
 
-                        ctx.restore();
-                    }
+                    ctx.restore();
                 }
-            ]
-        });
+            }
+        ]
     });
+});
+
 </script>
 @endpush

@@ -82,7 +82,55 @@ class ReportsController extends Controller
     // Section orders for 1 item for selected month
     public function monthlyReportItemGraph($id)
     {
+        $selectedYear = request('year', now()->year);
+        $selectedMonth = request('month', now()->month);
+        $normalizedId = strtolower(trim($id)); // key to match Livewire logic
 
+        // Fetch orders
+        $oldOrders = DB::connection('old_db')->table('orders')
+            ->join('section', 'orders.section_id', '=', 'section.id')
+            ->select('orders.items', 'section.name as section_name')
+            ->where('orders.status', 'APPROVED')
+            ->whereYear('orders.approved_denied_at', $selectedYear)
+            ->whereMonth('orders.approved_denied_at', $selectedMonth)
+            ->get();
+
+        $newOrders = DB::connection('mysql')->table('orders')
+            ->select('items', 'section_name')
+            ->where('status', 'APPROVED')
+            ->whereYear('approved_denied_at', $selectedYear)
+            ->whereMonth('approved_denied_at', $selectedMonth)
+            ->get();
+
+        $allOrders = $oldOrders->merge($newOrders);
+        $sectionTotals = [];
+        $itemDisplayName = $id;
+
+        foreach ($allOrders as $order) {
+            $items = json_decode($order->items ?? '[]', true);
+            if (is_string($items)) $items = json_decode($items, true);
+            if (!is_array($items)) continue;
+
+            foreach ($items as $item) {
+                $rawName = $item['name'] ?? '';
+                $key = strtolower(trim($rawName));
+                if ($key === $normalizedId) {
+                    $itemDisplayName = $rawName; // set for title display
+                    $section = trim($order->section_name ?? 'Unknown');
+                    $sectionTotals[$section] = ($sectionTotals[$section] ?? 0) + ((int) $item['quantity'] ?? 0);
+                }
+            }
+        }
+
+        arsort($sectionTotals);
+
+        return view('Warehouse.WarehouseSupervisor.Reports.reports.monthly-item-graph', [
+            'itemName' => $itemDisplayName,
+            'labels' => array_keys($sectionTotals),
+            'values' => array_values($sectionTotals),
+            'selectedMonth' => $selectedMonth,
+            'selectedYear' => $selectedYear,
+        ]);
     }
 
     // Calendar Year report
