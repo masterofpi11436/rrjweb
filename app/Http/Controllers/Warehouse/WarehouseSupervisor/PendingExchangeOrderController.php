@@ -8,7 +8,9 @@ use Illuminate\Http\Request;
 use App\Models\Warehouse\Order;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\View;
+use App\Mail\Warehouse\ExchangeOrderDenied;
 
 // CRUD operations for approving, denying, and editing an 1 for 1 exchange order
 class PendingExchangeOrderController extends Controller
@@ -69,6 +71,9 @@ class PendingExchangeOrderController extends Controller
     public function deny(Request $request, $id)
     {
         $order = Order::findOrFail($id);
+        $supervisor = $order->supervisor;
+        $section = $order->section;
+        $note = $order->note;
 
         $order->update([
             'status' => config('orderstatus.EXCHANGE_DENIED'),
@@ -77,6 +82,10 @@ class PendingExchangeOrderController extends Controller
             'approved_denied_by_name' => Auth::user()->first_name . ' ' . Auth::user()->last_name,
             'approved_denied_at' => Carbon::now(),
         ]);
+
+        if ($supervisor && $supervisor->email && config('mail.enabled')) {
+            Mail::to($supervisor->email)->send(new ExchangeOrderDenied($supervisor, $section, $note));
+        }
 
         return redirect()->route('warehouse.warehouse-supervisor.pending-exchange.dashboard')
             ->with('success', 'Order denied');
