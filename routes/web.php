@@ -237,6 +237,13 @@ Route::prefix('warehouse')->group(function () use ($warehouseLoginClass, $wareho
         Route::post('/forgot', [$warehouseLoginClass, 'forgotPassword'])->name('warehouse.forgot.form.submit');
         Route::post('/logout', [$warehouseLoginClass, 'logout'])->name('warehouse.logout');
 
+        // Public monthly report pages
+        Route::prefix('reports')->group(function () use ($reportsClass) {
+                Route::get('/monthly', [$reportsClass, 'publicMonthlyReport'])->name('public.reports.monthly');
+                Route::get('/monthly-graph', [$reportsClass, 'publicMonthlyReportGraph'])->name('public.reports.monthly-graph');
+                Route::get('/monthly-graph/{id}', [$reportsClass, 'publicMonthlyReportItemGraph'])->name('public.reports.monthly-graph-item');
+            });
+
         // Warehouse Supervisor Routes
         Route::prefix('warehouse-supervisor')->middleware('warehouseSupervisor', 'cache')->group(function () use ($warehouseSupervisorClass, $itemClass, $categoryClass, $sectionClass, $userClass, $inventoryClass, $reportsClass, $historyClass, $createOrderClass, $createExchangeClass, $pendingOrderClass, $pendingExchangeOrderClass) {
             Route::get('/dashboard', [$warehouseSupervisorClass, 'dashboard'])->name('warehouse.warehouse-supervisor.dashboard');
