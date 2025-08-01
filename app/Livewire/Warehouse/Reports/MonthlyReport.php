@@ -160,12 +160,14 @@ class MonthlyReport extends Component
 
         $recipients = DB::table('monthly_report_recipients')->pluck('email');
 
-        foreach ($recipients as $email) {
-            try {
-                Mail::to($email)->send(new MonthlyReportCsv($fullPath, $monthName, $this->selectedYear));
-            }
-            catch (Throwable $e){
-                continue;
+        if (config('mail.enabled')) {
+            foreach ($recipients as $email) {
+                try {
+                    Mail::to($email)->send(new MonthlyReportCsv($fullPath, $monthName, $this->selectedYear));
+                }
+                catch (Throwable $e){
+                    continue;
+                }
             }
         }
 
