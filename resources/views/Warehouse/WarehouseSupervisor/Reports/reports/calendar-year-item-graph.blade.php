@@ -1,32 +1,16 @@
 @extends('layouts.Warehouse.warehouse-supervisor')
 
-@section('title', 'Calendar Year Graph')
+@section('title', 'Yearly Item Breakdown')
 
-@section('heading', 'Calendar Year Graph')
+@section('heading', 'Yearly Item Breakdown')
 
 @section('content')
 
-    <form method="GET" action="{{ route('warehouse.warehouse-supervisor.reports.calendar-year-graph') }}" class="mb-6 flex gap-4 items-end">
-        <div>
-            <label for="year" class="block text-sm text-white mb-1">Year</label>
-            <select name="year" id="year" class="p-2 rounded bg-gray-700 text-white">
-                @for ($y = now()->year; $y >= now()->year - 4; $y--)
-                    <option value="{{ $y }}" @selected($selectedYear == $y)>{{ $y }}</option>
-                @endfor
-            </select>
-        </div>
-
+    <form method="GET" action="{{ route('warehouse.warehouse-supervisor.reports.monthly-graph') }}" class="mb-6 flex gap-4 items-end">
         <div>
             <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
-                Apply Filter
-            </button>
-        </div>
-
-        <div class="ml-auto">
-            <a href="{{ route('warehouse.warehouse-supervisor.reports.calendar-year') }}"
-               class="px-4 py-2 bg-purple-700 text-white rounded hover:bg-purple-800">
                 Back
-            </a>
+            </button>
         </div>
     </form>
 
@@ -49,10 +33,10 @@
             data: {
                 labels: {!! json_encode($labels) !!},
                 datasets: [{
-                    label: 'Total Quantity Ordered',
+                    label: 'Quantity Ordered by Section',
                     data: {!! json_encode($values) !!},
-                    backgroundColor: 'rgba(54, 162, 235, 0.6)',
-                    borderColor: 'rgba(54, 162, 235, 1)',
+                    backgroundColor: 'rgba(255, 99, 132, 0.6)',
+                    borderColor: 'rgba(255, 99, 132, 1)',
                     borderWidth: 1,
                     categoryPercentage: 1.0,
                     barPercentage: 0.5
@@ -62,17 +46,6 @@
                 indexAxis: 'y',
                 responsive: true,
                 maintainAspectRatio: false,
-                onClick: function(event, elements) {
-                    if (elements.length > 0) {
-                        const index = elements[0].index;
-                        const itemName = this.data.labels[index];
-                        const encodedItemName = encodeURIComponent(itemName);
-                        const year = {{ $selectedYear }};
-
-                        const url = `{{ url('warehouse/warehouse-supervisor/reports/calendar-year-graph') }}/${encodedItemName}?year=${year}`;
-                        window.location.href = url;
-                    }
-                },
                 layout: {
                     padding: {
                         right: 40
@@ -81,7 +54,7 @@
                 plugins: {
                     title: {
                         display: true,
-                        text: 'Monthly Item Quantities',
+                        text: 'Section Breakdown for "{{ $itemName }}"',
                         font: { size: 20 }
                     },
                     legend: { display: false }
@@ -133,3 +106,4 @@
     });
 </script>
 @endpush
+

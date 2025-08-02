@@ -325,7 +325,7 @@ Route::prefix('warehouse')->group(function () use ($warehouseLoginClass, $wareho
 
                 Route::get('/calendar-year', [$reportsClass, 'calendarYearReport'])->name('warehouse.warehouse-supervisor.reports.calendar-year');
                 Route::get('/calendar-year-graph', [$reportsClass, 'calendarReportGraph'])->name('warehouse.warehouse-supervisor.reports.calendar-year-graph');
-                Route::get('/calendar-year-graph/{id}', [$reportsClass, 'calendarReportGraph'])->name('warehouse.warehouse-supervisor.reports.calendar-year-graph-item');
+                Route::get('/calendar-year-graph/{id}', [$reportsClass, 'calendarReportItemGraph'])->name('warehouse.warehouse-supervisor.reports.calendar-year-graph-item');
 
                 Route::get('/fiscal-year', [$reportsClass, 'fiscalYearReport'])->name('warehouse.warehouse-supervisor.reports.fiscal-year');
                 Route::get('/fiscal-year-graph', [$reportsClass, 'fiscalYearReportGraph'])->name('warehouse.warehouse-supervisor.reports.fiscal-year-graph');

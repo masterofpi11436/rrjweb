@@ -182,9 +182,54 @@ class ReportsController extends Controller
     }
 
     // Section orders for 1 item for selected year
-    public function calendarReportItemGraph()
+    public function calendarReportItemGraph($id)
     {
+        $selectedYear = request('year', now()->year);
+        $normalizedId = strtolower(trim($id));
+        $sectionTotals = [];
+        $itemDisplayName = $id;
 
+        // OLD DB
+        $oldOrders = DB::connection('old_db')->table('orders')
+            ->join('section', 'orders.section_id', '=', 'section.id')
+            ->select('orders.items', 'section.name as section_name')
+            ->where('orders.status', 'APPROVED')
+            ->whereYear('orders.approved_denied_at', $selectedYear)
+            ->get();
+
+        // NEW DB
+        $newOrders = DB::connection('mysql')->table('orders')
+            ->select('items', 'section_name')
+            ->where('status', 'APPROVED')
+            ->whereYear('approved_denied_at', $selectedYear)
+            ->get();
+
+        $allOrders = $oldOrders->merge($newOrders);
+
+        foreach ($allOrders as $order) {
+            $items = json_decode($order->items ?? '[]', true);
+            if (is_string($items)) $items = json_decode($items, true);
+            if (!is_array($items)) continue;
+
+            foreach ($items as $item) {
+                $rawName = $item['name'] ?? '';
+                $key = strtolower(trim($rawName));
+                if ($key === $normalizedId) {
+                    $itemDisplayName = $rawName;
+                    $section = trim($order->section_name ?? 'Unknown');
+                    $sectionTotals[$section] = ($sectionTotals[$section] ?? 0) + ((int) $item['quantity'] ?? 0);
+                }
+            }
+        }
+
+        arsort($sectionTotals);
+
+        return view('Warehouse.WarehouseSupervisor.Reports.reports.calendar-year-item-graph', [
+            'itemName' => $itemDisplayName,
+            'labels' => array_keys($sectionTotals),
+            'values' => array_values($sectionTotals),
+            'selectedYear' => $selectedYear,
+        ]);
     }
 
     // Fiscal Year report
