@@ -1,12 +1,12 @@
 @extends('layouts.Warehouse.warehouse-supervisor')
 
-@section('title', 'Yearly Item Breakdown')
+@section('title', 'Item Breakdown')
 
-@section('heading', 'Yearly Item Breakdown')
+@section('heading', 'Item Breakdown')
 
 @section('content')
 
-    <form method="GET" action="{{ route('warehouse.warehouse-supervisor.reports.calendar-year-graph') }}" class="mb-6 flex gap-4 items-end">
+    <form method="GET" action="{{ route('warehouse.warehouse-supervisor.reports.fiscal-year-graph') }}" class="mb-6 flex gap-4 items-end">
         <div>
             <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
                 Back
@@ -16,7 +16,7 @@
 
     <div style="overflow-x: auto;">
         <div style="height: {{ max(count($labels) * 30, 300) }}px;">
-            <canvas id="calendarReportChart" style="width: 100%; height: 100%;"></canvas>
+            <canvas id="fiscalItemChart" style="width: 100%; height: 100%;"></canvas>
         </div>
     </div>
 
@@ -26,7 +26,7 @@
 <script src="{{ asset('js/chart.umd.js') }}"></script>
 <script>
     window.addEventListener('load', function () {
-        const ctx = document.getElementById('calendarReportChart').getContext('2d');
+        const ctx = document.getElementById('fiscalItemChart').getContext('2d');
 
         new Chart(ctx, {
             type: 'bar',

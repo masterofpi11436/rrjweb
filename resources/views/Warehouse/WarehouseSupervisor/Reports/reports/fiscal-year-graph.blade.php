@@ -58,6 +58,17 @@
                     barPercentage: 0.5
                 }]
             },
+            onClick: function(event, elements) {
+                if (elements.length > 0) {
+                    const index = elements[0].index;
+                    const itemName = this.data.labels[index];
+                    const encodedItemName = encodeURIComponent(itemName);
+                    const year = {{ $selectedYear }};
+                    const url = `{{ route('warehouse.warehouse-supervisor.reports.fiscal-year-graph-item', ['id' => 'REPLACE']) }}`
+                        .replace('REPLACE', encodedItemName) + `?year=${year}`;
+                    window.location.href = url;
+                }
+            },
             options: {
                 indexAxis: 'y',
                 responsive: true,
