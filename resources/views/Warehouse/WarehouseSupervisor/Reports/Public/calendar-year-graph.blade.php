@@ -69,7 +69,7 @@
                         const encodedItemName = encodeURIComponent(itemName);
                         const year = {{ $selectedYear }};
 
-                        const url = `{{ url('warehouse/warehouse-supervisor/reports/calendar-year-graph') }}/${encodedItemName}?year=${year}`;
+                        const url = `{{ url('public.reports.calendar-year-graph-item') }}/${encodedItemName}?year=${year}`;
                         window.location.href = url;
                     }
                 },
