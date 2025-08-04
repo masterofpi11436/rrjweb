@@ -448,6 +448,212 @@ class ReportsController extends Controller
         ]);
     }
 
+        // Calendar Year report
+    public function publicCalendarYearReport()
+    {
+        return view('Warehouse.WarehouseSupervisor.Reports.Public.calendar-year');
+    }
+
+    // Calendar Graph
+    public function publicCalendarReportGraph()
+    {
+        $selectedYear = request('year', now()->year);
+
+        // Fetch old orders
+        $oldOrders = DB::connection('old_db')->table('orders')
+            ->join('section', 'orders.section_id', '=', 'section.id')
+            ->select('orders.items', 'section.name as section_name')
+            ->where('orders.status', 'APPROVED')
+            ->whereYear('orders.approved_denied_at', $selectedYear)
+            ->get();
+
+        // Fetch new orders
+        $newOrders = DB::connection('mysql')->table('orders')
+            ->select('items', 'section_name')
+            ->where('status', 'APPROVED')
+            ->whereYear('approved_denied_at', $selectedYear)
+            ->get();
+
+        $allOrders = $oldOrders->merge($newOrders);
+        $totals = [];
+
+        foreach ($allOrders as $order) {
+            $items = json_decode($order->items ?? '[]', true);
+            if (is_string($items)) $items = json_decode($items, true);
+
+            foreach ($items as $item) {
+                $name = trim($item['name'] ?? 'Unnamed Item');
+                $totals[$name] = ($totals[$name] ?? 0) + ((int) $item['quantity'] ?? 0);
+            }
+        }
+
+        arsort($totals);
+
+        return view('Warehouse.WarehouseSupervisor.Reports.Public.calendar-year-graph', [
+            'labels' => array_keys($totals),
+            'values' => array_values($totals),
+            'selectedYear' => $selectedYear,
+        ]);
+    }
+
+    // Section orders for 1 item for selected year
+    public function publicCalendarReportItemGraph($id)
+    {
+        $selectedYear = request('year', now()->year);
+        $normalizedId = strtolower(trim($id));
+        $sectionTotals = [];
+        $itemDisplayName = $id;
+
+        // OLD DB
+        $oldOrders = DB::connection('old_db')->table('orders')
+            ->join('section', 'orders.section_id', '=', 'section.id')
+            ->select('orders.items', 'section.name as section_name')
+            ->where('orders.status', 'APPROVED')
+            ->whereYear('orders.approved_denied_at', $selectedYear)
+            ->get();
+
+        // NEW DB
+        $newOrders = DB::connection('mysql')->table('orders')
+            ->select('items', 'section_name')
+            ->where('status', 'APPROVED')
+            ->whereYear('approved_denied_at', $selectedYear)
+            ->get();
+
+        $allOrders = $oldOrders->merge($newOrders);
+
+        foreach ($allOrders as $order) {
+            $items = json_decode($order->items ?? '[]', true);
+            if (is_string($items)) $items = json_decode($items, true);
+            if (!is_array($items)) continue;
+
+            foreach ($items as $item) {
+                $rawName = $item['name'] ?? '';
+                $key = strtolower(trim($rawName));
+                if ($key === $normalizedId) {
+                    $itemDisplayName = $rawName;
+                    $section = trim($order->section_name ?? 'Unknown');
+                    $sectionTotals[$section] = ($sectionTotals[$section] ?? 0) + ((int) $item['quantity'] ?? 0);
+                }
+            }
+        }
+
+        arsort($sectionTotals);
+
+        return view('Warehouse.WarehouseSupervisor.Reports.Public.calendar-year-item-graph', [
+            'itemName' => $itemDisplayName,
+            'labels' => array_keys($sectionTotals),
+            'values' => array_values($sectionTotals),
+            'selectedYear' => $selectedYear,
+        ]);
+    }
+
+    // Fiscal Year report
+    public function publicFiscalYearReport()
+    {
+        return view('Warehouse.WarehouseSupervisor.Reports.Public.fiscal-year');
+    }
+
+    // Fiscal Year Graph
+    public function publicFiscalYearReportGraph()
+    {
+        $selectedYear = request('year', now()->year);
+
+        // Define fiscal year start and end dates
+        $fiscalStart = Carbon::create($selectedYear, 7, 1)->startOfDay();
+        $fiscalEnd = Carbon::create($selectedYear + 1, 6, 30)->endOfDay();
+
+        // Fetch old orders
+        $oldOrders = DB::connection('old_db')->table('orders')
+            ->join('section', 'orders.section_id', '=', 'section.id')
+            ->select('orders.items', 'section.name as section_name')
+            ->where('orders.status', 'APPROVED')
+            ->whereBetween('orders.approved_denied_at', [$fiscalStart, $fiscalEnd])
+            ->get();
+
+        // Fetch new orders
+        $newOrders = DB::connection('mysql')->table('orders')
+            ->select('items', 'section_name')
+            ->where('status', 'APPROVED')
+            ->whereBetween('approved_denied_at', [$fiscalStart, $fiscalEnd])
+            ->get();
+
+        $allOrders = $oldOrders->merge($newOrders);
+        $totals = [];
+
+        foreach ($allOrders as $order) {
+            $items = json_decode($order->items ?? '[]', true);
+            if (is_string($items)) $items = json_decode($items, true);
+
+            foreach ($items as $item) {
+                $name = trim($item['name'] ?? 'Unnamed Item');
+                $totals[$name] = ($totals[$name] ?? 0) + ((int) $item['quantity'] ?? 0);
+            }
+        }
+
+        arsort($totals);
+
+        return view('Warehouse.WarehouseSupervisor.Reports.Public.fiscal-year-graph', [
+            'labels' => array_keys($totals),
+            'values' => array_values($totals),
+            'selectedYear' => $selectedYear,
+        ]);
+    }
+
+    // Section orders for 1 item for selected fiscal year
+    public function publicFiscalYearReportItemGraph(Request $request)
+    {
+        $id = $request->query('id');
+        $selectedYear = $request->query('year', now()->year);
+        $normalizedId = strtolower(trim($id));
+        $sectionTotals = [];
+        $itemDisplayName = $id;
+
+        $fiscalStart = Carbon::create($selectedYear, 7, 1)->startOfDay();
+        $fiscalEnd = Carbon::create($selectedYear + 1, 6, 30)->endOfDay();
+
+        // Old orders
+        $oldOrders = DB::connection('old_db')->table('orders')
+            ->join('section', 'orders.section_id', '=', 'section.id')
+            ->select('orders.items', 'section.name as section_name')
+            ->where('orders.status', 'APPROVED')
+            ->whereBetween('orders.approved_denied_at', [$fiscalStart, $fiscalEnd])
+            ->get();
+
+        // New orders
+        $newOrders = DB::connection('mysql')->table('orders')
+            ->select('items', 'section_name')
+            ->where('status', 'APPROVED')
+            ->whereBetween('approved_denied_at', [$fiscalStart, $fiscalEnd])
+            ->get();
+
+        $allOrders = $oldOrders->merge($newOrders);
+
+        foreach ($allOrders as $order) {
+            $items = json_decode($order->items ?? '[]', true);
+            if (is_string($items)) $items = json_decode($items, true);
+            if (!is_array($items)) continue;
+
+            foreach ($items as $item) {
+                $rawName = $item['name'] ?? '';
+                $key = strtolower(trim($rawName));
+                if ($key === $normalizedId) {
+                    $itemDisplayName = $rawName;
+                    $section = trim($order->section_name ?? 'Unknown');
+                    $sectionTotals[$section] = ($sectionTotals[$section] ?? 0) + ((int) $item['quantity'] ?? 0);
+                }
+            }
+        }
+
+        arsort($sectionTotals);
+
+        return view('Warehouse.WarehouseSupervisor.Reports.Public.fiscal-year-item-graph', [
+            'itemName' => $itemDisplayName,
+            'labels' => array_keys($sectionTotals),
+            'values' => array_values($sectionTotals),
+            'selectedYear' => $selectedYear,
+        ]);
+    }
+
 /****------------------------------------------------------------------------------------------------------------------------------****/
     // CRUD for monthly report recipients
     public function dashboard()

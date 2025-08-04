@@ -242,6 +242,14 @@ Route::prefix('warehouse')->group(function () use ($warehouseLoginClass, $wareho
                 Route::get('/monthly', [$reportsClass, 'publicMonthlyReport'])->name('public.reports.monthly');
                 Route::get('/monthly-graph', [$reportsClass, 'publicMonthlyReportGraph'])->name('public.reports.monthly-graph');
                 Route::get('/monthly-graph/{id}', [$reportsClass, 'publicMonthlyReportItemGraph'])->name('public.reports.monthly-graph-item');
+
+                Route::get('/calendar-year', [$reportsClass, 'publicCalendarYearReport'])->name('public.reports.calendar-year');
+                Route::get('/calendar-year-graph', [$reportsClass, 'publicCalendarReportGraph'])->name('public.reports.calendar-year-graph');
+                Route::get('/calendar-year-graph/{id}', [$reportsClass, 'publicCalendarReportItemGraph'])->name('public.reports.calendar-year-graph-item');
+
+                Route::get('/fiscal-year', [$reportsClass, 'publicFiscalYearReport'])->name('public.reports.fiscal-year');
+                Route::get('/fiscal-year-graph', [$reportsClass, 'publicFiscalYearReportGraph'])->name('public.reports.fiscal-year-graph');
+                Route::get('/fiscal-year-graph/item', [$reportsClass, 'publicFiscalYearReportItemGraph'])->name('public.reports.fiscal-year-graph-item');
             });
 
         // Warehouse Supervisor Routes

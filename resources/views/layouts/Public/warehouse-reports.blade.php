@@ -31,10 +31,10 @@
                                     <a href="{{ route('public.reports.monthly') }}" class="block p-2 rounded hover:bg-green-900">Monthly</a>
                                 </li>
                                 <li class="mb-2">
-                                    <a href="#" class="block p-2 rounded hover:bg-green-900">Calendar Year</a>
+                                    <a href="{{ route('public.reports.calendar-year') }}" class="block p-2 rounded hover:bg-green-900">Calendar Year</a>
                                 </li>
                                 <li class="mb-2">
-                                    <a href="#" class="block p-2 rounded hover:bg-green-900">Fiscal Year</a>
+                                    <a href="{{ route('public.reports.fiscal-year') }}" class="block p-2 rounded hover:bg-green-900">Fiscal Year</a>
                                 </li>
                             </ul>
                         </details>
