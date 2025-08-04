@@ -23,7 +23,7 @@
         </div>
 
         <div class="ml-auto">
-            <a href="{{ route('public.reports.calendar-year') }}"
+            <a href="{{ route('public.reports.calendar-year-graph') }}"
                class="px-4 py-2 bg-purple-700 text-white rounded hover:bg-purple-800">
                 Back
             </a>
@@ -69,7 +69,8 @@
                         const encodedItemName = encodeURIComponent(itemName);
                         const year = {{ $selectedYear }};
 
-                        const url = `{{ url('public.reports.calendar-year-graph-item') }}/${encodedItemName}?year=${year}`;
+                        const url = `{{ route('public.reports.calendar-year-graph-item', ['id' => 'ITEM_REPLACE']) }}`.replace('ITEM_REPLACE', encodedItemName) + `?year=${year}`;
+
                         window.location.href = url;
                     }
                 },
