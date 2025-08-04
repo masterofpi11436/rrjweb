@@ -285,9 +285,10 @@ class ReportsController extends Controller
     }
 
     // Section orders for 1 item for selected fiscal year
-    public function fiscalYearReportItemGraph($id)
+    public function fiscalYearReportItemGraph(Request $request)
     {
-        $selectedYear = request('year', now()->year);
+        $id = $request->query('id');
+        $selectedYear = $request->query('year', now()->year);
         $normalizedId = strtolower(trim($id));
         $sectionTotals = [];
         $itemDisplayName = $id;

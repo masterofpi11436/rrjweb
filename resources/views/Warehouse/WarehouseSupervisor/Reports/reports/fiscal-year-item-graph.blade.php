@@ -54,7 +54,7 @@
                 plugins: {
                     title: {
                         display: true,
-                        text: 'Section Breakdown for "{{ $itemName }}"',
+                        text: 'Section Breakdown for ' + {!! json_encode($itemName) !!},
                         font: { size: 20 }
                     },
                     legend: { display: false }
