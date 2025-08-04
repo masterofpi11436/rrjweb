@@ -6,7 +6,7 @@
 
 @section('content')
 
-    <form method="GET" action="{{ route('warehouse.warehouse-supervisor.reports.fiscal-year-graph') }}" class="mb-6 flex gap-4 items-end">
+    <form method="GET" action="{{ route('public.reports.fiscal-year-graph') }}" class="mb-6 flex gap-4 items-end">
         <div>
             <label for="year" class="block text-sm text-white mb-1">Year</label>
             <select name="year" id="year" class="p-2 rounded bg-gray-700 text-white">
@@ -23,7 +23,7 @@
         </div>
 
         <div class="ml-auto">
-            <a href="{{ route('warehouse.warehouse-supervisor.reports.fiscal-year') }}"
+            <a href="{{ route('public.reports.fiscal-year') }}"
                class="px-4 py-2 bg-purple-700 text-white rounded hover:bg-purple-800">
                 Back
             </a>
@@ -68,7 +68,7 @@
                         const itemName = this.data.labels[index];
                         const encodedItemName = encodeURIComponent(itemName);
                         const year = {{ $selectedYear }};
-                        const url = `{{ route('warehouse.warehouse-supervisor.reports.fiscal-year-graph-item') }}?id=${encodedItemName}&year=${year}`;
+                        const url = `{{ route('public.reports.fiscal-year-graph-item') }}?id=${encodedItemName}&year=${year}`;
                         window.location.href = url;
                     }
                 },
