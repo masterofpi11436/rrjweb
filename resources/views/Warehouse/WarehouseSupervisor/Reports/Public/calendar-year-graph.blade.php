@@ -23,7 +23,7 @@
         </div>
 
         <div class="ml-auto">
-            <a href="{{ route('public.reports.calendar-year-graph') }}"
+            <a href="{{ route('public.reports.calendar-year') }}"
                class="px-4 py-2 bg-purple-700 text-white rounded hover:bg-purple-800">
                 Back
             </a>
