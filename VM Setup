@@ -237,3 +237,31 @@ In the gateway settings, forward ports 80 and 443
 
 Run the command:
 php artisan migrate --path=/database/migrations/(table_full_name).php
+
+*************************
+15. Creating a new GitHub repository
+
+Navigate to where you want the project to be located
+    cd ~/Desktop
+    mkdir tri-city-drive
+    cd tri-city-drive
+    composer create-project laravel/laravel (Name of Project)
+
+Initialize Git and Make First Commit
+    git init
+    git add .
+    git commit -m "Initial commit"
+
+Create GitHub Repo (via website)
+    Go to: https://github.com/new
+
+    Name it (Name of Project)
+
+    Leave README, .gitignore, and License unchecked
+
+    Click Create repository
+
+Connect Local Git to GitHub
+    git remote add origin https://github.com/YOUR_USERNAME/tri-city-drive.git
+    git branch -m main
+    git push -u origin main
