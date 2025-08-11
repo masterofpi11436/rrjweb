@@ -8,7 +8,7 @@
 
     <p>Please click the link to view the monthly report.</p>
 
-    <p><a href="http://rrjapps/warehouse/reports/monthly"></a>View Monthly Report</p>
+    <p><a href="http://rrjapps/warehouse/reports/monthly">View Monthly Report</a></p>
 
     <p>Regards,<br>Warehouse Supervisor</p>
 </body>
