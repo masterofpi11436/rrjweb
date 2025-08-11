@@ -36,7 +36,7 @@
 
     <!-- Action Buttons Bar -->
     <div class="flex flex-wrap justify-end gap-4 mb-4">
-        <button wire:click="sendMonthlyReport"
+        <button wire:click="emailMonthlyReport"
             class="px-4 py-2 bg-green-700 text-white rounded hover:bg-green-800">
             Email Monthly Report
         </button>
