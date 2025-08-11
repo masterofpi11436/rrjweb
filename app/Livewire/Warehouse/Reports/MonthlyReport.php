@@ -134,7 +134,7 @@ class MonthlyReport extends Component
 
     // Old Code, no longer sending CSV in an email, keeping for archived records
 
-    // private function buildCsvFromReport()
+    //  private function buildCsvFromReport()
     // {
     //     // Get all unique sections from the report data
     //     $sections = collect($this->reportData)

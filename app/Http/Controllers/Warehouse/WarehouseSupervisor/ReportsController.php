@@ -685,58 +685,99 @@ class ReportsController extends Controller
     }
 
     // Download the monthly report to user's computer
-    public function downloadMonthlyReport(Request $request): StreamedResponse
+    public function downloadMonthlyReport(Request $request): \Symfony\Component\HttpFoundation\StreamedResponse
     {
-        $year = (int) $request->input('year');
+        $year  = (int) $request->input('year');
         $month = (int) $request->input('month');
 
-        $orders = DB::connection('old_db')->table('orders')
+        // OLD DB (match Livewire: status + approved_denied_at)
+        $oldOrders = DB::connection('old_db')->table('orders')
             ->join('section', 'orders.section_id', '=', 'section.id')
             ->join('user', 'orders.supervisor_id', '=', 'user.id')
-            ->select('orders.items', 'section.name as section_name', DB::raw("CONCAT(user.first_name, ' ', user.last_name) as supervisor_name"), 'orders.created_at')
-            ->whereYear('orders.created_at', $year)
-            ->whereMonth('orders.created_at', $month)
+            ->select(
+                'orders.items',
+                'section.name as section_name',
+                DB::raw("CONCAT(user.first_name, ' ', user.last_name) as supervisor_name"),
+                'orders.approved_denied_at'
+            )
+            ->where('orders.status', 'APPROVED')
+            ->whereYear('orders.approved_denied_at', $year)
+            ->whereMonth('orders.approved_denied_at', $month)
             ->get();
 
+        // NEW DB (match Livewire)
+        $newOrders = DB::connection('mysql')->table('orders')
+            ->select('items', 'section_name', 'supervisor_name', 'approved_denied_at')
+            ->where('status', 'APPROVED')
+            ->whereYear('approved_denied_at', $year)
+            ->whereMonth('approved_denied_at', $month)
+            ->get();
+
+        $allOrders = $oldOrders->merge($newOrders);
+
+        // Group like Livewire (normalized item name key, preserve display)
         $grouped = [];
+        $sectionsSet = [];
 
-        foreach ($orders as $order) {
-            $items = json_decode($order->items, true);
-            if (!is_array($items)) continue;
+        foreach ($allOrders as $order) {
+            $decoded = json_decode($order->items ?? '[]', true);
+            if (is_string($decoded)) {
+                $decoded = json_decode($decoded, true);
+            }
+            if (!is_array($decoded) || empty($decoded)) {
+                continue;
+            }
 
-            foreach ($items as $item) {
-                $name = $item['name'] ?? 'Unnamed Item';
-                $qty = (int) ($item['quantity'] ?? 0);
-                $section = $order->section_name ?? 'Unknown';
+            $section = trim($order->section_name ?? 'Unknown');
+            $sectionsSet[$section] = true;
 
-                $grouped[$name][$section] = ($grouped[$name][$section] ?? 0) + $qty;
+            foreach ($decoded as $item) {
+                $rawName   = $item['name'] ?? 'Unnamed Item';
+                $nameKey   = strtolower(trim($rawName));
+                $display   = trim($rawName);
+                $qty       = (int) ($item['quantity'] ?? 0);
+
+                if (!isset($grouped[$nameKey])) {
+                    $grouped[$nameKey] = ['display' => $display, 'sections' => []];
+                }
+                if (!isset($grouped[$nameKey]['sections'][$section])) {
+                    $grouped[$nameKey]['sections'][$section] = 0;
+                }
+                $grouped[$nameKey]['sections'][$section] += $qty;
             }
         }
 
-        $sections = collect($orders)->pluck('section_name')->filter()->unique()->sort()->values()->all();
+        $sections = array_values(array_map('strval', array_keys($sectionsSet)));
+        sort($sections, SORT_NATURAL | SORT_FLAG_CASE);
 
         $filename = "monthly_report_{$year}_{$month}.csv";
 
         return response()->streamDownload(function () use ($grouped, $sections) {
-            $output = fopen('php://output', 'w');
+            $out = fopen('php://output', 'w');
 
-            fputcsv($output, array_merge(['Item Name'], $sections, ['Total']));
+            fputcsv($out, array_merge(['Item Name'], $sections, ['Total']));
 
-            foreach (collect($grouped)->sortKeys() as $item => $counts) {
-                $row = [$item];
+            ksort($grouped, SORT_NATURAL | SORT_FLAG_CASE);
+            foreach ($grouped as $entry) {
+                $row = [$entry['display']];
                 $total = 0;
 
                 foreach ($sections as $section) {
-                    $qty = $counts[$section] ?? 0;
-                    $row[] = $qty > 0 ? $qty : '';  // Write blank if zero
-                    $total += $qty;                 // Still include zero in total
+                    $qty = (int) ($entry['sections'][$section] ?? 0);
+                    $row[] = $qty > 0 ? $qty : '';
+                    $total += $qty;
                 }
 
                 $row[] = $total;
-                fputcsv($output, $row);
+                fputcsv($out, $row);
             }
 
-            fclose($output);
-        }, $filename);
+            fclose($out);
+        }, $filename, [
+            'Content-Type'        => 'text/csv; charset=UTF-8',
+            'Cache-Control'       => 'no-store, no-cache, must-revalidate',
+            'Pragma'              => 'no-cache',
+            'Content-Disposition' => "attachment; filename=\"{$filename}\"",
+        ]);
     }
 }
