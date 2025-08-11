@@ -13,15 +13,16 @@ class MonthlyReportCsv extends Mailable
     use Queueable, SerializesModels;
 
     public function __construct(
-        public string $filePath,
-        public string $monthName,
-        public int $year
+        // public string $filePath,
+        // public string $monthName,
+        // public int $year
+        public string $url
     ) {}
 
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: "Monthly Warehouse Report – {$this->monthName} {$this->year}",
+            subject: "Monthly Warehouse Report",
         );
     }
 
@@ -30,8 +31,9 @@ class MonthlyReportCsv extends Mailable
         return new Content(
             view: 'emails.monthly-report',
             with: [
-                'monthName' => $this->monthName,
-                'year' => $this->year,
+                // 'monthName' => $this->monthName,
+                // 'year' => $this->year,
+                'url' => $this->url
             ],
         );
     }
@@ -39,7 +41,7 @@ class MonthlyReportCsv extends Mailable
     public function attachments(): array
     {
         return [
-            \Illuminate\Mail\Mailables\Attachment::fromPath($this->filePath)
+            // \Illuminate\Mail\Mailables\Attachment::fromPath($this->filePath)
         ];
     }
 }

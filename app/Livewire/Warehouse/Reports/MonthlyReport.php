@@ -6,6 +6,7 @@ use Throwable;
 use Livewire\Component;
 use App\Mail\MonthlyReportCsv;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 
@@ -105,73 +106,23 @@ class MonthlyReport extends Component
         $this->displayNames = collect($grouped)->mapWithKeys(fn($entry, $key) => [$key => $entry['display']]);
     }
 
-    private function buildCsvFromReport()
+    // Email the monthly report to the list of recipients
+    public function emailMonthlyReport()
     {
-        // Get all unique sections from the report data
-        $sections = collect($this->reportData)
-            ->flatMap(fn($entries) => collect($entries)->pluck('section'))
-            ->unique()
-            ->sort()
-            ->values()
-            ->all();
-
-        // Use temp memory stream
-        $stream = fopen('php://temp', 'r+');
-
-        // Write header row
-        fputcsv($stream, array_merge(['Item Name'], $sections, ['Total']));
-
-        foreach ($this->reportData as $itemKey => $entries) {
-            $sectionCounts = collect($entries)->groupBy('section')->map->sum('quantity');
-            $row = [ucwords($this->displayNames[$itemKey] ?? $itemKey)];
-
-            foreach ($sections as $section) {
-                $row[] = ($sectionCounts[$section] ?? 0) > 0 ? $sectionCounts[$section] : '';
-            }
-
-            $row[] = $sectionCounts->sum();
-            fputcsv($stream, $row);
-        }
-
-        rewind($stream);
-        $csvData = stream_get_contents($stream);
-        fclose($stream);
-
-        return $csvData;
-    }
-
-    public function sendMonthlyReport()
-    {
-        $filename = "monthly_report_{$this->selectedYear}_{$this->selectedMonth}.csv";
-        $relativePath = "monthlyCSV/{$filename}"; // relative to 'app/public'
-        $fullPath = storage_path("app/public/{$relativePath}");
-
-        // Make sure directory exists
-        $directory = storage_path('app/public/monthlyCSV');
-        if (!file_exists($directory)) {
-            mkdir($directory, 0775, true);
-        }
-
-        $csvData = $this->buildCsvFromReport();
-
-        Storage::disk('public')->put($relativePath, $csvData);
-
-        $monthName = \Carbon\Carbon::create()->month((int) $this->selectedMonth)->format('F');
-
         $recipients = DB::table('monthly_report_recipients')->pluck('email');
+
+        $url = URL::route('public.reports.monthly');
 
         if (config('mail.enabled')) {
             foreach ($recipients as $email) {
                 try {
-                    Mail::to($email)->send(new MonthlyReportCsv($fullPath, $monthName, $this->selectedYear));
+                    Mail::to($email)->send(new MonthlyReportCsv($url));
                 }
                 catch (Throwable $e){
                     continue;
                 }
             }
         }
-
-        Storage::disk('public')->delete($relativePath);
 
         return redirect()->route('warehouse.warehouse-supervisor.reports.monthly')->with('success', 'Report sent successfully.');
     }
@@ -180,4 +131,77 @@ class MonthlyReport extends Component
     {
         return view('Warehouse.WarehouseSupervisor.Reports.livewire.monthly');
     }
+
+    // Old Code, no longer sending CSV in an email, keeping for archived records
+
+    // private function buildCsvFromReport()
+    // {
+    //     // Get all unique sections from the report data
+    //     $sections = collect($this->reportData)
+    //         ->flatMap(fn($entries) => collect($entries)->pluck('section'))
+    //         ->unique()
+    //         ->sort()
+    //         ->values()
+    //         ->all();
+
+    //     // Use temp memory stream
+    //     $stream = fopen('php://temp', 'r+');
+
+    //     // Write header row
+    //     fputcsv($stream, array_merge(['Item Name'], $sections, ['Total']));
+
+    //     foreach ($this->reportData as $itemKey => $entries) {
+    //         $sectionCounts = collect($entries)->groupBy('section')->map->sum('quantity');
+    //         $row = [ucwords($this->displayNames[$itemKey] ?? $itemKey)];
+
+    //         foreach ($sections as $section) {
+    //             $row[] = ($sectionCounts[$section] ?? 0) > 0 ? $sectionCounts[$section] : '';
+    //         }
+
+    //         $row[] = $sectionCounts->sum();
+    //         fputcsv($stream, $row);
+    //     }
+
+    //     rewind($stream);
+    //     $csvData = stream_get_contents($stream);
+    //     fclose($stream);
+
+    //     return $csvData;
+    // }
+
+    // public function sendMonthlyReport()
+    // {
+    //     $filename = "monthly_report_{$this->selectedYear}_{$this->selectedMonth}.csv";
+    //     $relativePath = "monthlyCSV/{$filename}"; // relative to 'app/public'
+    //     $fullPath = storage_path("app/public/{$relativePath}");
+
+    //     // Make sure directory exists
+    //     $directory = storage_path('app/public/monthlyCSV');
+    //     if (!file_exists($directory)) {
+    //         mkdir($directory, 0775, true);
+    //     }
+
+    //     $csvData = $this->buildCsvFromReport();
+
+    //     Storage::disk('public')->put($relativePath, $csvData);
+
+    //     $monthName = \Carbon\Carbon::create()->month((int) $this->selectedMonth)->format('F');
+
+    //     $recipients = DB::table('monthly_report_recipients')->pluck('email');
+
+    //     if (config('mail.enabled')) {
+    //         foreach ($recipients as $email) {
+    //             try {
+    //                 Mail::to($email)->send(new MonthlyReportCsv($fullPath, $monthName, $this->selectedYear));
+    //             }
+    //             catch (Throwable $e){
+    //                 continue;
+    //             }
+    //         }
+    //     }
+
+    //     Storage::disk('public')->delete($relativePath);
+
+    //     return redirect()->route('warehouse.warehouse-supervisor.reports.monthly')->with('success', 'Report sent successfully.');
+    // }
 }
