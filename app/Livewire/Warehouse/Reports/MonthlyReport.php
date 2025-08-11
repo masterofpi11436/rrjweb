@@ -111,7 +111,7 @@ class MonthlyReport extends Component
     {
         $recipients = DB::table('monthly_report_recipients')->pluck('email');
 
-        $url = URL::route('public.reports.monthly');
+        $url = "http://rrjapps/warehouse/reports/monthly";
 
         if (config('mail.enabled')) {
             foreach ($recipients as $email) {
