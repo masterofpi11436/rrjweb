@@ -44,7 +44,6 @@ window.addEventListener('load', function () {
                 data: {!! json_encode($monthValues) !!},
                 fill: false,
                 borderWidth: 2,
-                tension: 0.2,
                 pointRadius: 3
             }]
         },
