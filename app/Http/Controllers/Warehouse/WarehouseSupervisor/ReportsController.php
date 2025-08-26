@@ -504,22 +504,29 @@ class ReportsController extends Controller
         $sectionTotals = [];
         $itemDisplayName = $id;
 
+        // Year boundaries
+        $start = Carbon::create($selectedYear, 1, 1)->startOfDay();
+        $end   = Carbon::create($selectedYear, 12, 31)->endOfDay();
+
         // OLD DB
         $oldOrders = DB::connection('old_db')->table('orders')
             ->join('section', 'orders.section_id', '=', 'section.id')
-            ->select('orders.items', 'section.name as section_name')
+            ->select('orders.items', 'section.name as section_name', 'orders.approved_denied_at')
             ->where('orders.status', 'APPROVED')
-            ->whereYear('orders.approved_denied_at', $selectedYear)
+            ->whereBetween('orders.approved_denied_at', [$start, $end])
             ->get();
 
         // NEW DB
         $newOrders = DB::connection('mysql')->table('orders')
-            ->select('items', 'section_name')
+            ->select('items', 'section_name', 'approved_denied_at')
             ->where('status', 'APPROVED')
-            ->whereYear('approved_denied_at', $selectedYear)
+            ->whereBetween('approved_denied_at', [$start, $end])
             ->get();
 
         $allOrders = $oldOrders->merge($newOrders);
+
+        // Monthly totals (1..12)
+        $monthlyTotals = array_fill(1, 12, 0);
 
         foreach ($allOrders as $order) {
             $items = json_decode($order->items ?? '[]', true);
@@ -529,21 +536,37 @@ class ReportsController extends Controller
             foreach ($items as $item) {
                 $rawName = $item['name'] ?? '';
                 $key = strtolower(trim($rawName));
-                if ($key === $normalizedId) {
-                    $itemDisplayName = $rawName;
-                    $section = trim($order->section_name ?? 'Unknown');
-                    $sectionTotals[$section] = ($sectionTotals[$section] ?? 0) + ((int) $item['quantity'] ?? 0);
-                }
+                if ($key !== $normalizedId) continue;
+
+                $qty = (int)($item['quantity'] ?? 0);
+                if ($qty <= 0) continue;
+
+                $itemDisplayName = $rawName;
+
+                // Section aggregation (existing behavior)
+                $section = trim($order->section_name ?? 'Unknown');
+                $sectionTotals[$section] = ($sectionTotals[$section] ?? 0) + $qty;
+
+                // Monthly aggregation (new)
+                $monthNum = (int) Carbon::parse($order->approved_denied_at)->month;
+                $monthlyTotals[$monthNum] += $qty;
             }
         }
 
         arsort($sectionTotals);
 
+        // Labels/values for charts
+        $monthLabels = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+        $monthValues = array_values($monthlyTotals); // already 1..12 in order
+
         return view('Warehouse.WarehouseSupervisor.Reports.Public.calendar-year-item-graph', [
-            'itemName' => $itemDisplayName,
-            'labels' => array_keys($sectionTotals),
-            'values' => array_values($sectionTotals),
+            'itemName'     => $itemDisplayName,
+            'labels'       => array_keys($sectionTotals),   // sections (existing)
+            'values'       => array_values($sectionTotals), // section totals (existing)
             'selectedYear' => $selectedYear,
+            // NEW:
+            'monthLabels'  => $monthLabels,
+            'monthValues'  => $monthValues,
         ]);
     }
 
@@ -603,30 +626,34 @@ class ReportsController extends Controller
     public function publicFiscalYearReportItemGraph(Request $request)
     {
         $id = $request->query('id');
-        $selectedYear = $request->query('year', now()->year);
+        $selectedYear = (int) $request->query('year', now()->year);
         $normalizedId = strtolower(trim($id));
         $sectionTotals = [];
         $itemDisplayName = $id;
 
+        // FY runs Jul 1 -> Jun 30
         $fiscalStart = Carbon::create($selectedYear, 7, 1)->startOfDay();
-        $fiscalEnd = Carbon::create($selectedYear + 1, 6, 30)->endOfDay();
+        $fiscalEnd   = Carbon::create($selectedYear + 1, 6, 30)->endOfDay();
 
-        // Old orders
+        // Old orders (include approved_denied_at for month calc)
         $oldOrders = DB::connection('old_db')->table('orders')
             ->join('section', 'orders.section_id', '=', 'section.id')
-            ->select('orders.items', 'section.name as section_name')
+            ->select('orders.items', 'section.name as section_name', 'orders.approved_denied_at')
             ->where('orders.status', 'APPROVED')
             ->whereBetween('orders.approved_denied_at', [$fiscalStart, $fiscalEnd])
             ->get();
 
         // New orders
         $newOrders = DB::connection('mysql')->table('orders')
-            ->select('items', 'section_name')
+            ->select('items', 'section_name', 'approved_denied_at')
             ->where('status', 'APPROVED')
             ->whereBetween('approved_denied_at', [$fiscalStart, $fiscalEnd])
             ->get();
 
         $allOrders = $oldOrders->merge($newOrders);
+
+        // Monthly totals for 1..12 (calendar months)
+        $monthlyTotals = array_fill(1, 12, 0);
 
         foreach ($allOrders as $order) {
             $items = json_decode($order->items ?? '[]', true);
@@ -635,22 +662,38 @@ class ReportsController extends Controller
 
             foreach ($items as $item) {
                 $rawName = $item['name'] ?? '';
-                $key = strtolower(trim($rawName));
-                if ($key === $normalizedId) {
-                    $itemDisplayName = $rawName;
-                    $section = trim($order->section_name ?? 'Unknown');
-                    $sectionTotals[$section] = ($sectionTotals[$section] ?? 0) + ((int) $item['quantity'] ?? 0);
-                }
+                if (strtolower(trim($rawName)) !== $normalizedId) continue;
+
+                $qty = (int)($item['quantity'] ?? 0);
+                if ($qty <= 0) continue;
+
+                $itemDisplayName = $rawName;
+
+                // Section breakdown (existing)
+                $section = trim($order->section_name ?? 'Unknown');
+                $sectionTotals[$section] = ($sectionTotals[$section] ?? 0) + $qty;
+
+                // Monthly trend (by approved date)
+                $monthNum = (int) Carbon::parse($order->approved_denied_at)->month; // 1..12
+                $monthlyTotals[$monthNum] += $qty;
             }
         }
 
         arsort($sectionTotals);
 
+        // Order months as Fiscal (Jul..Dec, Jan..Jun)
+        $fiscalMonthOrder = [7,8,9,10,11,12,1,2,3,4,5,6];
+        $fiscalMonthLabels = ['Jul','Aug','Sep','Oct','Nov','Dec','Jan','Feb','Mar','Apr','May','Jun'];
+        $monthValues = array_map(fn($m) => $monthlyTotals[$m] ?? 0, $fiscalMonthOrder);
+
         return view('Warehouse.WarehouseSupervisor.Reports.Public.fiscal-year-item-graph', [
-            'itemName' => $itemDisplayName,
-            'labels' => array_keys($sectionTotals),
-            'values' => array_values($sectionTotals),
+            'itemName'     => $itemDisplayName,
+            'labels'       => array_keys($sectionTotals),   // sections
+            'values'       => array_values($sectionTotals), // section totals
             'selectedYear' => $selectedYear,
+            // NEW for trend:
+            'monthLabels'  => $fiscalMonthLabels,
+            'monthValues'  => $monthValues,
         ]);
     }
 
