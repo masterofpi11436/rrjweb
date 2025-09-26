@@ -23,6 +23,7 @@ use App\Http\Controllers\VFM\VFMTechController;
 use App\Http\Controllers\Directory\PhoneDirectoryController;
 use App\Http\Controllers\Jurisdiction\JurisdictionController;
 use App\Http\Controllers\Administrator\AdministratorController;
+use App\Http\Controllers\Administrator\IntakeController;
 use App\Http\Controllers\Warehouse\WarehouseSupervisor\WarehouseSupervisorController;
 use App\Http\Controllers\Warehouse\WarehouseSupervisor\ItemController;
 use App\Http\Controllers\Warehouse\WarehouseSupervisor\CategoryController;
@@ -38,7 +39,6 @@ use App\Http\Controllers\Warehouse\WarehouseSupervisor\CreateExchangeOrderContro
 use App\Http\Controllers\Warehouse\Requestor\RequestorController;
 use App\Http\Controllers\Warehouse\Supervisor\SupervisorController;
 use App\Http\Controllers\Warehouse\Property\PropertyController;
-use GuzzleHttp\Middleware;
 
 // Shorthand login Classes
 $baseLoginClass = BaseLoginController::class;
@@ -52,6 +52,7 @@ $warehouseLoginClass = WarehouseLoginController::class;
 
 // Shorthand Controller Classes
 $adminClass = AdministratorController::class;
+$intakeClass = IntakeController::class;
 $phoneClass = PhoneDirectoryController::class;
 $vfmClass = VFMController::class;
 $vfmVehicleClass = VFMVehicleController::class;
@@ -110,6 +111,16 @@ Route::prefix('admin')->group(function () use ($adminClass, $adminLoginClass) {
         Route::get('/create', [$adminClass, 'create'])->name('admin.create');
         Route::get('/{id}/edit', [$adminClass, 'edit'])->name('admin.edit');
         Route::delete('/{id}', [$adminClass, 'destroy'])->name('admin.destroy');
+    });
+});
+
+// Petersburg Weekly instakes
+Route::prefix('intake')->group(function () use ($intakeClass, $adminLoginClass) {
+
+    // Routes with 'admin' middleware
+    Route::middleware('admin')->group(function () use ($intakeClass) {
+        Route::get('/index', [$intakeClass, 'index'])->name('intake.index')->middleware('cache');
+        Route::post('/upload', [$intakeClass, 'upload'])->name('intake.upload');
     });
 });
 
