@@ -23,7 +23,6 @@ use App\Http\Controllers\VFM\VFMTechController;
 use App\Http\Controllers\Directory\PhoneDirectoryController;
 use App\Http\Controllers\Jurisdiction\JurisdictionController;
 use App\Http\Controllers\Administrator\AdministratorController;
-use App\Http\Controllers\Administrator\IntakeController;
 use App\Http\Controllers\Warehouse\WarehouseSupervisor\WarehouseSupervisorController;
 use App\Http\Controllers\Warehouse\WarehouseSupervisor\ItemController;
 use App\Http\Controllers\Warehouse\WarehouseSupervisor\CategoryController;
@@ -52,7 +51,6 @@ $warehouseLoginClass = WarehouseLoginController::class;
 
 // Shorthand Controller Classes
 $adminClass = AdministratorController::class;
-$intakeClass = IntakeController::class;
 $phoneClass = PhoneDirectoryController::class;
 $vfmClass = VFMController::class;
 $vfmVehicleClass = VFMVehicleController::class;
