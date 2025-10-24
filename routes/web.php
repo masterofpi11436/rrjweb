@@ -112,16 +112,6 @@ Route::prefix('admin')->group(function () use ($adminClass, $adminLoginClass) {
     });
 });
 
-// Petersburg Weekly instakes
-Route::prefix('intake')->group(function () use ($intakeClass, $adminLoginClass) {
-
-    // Routes with 'admin' middleware
-    Route::middleware('admin')->group(function () use ($intakeClass) {
-        Route::get('/index', [$intakeClass, 'index'])->name('intake.index')->middleware('cache');
-        Route::post('/upload', [$intakeClass, 'upload'])->name('intake.upload');
-    });
-});
-
 // Phone Application
 Route::prefix('phone')->group(function () use ($phoneClass, $phoneLoginClass){
 

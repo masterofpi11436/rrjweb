@@ -41,9 +41,4 @@
     <button>Jurisdiction Time Logs</button>
 </form>
 
-<!-- Petersburg Intakes App -->
-<form action="{{ route('intake.index') }}">
-    <button>Petersburg Intakes</button>
-</form>
-
 @endsection
