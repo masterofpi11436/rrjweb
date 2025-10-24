@@ -97,15 +97,5 @@ Supervisors can approve, edit, consolidate, and deny (delete) requests submitted
 Proprty is the same as Supervisors, but can add property items.
 Warehouse Technician can approve, edit, and deny requests. Can also add or remove users, items, and create a request for 1 for 1 Exchanges.
 
-New Features to be added
-- Quantity needed to send alerts to the warehouse manager
-- Custom Report ranges for daily, weekly, monthly, or yearly
-- Graph dashboard for reporting
-- Consolidate orders sent by users to supervisors
-- Status of orders submitted by Users
-- Status of orders submitted by Supervisors
-- Previous orders to allow order again/edit
-
-
 # Logging
 Time and date of when a user logs in to any application is logged.
