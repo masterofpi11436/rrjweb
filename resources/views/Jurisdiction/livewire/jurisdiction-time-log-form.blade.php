@@ -13,6 +13,15 @@
             </select>
         </div>
 
+        <!-- Department Selection -->
+        <div>
+            <label for="department" class="block text-sm font-medium">Department</label>
+            <select id="department" wire:model="department" class="mt-1 block w-full p-2 border border-gray-300 rounded-md dark:bg-gray-800">
+                <option value="1">Police</option>
+                <option value="0">Sheriff</option>
+            </select>
+        </div>
+
         <!-- Date -->
         <div>
             <label for="date_of_visit" class="block text-sm font-medium">Date of Visit</label>
@@ -68,19 +77,17 @@
             <input type="number" id="inmate_count" wire:model="inmate_count" class="mt-1 block w-full p-2 border border-gray-300 rounded-md dark:bg-gray-800">
         </div>
 
-        <!-- Checkbox -->
+        <!-- Inmate committed to facility -->
         <div class="flex items-center">
             <input id="did_not_get_committed" type="checkbox" wire:model.defer="did_not_get_committed" class="h-4 w-4 text-blue-600 border-gray-300 rounded">
             <label for="did_not_get_committed" class="ml-2 block text-sm font-medium">Not Comitted</label>
         </div>
 
-        <!-- Note -->
         <div>
             <label for="note" class="block text-sm font-medium">Note</label>
             <textarea wire:model="note" id="note" rows="3" class="mt-1 block w-full p-2 border border-gray-300 rounded-md dark:bg-gray-800"></textarea>
         </div>
 
-        <!-- Submit -->
         <button type="submit" class="px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
             {{ $logId ? 'Update' : 'Create' }} Time Log
         </button>

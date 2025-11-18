@@ -13,6 +13,7 @@ class JurisdictionTimeLog extends Model
 
     protected $fillable = [
         'jurisdiction_id',
+        'department',
         'date_of_visit',
         'arrival_time',
         'booking_start',
@@ -27,6 +28,11 @@ class JurisdictionTimeLog extends Model
         'inmate_count',
         'did_not_get_committed',
         'note',
+    ];
+
+    protected $casts = [
+        'department' => 'boolean',
+        'did_not_get_committed' => 'boolean',
     ];
 
     public function jurisdiction()

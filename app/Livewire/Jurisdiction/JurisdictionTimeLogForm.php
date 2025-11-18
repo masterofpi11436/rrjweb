@@ -14,6 +14,7 @@ class JurisdictionTimeLogForm extends Component
     public $logId;
 
     public $jurisdiction_id;
+    public $department;
     public $date_of_visit;
     public $arrival_time;
     public $departure_time;
@@ -31,6 +32,7 @@ class JurisdictionTimeLogForm extends Component
 
     protected $rules = [
         'jurisdiction_id' => 'required|exists:jurisdictions,id',
+        'department' => 'boolean',
         'date_of_visit' => 'required|date',
         'arrival_time' => 'required',
         'departure_time' => 'required',
@@ -55,6 +57,9 @@ class JurisdictionTimeLogForm extends Component
             $log = JurisdictionTimeLog::findOrFail($id);
             $this->logId = $log->id;
             $this->fill($log->toArray());
+
+           $this->department = $log->department ? '1' : '0';
+
             $this->did_not_get_committed = (bool) $log->did_not_get_committed;
         }
     }
@@ -62,6 +67,9 @@ class JurisdictionTimeLogForm extends Component
     public function submitForm()
     {
         $data = $this->validate();
+
+            $data['department'] = $this->department === '1';
+            $data['did_not_get_committed'] = (bool) $this->did_not_get_committed;
 
         if ($this->logId) {
             JurisdictionTimeLog::findOrFail($this->logId)->update($data);

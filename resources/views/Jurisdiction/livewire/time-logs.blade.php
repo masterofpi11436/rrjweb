@@ -17,6 +17,7 @@
                         @endif
                     </a>
                 </th>
+                <th>Department</th>
                 <th>
                     <a href="#" wire:click.prevent="sortBy('date_of_visit')">
                         Visit Date
@@ -62,6 +63,13 @@
             @forelse ($logs as $log)
                 <tr>
                     <td>{{ $log->jurisdiction->name ?? 'N/A' }}</td>
+                    <td>
+                        {{
+                            $log->department === null
+                                ? ''
+                                : ($log->department == 1 ? 'Police' : 'Sheriff')
+                        }}
+                    </td>
                     <td>{{ $log->date_of_visit }}</td>
                     <td>{{ $log->arrival_time }}</td>
                     <td>
