@@ -14,7 +14,7 @@ class JurisdictionTimeLogForm extends Component
     public $logId;
 
     public $jurisdiction_id;
-    public $department;
+    public $department = '1';
     public $date_of_visit;
     public $arrival_time;
     public $departure_time;
@@ -68,7 +68,6 @@ class JurisdictionTimeLogForm extends Component
     {
         $data = $this->validate();
 
-            $data['department'] = $this->department === '1';
             $data['did_not_get_committed'] = (bool) $this->did_not_get_committed;
 
         if ($this->logId) {

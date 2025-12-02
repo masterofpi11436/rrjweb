@@ -18,6 +18,7 @@ return new class extends Migration
                 ->constrained('jurisdictions')
                 ->onDelete('set null');
             $table->date('date_of_visit');
+            $table->boolean('department')->default(false);
             $table->time('arrival_time');
             $table->time('departure_time');
             $table->time('booking_start')->nullable();
