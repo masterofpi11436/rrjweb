@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Login;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
 use App\Http\Controllers\Login\BaseLoginController;
@@ -32,6 +33,18 @@ class WarehouseLoginController extends BaseLoginController
 
         // Attempt login using BaseLoginController method
         if (Auth::attempt($request->only('email', 'password'))) {
+
+            $user = Auth::user();
+
+            Log::channel('login')->info('Warehouse User Logged In', [
+                'first_name'     => $user->first_name,
+                'last_name'      => $user->last_name,
+                'email'          => $user->email,
+                'logged_in_at'   => now()->toDateTimeString(),
+                'ip_address'     => $request->ip(),
+                'warehouse_role' => $user->warehouse_role,
+            ]);
+
             return $this->redirectWarehouseStoreUser(Auth::user());
         }
 
