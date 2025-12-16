@@ -1,13 +1,11 @@
-*** Warehouse Store ***
+** Jurisdiction **
 
-* Reports *
-1. Fiscal year Graph
-    1a. Breakdown of Section when Item is selected.
-2. Clander Year Graph
-    2a. Breakdown of Section when Item is selected.
-3. Monthly Reports
-    3a. Breakdown of Section when Item is selected.
-
-* Emails *
-1. Warehouse emails with try.catch.
-2. Recipient list error sending email handing
+Default inmate count to 1
+1. The Officer enter times and the Nurse start times
+2. The Officer enter times and the Magistrate start times
+3. The Officer enter times and the Booking start times
+4. The Magistrate finish times and Nurse start times
+5. The Magistrate finish times and the Booking start times
+6. The Nurse start times and the Booking start times.
+7. Weekly and Monthly Trends (Or date picker for trends)
+8. Paginate time logs page for 20 entries
