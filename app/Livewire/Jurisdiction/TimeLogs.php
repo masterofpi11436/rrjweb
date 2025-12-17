@@ -53,7 +53,7 @@ class TimeLogs extends Component
             })
             ->orderBy($this->sortColumn, $this->sortDirection)
             ->with('jurisdiction')
-            ->paginate(10);
+            ->paginate(20);
 
         return view('Jurisdiction.livewire.time-logs', compact('logs'));
     }

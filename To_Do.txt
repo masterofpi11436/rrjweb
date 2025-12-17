@@ -8,4 +8,3 @@ Default inmate count to 1
 5. The Magistrate finish times and the Booking start times
 6. The Nurse start times and the Booking start times.
 7. Weekly and Monthly Trends (Or date picker for trends)
-8. Paginate time logs page for 20 entries

@@ -105,5 +105,5 @@
             @endforelse
         </tbody>
     </table>
-    {{ $logs->links() }}
+    {{ $logs->onEachSide(2)->links('components.pagination') }}
 </div>
