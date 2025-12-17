@@ -1,8 +1,15 @@
 @if ($paginator->hasPages())
     <nav class="pagination" role="navigation" aria-label="Pagination">
+        {{-- First --}}
+        @if ($paginator->onFirstPage())
+            <span class="page-btn first disabled" aria-disabled="true" aria-label="First">«</span>
+        @else
+            <a class="page-btn first" href="{{ $paginator->url(1) }}" aria-label="First">«</a>
+        @endif
+
         {{-- Prev --}}
         @if ($paginator->onFirstPage())
-            <span class="page-btn disabled" aria-disabled="true">‹</span>
+            <span class="page-btn prev disabled" aria-disabled="true" aria-label="Previous">‹</span>
         @else
             <a class="page-btn prev" href="{{ $paginator->previousPageUrl() }}" rel="prev" aria-label="Previous">‹</a>
         @endif
@@ -28,7 +35,14 @@
         @if ($paginator->hasMorePages())
             <a class="page-btn next" href="{{ $paginator->nextPageUrl() }}" rel="next" aria-label="Next">›</a>
         @else
-            <span class="page-btn disabled" aria-disabled="true">›</span>
+            <span class="page-btn next disabled" aria-disabled="true" aria-label="Next">›</span>
+        @endif
+
+        {{-- Last --}}
+        @if ($paginator->hasMorePages())
+            <a class="page-btn last" href="{{ $paginator->url($paginator->lastPage()) }}" aria-label="Last">»</a>
+        @else
+            <span class="page-btn last disabled" aria-disabled="true" aria-label="Last">»</span>
         @endif
     </nav>
 @endif

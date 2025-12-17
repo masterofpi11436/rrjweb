@@ -105,6 +105,35 @@
             @endforelse
         </tbody>
     </table>
+    <script>
+        function jumpPage(form) {
+            const page = form.querySelector('input').value;
+            if (!page) return;
+
+            const url = new URL(window.location.href);
+            url.searchParams.set('page', page);
+            window.location.href = url.toString();
+        }
+    </script>
+
+<form class="page-jump" onsubmit="event.preventDefault(); jumpPage(this)">
+    <input
+        class="page-jump-input"
+        type="number"
+        min="1"
+        max="{{ $logs->lastPage() }}"
+        placeholder="Page"
+        aria-label="Jump to page"
+    />
+    <button
+        class="page-jump-btn"
+        type="submit"
+        aria-label="Go to page">
+        Go
+    </button>
+</form>
+
+
     <div class="mt-3">
         {{ $logs->onEachSide(2)->links('components.pagination') }}
     </div>
