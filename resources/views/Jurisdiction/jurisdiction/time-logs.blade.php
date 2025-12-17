@@ -17,7 +17,7 @@
 <div style="overflow: hidden; margin-bottom: 20px;">
     <a href="{{ route('jurisdiction.dashboard') }}"
        style="float: left; display: inline-block; padding: 8px 16px; background-color: #ccc; color: #000; text-decoration: none; border-radius: 4px;">
-       Back
+       Graphs
     </a>
 
     <a href="{{ route('jurisdiction.create-time-log') }}"

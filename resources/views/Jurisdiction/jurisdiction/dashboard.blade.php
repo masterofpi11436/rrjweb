@@ -6,7 +6,10 @@
 
 @section('content')
 
-<a href="{{ route('jurisdiction.time-logs')}}">Time Logs</a>
+<a href="{{ route('jurisdiction.time-logs') }}"
+    style="float: left; display: inline-block; padding: 8px 16px; background-color: #007bff; color: #fff; text-decoration: none; border-radius: 4px;">
+    Time Logs
+</a>
 
 <canvas id="timeLogChart" width="400" height="200"></canvas>
 

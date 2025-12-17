@@ -6,7 +6,10 @@
 
 @section('content')
 
-<a href="{{route('jurisdiction.dashboard')}}">Dashboard</a>
+<a href="{{ route('jurisdiction.dashboard') }}"
+    style="float: left; display: inline-block; padding: 8px 16px; background-color: #ccc; color: #000; text-decoration: none; border-radius: 4px;">
+    Graphs
+</a>
 
 <canvas id="roleChart" width="400" height="200"></canvas>
 
