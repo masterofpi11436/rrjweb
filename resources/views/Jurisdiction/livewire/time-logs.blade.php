@@ -105,4 +105,5 @@
             @endforelse
         </tbody>
     </table>
+    {{ $logs->links() }}
 </div>

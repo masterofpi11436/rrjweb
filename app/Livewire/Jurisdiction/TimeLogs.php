@@ -4,22 +4,21 @@ namespace App\Livewire\Jurisdiction;
 
 use Livewire\Component;
 use App\Models\Jurisdiction\JurisdictionTimeLog;
+use Livewire\WithPagination;
 
 class TimeLogs extends Component
 {
-    public $logs;
+    use WithPagination;
+
+    protected $paginationTheme = 'tailwind';
+
     public $search = '';
     public $sortColumn = 'date_of_visit';
     public $sortDirection = 'desc';
 
-    public function mount()
-    {
-        $this->loadLogs();
-    }
-
     public function updatedSearch()
     {
-        $this->loadLogs();
+        $this->resetPage();
     }
 
     public function sortBy($column)
@@ -31,12 +30,18 @@ class TimeLogs extends Component
             $this->sortDirection = 'asc';
         }
 
-        $this->loadLogs();
+        $this->resetPage();
     }
 
-    public function loadLogs()
+    public function deleteLog($id)
     {
-        $this->logs = JurisdictionTimeLog::query()
+        JurisdictionTimeLog::findOrFail($id)->delete();
+        session()->flash('create-edit-delete-message', 'Time log deleted.');
+    }
+
+    public function render()
+    {
+        $logs = JurisdictionTimeLog::query()
             ->join('jurisdictions', 'jurisdictions.id', '=', 'jurisdiction_time_log.jurisdiction_id')
             ->select('jurisdiction_time_log.*', 'jurisdictions.name as jurisdiction_name')
             ->where(function ($query) {
@@ -48,18 +53,8 @@ class TimeLogs extends Component
             })
             ->orderBy($this->sortColumn, $this->sortDirection)
             ->with('jurisdiction')
-            ->get();
-    }
+            ->paginate(10);
 
-    public function deleteLog($id)
-    {
-        JurisdictionTimeLog::findOrFail($id)->delete();
-        session()->flash('create-edit-delete-message', 'Time log deleted.');
-        $this->loadLogs();
-    }
-
-    public function render()
-    {
-        return view('Jurisdiction.livewire.time-logs');
+        return view('Jurisdiction.livewire.time-logs', compact('logs'));
     }
 }
