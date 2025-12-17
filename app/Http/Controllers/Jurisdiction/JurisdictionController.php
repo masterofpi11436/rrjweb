@@ -10,17 +10,27 @@ use App\Models\Jurisdiction\JurisdictionTimeLog;
 
 class JurisdictionController extends Controller
 {
+    // Main Graph page
     public function dashboard()
     {
-        $logs = JurisdictionTimeLog::select(
+        $range = request()->get('range', 'all'); // week|month|all
+
+        $query = JurisdictionTimeLog::query()
+            ->select(
                 'jurisdictions.name as jurisdiction_name',
                 'jurisdiction_time_log.arrival_time',
                 'jurisdiction_time_log.departure_time',
                 'jurisdiction_time_log.date_of_visit'
             )
-            ->join('jurisdictions', 'jurisdictions.id', '=', 'jurisdiction_time_log.jurisdiction_id')
-            ->get()
-            ->groupBy('jurisdiction_name');
+            ->join('jurisdictions', 'jurisdictions.id', '=', 'jurisdiction_time_log.jurisdiction_id');
+
+        if ($range === 'week') {
+            $query->where('jurisdiction_time_log.date_of_visit', '>=', Carbon::today()->subDays(7));
+        } elseif ($range === 'month') {
+            $query->where('jurisdiction_time_log.date_of_visit', '>=', Carbon::today()->subDays(30));
+        }
+
+        $logs = $query->get()->groupBy('jurisdiction_name');
 
         $labels = [];
         $values = [];
@@ -30,32 +40,48 @@ class JurisdictionController extends Controller
             $count = 0;
 
             foreach ($entries as $log) {
+                if (!$log->arrival_time || !$log->departure_time) continue;
+
                 $arrival = Carbon::parse($log->date_of_visit . ' ' . $log->arrival_time);
                 $departure = Carbon::parse($log->date_of_visit . ' ' . $log->departure_time);
 
                 if ($departure->lt($arrival)) {
-                    $departure->addDay(); // Handle overnight
+                    $departure->addDay();
                 }
 
                 $totalMinutes += $arrival->diffInMinutes($departure);
                 $count++;
             }
 
+            if ($count === 0) continue;
+
             $labels[] = $jurisdiction;
-            $values[] = $count ? round($totalMinutes / $count, 2) : 0;
+            $values[] = round($totalMinutes / $count, 2);
         }
 
         return view('Jurisdiction.jurisdiction.dashboard', [
             'labels' => $labels,
             'values' => $values,
+            'range'  => $range,
         ]);
     }
 
+    // Drilldown from the main graph page
     public function jurisdictionGraph($label)
     {
+        $range = session('jurisdiction_range', 'all');
+
         $jurisdiction = Jurisdiction::where('name', $label)->firstOrFail();
 
-        $logs = JurisdictionTimeLog::where('jurisdiction_id', $jurisdiction->id)->get();
+        $logsQuery = JurisdictionTimeLog::where('jurisdiction_id', $jurisdiction->id);
+
+        if ($range === 'week') {
+            $logsQuery->where('date_of_visit', '>=', Carbon::today()->subDays(7));
+        } elseif ($range === 'month') {
+            $logsQuery->where('date_of_visit', '>=', Carbon::today()->subDays(30));
+        }
+
+        $logs = $logsQuery->get();
 
         $avg_overall = round($logs->avg(function ($log) {
             if ($log->arrival_time && $log->departure_time) {
@@ -103,8 +129,22 @@ class JurisdictionController extends Controller
         return view('Jurisdiction.jurisdiction.jurisdiction-graph', [
             'jurisdictionName' => $jurisdiction->name,
             'labels' => $labels,
-            'values' => $values
+            'values' => $values,
+            'range' => $range, // so the dropdown shows selected
         ]);
+    }
+
+    public function setRange()
+    {
+        $range = request('range', 'all');
+
+        if (!in_array($range, ['week', 'month', 'all'], true)) {
+            $range = 'all';
+        }
+
+        session(['jurisdiction_range' => $range]);
+
+        return response()->json(['ok' => true]);
     }
 
     // CRUD for Jurisdictions

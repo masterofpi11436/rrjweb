@@ -6,16 +6,29 @@
 
 @section('content')
 
-<a href="{{ route('jurisdiction.time-logs') }}"
-    style="float: left; display: inline-block; padding: 8px 16px; background-color: #007bff; color: #fff; text-decoration: none; border-radius: 4px;">
-    Time Logs
-</a>
+<div style="display:flex; gap:12px; align-items:center; margin-bottom:12px;">
+    <a href="{{ route('jurisdiction.time-logs') }}"
+       style="display:inline-block; padding:8px 16px; background:#007bff; color:#fff; text-decoration:none; border-radius:4px;">
+        Time Logs
+    </a>
+
+    <label for="range" style="font-weight:600;">Range</label>
+
+    <select id="range" name="range"
+            style="padding:8px 10px; border-radius:6px;"
+            onchange="location.href='{{ route('jurisdiction.dashboard') }}?range=' + this.value;">
+        <option value="week"  @selected(($range ?? 'all') === 'week')>Last 7 Days</option>
+        <option value="month" @selected(($range ?? 'all') === 'month')>Last 30 Days</option>
+        <option value="all"   @selected(($range ?? 'all') === 'all')>All time</option>
+    </select>
+</div>
 
 <canvas id="timeLogChart" width="400" height="200"></canvas>
 
 @endsection
 
 @push('scripts')
+
 <script>
     window.addEventListener('load', function () {
 

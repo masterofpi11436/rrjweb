@@ -417,6 +417,8 @@ Route::prefix('jurisdiction')->group(function () use ($jurisdictionClass){
     // Routes without middleware
     Route::get('/dashboard', [$jurisdictionClass, 'dashboard'])->name('jurisdiction.dashboard');
     Route::get('/jurisdiction-graph/{label}', [$jurisdictionClass, 'jurisdictionGraph'])->name('jurisdiction.jurisdiction-graph');
+    Route::post('/range', [JurisdictionController::class, 'setRange'])->name('jurisdiction.set-range');
+
 
     // Jurisdiction CRUD
     Route::get('/create', [$jurisdictionClass, 'create'])->name('jurisdiction.create');
