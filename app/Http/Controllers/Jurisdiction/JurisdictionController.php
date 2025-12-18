@@ -147,6 +147,57 @@ class JurisdictionController extends Controller
         return response()->json(['ok' => true]);
     }
 
+    // Trends
+    public function monthlyTrends()
+    {
+        // last 30 days INCLUDING today
+        $start = Carbon::today()->subDays(29);
+
+        $logs = JurisdictionTimeLog::query()
+            ->select(
+                'jurisdictions.name as jurisdiction_name',
+                'jurisdiction_time_log.arrival_time',
+                'jurisdiction_time_log.departure_time',
+                'jurisdiction_time_log.date_of_visit'
+            )
+            ->join('jurisdictions', 'jurisdictions.id', '=', 'jurisdiction_time_log.jurisdiction_id')
+            ->whereDate('jurisdiction_time_log.date_of_visit', '>=', $start)
+            ->get();
+
+        // Build: [date => [minutes, minutes, ...]]
+        $minutesByDate = [];
+
+        foreach ($logs as $log) {
+            if (!$log->arrival_time || !$log->departure_time) continue;
+
+            $arrival = Carbon::parse($log->date_of_visit.' '.$log->arrival_time);
+            $departure = Carbon::parse($log->date_of_visit.' '.$log->departure_time);
+
+            if ($departure->lt($arrival)) {
+                $departure->addDay();
+            }
+
+            $minutes = $arrival->diffInMinutes($departure);
+            $dateKey = Carbon::parse($log->date_of_visit)->toDateString();
+
+            $minutesByDate[$dateKey][] = $minutes;
+        }
+
+        // Create the full 30-day label axis (fills missing dates with null)
+        $labels = collect(range(29, 0))
+            ->map(fn ($i) => Carbon::today()->subDays($i)->toDateString());
+
+        $values = $labels->map(function ($date) use ($minutesByDate) {
+            if (!isset($minutesByDate[$date])) return null; // no data that day
+            return round(collect($minutesByDate[$date])->avg(), 2);
+        })->values();
+
+        return view('Jurisdiction.jurisdiction.monthly_trends', [
+            'labels' => $labels,
+            'values' => $values,
+        ]);
+    }
+
     // CRUD for Jurisdictions
     public function create()
     {

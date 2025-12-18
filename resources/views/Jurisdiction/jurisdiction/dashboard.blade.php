@@ -8,14 +8,18 @@
 
 <div style="display:flex; gap:12px; align-items:center; margin-bottom:12px;">
     <a href="{{ route('jurisdiction.time-logs') }}"
-       style="display:inline-block; padding:8px 16px; background:#007bff; color:#fff; text-decoration:none; border-radius:4px;">
+       style="padding:8px 16px; background:#007bff; color:#fff; text-decoration:none; border-radius:4px;">
         Time Logs
+    </a>
+
+    <a href="{{ route('jurisdiction.monthly-trends') }}"
+       style="padding:8px 16px; background:#28a745; color:#fff; text-decoration:none; border-radius:4px;">
+        Monthly Trends
     </a>
 
     <label for="range" style="font-weight:600;">Range</label>
 
-    <select id="range" name="range"
-            style="padding:8px 10px; border-radius:6px;"
+    <select id="range"
             onchange="location.href='{{ route('jurisdiction.dashboard') }}?range=' + this.value;">
         <option value="week"  @selected(($range ?? 'all') === 'week')>Last 7 Days</option>
         <option value="month" @selected(($range ?? 'all') === 'month')>Last 30 Days</option>
