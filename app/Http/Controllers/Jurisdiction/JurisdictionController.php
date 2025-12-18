@@ -18,9 +18,15 @@ class JurisdictionController extends Controller
         $query = JurisdictionTimeLog::query()
             ->select(
                 'jurisdictions.name as jurisdiction_name',
+                'jurisdiction_time_log.date_of_visit',
                 'jurisdiction_time_log.arrival_time',
                 'jurisdiction_time_log.departure_time',
-                'jurisdiction_time_log.date_of_visit'
+                'jurisdiction_time_log.magistrate_start',
+                'jurisdiction_time_log.magistrate_end',
+                'jurisdiction_time_log.nurse_start',
+                'jurisdiction_time_log.nurse_end',
+                'jurisdiction_time_log.officer_start',
+                'jurisdiction_time_log.officer_end'
             )
             ->join('jurisdictions', 'jurisdictions.id', '=', 'jurisdiction_time_log.jurisdiction_id');
 
@@ -30,39 +36,62 @@ class JurisdictionController extends Controller
             $query->where('jurisdiction_time_log.date_of_visit', '>=', Carbon::today()->subDays(30));
         }
 
-        $logs = $query->get()->groupBy('jurisdiction_name');
+        $logsByJurisdiction = $query->get()->groupBy('jurisdiction_name');
 
         $labels = [];
-        $values = [];
 
-        foreach ($logs as $jurisdiction => $entries) {
-            $totalMinutes = 0;
-            $count = 0;
+        $overall = [];
+        $magistrate = [];
+        $nurse = [];
+        $officer = [];
+
+        $calcMinutes = function ($date, $startTime, $endTime) {
+            if (!$startTime || !$endTime) return null;
+
+            $start = Carbon::parse($date . ' ' . $startTime);
+            $end   = Carbon::parse($date . ' ' . $endTime);
+
+            if ($end->lt($start)) $end->addDay();
+
+            return $start->diffInMinutes($end);
+        };
+
+        foreach ($logsByJurisdiction as $jurisdictionName => $entries) {
+            $labels[] = $jurisdictionName;
+
+            // Overall
+            $overallMinutes = [];
+            $magMinutes = [];
+            $nurseMinutes = [];
+            $officerMinutes = [];
 
             foreach ($entries as $log) {
-                if (!$log->arrival_time || !$log->departure_time) continue;
+                $m = $calcMinutes($log->date_of_visit, $log->arrival_time, $log->departure_time);
+                if ($m !== null) $overallMinutes[] = $m;
 
-                $arrival = Carbon::parse($log->date_of_visit . ' ' . $log->arrival_time);
-                $departure = Carbon::parse($log->date_of_visit . ' ' . $log->departure_time);
+                $m = $calcMinutes($log->date_of_visit, $log->magistrate_start, $log->magistrate_end);
+                if ($m !== null) $magMinutes[] = $m;
 
-                if ($departure->lt($arrival)) {
-                    $departure->addDay();
-                }
+                $m = $calcMinutes($log->date_of_visit, $log->nurse_start, $log->nurse_end);
+                if ($m !== null) $nurseMinutes[] = $m;
 
-                $totalMinutes += $arrival->diffInMinutes($departure);
-                $count++;
+                $m = $calcMinutes($log->date_of_visit, $log->officer_start, $log->officer_end);
+                if ($m !== null) $officerMinutes[] = $m;
             }
 
-            if ($count === 0) continue;
-
-            $labels[] = $jurisdiction;
-            $values[] = round($totalMinutes / $count, 2);
+            $overall[]    = count($overallMinutes) ? round(collect($overallMinutes)->avg(), 2) : null;
+            $magistrate[] = count($magMinutes)     ? round(collect($magMinutes)->avg(), 2)     : null;
+            $nurse[]      = count($nurseMinutes)   ? round(collect($nurseMinutes)->avg(), 2)   : null;
+            $officer[]    = count($officerMinutes) ? round(collect($officerMinutes)->avg(), 2) : null;
         }
 
         return view('Jurisdiction.jurisdiction.dashboard', [
-            'labels' => $labels,
-            'values' => $values,
-            'range'  => $range,
+            'labels'      => $labels,
+            'overall'     => $overall,
+            'magistrate'  => $magistrate,
+            'nurse'       => $nurse,
+            'officer'     => $officer,
+            'range'       => $range,
         ]);
     }
 
