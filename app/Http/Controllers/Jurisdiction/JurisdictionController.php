@@ -221,7 +221,7 @@ class JurisdictionController extends Controller
             return round(collect($minutesByDate[$date])->avg(), 2);
         })->values();
 
-        return view('Jurisdiction.jurisdiction.monthly_trends', [
+        return view('Jurisdiction.jurisdiction.monthly-trends', [
             'labels' => $labels,
             'values' => $values,
         ]);
