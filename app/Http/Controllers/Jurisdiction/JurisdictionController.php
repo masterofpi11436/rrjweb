@@ -177,55 +177,102 @@ class JurisdictionController extends Controller
     }
 
     // Trends
-    public function monthlyTrends()
-    {
-        // last 30 days INCLUDING today
-        $start = Carbon::today()->subDays(29);
+public function monthlyTrends()
+{
+    $range = request()->get('range', session('jurisdiction_trends_range', '30'));
+    if (!in_array($range, ['7', '30', 'all'], true)) $range = '30';
 
-        $logs = JurisdictionTimeLog::query()
-            ->select(
-                'jurisdictions.name as jurisdiction_name',
-                'jurisdiction_time_log.arrival_time',
-                'jurisdiction_time_log.departure_time',
-                'jurisdiction_time_log.date_of_visit'
-            )
-            ->join('jurisdictions', 'jurisdictions.id', '=', 'jurisdiction_time_log.jurisdiction_id')
-            ->whereDate('jurisdiction_time_log.date_of_visit', '>=', $start)
-            ->get();
+    $from = request()->get('from');
+    $to   = request()->get('to');
 
-        // Build: [date => [minutes, minutes, ...]]
-        $minutesByDate = [];
+    $jurisdictionId = request()->get('jurisdiction_id'); // NEW
 
-        foreach ($logs as $log) {
-            if (!$log->arrival_time || !$log->departure_time) continue;
+    // Parse dates
+    $fromDate = null;
+    $toDate   = null;
 
-            $arrival = Carbon::parse($log->date_of_visit.' '.$log->arrival_time);
-            $departure = Carbon::parse($log->date_of_visit.' '.$log->departure_time);
+    try { if ($from) $fromDate = Carbon::createFromFormat('Y-m-d', $from)->startOfDay(); } catch (\Exception $e) {}
+    try { if ($to)   $toDate   = Carbon::createFromFormat('Y-m-d', $to)->endOfDay(); }   catch (\Exception $e) {}
 
-            if ($departure->lt($arrival)) {
-                $departure->addDay();
-            }
+    if ($fromDate && !$toDate) $toDate = Carbon::today()->endOfDay();
+    if (!$fromDate && $toDate) $fromDate = $toDate->copy()->subDays(29)->startOfDay();
 
-            $minutes = $arrival->diffInMinutes($departure);
-            $dateKey = Carbon::parse($log->date_of_visit)->toDateString();
+    $logsQuery = JurisdictionTimeLog::query()
+        ->select('arrival_time', 'departure_time', 'date_of_visit');
 
-            $minutesByDate[$dateKey][] = $minutes;
-        }
-
-        // Create the full 30-day label axis (fills missing dates with null)
-        $labels = collect(range(29, 0))
-            ->map(fn ($i) => Carbon::today()->subDays($i)->toDateString());
-
-        $values = $labels->map(function ($date) use ($minutesByDate) {
-            if (!isset($minutesByDate[$date])) return null; // no data that day
-            return round(collect($minutesByDate[$date])->avg(), 2);
-        })->values();
-
-        return view('Jurisdiction.jurisdiction.monthly-trends', [
-            'labels' => $labels,
-            'values' => $values,
-        ]);
+    // Jurisdiction filter
+    if ($jurisdictionId) {
+        $logsQuery->where('jurisdiction_id', $jurisdictionId);
     }
+
+    // Date logic
+    if ($fromDate && $toDate) {
+        $logsQuery
+            ->whereDate('date_of_visit', '>=', $fromDate->toDateString())
+            ->whereDate('date_of_visit', '<=', $toDate->toDateString());
+    } else {
+        session(['jurisdiction_trends_range' => $range]);
+
+        if ($range === '7') {
+            $logsQuery->whereDate('date_of_visit', '>=', Carbon::today()->subDays(6));
+        } elseif ($range === '30') {
+            $logsQuery->whereDate('date_of_visit', '>=', Carbon::today()->subDays(29));
+        }
+    }
+
+    $logs = $logsQuery->get();
+
+    // Build [date => minutes[]]
+    $minutesByDate = [];
+
+    foreach ($logs as $log) {
+        if (!$log->arrival_time || !$log->departure_time) continue;
+
+        $start = Carbon::parse($log->date_of_visit . ' ' . $log->arrival_time);
+        $end   = Carbon::parse($log->date_of_visit . ' ' . $log->departure_time);
+        if ($end->lt($start)) $end->addDay();
+
+        $minutesByDate[$log->date_of_visit][] = $start->diffInMinutes($end);
+    }
+
+    // Axis
+    if ($fromDate && $toDate) {
+        $labels = collect();
+        for ($d = $fromDate->copy(); $d->lte($toDate); $d->addDay()) {
+            $labels->push($d->toDateString());
+        }
+    } elseif ($range === '7') {
+        $labels = collect(range(6, 0))->map(fn ($i) => Carbon::today()->subDays($i)->toDateString());
+    } elseif ($range === '30') {
+        $labels = collect(range(29, 0))->map(fn ($i) => Carbon::today()->subDays($i)->toDateString());
+    } else {
+        if (empty($minutesByDate)) {
+            $labels = collect([]);
+        } else {
+            $min = Carbon::parse(min(array_keys($minutesByDate)));
+            $max = Carbon::parse(max(array_keys($minutesByDate)));
+            $labels = collect();
+            for ($d = $min; $d->lte($max); $d->addDay()) {
+                $labels->push($d->toDateString());
+            }
+        }
+    }
+
+    $values = $labels->map(function ($date) use ($minutesByDate) {
+        if (!isset($minutesByDate[$date])) return null;
+        return round(collect($minutesByDate[$date])->avg(), 2);
+    });
+
+    return view('Jurisdiction.jurisdiction.monthly-trends', [
+        'labels'         => $labels,
+        'values'         => $values,
+        'range'          => $range,
+        'from'           => $fromDate?->toDateString(),
+        'to'             => $toDate?->toDateString(),
+        'jurisdictionId' => $jurisdictionId,
+        'jurisdictions'  => Jurisdiction::orderBy('name')->get(), // NEW
+    ]);
+}
 
     // CRUD for Jurisdictions
     public function create()
