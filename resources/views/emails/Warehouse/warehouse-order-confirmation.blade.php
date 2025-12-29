@@ -16,7 +16,7 @@
         <li>{{ $item['name']}} x {{ $item['quantity'] }}</li>
     @endforeach
 
-    <p>Please reach out to the warehouse if you have anything concerning your order.</p>
+    <p>(DO NOT REPLY TO THIS EMAIL) Please reach out to the warehouse if you have anything concerning your order.</p>
 
     <p>Thank you</p>
 </body>

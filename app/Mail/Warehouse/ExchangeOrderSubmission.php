@@ -35,7 +35,7 @@ class ExchangeOrderSubmission extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'New Exchange Order',
+            subject: '(DO NOT REPLY) New Exchange Order',
         );
     }
 

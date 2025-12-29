@@ -37,7 +37,7 @@ class WarehouseOrderDenied extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Warehouse Order Denied',
+            subject: '(DO NOT REPLY) Warehouse Order Denied',
         );
     }
 

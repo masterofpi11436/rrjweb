@@ -35,7 +35,7 @@ class ExchangeOrderDenied extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Exchange Order Denied',
+            subject: '(DO NOT REPLY) Exchange Order Denied',
         );
     }
 

@@ -37,7 +37,7 @@ class WarehouseOrderApproved extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Warehouse Order Approved',
+            subject: '(DO NOT REPLY) Warehouse Order Approved',
         );
     }
 

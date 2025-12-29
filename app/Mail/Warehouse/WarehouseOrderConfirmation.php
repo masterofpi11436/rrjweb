@@ -36,7 +36,7 @@ class WarehouseOrderConfirmation extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Warehouse Order Confirmation',
+            subject: '(DO NOT REPLY) Warehouse Order Confirmation',
         );
     }
 

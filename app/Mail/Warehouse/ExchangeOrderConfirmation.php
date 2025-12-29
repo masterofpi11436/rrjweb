@@ -33,7 +33,7 @@ class ExchangeOrderConfirmation extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Exchange Order Submitted (BRING ITEM(S) TO THE WAREHOUSE)',
+            subject: '(DO NOT REPLY) Exchange Order Submitted (BRING ITEM(S) TO THE WAREHOUSE)',
         );
     }
 

@@ -21,7 +21,7 @@
         <p>{{ $note }}</p>
     @endif
 
-    <p>Please reach out to the warehouse if you have anything concerning your order.</p>
+    <p>(DO NOT REPLY TO THIS EMAIL) Please reach out to the warehouse if you have anything concerning your order.</p>
 
     <p>Thank you</p>
 </body>

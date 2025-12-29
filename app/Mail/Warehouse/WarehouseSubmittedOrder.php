@@ -37,7 +37,7 @@ class WarehouseSubmittedOrder extends Mailable implements ShouldQueue
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Warehouse Order Submitted',
+            subject: '(DO NOT REPLY) Warehouse Order Submitted',
         );
     }
 

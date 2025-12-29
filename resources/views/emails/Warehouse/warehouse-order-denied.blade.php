@@ -18,7 +18,7 @@
     <h3>Note from Warehouse:</h3>
     <p>{{ $note }}</p>
 
-    <p>Please reach out to the warehouse if you have any questions.</p>
+    <p>(DO NOT REPLY TO THIS EMAIL) Please reach out to the warehouse if you have any questions.</p>
 
     <p>Thank you</p>
 </body>

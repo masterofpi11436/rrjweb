@@ -30,6 +30,7 @@
     </table>
 
     <p>Please log in to review and approve the order.</p>
+    <a href="http://rrjapps/warehouse/login">Warehouse Store</a>
 
 </body>
 </html>
