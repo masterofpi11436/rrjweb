@@ -88,7 +88,7 @@ Maintenance departments online vehicle repair tracker. There is a VFM admin and 
 # ICS
 List of inmates who are restricted from getting tablets. List is maintained by ICS staff and the mailroom, OPR, and Command Staff
 
-# Warehouse Store (In-Progress)
+# Warehouse Store
 Users can submit orders to the warehouse for delivery. Users are managed by the warehouse manager but can be managed by the IT Administrator.
 User, Supervisors, Proprty, Warehouse Technician, and Warehouse Supervisor are the role types.
 
@@ -96,6 +96,9 @@ User can submit requests to Supervisors and Property users
 Supervisors can approve, edit, consolidate, and deny (delete) requests submitted to them by users.
 Proprty is the same as Supervisors, but can add property items.
 Warehouse Technician can approve, edit, and deny requests. Can also add or remove users, items, and create a request for 1 for 1 Exchanges.
+
+# Jurisdiction Tracker
+Tracker used by officer to log the in/out times of officers entering the facility plus other actions performed.
 
 # Logging
 Time and date of when a user logs in to any application is logged.
