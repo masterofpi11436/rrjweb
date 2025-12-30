@@ -1,7 +1,6 @@
 # rrjweb
-Source code is on github. 
 
-In order to download and run the framework locally; the tools git, composer, and XAMPP is used for the MySQL database
+In order to download and run the framework locally; the tools git, composer, node.js for npm, and XAMPP is used for the MySQL database
 
 git pull origin main
 Create the .env file from the .env.example file
@@ -15,62 +14,6 @@ php artisan migrate
 php artisan migrate:refresh
 php artisan db:seed
 php artisan migrate:refresh --seed
-
-# Tables to Save
-policies
-vfm
-vfm_vehicle
-users
-
-# Change starting ID number
-ALTER TABLE orders AUTO_INCREMENT = 1000;
-
-# Migrate one table
-php artisan migrate --path=/database/migrations/2025_01_28_125006_create_test_table.php
-
-# change permission of the folders
-sudo chmod 777 storage
-sudo chmod 777 storage/framework/views
-sudo chmod 777 storage/app
-sudo chmod 777 storage/app/public
-sudo chmod 777 storage/framework
-sudo chmod 777 storage/logs
-
-sudo chmod 644 phpmyadmin
-sudo chmod -R 755 /opt/lampp/phpmyadmin
-sudo chown -R www-date:www-data /opt/lampp/phpmyadmin
-
-# Allow Port traffic
-
-sudo ufw allow 80/tcp
-sudo ufw allow 443/tcp
-
-
-# Drop one specific table:
-php artisan tinker
-Schema::dropIfExists('table_name');
-
-# Run on other computer in network:
-php artisan serve --host=128.168.123.75 --port=8000
-
-# Clear Laravel Cache:
-
-php artisan cache:clear
-php artisan config:clear
-php artisan view:clear
-
-# Link the storage to allow user to see documents in the storage folder
-php artisan storage:link
-
-# php.ini edits:
-upload_max_filesize = 100M
-post_max_size = 100M
-max_file_uploads = 100
-max_execution_time=300
-max_input_time=300
-
-# Edited .htaccess file in public directory
-php_value max_file_uploads 100
 
 # Admin Dashboard
 Dashboard for the IT administrator to manage all users and all applications.

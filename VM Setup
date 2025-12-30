@@ -274,3 +274,43 @@ Connect Local Git to GitHub
     git remote add origin https://github.com/YOUR_USERNAME/tri-city-drive.git
     git branch -m main
     git push -u origin main
+
+*************************
+16. Framework permissions needed to run
+
+# change permission of the folders
+sudo chmod 777 storage
+sudo chmod 777 storage/framework/views
+sudo chmod 777 storage/app
+sudo chmod 777 storage/app/public
+sudo chmod 777 storage/framework
+sudo chmod 777 storage/logs
+
+sudo chmod 644 phpmyadmin
+sudo chmod -R 755 /opt/lampp/phpmyadmin
+sudo chown -R www-date:www-data /opt/lampp/phpmyadmin
+
+# Allow Port traffic
+sudo ufw allow 80/tcp
+sudo ufw allow 443/tcp
+
+# Run on other computer in network:
+php artisan serve --host=128.168.123.75 --port=8000
+
+# Clear Laravel Cache:
+php artisan cache:clear
+php artisan config:clear
+php artisan view:clear
+
+# Link the storage to allow user to see documents in the storage folder
+php artisan storage:link
+
+# php.ini edits:
+upload_max_filesize = 100M
+post_max_size = 100M
+max_file_uploads = 100
+max_execution_time=300
+max_input_time=300
+
+# Edited .htaccess file in public directory
+php_value max_file_uploads 100
