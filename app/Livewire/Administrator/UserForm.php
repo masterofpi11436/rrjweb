@@ -23,6 +23,7 @@ class UserForm extends Component
     public $ics = false;
     public $policy = false;
     public $warehouse_role = 'Requestor';
+    public $jurisdiction = false;
 
     public function mount($id = null)
     {
@@ -48,6 +49,7 @@ class UserForm extends Component
             $this->ics = $user->ics;
             $this->policy = $user->policy;
             $this->warehouse_role = $user->warehouse_role;
+            $this->jurisdiction = $user->jurisdiction;
         }
     }
 
@@ -66,6 +68,7 @@ class UserForm extends Component
             'ics' => 'boolean',
             'policy' => 'boolean',
             'warehouse_role' => 'nullable|in:Warehouse Supervisor,Warehouse Technician,Property,Supervisor,Requestor',
+            'jurisdiction' => 'boolean',
         ];
     }
 
@@ -99,6 +102,7 @@ class UserForm extends Component
         $user->ics = $this->ics;
         $user->policy = $this->policy;
         $user->warehouse_role = $this->warehouse_role ?: null;
+        $user->jurisdiction = $this->jurisdiction;
 
         $isCreating = !$this->userId;
 

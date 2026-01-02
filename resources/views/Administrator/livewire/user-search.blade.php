@@ -84,6 +84,14 @@
                         @endif
                     </a>
                 </th>
+                <th>
+                    <a href="#" wire:click.prevent="sortBy('policy')" title="Can remove/upload policies">
+                        Policy
+                        @if ($sortColumn === 'policy')
+                            @if ($sortDirection === 'asc') ▲ @else ▼ @endif
+                        @endif
+                    </a>
+                </th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -100,6 +108,7 @@
                     <td>{{ $user->ics ? 'Yes' : 'No' }}</td>
                     <td>{{ $user->policy ? 'Yes' : 'No' }}</td>
                     <td>{{ $user->warehouse_role ?? "No"}}</td>
+                    <td>{{ $user->jurisdiction ? 'Yes' : 'No' }}</td>
                     <td>
                         <a href="{{ route('admin.edit', $user->id) }}">Edit</a>/
                         <div>

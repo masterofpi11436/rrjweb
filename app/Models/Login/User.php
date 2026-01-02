@@ -17,7 +17,7 @@ class User extends Authenticatable
     // Define mass-assignable fields
     protected $fillable = [
         'first_name', 'last_name', 'email', 'password',
-        'admin', 'phone', 'vfm', 'vfm-tech', 'ics', 'policy', 'warehouse_role',
+        'admin', 'phone', 'vfm', 'vfm-tech', 'ics', 'policy', 'warehouse_role', 'jurisdiction',
     ];
 
     // Define fields hidden from serialization (e.g., in JSON responses)

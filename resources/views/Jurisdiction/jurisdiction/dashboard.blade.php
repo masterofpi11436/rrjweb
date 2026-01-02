@@ -7,7 +7,7 @@
 @section('content')
 
 <div style="display:flex; gap:12px; align-items:center; margin-bottom:12px;">
-    <a href="{{ route('jurisdiction.login') }}"
+    <a href="{{ route('jurisdiction.time-logs') }}"
        style="padding:8px 16px; background:#007bff; color:#fff; text-decoration:none; border-radius:4px;">
         Time Logs
     </a>

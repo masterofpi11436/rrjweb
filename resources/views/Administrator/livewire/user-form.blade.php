@@ -63,6 +63,11 @@
         </div>
 
         <div>
+            <label for="jurisdiction">Jurisdiction</label>
+            <input type="checkbox" id="jurisdiction" wire:model.defer="jurisdiction" {{ $jurisdiction ? 'checked' : '' }}>
+        </div>
+
+        <div>
             <button type="submit">{{ $userId ? 'Update User' : 'Create User' }}</button>
         </div>
 
