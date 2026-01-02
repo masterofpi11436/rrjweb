@@ -1,10 +1,8 @@
 ** Jurisdiction **
 
-Default inmate count to 1
 1. The Officer enter times and the Nurse start times
 2. The Officer enter times and the Magistrate start times
 3. The Officer enter times and the Booking start times
 4. The Magistrate finish times and Nurse start times
 5. The Magistrate finish times and the Booking start times
 6. The Nurse start times and the Booking start times.
-7. Weekly and Monthly Trends (Or date picker for trends)

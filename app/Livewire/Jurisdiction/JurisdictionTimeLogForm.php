@@ -26,7 +26,7 @@ class JurisdictionTimeLogForm extends Component
     public $nurse_end;
     public $officer_start;
     public $officer_end;
-    public $inmate_count;
+    public $inmate_count = '1';
     public $did_not_get_committed = false;
     public $note;
 
