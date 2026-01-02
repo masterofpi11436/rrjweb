@@ -85,8 +85,8 @@
                     </a>
                 </th>
                 <th>
-                    <a href="#" wire:click.prevent="sortBy('policy')" title="Can remove/upload policies">
-                        Policy
+                    <a href="#" wire:click.prevent="sortBy('jurisdiction')" title="Can remove/upload Time Logs for the jurisdiction logger">
+                        Jurisdiction
                         @if ($sortColumn === 'policy')
                             @if ($sortDirection === 'asc') ▲ @else ▼ @endif
                         @endif
