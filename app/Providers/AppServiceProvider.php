@@ -10,6 +10,7 @@ use App\Http\Middleware\Auth\Phone;
 use App\Http\Middleware\ClearCache;
 use App\Http\Middleware\Auth\Policy;
 use App\Http\Middleware\Auth\VFMTech;
+use App\Http\Middleware\Auth\Jurisdiction;
 use Illuminate\Support\ServiceProvider;
 use App\Http\Middleware\Auth\Warehouse\WarehouseSupervisor;
 use App\Http\Middleware\Auth\Warehouse\WarehouseTechnician;
@@ -40,6 +41,7 @@ class AppServiceProvider extends ServiceProvider
         $router->aliasMiddleware('vfm-tech', VFMTech::class);
         $router->aliasMiddleware('ics', ICS::class);
         $router->aliasMiddleware('policy', Policy::class);
+        $router->aliasMiddleware('jurisdiction', Jurisdiction::class);
         $router->aliasMiddleware('warehouseSupervisor', WarehouseSupervisor::class);
         $router->aliasMiddleware('warehouseTechnician', WarehouseTechnician::class);
         $router->aliasMiddleware('property', Property::class);

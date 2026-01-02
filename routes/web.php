@@ -13,6 +13,7 @@ use App\Http\Controllers\Login\PhoneLoginController;
 use App\Http\Controllers\Login\PolicyLoginController;
 use App\Http\Controllers\Login\VFMTechLoginController;
 use App\Http\Controllers\Login\WarehouseLoginController;
+use App\Http\Controllers\Login\JurisdictionLoginController;
 
 // Class Controllers
 use App\Http\Controllers\ICS\ICSController;
@@ -48,6 +49,7 @@ $vfmTechLoginClass = VFMTechLoginController::class;
 $icsLoginClass = ICSLoginController::class;
 $policyLoginClass = PolicyLoginController::class;
 $warehouseLoginClass = WarehouseLoginController::class;
+$jurisdictionLoginClass = JurisdictionLoginController::class;
 
 // Shorthand Controller Classes
 $adminClass = AdministratorController::class;
@@ -412,23 +414,32 @@ Route::prefix('warehouse')->group(function () use ($warehouseLoginClass, $wareho
 });
 
 // Jurisdiction Time Log Application
-Route::prefix('jurisdiction')->group(function () use ($jurisdictionClass){
+Route::prefix('jurisdiction')->group(function () use ($jurisdictionClass, $jurisdictionLoginClass){
 
     // Routes without middleware
+    Route::get('/login', [$jurisdictionLoginClass, 'jurisdictionLoginForm'])->name('jurisdiction.login');
+    Route::post('/login', [$jurisdictionLoginClass, 'login']);
+    Route::get('/forgot', [$jurisdictionLoginClass, 'jurisdictionForgotPasswordForm'])->name('jurisdiction.forgot.form');
+    Route::post('/forgot', [$jurisdictionLoginClass, 'forgotPassword'])->name('jurisdiction.forgot.form.submit');
+    Route::post('/logout', [$jurisdictionLoginClass, 'logout'])->name('jurisdiction.logout');
+
     Route::get('/dashboard', [$jurisdictionClass, 'dashboard'])->name('jurisdiction.dashboard');
     Route::get('/jurisdiction-graph/{label}', [$jurisdictionClass, 'jurisdictionGraph'])->name('jurisdiction.jurisdiction-graph');
     Route::post('/range', [$jurisdictionClass, 'setRange'])->name('jurisdiction.set-range');
     Route::get('/monthly-trends', [$jurisdictionClass, 'monthlyTrends'])->name('jurisdiction.monthly-trends');
 
-    // Jurisdiction CRUD
-    Route::get('/create', [$jurisdictionClass, 'create'])->name('jurisdiction.create');
-    Route::get('/edit/{id}', [$jurisdictionClass, 'edit'])->name('jurisdiction.edit');
-    Route::get('/destroy/{id}', [$jurisdictionClass, 'destroy'])->name('jurisdiction.destroy');
+    // Routes with 'jurisdiction' middleware
+    Route::middleware('jurisdiction')->group(function () use ($jurisdictionClass) {
 
-    // Time Log CRUD
-    Route::get('/time-logs', [$jurisdictionClass, 'timeLogs'])->name('jurisdiction.time-logs');
-    Route::get('/create-time-log', [$jurisdictionClass, 'createTimeLog'])->name('jurisdiction.create-time-log');
-    Route::get('/edit-time-log/{id}', [$jurisdictionClass, 'editTimeLog'])->name('jurisdiction.edit-time-log');
-    Route::get('/destroy-time-log/{id}', [$jurisdictionClass, 'destroyTimeLog'])->name('jurisdiction.destroy-time-log');
+        // Jurisdiction CRUD
+        Route::get('/create', [$jurisdictionClass, 'create'])->name('jurisdiction.create');
+        Route::get('/edit/{id}', [$jurisdictionClass, 'edit'])->name('jurisdiction.edit');
+        Route::get('/destroy/{id}', [$jurisdictionClass, 'destroy'])->name('jurisdiction.destroy');
 
+        // Time Log CRUD
+        Route::get('/time-logs', [$jurisdictionClass, 'timeLogs'])->name('jurisdiction.time-logs');
+        Route::get('/create-time-log', [$jurisdictionClass, 'createTimeLog'])->name('jurisdiction.create-time-log');
+        Route::get('/edit-time-log/{id}', [$jurisdictionClass, 'editTimeLog'])->name('jurisdiction.edit-time-log');
+        Route::get('/destroy-time-log/{id}', [$jurisdictionClass, 'destroyTimeLog'])->name('jurisdiction.destroy-time-log');
+    });
 });
