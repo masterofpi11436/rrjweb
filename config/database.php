@@ -62,6 +62,25 @@ return [
             ]) : [],
         ],
 
+        'phone' => [
+            'driver' => 'mysql',
+            'host' => env('PHONE_DB_HOST'),
+            'port' => env('PHONE_DB_PORT'),
+            'database' => env('PHONE_DB_DATABASE'),
+            'username' => env('PHONE_DB_USERNAME'),
+            'password' => env('PHONE_DB_PASSWORD'),
+            'unix_socket' => env('PHONE_DB_SOCKET'),
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+            'prefix_indexes' => true,
+            'strict' => true,
+            'engine' => null,
+            'options' => extension_loaded('pdo_mysql') ? array_filter([
+                PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
+            ]) : [],
+        ],
+
         'mariadb' => [
             'driver' => 'mariadb',
             'url' => env('DB_URL'),

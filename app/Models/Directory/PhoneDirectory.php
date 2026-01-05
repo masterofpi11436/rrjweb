@@ -7,9 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class PhoneDirectory extends Model
 {
-    use HasFactory;
+    // use HasFactory;
 
-    protected $table = 'phone_directory';
+    protected $connection = 'phone';
+    protected $table = 'phone';
+    public $timestamps = false;
 
     protected $fillable = ['name', 'title', 'section', 'extension'];
 }
