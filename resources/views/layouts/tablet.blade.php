@@ -47,6 +47,6 @@
     <script src="{{ asset('javascript/flash-message-expiry.js') }}"></script>
     <script src="{{ asset('javascript/delete-confirmation.js') }}"></script>
     <script src="{{ asset('javascript/back-to-top.js') }}"></script>
-    <script src="{{ asset('javascript/ics-form.js') }}"></script>
+    <script src="{{ asset('javascript/tablet-form.js') }}"></script>
 </body>
 </html>

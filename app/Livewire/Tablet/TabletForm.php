@@ -22,7 +22,7 @@ class TabletForm extends Component
         'first_name' => 'required|string',
         'last_name' => 'required|string',
         'middle_name' => 'nullable',
-        'date_found' => 'nullable',
+        'date_found' => 'nullable|date',
         'charged_101' => 'boolean',
         'filed_with_inmate_accounts' => 'boolean',
         'charged_by_inmate_accounts' => 'boolean',
@@ -40,7 +40,7 @@ class TabletForm extends Component
             $this->first_name = $tablet->first_name;
             $this->last_name = $tablet->last_name;
             $this->middle_name = $tablet->middle_name;
-            $this->date_found = $tablet->date_found;
+            $this->date_found = optional($tablet->date_found)->format('Y-m-d');
             $this->charged_101 = $tablet->charged_101;
             $this->filed_with_inmate_accounts = $tablet->filed_with_inmate_accounts;
             $this->charged_by_inmate_accounts = $tablet->charged_by_inmate_accounts;

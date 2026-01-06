@@ -37,7 +37,7 @@
 
             <div>
                 <label for="date_found">Date Found</label>
-                <input id="date_found" type="date" wire:model.defer="date">
+                <input id="date_found" type="date" wire:model.live="date_found">
                 @error('date_found') <span>{{ $message }}</span> @enderror
             </div>
         </div>
