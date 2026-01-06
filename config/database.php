@@ -62,7 +62,7 @@ return [
             ]) : [],
         ],
 
-        'rrjweb2' => [
+        'phone' => [
             'driver' => 'mysql',
             'host' => env('RRJWEB2_DB_HOST'),
             'port' => env('RRJWEB2_DB_PORT'),
