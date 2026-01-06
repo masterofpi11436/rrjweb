@@ -62,14 +62,14 @@ return [
             ]) : [],
         ],
 
-        'phone' => [
+        'rrjweb2' => [
             'driver' => 'mysql',
-            'host' => env('PHONE_DB_HOST'),
-            'port' => env('PHONE_DB_PORT'),
-            'database' => env('PHONE_DB_DATABASE'),
-            'username' => env('PHONE_DB_USERNAME'),
-            'password' => env('PHONE_DB_PASSWORD'),
-            'unix_socket' => env('PHONE_DB_SOCKET'),
+            'host' => env('RRJWEB2_DB_HOST'),
+            'port' => env('RRJWEB2_DB_PORT'),
+            'database' => env('RRJWEB2_DB_DATABASE'),
+            'username' => env('RRJWEB2_DB_USERNAME'),
+            'password' => env('RRJWEB2_DB_PASSWORD'),
+            'unix_socket' => env('RRJWEB2_DB_SOCKET'),
             'charset' => 'utf8mb4',
             'collation' => 'utf8mb4_unicode_ci',
             'prefix' => '',

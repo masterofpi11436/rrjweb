@@ -90,33 +90,33 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($suggestions as $ics)
+                @foreach ($suggestions as $tablet)
                     <tr>
-                        <td>{{ $ics->inmate_number }}</td>
-                        <td>{{ $ics->last_name }}</td>
-                        <td>{{ $ics->first_name }}</td>
-                        <td>{{ $ics->middle_name }}</td>
-                        <td>{{ $ics->date_found }}</td>
-                        <td>{{ $ics->charged_101 ? '101 Charged' : 'No'}}</td>
-                        <td>{{ $ics->filed_with_inmate_accounts ? 'Filed' : 'No' }}</td>
-                        <td>{{ $ics->charged_by_inmate_accounts ? 'Charged' : 'No' }}</td>
-                        <td>{{ $ics->payment_status ? 'Paid' : 'Owes $300' }}</td>
-                        <td>{{ $ics->notes }}</td>
+                        <td>{{ $tablet->inmate_number }}</td>
+                        <td>{{ $tablet->last_name }}</td>
+                        <td>{{ $tablet->first_name }}</td>
+                        <td>{{ $tablet->middle_name }}</td>
+                        <td>{{ $tablet->date_found }}</td>
+                        <td>{{ $tablet->charged_101 ? '101 Charged' : 'No'}}</td>
+                        <td>{{ $tablet->filed_with_inmate_accounts ? 'Filed' : 'No' }}</td>
+                        <td>{{ $tablet->charged_by_inmate_accounts ? 'Charged' : 'No' }}</td>
+                        <td>{{ $tablet->payment_status ? 'Paid' : 'Owes $300' }}</td>
+                        <td>{{ $tablet->notes }}</td>
                         <td>
-                            <a href="{{ route('ics.edit', $ics->id) }}">Edit</a>/
+                            <a href="{{ route('tablet.edit', $tablet->id) }}">Edit</a>/
                             <div>
                                 <!-- Delete link -->
-                                <a href="#" onclick="event.preventDefault(); confirmDelete({{ $ics->id }});">Delete</a>
-                                <form id="delete-form-{{ $ics->id }}" action="{{ route('ics.destroy', $ics->id) }}" method="POST" style="display: none;">
+                                <a href="#" onclick="event.preventDefault(); confirmDelete({{ $tablet->id }});">Delete</a>
+                                <form id="delete-form-{{ $tablet->id }}" action="{{ route('tablet.destroy', $tablet->id) }}" method="POST" style="display: none;">
                                     @csrf
                                     @method('DELETE')
                                 </form>
                                 <!-- Custom Confirmation Modal -->
-                                <div id="custom-confirmation-modal-{{ $ics->id }}" class="confirmation-modal" style="display: none;">
+                                <div id="custom-confirmation-modal-{{ $tablet->id }}" class="confirmation-modal" style="display: none;">
                                     <div class="modal-content">
                                         <p>Are you sure you want to delete this inmate?</p>
-                                        <button class="btn-confirm" onclick="deleteRecord({{ $ics->id }});">Yes, Delete</button>
-                                        <button class="btn-cancel" onclick="hideModal({{ $ics->id }});">Cancel</button>
+                                        <button class="btn-confirm" onclick="deleteRecord({{ $tablet->id }});">Yes, Delete</button>
+                                        <button class="btn-cancel" onclick="hideModal({{ $tablet->id }});">Cancel</button>
                                     </div>
                                 </div>
                             </div>

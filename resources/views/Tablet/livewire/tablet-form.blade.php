@@ -74,6 +74,6 @@
     </div>
 
     <div>
-        <button type="submit">{{ $icsId ? 'Update Record' : 'Create Record' }}</button>
+        <button type="submit">{{ $tabletId ? 'Update Record' : 'Create Record' }}</button>
     </div>
 </form>

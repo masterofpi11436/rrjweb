@@ -1,31 +1,31 @@
 <?php
 
-namespace App\Http\Controllers\ICS;
+namespace App\Http\Controllers\Tablet;
 
 // Base Controller
 use App\Http\Controllers\Controller;
-use App\Models\ICS\ICS;
+use App\Models\Tablet\Tablet;
 
-class ICSController extends Controller
+class TabletController extends Controller
 {
     public function dashboard()
     {
-        return view('ICS.ICS.dashboard');
+        return view('Tablet.Tablet.dashboard');
     }
     public function create()
     {
-        return view('ICS.ICS.create');
+        return view('Tablet.Tablet.create');
     }
 
     public function edit($id)
     {
-        $ics = ICS::findOrFail($id);
-        return view('ICS.ICS.edit', ['ics' => $ics]);
+        $tablet = Tablet::findOrFail($id);
+        return view('Tablet.Tablet.edit', ['tablet' => $tablet]);
     }
 
     public function destroy($id)
     {
-        $tablet = ICS::findOrFail($id);
+        $tablet = Tablet::findOrFail($id);
         $tablet->delete();
 
         session()->flash('create-edit-delete-message', 'Record deleted successfully!');

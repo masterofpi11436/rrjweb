@@ -1,4 +1,4 @@
-@extends('layouts.ics')
+@extends('layouts.tablet')
 
 @section('title', 'Create New Inmate Entry')
 
@@ -6,8 +6,8 @@
 
 @section('content')
 
-<a href="{{ route('ics.dashboard') }}">Back</a>
+<a href="{{ route('tablet.dashboard') }}">Back</a>
 
-@livewire('ICS.ICS-form')
+@livewire('Tablet.tablet-form')
 
 @endsection

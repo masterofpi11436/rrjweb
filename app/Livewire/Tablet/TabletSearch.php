@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Livewire\ICS;
+namespace App\Livewire\Tablet;
 
 use Livewire\Component;
 
 // Required Models
-use App\Models\ICS\ICS;
+use App\Models\Tablet\Tablet;
 
-class ICSSearch extends Component
+class TabletSearch extends Component
 {
     public $search = ''; // Default search term
     public $sortColumn = 'last_name'; // Default sort column
@@ -30,8 +30,8 @@ class ICSSearch extends Component
     public function render()
     {
         // Search for matching records
-        return view('ICS.livewire.ics-search', [
-            'suggestions' => ICS::where('inmate_number', 'like', '%' . $this->search . '%')
+        return view('Tablet.livewire.tablet-search', [
+            'suggestions' => Tablet::where('inmate_number', 'like', '%' . $this->search . '%')
                                            ->orWhere('last_name', 'like', '%' . $this->search . '%')
                                            ->orWhere('first_name', 'like', '%' . $this->search . '%')
                                            ->orWhere('date_found', 'like', '%' . $this->search . '%')

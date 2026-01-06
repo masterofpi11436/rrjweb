@@ -22,7 +22,7 @@ class MonthlyReportCsv extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: "Monthly Warehouse Report",
+            subject: "Monthly Warehouse Report (DO NOT REPLY)",
         );
     }
 

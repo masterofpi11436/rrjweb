@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Livewire\ICS;
+namespace App\Livewire\Tablet;
 
 use Livewire\Component;
 
 // Required Models
-use App\Models\ICS\ICS;
+use App\Models\Tablet\Tablet;
 
-class ICSForm extends Component
+class TabletForm extends Component
 {
     // For Editing Records
-    public $icsId;
+    public $tabletId;
 
     // Fields
     public $inmate_number, $first_name, $last_name, $middle_name, $date_found, $notes;
@@ -34,18 +34,18 @@ class ICSForm extends Component
     public function mount($id = null)
     {
         if ($id) {
-            $ics = ICS::findOrFail($id);
-            $this->icsId = $ics->id;
-            $this->inmate_number = $ics->inmate_number;
-            $this->first_name = $ics->first_name;
-            $this->last_name = $ics->last_name;
-            $this->middle_name = $ics->middle_name;
-            $this->date_found = $ics->date_found;
-            $this->charged_101 = $ics->charged_101;
-            $this->filed_with_inmate_accounts = $ics->filed_with_inmate_accounts;
-            $this->charged_by_inmate_accounts = $ics->charged_by_inmate_accounts;
-            $this->payment_status = $ics->payment_status;
-            $this->notes = $ics->notes;
+            $tablet = Tablet::findOrFail($id);
+            $this->tabletId = $tablet->id;
+            $this->inmate_number = $tablet->inmate_number;
+            $this->first_name = $tablet->first_name;
+            $this->last_name = $tablet->last_name;
+            $this->middle_name = $tablet->middle_name;
+            $this->date_found = $tablet->date_found;
+            $this->charged_101 = $tablet->charged_101;
+            $this->filed_with_inmate_accounts = $tablet->filed_with_inmate_accounts;
+            $this->charged_by_inmate_accounts = $tablet->charged_by_inmate_accounts;
+            $this->payment_status = $tablet->payment_status;
+            $this->notes = $tablet->notes;
         }
     }
 
@@ -60,24 +60,24 @@ class ICSForm extends Component
      {
         $validatedData = $this->validate();
 
-        if ($this->icsId) {
+        if ($this->tabletId) {
             // Update existing entry
-            $ics = ICS::findOrFail($this->icsId);
-            $ics->update($validatedData);
+            $tablet = Tablet::findOrFail($this->tabletId);
+            $tablet->update($validatedData);
             session()->flash('create-edit-delete-message', 'Record updated successfully!');
         } else {
             // Create new entry
-            ICS::create($validatedData);
+            Tablet::create($validatedData);
             session()->flash('create-edit-delete-message', 'Record added successfully!');
         }
 
         // Redirect to index
-        return redirect()->route('ics.dashboard');
+        return redirect()->route('tablet.dashboard');
     }
 
 
     public function render()
     {
-        return view('ICS.livewire.ics-form');
+        return view('Tablet.livewire.tablet-form');
     }
 }

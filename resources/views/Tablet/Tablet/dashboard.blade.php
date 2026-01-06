@@ -1,8 +1,8 @@
-@extends('layouts.ics')
+@extends('layouts.tablet')
 
-@section('title', 'ICS')
+@section('title', 'Tablet')
 
-@section('heading', 'ICS Inmate Tablet Management')
+@section('heading', 'Tablet Inmate Tablet Management')
 
 <!-- Flash Message -->
 @if (session()->has('create-edit-delete-message'))
@@ -15,9 +15,9 @@
 @section('content')
 
 <!-- Link to navigate to the Create page -->
-<a href="{{ route('ics.create') }}" class="create-link">Create New Entry</a>
+<a href="{{ route('tablet.create') }}" class="create-link">Create New Entry</a>
 
 <!-- Livewire search component -->
-@livewire('ICS.ICS-search')
+@livewire('Tablet.Tablet-search')
 
 @endsection

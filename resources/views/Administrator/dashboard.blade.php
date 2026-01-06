@@ -21,9 +21,9 @@
     <button>Vehicle Fleet Maintenance (VFM) Tracker</button>
 </form>
 
-<!-- Link to navigate to the ICS App -->
-<form action="{{ route('ics.dashboard') }}">
-    <button>ICS Restricted Tablets</button>
+<!-- Link to navigate to the Tablet App -->
+<form action="{{ route('tablet.dashboard') }}">
+    <button>Tablet Restricted Tablets</button>
 </form>
 
 <!-- Link to navigate to the Wareouse Store App as Warehouse Supervisor login -->

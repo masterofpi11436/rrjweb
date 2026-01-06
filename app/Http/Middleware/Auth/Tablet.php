@@ -2,21 +2,21 @@
 
 namespace App\Http\Middleware\Auth;
 
-class ICS extends BaseAuth
+class Tablet extends BaseAuth
 {
     protected function hasAccess($user): bool
     {
         // Check if the user is authenticated and has phone access or is an admin
-        return $user && ($user->ics === 1 || $user->admin === 1);
+        return $user && ($user->tablet === 1 || $user->admin === 1);
     }
 
     protected function getRedirectRoute(): string
     {
-        return 'ics.login';
+        return 'tablet.login';
     }
 
     protected function getAccessDeniedMessage(): string
     {
-        return 'You do not have access to the ICS admin site.';
+        return 'You do not have access to the Tablet admin site.';
     }
 }

@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 // Login Controllers
 
 use App\Http\Controllers\Policy\PolicyController;
-use App\Http\Controllers\Login\ICSLoginController;
+use App\Http\Controllers\Login\TabletLoginController;
 use App\Http\Controllers\Login\VFMLoginController;
 use App\Http\Controllers\Login\BaseLoginController;
 use App\Http\Controllers\Login\AdminLoginController;
@@ -16,7 +16,7 @@ use App\Http\Controllers\Login\WarehouseLoginController;
 use App\Http\Controllers\Login\JurisdictionLoginController;
 
 // Class Controllers
-use App\Http\Controllers\ICS\ICSController;
+use App\Http\Controllers\Tablet\TabletController;
 use App\Http\Controllers\VFM\VFMController;
 use App\Http\Controllers\VFM\VFMVehicleController;
 use App\Http\Controllers\VFM\VFMTechVehicleController;
@@ -46,7 +46,7 @@ $adminLoginClass = AdminLoginController::class;
 $phoneLoginClass = PhoneLoginController::class;
 $vfmLoginClass = VFMLoginController::class;
 $vfmTechLoginClass = VFMTechLoginController::class;
-$icsLoginClass = ICSLoginController::class;
+$tabletLoginClass = TabletLoginController::class;
 $policyLoginClass = PolicyLoginController::class;
 $warehouseLoginClass = WarehouseLoginController::class;
 $jurisdictionLoginClass = JurisdictionLoginController::class;
@@ -58,7 +58,7 @@ $vfmClass = VFMController::class;
 $vfmVehicleClass = VFMVehicleController::class;
 $vfmTechVehicleClass = VFMTechVehicleController::class;
 $vfmTechClass = VFMTechController::class;
-$icsClass = ICSController::class;
+$tabletClass = TabletController::class;
 $policyClass = PolicyController::class;
 $jurisdictionClass = JurisdictionController::class;
 $warehouseSupervisorClass = WarehouseSupervisorController::class;
@@ -185,22 +185,22 @@ Route::prefix('vfm-tech')->group(function () use ($vfmTechClass, $vfmTechVehicle
     });
 });
 
-// ICS Application
-Route::prefix('ics')->group(function () use ($icsClass, $icsLoginClass){
+// Tablet Application
+Route::prefix('tablet')->group(function () use ($tabletClass, $tabletLoginClass){
 
     // Routes without middleware
-    Route::get('/login', [$icsLoginClass, 'icsLoginForm'])->name('ics.login');
-    Route::post('/login', [$icsLoginClass, 'login']);
-    Route::get('/forgot', [$icsLoginClass, 'icsForgotPasswordForm'])->name('ics.forgot.form');
-    Route::post('/forgot', [$icsLoginClass, 'forgotPassword'])->name('ics.forgot.form.submit');
-    Route::post('/logout', [$icsLoginClass, 'logout'])->name('ics.logout');
+    Route::get('/login', [$tabletLoginClass, 'tabletLoginForm'])->name('tablet.login');
+    Route::post('/login', [$tabletLoginClass, 'login']);
+    Route::get('/forgot', [$tabletLoginClass, 'tabletForgotPasswordForm'])->name('tablet.forgot.form');
+    Route::post('/forgot', [$tabletLoginClass, 'forgotPassword'])->name('tablet.forgot.form.submit');
+    Route::post('/logout', [$tabletLoginClass, 'logout'])->name('tablet.logout');
 
-    // Routes with 'ics' middleware
-    Route::middleware('ics')->group(function () use ($icsClass) {
-        Route::get('/dashboard', [$icsClass, 'dashboard'])->name('ics.dashboard');
-        Route::get('/create', [$icsClass, 'create'])->name('ics.create');
-        Route::get('/{id}/edit', [$icsClass, 'edit'])->name('ics.edit');
-        Route::delete('/{id}', [$icsClass, 'destroy'])->name('ics.destroy');
+    // Routes with 'tablet' middleware
+    Route::middleware('tablet')->group(function () use ($tabletClass) {
+        Route::get('/dashboard', [$tabletClass, 'dashboard'])->name('tablet.dashboard');
+        Route::get('/create', [$tabletClass, 'create'])->name('tablet.create');
+        Route::get('/{id}/edit', [$tabletClass, 'edit'])->name('tablet.edit');
+        Route::delete('/{id}', [$tabletClass, 'destroy'])->name('tablet.destroy');
     });
 });
 

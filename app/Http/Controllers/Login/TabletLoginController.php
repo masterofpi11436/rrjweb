@@ -6,11 +6,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
 
-class ICSLoginController extends BaseLoginController
+class TabletLoginController extends BaseLoginController
 {
-    public function icsLoginForm()
+    public function tabletLoginForm()
     {
-        return view('Login.Logins.ics-login');
+        return view('Login.Logins.tablet-login');
     }
 
     public function login(Request $request)
@@ -26,21 +26,21 @@ class ICSLoginController extends BaseLoginController
 
         // If user is not found, return error
         if (!$user) {
-            return redirect()->route('ics.login')->withErrors(['email_not_found' => 'No account found with this email address.']);
+            return redirect()->route('tablet.login')->withErrors(['email_not_found' => 'No account found with this email address.']);
         }
 
-        // Attempt login with ics access or admin access
-        return $this->attemptLogin($request, 'ics.dashboard', function ($user) {
-            return $user->ics == 1 || $user->admin == 1;
+        // Attempt login with tablet access or admin access
+        return $this->attemptLogin($request, 'tablet.dashboard', function ($user) {
+            return $user->tablet == 1 || $user->admin == 1;
         });
     }
 
-    public function icsForgotPasswordForm()
+    public function tabletForgotPasswordForm()
     {
-        return parent::showForgotPasswordForm('Login.Forgots.ics-forgot-password');
+        return parent::showForgotPasswordForm('Login.Forgots.tablet-forgot-password');
     }
 
-    public function logout(Request $request, $route = 'ics.login')
+    public function logout(Request $request, $route = 'tablet.login')
     {
         // Perform the standard logout
         Auth::logout();
