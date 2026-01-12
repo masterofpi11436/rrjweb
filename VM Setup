@@ -43,8 +43,8 @@ Setting Up a Virtual Machine with Ubuntu to Host a Website
 
 	***Hyper-V Full Screen instructions***
 	sudo nano /etc/default/grub
-	CHANGE: GRUB_CMDLINE_LINUX_DEFAULT="quiert splash"
-	TO: GRUB_CMDLINE_LINUX_DEFAULT="quiert splash video=hyperv_fb:1920x1080"
+	CHANGE: GRUB_CMDLINE_LINUX_DEFAULT="quiet splash"
+	TO: GRUB_CMDLINE_LINUX_DEFAULT="quiet splash video=hyperv_fb:1920x1080"
 	SAVE FILE
 	sudo update grub
 	RESTART VM: init 6
@@ -112,13 +112,14 @@ These next set of instructions are for using PHP (Laravel) and may not pertain t
 6.  Node.js for npm (Change version to the most recent version, Node.js 22.x in this case)
 	***This is to make use of the tool npm to download Tailwind.CSS. Can be used for React and other JavaScript Libraries.
 
-		sudo apt update
-		curl -fsSL https://deb.nodesource.com/setup_22.x | sudo -E bash -
-		sudo apt install -y nodejs
-
-    Verify node and npm installation
-        node -v
-        npm -v
+        # Download and install n and Node.js:
+        curl -fsSL https://raw.githubusercontent.com/mklement0/n-install/stable/bin/n-install | bash -s 24
+        # Node.js already installs during n-install, but you can also install it manually:
+        #   n install 24
+        # Verify the Node.js version:
+        node -v # Should print "v24.12.0".
+        # Verify npm version:
+        npm -v # Should print "11.6.2".
 
 ***************************
 7. Install XAMPP
