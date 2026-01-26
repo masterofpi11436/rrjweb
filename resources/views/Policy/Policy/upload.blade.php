@@ -8,6 +8,14 @@
 
 <a href="{{ route('policy.dashboard') }}">Back</a>
 
+<!-- Flash Message -->
+@if (session()->has('create-edit-delete-message'))
+        <div id="flash-message" class="policy-flash-message">
+        <button class="close-btn" onclick="this.parentElement.style.display='none';">&times;</button>
+        {{ session('create-edit-delete-message') }}
+    </div>
+@endif
+
 <form action="{{ route('policy.upload') }}" method="POST" enctype="multipart/form-data">
     @csrf
     <div>

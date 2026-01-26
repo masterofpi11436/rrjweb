@@ -158,6 +158,46 @@
     border-color: green; /* Change border color on hover */
 }
 
+.policy-flash-message {
+    position: fixed; /* Ensure it's positioned relative to the viewport */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Center it on the screen */
+    background-color: rgba(114, 12, 12, 0.5); /* Green with transparency */
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    width: 300px;
+    z-index: 9999; /* High z-index to stay on top */
+    pointer-events: none; /* Prevent interaction with underlying elements */
+}
+
+.policy-flash-message .close-btn {
+    position: absolute;
+    top: 5px; /* Adjusts the position slightly down */
+    right: 5px; /* Adjusts the position slightly to the left */
+    background-color: transparent; /* No background color */
+    color: rgb(255, 255, 255); /* Dark green color for the X */
+    border: 2px solid rgb(151, 16, 16); /* Dark green border */
+    border-radius: 50%; /* Makes the button round */
+    cursor: pointer;
+    width: 20px; /* Small size */
+    height: 20px; /* Small size */
+    padding: 0;
+    font-size: 14px; /* Smaller X */
+    display: flex; /* Use flex to center the X */
+    justify-content: center;
+    align-items: center;
+    pointer-events: all; /* Enable clicking on the close button */
+    line-height: 0; /* Fix line height so the X stays centered */
+}
+
+.policy-flash-message .close-btn:hover {
+    color: red; /* Lighter green on hover */
+    border-color: red; /* Change border color on hover */
+}
+
 /*********************************************************************************/
 
 /* Delete Confirmation */

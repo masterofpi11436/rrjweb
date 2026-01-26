@@ -46,6 +46,12 @@ class PolicyController extends Controller
                 $pdf = $parser->parseFile(storage_path('app/public/' . $pdfFilePath));
                 $extractedText = $pdf->getText();
 
+                // Check for image based PDFs
+                if (strlen(trim($extractedText)) < 50) {
+                    Storage::disk('public')->delete($pdfFilePath);
+                    return redirect()->route('policy.upload')->with('create-edit-delete-message', "{$originalName} is an image-based PDF. Please upload a searchable (text-based) PDF.");
+                }
+
                 // Save extracted text to a .txt file
                 $textFilePath = 'policies/text/' . $baseName . '.txt';
                 Storage::disk('public')->put($textFilePath, $extractedText);
@@ -65,7 +71,6 @@ class PolicyController extends Controller
         // Handle the case where no files were uploaded
         return redirect()->route('policy.dashboard')->withErrors('Failed to upload the PDFs.');
     }
-
 
     public function destroy($id)
     {
