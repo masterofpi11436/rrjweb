@@ -69,8 +69,8 @@
     </fieldset>
 
     <div>
-        <label for="notes">Notes:</label>
-        <textarea id="notes" wire:model.live="notes"></textarea>
+        <label for="note">Notes:</label>
+        <textarea id="note" wire:model.live="note"></textarea>
     </div>
 
     <div>

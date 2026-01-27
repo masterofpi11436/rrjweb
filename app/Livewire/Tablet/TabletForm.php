@@ -13,7 +13,7 @@ class TabletForm extends Component
     public $tabletId;
 
     // Fields
-    public $inmate_number, $first_name, $last_name, $middle_name, $date_found, $notes;
+    public $inmate_number, $first_name, $last_name, $middle_name, $date_found, $note;
     public $charged_101 = false, $filed_with_inmate_accounts = false, $charged_by_inmate_accounts = false, $payment_status = false;
 
     // Field Rules
@@ -27,7 +27,7 @@ class TabletForm extends Component
         'filed_with_inmate_accounts' => 'boolean',
         'charged_by_inmate_accounts' => 'boolean',
         'payment_status' => 'boolean',
-        'notes' => 'nullable|string|max:1000',
+        'note' => 'nullable|string|max:1000',
     ];
 
     // Method to load existing data if editing
@@ -45,7 +45,7 @@ class TabletForm extends Component
             $this->filed_with_inmate_accounts = $tablet->filed_with_inmate_accounts;
             $this->charged_by_inmate_accounts = $tablet->charged_by_inmate_accounts;
             $this->payment_status = $tablet->payment_status;
-            $this->notes = $tablet->notes;
+            $this->note = $tablet->note;
         }
     }
 
