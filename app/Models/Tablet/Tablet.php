@@ -12,8 +12,7 @@ class Tablet extends Model
     protected $table = 'tablet';
 
     protected $fillable = ['inmate_number', 'last_name', 'first_name', 'middle_name', 'date_found',
-                           'charged_101', 'filed_with_inmate_accounts', 'charged_by_inmate_accounts',
-                           'payment_status', 'notes'];
+                           'is_reported', 'is_filed', 'is_charged', 'is_paid', 'notes'];
 
     protected $casts = ['date_found' => 'date'];
 }
