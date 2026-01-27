@@ -47,13 +47,13 @@
         <legend>Additional Information</legend>
         <div class="checkbox-group">
             <div>
-                <label for="is_filed">Charged with 101?</label>
-                <input type="checkbox" id="is_filed" wire:model.defer="is_filed" {{ $is_filed ? 'checked' : '' }}>
+                <label for="is_reported">Charged with 101?</label>
+                <input type="checkbox" id="is_reported" wire:model.defer="is_reported" {{ $is_reported ? 'checked' : '' }}>
             </div>
 
             <div>
                 <label for="is_filed">Filed with Inmate Accounts?</label>
-                <input type="checkbox" id="is_filed" wire:model.defer="filed_with_inmate_accounts" {{ $is_filed ? 'checked' : '' }}>
+                <input type="checkbox" id="is_filed" wire:model.defer="is_filed" {{ $is_filed ? 'checked' : '' }}>
             </div>
 
             <div>
