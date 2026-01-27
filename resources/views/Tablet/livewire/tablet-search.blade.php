@@ -47,33 +47,33 @@
                         </a>
                     </th>
                     <th>
-                        <a href="#" wire:click.prevent="sortBy('charged_101')">
+                        <a href="#" wire:click.prevent="sortBy('is_reported')">
                             Charged 101?
-                            @if ($sortColumn === 'charged_101')
+                            @if ($sortColumn === 'is_reported')
                                 @if ($sortDirection === 'asc') ▲ @else ▼ @endif
                             @endif
                         </a>
                     </th>
                     <th>
-                        <a href="#" wire:click.prevent="sortBy('filed_with_inmate_accounts')">
+                        <a href="#" wire:click.prevent="sortBy('is_filed')">
                             Filed with Inmate Accounts?
-                            @if ($sortColumn === 'filed_with_inmate_accounts')
+                            @if ($sortColumn === 'is_filed')
                                 @if ($sortDirection === 'asc') ▲ @else ▼ @endif
                             @endif
                         </a>
                     </th>
                     <th>
-                        <a href="#" wire:click.prevent="sortBy('charged_by_inmate_accounts')">
+                        <a href="#" wire:click.prevent="sortBy('is_charged')">
                             Charged by Inmate Accounts?
-                            @if ($sortColumn === 'charged_by_inmate_accounts')
+                            @if ($sortColumn === 'is_charged')
                                 @if ($sortDirection === 'asc') ▲ @else ▼ @endif
                             @endif
                         </a>
                     </th>
                     <th>
-                        <a href="#" wire:click.prevent="sortBy('payment_status')">
+                        <a href="#" wire:click.prevent="sortBy('is_paid')">
                             Payment Status
-                            @if ($sortColumn === 'payment_status')
+                            @if ($sortColumn === 'is_paid')
                                 @if ($sortDirection === 'asc') ▲ @else ▼ @endif
                             @endif
                         </a>
@@ -97,10 +97,10 @@
                         <td>{{ $tablet->first_name }}</td>
                         <td>{{ $tablet->middle_name }}</td>
                         <td>{{ $tablet->date_found }}</td>
-                        <td>{{ $tablet->charged_101 ? '101 Charged' : 'No'}}</td>
-                        <td>{{ $tablet->filed_with_inmate_accounts ? 'Filed' : 'No' }}</td>
-                        <td>{{ $tablet->charged_by_inmate_accounts ? 'Charged' : 'No' }}</td>
-                        <td>{{ $tablet->payment_status ? 'Paid' : 'Owes $300' }}</td>
+                        <td>{{ $tablet->is_reported ? '101 Charged' : 'No'}}</td>
+                        <td>{{ $tablet->is_filed ? 'Filed' : 'No' }}</td>
+                        <td>{{ $tablet->is_charged ? 'Charged' : 'No' }}</td>
+                        <td>{{ $tablet->is_paid ? 'Paid' : 'Owes $300' }}</td>
                         <td>{{ $tablet->note }}</td>
                         <td>
                             <a href="{{ route('tablet.edit', $tablet->id) }}">Edit</a>/

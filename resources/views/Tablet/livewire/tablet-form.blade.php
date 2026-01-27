@@ -47,23 +47,23 @@
         <legend>Additional Information</legend>
         <div class="checkbox-group">
             <div>
-                <label for="charged_101">Charged with 101?</label>
-                <input type="checkbox" id="charged_101" wire:model.defer="charged_101" {{ $charged_101 ? 'checked' : '' }}>
+                <label for="is_filed">Charged with 101?</label>
+                <input type="checkbox" id="is_filed" wire:model.defer="is_filed" {{ $is_filed ? 'checked' : '' }}>
             </div>
 
             <div>
-                <label for="filed_with_inmate_accounts">Filed with Inmate Accounts?</label>
-                <input type="checkbox" id="filed_with_inmate_accounts" wire:model.defer="filed_with_inmate_accounts" {{ $filed_with_inmate_accounts ? 'checked' : '' }}>
+                <label for="is_filed">Filed with Inmate Accounts?</label>
+                <input type="checkbox" id="is_filed" wire:model.defer="filed_with_inmate_accounts" {{ $is_filed ? 'checked' : '' }}>
             </div>
 
             <div>
-                <label for="charged_by_inmate_accounts">Charged by Inmate Accounts?</label>
-                <input type="checkbox" id="charged_by_inmate_accounts" wire:model.defer="charged_by_inmate_accounts" {{ $charged_by_inmate_accounts ? 'checked' : '' }}>
+                <label for="is_charged">Charged by Inmate Accounts?</label>
+                <input type="checkbox" id="is_charged" wire:model.defer="is_charged" {{ $is_charged ? 'checked' : '' }}>
             </div>
 
             <div>
-                <label for="payment_status">Payment Status?</label>
-                <input type="checkbox" id="payment_status" wire:model.defer="payment_status" {{ $payment_status ? 'checked' : '' }}>
+                <label for="is_paid">Payment Status?</label>
+                <input type="checkbox" id="is_paid" wire:model.defer="is_paid" {{ $is_paid ? 'checked' : '' }}>
             </div>
         </div>
     </fieldset>

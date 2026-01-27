@@ -14,7 +14,7 @@ class TabletForm extends Component
 
     // Fields
     public $inmate_number, $first_name, $last_name, $middle_name, $date_found, $note;
-    public $charged_101 = false, $filed_with_inmate_accounts = false, $charged_by_inmate_accounts = false, $payment_status = false;
+    public $is_reported = false, $is_filed = false, $is_charged = false, $is_paid = false;
 
     // Field Rules
     protected $rules = [
@@ -23,10 +23,10 @@ class TabletForm extends Component
         'last_name' => 'required|string',
         'middle_name' => 'nullable',
         'date_found' => 'nullable|date',
-        'charged_101' => 'boolean',
-        'filed_with_inmate_accounts' => 'boolean',
-        'charged_by_inmate_accounts' => 'boolean',
-        'payment_status' => 'boolean',
+        'is_reported' => 'boolean',
+        'is_filed' => 'boolean',
+        'is_charged' => 'boolean',
+        'is_paid' => 'boolean',
         'note' => 'nullable|string|max:1000',
     ];
 
@@ -41,10 +41,10 @@ class TabletForm extends Component
             $this->last_name = $tablet->last_name;
             $this->middle_name = $tablet->middle_name;
             $this->date_found = optional($tablet->date_found)->format('Y-m-d');
-            $this->charged_101 = $tablet->charged_101;
-            $this->filed_with_inmate_accounts = $tablet->filed_with_inmate_accounts;
-            $this->charged_by_inmate_accounts = $tablet->charged_by_inmate_accounts;
-            $this->payment_status = $tablet->payment_status;
+            $this->is_reported = $tablet->is_reported;
+            $this->is_filed = $tablet->is_filed;
+            $this->is_charged = $tablet->is_charged;
+            $this->is_paid = $tablet->is_paid;
             $this->note = $tablet->note;
         }
     }
