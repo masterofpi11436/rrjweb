@@ -13,18 +13,18 @@ class MailroomController extends Controller
     // Login Required Pages
     public function dashboard()
     {
-        return view('Mailroom.Mailroom.dashboard');
+        return view('Mailroom.mailroom.dashboard');
     }
 
     public function create()
     {
-        return view('Mailroom.Mailroom.create');
+        return view('Mailroom.mailroom.create');
     }
 
     public function edit($id)
     {
         $mailroom = Mailroom::findOrFail($id);
-        return view('Mailroom.Mailroom.edit', ['mailroom' => $mailroom]);
+        return view('Mailroom.mailroom.edit', ['mailroom' => $mailroom]);
     }
 
     public function destroy($id)
