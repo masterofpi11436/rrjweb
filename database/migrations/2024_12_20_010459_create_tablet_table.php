@@ -18,10 +18,10 @@ return new class extends Migration
             $table->string('first_name');
             $table->string('middle_name')->nullable();
             $table->date('date_found')->nullable();
-            $table->boolean('charged_101');
-            $table->boolean('filed_with_inmate_accounts');
-            $table->boolean('charged_by_inmate_accounts');
-            $table->boolean('payment_status');
+            $table->boolean('is_reported');
+            $table->boolean('is_filed');
+            $table->boolean('is_charged');
+            $table->boolean('is_paid');
             $table->text('notes')->nullable();
             $table->timestamps();
         });
