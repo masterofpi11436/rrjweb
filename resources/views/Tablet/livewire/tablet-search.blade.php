@@ -79,9 +79,9 @@
                         </a>
                     </th>
                     <th>
-                        <a href="#" wire:click.prevent="sortBy('notes')">
+                        <a href="#" wire:click.prevent="sortBy('note')">
                             Notes
-                            @if ($sortColumn === 'notes')
+                            @if ($sortColumn === 'note')
                                 @if ($sortDirection === 'asc') ▲ @else ▼ @endif
                             @endif
                         </a>
@@ -101,7 +101,7 @@
                         <td>{{ $tablet->filed_with_inmate_accounts ? 'Filed' : 'No' }}</td>
                         <td>{{ $tablet->charged_by_inmate_accounts ? 'Charged' : 'No' }}</td>
                         <td>{{ $tablet->payment_status ? 'Paid' : 'Owes $300' }}</td>
-                        <td>{{ $tablet->notes }}</td>
+                        <td>{{ $tablet->note }}</td>
                         <td>
                             <a href="{{ route('tablet.edit', $tablet->id) }}">Edit</a>/
                             <div>
