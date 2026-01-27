@@ -26,6 +26,11 @@
     <button>Tablet Restricted Tablets</button>
 </form>
 
+<!-- Link to navigate to the Mailroom App -->
+<form action="{{ route('mailroom.dashboard') }}">
+    <button>Mailroom Names</button>
+</form>
+
 <!-- Link to navigate to the Wareouse Store App as Warehouse Supervisor login -->
 <form action="{{ route('warehouse.warehouse-supervisor.dashboard') }}">
     <button>Warehouse Supervisor Dashboard</button>

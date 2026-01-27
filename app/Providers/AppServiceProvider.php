@@ -3,21 +3,22 @@
 namespace App\Providers;
 
 use Illuminate\Routing\Router;
-use App\Http\Middleware\Auth\Tablet;
 use App\Http\Middleware\Auth\VFM;
+use App\Http\Middleware\ClearCart;
 use App\Http\Middleware\Auth\Admin;
 use App\Http\Middleware\Auth\Phone;
 use App\Http\Middleware\ClearCache;
 use App\Http\Middleware\Auth\Policy;
+use App\Http\Middleware\Auth\Tablet;
 use App\Http\Middleware\Auth\VFMTech;
-use App\Http\Middleware\Auth\Jurisdiction;
+use App\Http\Middleware\Auth\Mailroom;
 use Illuminate\Support\ServiceProvider;
+use App\Http\Middleware\Auth\Jurisdiction;
+use App\Http\Middleware\Auth\Warehouse\Property;
+use App\Http\Middleware\Auth\Warehouse\Requestor;
+use App\Http\Middleware\Auth\Warehouse\Supervisor;
 use App\Http\Middleware\Auth\Warehouse\WarehouseSupervisor;
 use App\Http\Middleware\Auth\Warehouse\WarehouseTechnician;
-use App\Http\Middleware\Auth\Warehouse\Property;
-use App\Http\Middleware\Auth\Warehouse\Supervisor;
-use App\Http\Middleware\Auth\Warehouse\Requestor;
-use App\Http\Middleware\ClearCart;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -40,6 +41,7 @@ class AppServiceProvider extends ServiceProvider
         $router->aliasMiddleware('vfm', VFM::class);
         $router->aliasMiddleware('vfm-tech', VFMTech::class);
         $router->aliasMiddleware('tablet', Tablet::class);
+        $router->aliasMiddleware('mailroom', Mailroom::class);
         $router->aliasMiddleware('policy', Policy::class);
         $router->aliasMiddleware('jurisdiction', Jurisdiction::class);
         $router->aliasMiddleware('warehouseSupervisor', WarehouseSupervisor::class);

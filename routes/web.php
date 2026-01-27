@@ -4,41 +4,45 @@ use Illuminate\Support\Facades\Route;
 
 // Login Controllers
 
-use App\Http\Controllers\Policy\PolicyController;
-use App\Http\Controllers\Login\TabletLoginController;
+
 use App\Http\Controllers\Login\VFMLoginController;
 use App\Http\Controllers\Login\BaseLoginController;
 use App\Http\Controllers\Login\AdminLoginController;
 use App\Http\Controllers\Login\PhoneLoginController;
-use App\Http\Controllers\Login\PolicyLoginController;
 use App\Http\Controllers\Login\VFMTechLoginController;
+use App\Http\Controllers\Login\TabletLoginController;
+use App\Http\Controllers\Login\PolicyLoginController;
+use App\Http\Controllers\Login\MailroomLoginController;
 use App\Http\Controllers\Login\WarehouseLoginController;
 use App\Http\Controllers\Login\JurisdictionLoginController;
 
 // Class Controllers
-use App\Http\Controllers\Tablet\TabletController;
-use App\Http\Controllers\VFM\VFMController;
-use App\Http\Controllers\VFM\VFMVehicleController;
+
 use App\Http\Controllers\VFM\VFMTechVehicleController;
+use App\Http\Controllers\VFM\VFMController;
 use App\Http\Controllers\VFM\VFMTechController;
+use App\Http\Controllers\VFM\VFMVehicleController;
+use App\Http\Controllers\Policy\PolicyController;
+use App\Http\Controllers\Tablet\TabletController;
+use App\Http\Controllers\Mailroom\MailroomController;
 use App\Http\Controllers\Directory\PhoneDirectoryController;
 use App\Http\Controllers\Jurisdiction\JurisdictionController;
 use App\Http\Controllers\Administrator\AdministratorController;
-use App\Http\Controllers\Warehouse\WarehouseSupervisor\WarehouseSupervisorController;
-use App\Http\Controllers\Warehouse\WarehouseSupervisor\ItemController;
-use App\Http\Controllers\Warehouse\WarehouseSupervisor\CategoryController;
-use App\Http\Controllers\Warehouse\WarehouseSupervisor\SectionController;
-use App\Http\Controllers\Warehouse\WarehouseSupervisor\UserController;
-use App\Http\Controllers\Warehouse\WarehouseSupervisor\InventoryController;
-use App\Http\Controllers\Warehouse\WarehouseSupervisor\ReportsController;
-use App\Http\Controllers\Warehouse\WarehouseSupervisor\HistoryController;
-use App\Http\Controllers\Warehouse\WarehouseSupervisor\PendingOrderController;
-use App\Http\Controllers\Warehouse\WarehouseSupervisor\PendingExchangeOrderController;
-use App\Http\Controllers\Warehouse\WarehouseSupervisor\CreateOrderController;
-use App\Http\Controllers\Warehouse\WarehouseSupervisor\CreateExchangeOrderController;
+use App\Http\Controllers\Warehouse\Property\PropertyController;
 use App\Http\Controllers\Warehouse\Requestor\RequestorController;
 use App\Http\Controllers\Warehouse\Supervisor\SupervisorController;
-use App\Http\Controllers\Warehouse\Property\PropertyController;
+use App\Http\Controllers\Warehouse\WarehouseSupervisor\ItemController;
+use App\Http\Controllers\Warehouse\WarehouseSupervisor\UserController;
+use App\Http\Controllers\Warehouse\WarehouseSupervisor\HistoryController;
+use App\Http\Controllers\Warehouse\WarehouseSupervisor\ReportsController;
+use App\Http\Controllers\Warehouse\WarehouseSupervisor\SectionController;
+use App\Http\Controllers\Warehouse\WarehouseSupervisor\CategoryController;
+use App\Http\Controllers\Warehouse\WarehouseSupervisor\InventoryController;
+use App\Http\Controllers\Warehouse\WarehouseSupervisor\CreateOrderController;
+use App\Http\Controllers\Warehouse\WarehouseSupervisor\PendingOrderController;
+use App\Http\Controllers\Warehouse\WarehouseSupervisor\CreateExchangeOrderController;
+use App\Http\Controllers\Warehouse\WarehouseSupervisor\WarehouseSupervisorController;
+use App\Http\Controllers\Warehouse\WarehouseSupervisor\PendingExchangeOrderController;
 
 // Shorthand login Classes
 $baseLoginClass = BaseLoginController::class;
@@ -47,6 +51,7 @@ $phoneLoginClass = PhoneLoginController::class;
 $vfmLoginClass = VFMLoginController::class;
 $vfmTechLoginClass = VFMTechLoginController::class;
 $tabletLoginClass = TabletLoginController::class;
+$mailroomLoginClass = MailroomLoginController::class;
 $policyLoginClass = PolicyLoginController::class;
 $warehouseLoginClass = WarehouseLoginController::class;
 $jurisdictionLoginClass = JurisdictionLoginController::class;
@@ -59,6 +64,7 @@ $vfmVehicleClass = VFMVehicleController::class;
 $vfmTechVehicleClass = VFMTechVehicleController::class;
 $vfmTechClass = VFMTechController::class;
 $tabletClass = TabletController::class;
+$mailroomClass = MailroomController::class;
 $policyClass = PolicyController::class;
 $jurisdictionClass = JurisdictionController::class;
 $warehouseSupervisorClass = WarehouseSupervisorController::class;
@@ -201,6 +207,25 @@ Route::prefix('tablet')->group(function () use ($tabletClass, $tabletLoginClass)
         Route::get('/create', [$tabletClass, 'create'])->name('tablet.create');
         Route::get('/{id}/edit', [$tabletClass, 'edit'])->name('tablet.edit');
         Route::delete('/{id}', [$tabletClass, 'destroy'])->name('tablet.destroy');
+    });
+});
+
+// Mailroom Application
+Route::prefix('mailroom')->group(function () use ($mailroomClass, $mailroomLoginClass){
+
+    // Routes without middleware
+    Route::get('/login', [$mailroomLoginClass, 'mailroomLoginForm'])->name('mailroom.login');
+    Route::post('/login', [$mailroomLoginClass, 'login']);
+    Route::get('/forgot', [$mailroomLoginClass, 'mailroomForgotPasswordForm'])->name('mailroom.forgot.form');
+    Route::post('/forgot', [$mailroomLoginClass, 'forgotPassword'])->name('mailroom.forgot.form.submit');
+    Route::post('/logout', [$mailroomLoginClass, 'logout'])->name('mailroom.logout');
+
+    // Routes with 'tablet' middleware
+    Route::middleware('mailroom')->group(function () use ($mailroomClass) {
+        Route::get('/dashboard', [$mailroomClass, 'dashboard'])->name('mailroom.dashboard');
+        Route::get('/create', [$mailroomClass, 'create'])->name('mailroom.create');
+        Route::get('/{id}/edit', [$mailroomClass, 'edit'])->name('mailroom.edit');
+        Route::delete('/{id}', [$mailroomClass, 'destroy'])->name('mailroom.destroy');
     });
 });
 
