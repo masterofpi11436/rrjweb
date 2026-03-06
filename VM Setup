@@ -253,14 +253,13 @@ php artisan migrate --path=/database/migrations/(table_full_name).php
 
 Navigate to where you want the project to be located
     cd ~/Desktop
-    mkdir tri-city-drive
-    cd tri-city-drive
     composer create-project laravel/laravel (Name of Project)
+    cd (Name of Project)
 
 Initialize Git and Make First Commit
     git init
     git add .
-    git commit -m "Initial commit"
+    git commit -m "Initial Laravel install"
 
 Create GitHub Repo (via website)
     Go to: https://github.com/new
@@ -272,7 +271,7 @@ Create GitHub Repo (via website)
     Click Create repository
 
 Connect Local Git to GitHub
-    git remote add origin https://github.com/YOUR_USERNAME/tri-city-drive.git
+    git remote add origin https://github.com/YOUR_USERNAME/(Name of Project).git
     git branch -m main
     git push -u origin main
 
