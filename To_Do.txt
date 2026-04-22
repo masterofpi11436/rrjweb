@@ -1,8 +1,13 @@
-** Jurisdiction **
+Simple Inventory App:
 
-1. The Officer enter times and the Nurse start times
-2. The Officer enter times and the Magistrate start times
-3. The Officer enter times and the Booking start times
-4. The Magistrate finish times and Nurse start times
-5. The Magistrate finish times and the Booking start times
-6. The Nurse start times and the Booking start times.
+    1. 1D barcode created for scanning items to conduct a periodic inventory.
+    2. 2 tables:
+        a. Items
+        b. Category
+    3. Admin for performing CRUD on authorizing users
+    4. User for performing inventory report
+
+Down or Out App:
+    1. Scan a barcode on ID for logging people who are checked in or Out
+    2. Admin perform CRUD on People who can log in or Out
+    3. User can edit if person in logged in or out manually
