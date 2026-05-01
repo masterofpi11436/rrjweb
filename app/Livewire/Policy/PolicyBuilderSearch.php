@@ -8,11 +8,13 @@ use Illuminate\Support\Facades\Storage;
 // Required Models
 use App\Models\Policy\Policy;
 
-class PublicPolicySearch extends Component
+class PolicyBuilderSearch extends Component
 {
-    public $search = '';
-    public $sortColumn = 'title';
-    public $sortDirection = 'asc';
+    public $search = ''; // Default search term
+    public $sortColumn = 'title'; // Default sort column
+    public $sortDirection = 'asc'; // Default sort direction
+    public $confirmingDelete = false;
+    public $deleteId;
 
     public function sortBy($column)
     {
@@ -41,11 +43,12 @@ class PublicPolicySearch extends Component
             return false;
         });
 
+        // Keep search term and sort
         $sortedSuggestions = $this->sortDirection === 'asc'
             ? $suggestions->sortBy('title')
             : $suggestions->sortByDesc('title');
 
-        return view('Policy.livewire.public-policy-search', [
+        return view('Policy.livewire.policy-builder-search', [
             'suggestions' => $sortedSuggestions,
         ]);
     }

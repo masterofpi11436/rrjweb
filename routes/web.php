@@ -92,9 +92,9 @@ Route::post('/password/reset', [$baseLoginClass, 'reset'])->name('login.update')
 Route::view('/login/success', 'Login.Resets.success')->name('login.success');
 
 // Default Redirect Route for testing
-Route::get('/', function () {
-    return redirect()->route('admin.login');
-});
+// Route::get('/', function () {
+//     return redirect()->route('admin.login');
+// });
 
 // Public Routes
 Route::get('/phone-directory', [$phoneClass, 'phoneDirectory']);
@@ -245,6 +245,9 @@ Route::prefix('policy')->group(function () use ($policyClass, $policyLoginClass)
         Route::get('/upload', [$policyClass, 'create'])->name('policy.upload');
         Route::post('/upload', [$policyClass, 'store'])->name('policy.upload');
         Route::delete('/{id}', [$policyClass, 'destroy'])->name('policy.destroy');
+        Route::get('/policy-builder', [$policyClass, 'PolicyBuilderDashboard'])->name('policy.builder');
+        Route::get('/create', [$policyClass, 'createpolicy'])->name('policy.create');
+        Route::get('/edit/{id}', [$policyClass, 'edit'])->name('policy.edit');
     });
 });
 

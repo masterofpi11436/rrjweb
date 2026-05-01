@@ -13,11 +13,13 @@ use Illuminate\Support\Facades\Storage;
 
 class PolicyController extends Controller
 {
+    // PUblic Pages
     public function policySearch()
     {
         return view('Policy.Policy.public-dashboard');
     }
 
+    // Admin Pages
     public function dashboard()
     {
         return view('Policy.Policy.dashboard');
@@ -32,14 +34,14 @@ class PolicyController extends Controller
     {
         // Validate the form inputs
         $request->validate([
-            'pdfs.*' => 'required|mimes:pdf', // Ensure each file is a PDF with max size of 100MB
+            'pdfs.*' => 'required|mimes:pdf',
         ]);
 
         if ($request->hasFile('pdfs')) {
             foreach ($request->file('pdfs') as $file) {
-                $originalName = $file->getClientOriginalName(); // Get the original file name
-                $baseName = pathinfo($originalName, PATHINFO_FILENAME); // Extract the base name (without extension)
-                $pdfFilePath = $file->storeAs('policies', $originalName, 'public'); // Save with original name in 'policies' folder
+                $originalName = $file->getClientOriginalName();
+                $baseName = pathinfo($originalName, PATHINFO_FILENAME);
+                $pdfFilePath = $file->storeAs('policies', $originalName, 'public');
 
                 // Extract text from the uploaded PDF
                 $parser = new Parser();
@@ -64,7 +66,6 @@ class PolicyController extends Controller
                 ]);
             }
 
-            // Redirect back with a success message
             return redirect()->route('policy.dashboard')->with('create-edit-delete-message', 'PDFs uploaded and text extracted successfully!');
         }
 
@@ -89,8 +90,23 @@ class PolicyController extends Controller
         // Delete the database entry
         $policy->delete();
 
-        // Flash a success message
         session()->flash('create-edit-delete-message', 'Record and associated files deleted successfully!');
         return redirect()->back();
+    }
+
+    // Policy Builder
+    public function PolicyBuilderDashboard()
+    {
+        return view('Policy.Policy.builder');
+    }
+
+    public function CreatePolicy()
+    {
+        return view('Policy.Policy.create');
+    }
+
+    public function edit()
+    {
+        return view('Policy.Policy.edit');
     }
 }
