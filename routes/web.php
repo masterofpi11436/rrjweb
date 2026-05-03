@@ -92,9 +92,9 @@ Route::post('/password/reset', [$baseLoginClass, 'reset'])->name('login.update')
 Route::view('/login/success', 'Login.Resets.success')->name('login.success');
 
 // Default Redirect Route for testing
-// Route::get('/', function () {
-//     return redirect()->route('admin.login');
-// });
+Route::get('/', function () {
+    return redirect()->route('admin.login');
+});
 
 // Public Routes
 Route::get('/phone-directory', [$phoneClass, 'phoneDirectory']);
