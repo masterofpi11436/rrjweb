@@ -16,7 +16,7 @@ class EditApprovedOrder extends Component
     public $search = '';
     public $selectedCategory = '';
     public $quantities = [];
-    public $orderId;
+    public int $orderId;
 
     protected $paginationTheme = 'tailwind';
 
@@ -24,15 +24,14 @@ class EditApprovedOrder extends Component
     {
         $this->orderId = $orderId;
 
-        // Retrieve order items from the database
         $order = Order::findOrFail($orderId);
         $cart = json_decode($order->items, true) ?? [];
 
-        // Normalize consolidated orders (convert list format into associative array)
+        // Normalize consolidated orders to assoc array
         if (isset($cart[0]) && is_array($cart[0]) && array_key_exists('id', $cart[0])) {
             $normalizedCart = [];
             foreach ($cart as $item) {
-                $normalizedCart[$item['id']] = $item; // Set item ID as the key
+                $normalizedCart[$item['id']] = $item;
             }
             $cart = $normalizedCart;
         }
@@ -46,9 +45,9 @@ class EditApprovedOrder extends Component
         }
     }
 
-    public function updatedQuantities($value, $itemId)
+    public function updatedQuantities($value, $key)
     {
-        $cart = session('cart_edit', []);
+        $itemId = (int) $key;
 
         if (isset($cart[$itemId])) {
             $cart[$itemId]['quantity'] = (int) $value;
@@ -85,7 +84,14 @@ class EditApprovedOrder extends Component
     public function updateOrder()
     {
         $order = Order::findOrFail($this->orderId);
-        $order->items = json_encode(session('cart_edit', []));
+
+        $cart = session('cart_edit', []);
+
+        foreach ($cart as $itemId => &$item) {
+            $item['quantity'] = max(1, (int) ($this->quantities[$itemId] ?? $item['quantity'] ?? 1));
+        }
+
+        $order->items = json_encode(array_values($cart));
         $order->save();
 
         session()->forget('cart_edit');

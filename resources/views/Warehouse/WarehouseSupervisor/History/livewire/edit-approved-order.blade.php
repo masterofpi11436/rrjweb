@@ -21,7 +21,9 @@
         @if(count($cart) > 0)
             <ul class="border border-gray-600 p-4 rounded-md bg-gray-900">
                 @foreach ($cart as $item)
-                <li class="flex justify-between items-center p-2 border-b border-gray-700 last:border-b-0">
+                <li class="flex justify-between items-center p-2 border-b border-gray-700 last:border-b-0"
+                    wire:key="cart-item-{{ $item['id'] }}"
+                    class="flex justify-between items-center p-2 border-b border-gray-700 last:border-b-0">
                     <span class="font-medium">{{ $item['name'] }}</span>
                     <div class="flex items-center gap-2">
                         <input
