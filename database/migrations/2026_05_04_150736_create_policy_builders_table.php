@@ -16,16 +16,25 @@ return new class extends Migration
             $table->string('title');
             $table->string('policy_statement');
             $table->string('policy_purpose');
-            $table->string('standards');
-            $table->string('american_correctional_association');
-            $table->string('va_board_of_local_and_regional_jails');
-            $table->string('prison_rape_and_elimination_act');
-            $table->string('ncchc');
+            $table->string('standards')->nullable();
+            $table->string('american_correctional_association')->nullable();
+            $table->string('va_board_of_local_and_regional_jails')->nullable();
+            $table->string('prison_rape_and_elimination_act')->nullable();
+            $table->string('ncchc')->nullable();
             $table->string('policy_cross_reference');
-            $table->string('forms');
+            $table->string('forms')->nullable();
             $table->string('policy_effective_date');
-            $table->string('policy_review_revision_date');
+            $table->json('policy_revision_dates');
+            $table->binary('policy_owner_signature');
+            $table->date('policy_owner_date');
+            $table->binary('policy_reviewer_signature');
+            $table->date('policy_reviewer_date');
+            $table->binary('superintendent_approval_signature');
+            $table->date('superintendent_approval_date');
+
             $table->string('table_of_contents');
+            $table->string('references');
+            $table->string('definitions');
             $table->timestamps();
         });
     }
