@@ -106,6 +106,6 @@ class PolicyBuilderForm extends Component
 
     public function render()
     {
-        return view('policy.livewire.policy-builder-form');
+        return view('Policy.livewire.policy-builder-form');
     }
 }
