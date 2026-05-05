@@ -102,7 +102,7 @@ class PolicyController extends Controller
 
     public function CreatePolicy()
     {
-        return view('Policy.Policy.create');
+        return view('Policy.Policy.policy-builder-form');
     }
 
     public function edit()

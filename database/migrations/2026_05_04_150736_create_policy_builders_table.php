@@ -23,18 +23,18 @@ return new class extends Migration
             $table->string('ncchc')->nullable();
             $table->string('policy_cross_reference');
             $table->string('forms')->nullable();
-            $table->string('policy_effective_date');
-            $table->json('policy_revision_dates');
-            $table->binary('policy_owner_signature');
-            $table->date('policy_owner_date');
-            $table->binary('policy_reviewer_signature');
-            $table->date('policy_reviewer_date');
-            $table->binary('superintendent_approval_signature');
-            $table->date('superintendent_approval_date');
+            $table->string('policy_effective_date')->nullable();
+            $table->json('policy_revision_dates')->nullable();
+            $table->binary('policy_owner_signature')->nullable();
+            $table->date('policy_owner_date')->nullable();
+            $table->binary('policy_reviewer_signature')->nullable();
+            $table->date('policy_reviewer_date')->nullable();
+            $table->binary('superintendent_approval_signature')->nullable();
+            $table->date('superintendent_approval_date')->nullable();
 
-            $table->string('table_of_contents');
-            $table->string('references');
-            $table->string('definitions');
+            $table->string('table_of_contents')->nullable();
+            $table->string('references')->nullable();
+            $table->string('definitions')->nullable();
             $table->timestamps();
         });
     }
