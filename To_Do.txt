@@ -11,3 +11,6 @@ Down or Out App:
     1. Scan a barcode on ID for logging people who are checked in or Out
     2. Admin perform CRUD on People who can log in or Out
     3. User can edit if person in logged in or out manually
+
+Policy builder,
+

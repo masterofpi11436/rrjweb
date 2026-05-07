@@ -18,18 +18,13 @@ class PolicyBuilderForm extends Component
     public string $policy_cross_reference = '';
     public ?string $forms = null;
     public string $policy_effective_date = '';
-
     public array $policy_revision_dates = [];
-
     public string $policy_owner_signature = '';
     public string $policy_owner_date = '';
-
     public string $policy_reviewer_signature = '';
     public string $policy_reviewer_date = '';
-
     public string $superintendent_approval_signature = '';
     public string $superintendent_approval_date = '';
-
     public string $table_of_contents = '';
     public string $references = '';
     public string $definitions = '';
