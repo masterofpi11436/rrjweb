@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('policy_chapter_paragraph_bullets', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('policy_chapter_paragraph_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('paragraph_id')->constrained('policy_chapter_paragraphs')->cascadeOnDelete();
             $table->string('type'); // Bullet, ordered list
             $table->json('list');
             $table->timestamps();

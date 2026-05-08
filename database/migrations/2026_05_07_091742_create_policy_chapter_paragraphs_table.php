@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('policy_chapter_paragraphs', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('policy_chapter_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('chapter_id')->constrained('policy_chapters')->cascadeOnDelete();
             $table->longText('paragraph');
             $table->unsignedInteger('sort_order')->default(0);
             $table->timestamps();
