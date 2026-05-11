@@ -23,6 +23,7 @@ use App\Http\Controllers\VFM\VFMController;
 use App\Http\Controllers\VFM\VFMTechController;
 use App\Http\Controllers\VFM\VFMVehicleController;
 use App\Http\Controllers\Policy\PolicyController;
+use App\Http\Controllers\Policy\BuilderController;
 use App\Http\Controllers\Tablet\TabletController;
 use App\Http\Controllers\Mailroom\MailroomController;
 use App\Http\Controllers\Directory\PhoneDirectoryController;
@@ -66,6 +67,7 @@ $vfmTechClass = VFMTechController::class;
 $tabletClass = TabletController::class;
 $mailroomClass = MailroomController::class;
 $policyClass = PolicyController::class;
+$buildClass = BuilderController::class;
 $jurisdictionClass = JurisdictionController::class;
 $warehouseSupervisorClass = WarehouseSupervisorController::class;
 $itemClass = ItemController::class;
@@ -230,7 +232,7 @@ Route::prefix('mailroom')->group(function () use ($mailroomClass, $mailroomLogin
 });
 
 // Policy Application
-Route::prefix('policy')->group(function () use ($policyClass, $policyLoginClass){
+Route::prefix('policy')->group(function () use ($policyClass, $buildClass, $policyLoginClass){
 
     // Routes without middleware
     Route::get('/login', [$policyLoginClass, 'policyLoginForm'])->name('policy.login');
@@ -240,14 +242,18 @@ Route::prefix('policy')->group(function () use ($policyClass, $policyLoginClass)
     Route::post('/logout', [$policyLoginClass, 'logout'])->name('policy.logout');
 
     // Routes with 'policy' middleware
-    Route::middleware('policy')->group(function () use ($policyClass) {
+    Route::middleware('policy')->group(function () use ($policyClass, $buildClass) {
         Route::get('/dashboard', [$policyClass, 'dashboard'])->name('policy.dashboard');
         Route::get('/upload', [$policyClass, 'create'])->name('policy.upload');
         Route::post('/upload', [$policyClass, 'store'])->name('policy.upload');
         Route::delete('/{id}', [$policyClass, 'destroy'])->name('policy.destroy');
         Route::get('/policy-builder', [$policyClass, 'PolicyBuilderDashboard'])->name('policy.builder');
-        Route::get('/create', [$policyClass, 'createpolicy'])->name('policy.create');
-        Route::get('/edit/{id}', [$policyClass, 'edit'])->name('policy.edit');
+
+        Route::prefix('builder')->group(function () use ($buildClass){
+            Route::get('/index', [$buildClass, 'index'])->name('policy.builder.index');
+            Route::get('/create', [$buildClass, 'create'])->name('policy.builder.create');
+        });
+
     });
 });
 

@@ -93,20 +93,4 @@ class PolicyController extends Controller
         session()->flash('create-edit-delete-message', 'Record and associated files deleted successfully!');
         return redirect()->back();
     }
-
-    // Policy Builder
-    public function PolicyBuilderDashboard()
-    {
-        return view('Policy.Policy.builder');
-    }
-
-    public function CreatePolicy()
-    {
-        return view('Policy.Policy.policy-builder-form');
-    }
-
-    public function edit()
-    {
-        return view('Policy.Policy.edit');
-    }
 }

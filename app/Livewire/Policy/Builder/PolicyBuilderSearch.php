@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Policy;
+namespace App\Livewire\Policy\Builder;
 
 use Livewire\Component;
 use Illuminate\Support\Facades\Storage;
@@ -48,7 +48,7 @@ class PolicyBuilderSearch extends Component
             ? $suggestions->sortBy('title')
             : $suggestions->sortByDesc('title');
 
-        return view('Policy.livewire.policy-builder-search', [
+        return view('Policy.Builder.livewire.policy-builder-search', [
             'suggestions' => $sortedSuggestions,
         ]);
     }

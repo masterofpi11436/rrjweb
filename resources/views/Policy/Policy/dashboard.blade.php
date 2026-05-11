@@ -18,7 +18,7 @@
 
 <!-- Link to navigate to the Upload page -->
 <a href="{{ route('policy.upload') }}" class="create-link">Upload New Policy</a>
-<a href="{{ route('policy.builder') }}" class="create-link">Build New Policy</a>
+<a href="{{ route('policy.builder.index') }}" class="create-link">Policy Builder</a>
 
 @livewire('policy.policy-search')
 
