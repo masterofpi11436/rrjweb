@@ -36,6 +36,6 @@
             </tbody>
         </table>
     @else
-        <h1>No Policy Found.</h1>
+        <h1>No Policy Created.</h1>
     @endif
 </div>

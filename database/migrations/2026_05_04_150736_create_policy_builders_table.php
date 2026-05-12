@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
 
             $table->string('title');
-            $table->string('policy_statement');
-            $table->string('policy_purpose');
+            $table->text('policy_statement');
+            $table->text('policy_purpose');
 
             $table->string('standards')->nullable();
             $table->string('american_correctional_association')->nullable();
@@ -40,6 +40,10 @@ return new class extends Migration
             $table->foreignId('policy_id')->contrained()->cascadeOnDelete();
             $table->string('references')->nullable();
             $table->string('definitions')->nullable();
+
+            // Aproval Logic
+            $table->boolean('revised')->default(false);
+            $table->boolean('approved')->default(false);
             $table->timestamps();
         });
     }
