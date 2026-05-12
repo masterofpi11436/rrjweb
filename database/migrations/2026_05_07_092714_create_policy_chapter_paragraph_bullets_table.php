@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('paragraph_id')->constrained('policy_chapter_paragraphs')->cascadeOnDelete();
             $table->string('type'); // Bullet, ordered list
             $table->json('list');
+            $table->unsignedInteger('sort_order')->default(0);
             $table->timestamps();
         });
     }
