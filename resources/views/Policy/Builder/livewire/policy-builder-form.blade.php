@@ -28,7 +28,7 @@
 
     <div>
         <label>VA Board of Local and Regional Jails</label>
-        <input type="text" wire:model="va_board_of_local_and_regional_jails"">
+        <input type="text" wire:model="va_board_of_local_and_regional_jails">
     </div>
 
     <div>
@@ -89,6 +89,89 @@
         <label>Table of Contents</label>
         <textarea wire:model="table_of_contents"></textarea>
     </div>
+
+    <hr>
+
+    <h3>Policy Chapters</h3>
+
+    @foreach ($chapters as $chapterIndex => $chapter)
+        <div style="border: 1px solid #ccc; padding: 15px; margin-bottom: 15px;">
+
+            <label>Chapter Title</label>
+            <input
+                type="text"
+                wire:model="chapters.{{ $chapterIndex }}.chapter_title"
+                placeholder="Chapter Title"
+            >
+
+            <button type="button" wire:click="removeChapter({{ $chapterIndex }})">
+                Remove Chapter
+            </button>
+
+            <h4>Paragraphs</h4>
+
+            @foreach ($chapter['paragraphs'] as $paragraphIndex => $paragraph)
+                <div style="border: 1px dashed #aaa; padding: 10px; margin-top: 10px;">
+
+                    <label>Paragraph</label>
+                    <textarea
+                        wire:model="chapters.{{ $chapterIndex }}.paragraphs.{{ $paragraphIndex }}.paragraph"
+                        placeholder="Paragraph text"
+                    ></textarea>
+
+                    <button
+                        type="button"
+                        wire:click="removeParagraph({{ $chapterIndex }}, {{ $paragraphIndex }})"
+                    >
+                        Remove Paragraph
+                    </button>
+
+                    <h5>Bullets</h5>
+
+                    @foreach ($paragraph['bullets'] as $bulletIndex => $bullet)
+                        <div class="flex gap-2 items-center">
+
+                            <select wire:model="chapters.{{ $chapterIndex }}.paragraphs.{{ $paragraphIndex }}.bullets.{{ $bulletIndex }}.type">
+                                <option value="bullet">Bullet</option>
+                                <option value="ordered">Ordered</option>
+                            </select>
+
+                            <input
+                                type="text"
+                                wire:model="chapters.{{ $chapterIndex }}.paragraphs.{{ $paragraphIndex }}.bullets.{{ $bulletIndex }}.list"
+                                placeholder="Bullet text"
+                            >
+
+                            <button
+                                type="button"
+                                wire:click="removeBullet({{ $chapterIndex }}, {{ $paragraphIndex }}, {{ $bulletIndex }})"
+                            >
+                                Remove Bullet
+                            </button>
+
+                        </div>
+                    @endforeach
+
+                    <button
+                        type="button"
+                        wire:click="addBullet({{ $chapterIndex }}, {{ $paragraphIndex }})"
+                    >
+                        Add Bullet
+                    </button>
+
+                </div>
+            @endforeach
+
+            <button type="button" wire:click="addParagraph({{ $chapterIndex }})">
+                Add Paragraph
+            </button>
+
+        </div>
+    @endforeach
+
+    <button type="button" wire:click="addChapter">
+        Add Chapter
+    </button>
 
     <div>
         <label>References</label>

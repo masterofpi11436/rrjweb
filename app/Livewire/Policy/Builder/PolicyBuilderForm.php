@@ -3,7 +3,10 @@
 namespace App\Livewire\Policy\Builder;
 
 use Livewire\Component;
-use App\Models\Policy\Policy;
+use App\Models\Policy\PolicyBuilder;
+use App\Models\Policy\Chapter;
+use App\Models\Policy\ChapterParagraph;
+use App\Models\Policy\ChapterParagraphBullet;
 
 class PolicyBuilderForm extends Component
 {
@@ -29,6 +32,7 @@ class PolicyBuilderForm extends Component
     public string $superintendent_approval_date = '';
 
     public string $table_of_contents = '';
+    public array $chapters = [];
     public string $references = '';
     public string $definitions = '';
 
@@ -44,6 +48,49 @@ class PolicyBuilderForm extends Component
     {
         unset($this->policy_revision_dates[$index]);
         $this->policy_revision_dates = array_values($this->policy_revision_dates);
+    }
+
+    public function addChapter()
+    {
+        $this->chapters[] = [
+            'chapter_title' => '',
+            'paragraphs' => [],
+        ];
+    }
+
+    public function removeChapter($chapterIndex)
+    {
+        unset($this->chapters[$chapterIndex]);
+        $this->chapters = array_values($this->chapters);
+    }
+
+    public function addParagraph($chapterIndex)
+    {
+        $this->chapters[$chapterIndex]['paragraphs'][] = [
+            'paragraph' => '',
+            'bullets' => [],
+        ];
+    }
+
+    public function removeParagraph($chapterIndex, $paragraphIndex)
+    {
+        unset($this->chapters[$chapterIndex]['paragraphs'][$paragraphIndex]);
+        $this->chapters[$chapterIndex]['paragraphs'] = array_values($this->chapters[$chapterIndex]['paragraphs']);
+    }
+
+    public function addBullet($chapterIndex, $paragraphIndex)
+    {
+        $this->chapters[$chapterIndex]['paragraphs'][$paragraphIndex]['bullets'][] = [
+            'type' => 'bullet',
+            'list' => '',
+        ];
+    }
+
+    public function removeBullet($chapterIndex, $paragraphIndex, $bulletIndex)
+    {
+        unset($this->chapters[$chapterIndex]['paragraphs'][$paragraphIndex]['bullets'][$bulletIndex]);
+        $this->chapters[$chapterIndex]['paragraphs'][$paragraphIndex]['bullets'] =
+            array_values($this->chapters[$chapterIndex]['paragraphs'][$paragraphIndex]['bullets']);
     }
 
     public function save()
@@ -67,11 +114,20 @@ class PolicyBuilderForm extends Component
             'superintendent_approval_date' => 'required|date',
 
             'table_of_contents' => 'required|string',
+
+            'chapters' => 'required|array',
+            'chapters.*.chapter_title' => 'required|string|max:255',
+            'chapters.*.paragraphs' => 'required|array',
+            'chapters.*.paragraphs.*.paragraph' => 'required|string',
+            'chapters.*.paragraphs.*.bullets' => 'nullable|array',
+            'chapters.*.paragraphs.*.bullets.*.type' => 'nullable|string',
+            'chapters.*.paragraphs.*.bullets.*.list' => 'nullable|string',
+
             'references' => 'required|string',
             'definitions' => 'required|string',
         ]);
 
-        Policy::create([
+        $policyBuilder = PolicyBuilder::create([
             'title' => $this->title,
             'policy_statement' => $this->policy_statement,
             'policy_purpose' => $this->policy_purpose,
@@ -85,19 +141,37 @@ class PolicyBuilderForm extends Component
             'policy_effective_date' => $this->policy_effective_date,
             'policy_revision_dates' => $this->policy_revision_dates,
 
-            'policy_owner_signature' => base64_decode($this->policy_owner_signature),
-            'policy_owner_date' => $this->policy_owner_date,
-
-            'policy_reviewer_signature' => base64_decode($this->policy_reviewer_signature),
-            'policy_reviewer_date' => $this->policy_reviewer_date,
-
-            'superintendent_approval_signature' => base64_decode($this->superintendent_approval_signature),
-            'superintendent_approval_date' => $this->superintendent_approval_date,
-
             'table_of_contents' => $this->table_of_contents,
             'references' => $this->references,
             'definitions' => $this->definitions,
         ]);
+
+        foreach ($this->chapters as $chapterIndex => $chapterData) {
+            $chapter = Chapter::create([
+                'policy_builder_id' => $policyBuilder->id,
+                'chapter_title' => $chapterData['chapter_title'],
+                'sort_order' => $chapterIndex,
+            ]);
+
+            foreach ($chapterData['paragraphs'] as $paragraphIndex => $paragraphData) {
+                $paragraph = ChapterParagraph::create([
+                    'policy_chapter_id' => $chapter->id,
+                    'paragraph' => $paragraphData['paragraph'],
+                    'sort_order' => $paragraphIndex,
+                ]);
+
+                foreach ($paragraphData['bullets'] ?? [] as $bulletIndex => $bulletData) {
+                    ChapterParagraphBullet::create([
+                        'policy_chapter_paragraph_id' => $paragraph->id,
+                        'type' => $bulletData['type'],
+                        'list' => [
+                            'text' => $bulletData['list'],
+                        ],
+                        'sort_order' => $bulletIndex,
+                    ]);
+                }
+            }
+        }
 
         session()->flash('success', 'Policy saved successfully.');
     }
