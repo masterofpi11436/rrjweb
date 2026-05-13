@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('va_board_of_local_and_regional_jails')->nullable();
             $table->string('prison_rape_and_elimination_act')->nullable();
             $table->string('ncchc')->nullable();
-            $table->string('policy_cross_reference');
+            $table->string('policy_cross_reference')->nullable();
             $table->string('forms')->nullable();
             $table->date('policy_effective_date')->nullable();
 

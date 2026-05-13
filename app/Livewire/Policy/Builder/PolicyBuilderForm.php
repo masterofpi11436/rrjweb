@@ -18,9 +18,9 @@ class PolicyBuilderForm extends Component
     public ?string $va_board_of_local_and_regional_jails = null;
     public ?string $prison_rape_and_elimination_act = null;
     public ?string $ncchc = null;
-    public string $policy_cross_reference = '';
+    public ?string $policy_cross_reference = null;
     public ?string $forms = null;
-    public string $policy_effective_date = '';
+    public ?string $policy_effective_date = null;
 
     public array $policy_revision_dates = [];
 
@@ -99,23 +99,25 @@ class PolicyBuilderForm extends Component
             'title' => 'required|string|max:255',
             'policy_statement' => 'required|string',
             'policy_purpose' => 'required|string',
-            'policy_cross_reference' => 'required|string',
-            'policy_effective_date' => 'required|date',
+            'policy_cross_reference' => 'nullable|string',
+            'policy_effective_date' => 'nullable|date',
 
-            'policy_revision_dates' => json_encode($this->policy_revision_dates),
+            'policy_revision_dates' => 'nullable|array',
+            'policy_revision_dates.*.revision' => 'nullable|string',
+            'policy_revision_dates.*.date' => 'nullable|string',
 
             'table_of_contents' => 'string',
 
-            'chapters' => 'required|array',
-            'chapters.*.chapter_title' => 'required|string|max:255',
-            'chapters.*.paragraphs' => 'required|array',
-            'chapters.*.paragraphs.*.paragraph' => 'required|string',
+            'chapters' => 'nullable|array',
+            'chapters.*.chapter_title' => 'nullable|string|max:255',
+            'chapters.*.paragraphs' => 'nullable|array',
+            'chapters.*.paragraphs.*.paragraph' => 'nullable|string',
             'chapters.*.paragraphs.*.bullets' => 'nullable|array',
             'chapters.*.paragraphs.*.bullets.*.type' => 'nullable|string',
             'chapters.*.paragraphs.*.bullets.*.list' => 'nullable|string',
 
-            'references' => 'required|string',
-            'definitions' => 'required|string',
+            'references' => 'nullable|string',
+            'definitions' => 'nullable|string',
         ]);
 
         $policyBuilder = PolicyBuilder::create([
@@ -163,8 +165,6 @@ class PolicyBuilderForm extends Component
                 }
             }
         }
-
-        session()->flash('success', 'Policy saved successfully.');
     }
 
     public function render()

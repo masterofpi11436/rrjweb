@@ -13,6 +13,10 @@ class PolicyBuilder extends Model
 
     protected $table = 'policy_builders';
 
+    protected $casts = [
+        'policy_revision_dates' => 'array',
+    ];
+
     public function chapters()
     {
         return $this->hasMany(Chapter::class, 'policy_builder_id')
