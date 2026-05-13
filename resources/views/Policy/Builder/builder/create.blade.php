@@ -1,4 +1,4 @@
-@extends('layouts.policy')
+@extends('layouts.policy-builder')
 
 @section('title', 'Create Policy')
 

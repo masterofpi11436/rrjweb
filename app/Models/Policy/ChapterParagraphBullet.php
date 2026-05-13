@@ -9,6 +9,8 @@ class ChapterParagraphBullet extends Model
 {
     use HasFactory;
 
+    protected $guarded = [];
+
     protected $table = 'policy_chapter_paragraph_bullets';
 
     public function policyChapter()

@@ -9,6 +9,8 @@ class PolicyBuilder extends Model
 {
     use HasFactory;
 
+    protected $guarded = [];
+
     protected $table = 'policy_builders';
 
     public function chapters()

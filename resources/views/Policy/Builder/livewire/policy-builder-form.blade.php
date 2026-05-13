@@ -1,59 +1,68 @@
-<form wire:submit.prevent="save" class="space-y-6">
+@php
+    $labelClass = 'block text-sm font-medium text-gray-700';
+    $inputClass = 'w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500';
+    $textareaClass = 'w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500';
+    $sectionClass = 'rounded-xl border border-gray-200 bg-gray-50 p-5 space-y-4';
+    $addButtonClass = 'rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700';
+    $removeButtonClass = 'rounded-lg bg-red-50 px-3 py-2 text-sm font-medium text-red-700 hover:bg-red-100';
+@endphp
+
+<form wire:submit.prevent="save" class="max-w-5xl mx-auto p-6 space-y-4 bg-white rounded-2xl shadow">
 
     {{-- Policy Header Information --}}
-    <div>
-        <label>Title</label>
-        <input type="text" wire:model="title" required>
+    <div class="space-y-2">
+        <label class="{{ $labelClass }}">Title</label>
+        <input type="text" wire:model="title" required class="{{ $inputClass }}">
     </div>
 
-    <div>
-        <label>Policy Statement</label>
-        <textarea wire:model="policy_statement" required></textarea>
+    <div class="space-y-2">
+        <label class="{{ $labelClass }}">Policy Statement</label>
+        <textarea wire:model="policy_statement" required class="{{ $inputClass }}"></textarea>
     </div>
 
-    <div>
-        <label>Policy Purpose</label>
-        <textarea wire:model="policy_purpose" required></textarea>
+    <div class="space-y-2">
+        <label class="{{ $labelClass }}">Policy Purpose</label>
+        <textarea wire:model="policy_purpose" required class="{{ $textareaClass }}"></textarea>
     </div>
 
-    <div>
-        <label>Standards</label>
-        <input type="text" wire:model="standards">
+    <div class="space-y-2">
+        <label class="{{ $labelClass }}">Standards</label>
+        <input type="text" wire:model="standards" class="{{ $inputClass }}">
     </div>
 
-    <div>
-        <label>American Correctional Association</label>
-        <input type="text" wire:model="american_correctional_association">
+    <div class="space-y-2">
+        <label class="{{ $labelClass }}">American Correctional Association</label>
+        <input type="text" wire:model="american_correctional_association" class="{{ $inputClass }}">
     </div>
 
-    <div>
-        <label>VA Board of Local and Regional Jails</label>
-        <input type="text" wire:model="va_board_of_local_and_regional_jails">
+    <div class="space-y-2">
+        <label class="{{ $labelClass }}">VA Board of Local and Regional Jails</label>
+        <input type="text" wire:model="va_board_of_local_and_regional_jails" class="{{ $inputClass }}">
     </div>
 
-    <div>
-        <label>Prison Rape Elimination Act</label>
-        <input type="text" wire:model="prison_rape_and_elimination_act">
+    <div class="space-y-2">
+        <label class="{{ $labelClass }}">Prison Rape Elimination Act</label>
+        <input type="text" wire:model="prison_rape_and_elimination_act" class="{{ $inputClass }}">
     </div>
 
-    <div>
-        <label>NCCHC</label>
-        <input type="text" wire:model="ncchc">
+    <div class="space-y-2">
+        <label class="{{ $labelClass }}">NCCHC</label>
+        <input type="text" wire:model="ncchc" class="{{ $inputClass }}">
     </div>
 
-    <div>
-        <label>Policy Cross Reference</label>
-        <input type="text" wire:model="policy_cross_reference">
+    <div class="space-y-2">
+        <label class="{{ $labelClass }}">Policy Cross Reference</label>
+        <input type="text" wire:model="policy_cross_reference" class="{{ $inputClass }}">
     </div>
 
-    <div>
-        <label>Forms</label>
-        <textarea wire:model="forms"></textarea>
+    <div class="space-y-2">
+        <label class="{{ $labelClass }}">Forms</label>
+        <textarea wire:model="forms" class="{{ $textareaClass }}"></textarea>
     </div>
 
-    <div>
-        <label>Policy Effective Date</label>
-        <input type="date" wire:model="policy_effective_date">
+    <div class="space-y-2">
+        <label class="{{ $labelClass }}">Policy Effective Date</label>
+        <input type="date" wire:model="policy_effective_date" class="{{ $inputClass }}">
     </div>
 
     <hr>

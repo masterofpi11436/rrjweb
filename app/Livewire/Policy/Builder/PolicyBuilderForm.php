@@ -102,18 +102,9 @@ class PolicyBuilderForm extends Component
             'policy_cross_reference' => 'required|string',
             'policy_effective_date' => 'required|date',
 
-            'policy_revision_dates' => 'required|array',
+            'policy_revision_dates' => json_encode($this->policy_revision_dates),
 
-            'policy_owner_signature' => 'required|string',
-            'policy_owner_date' => 'required|date',
-
-            'policy_reviewer_signature' => 'required|string',
-            'policy_reviewer_date' => 'required|date',
-
-            'superintendent_approval_signature' => 'required|string',
-            'superintendent_approval_date' => 'required|date',
-
-            'table_of_contents' => 'required|string',
+            'table_of_contents' => 'string',
 
             'chapters' => 'required|array',
             'chapters.*.chapter_title' => 'required|string|max:255',
