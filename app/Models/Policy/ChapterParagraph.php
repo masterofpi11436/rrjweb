@@ -9,9 +9,9 @@ class ChapterParagraph extends Model
 {
     use HasFactory;
 
-    protected $guarded = [];
-
     protected $table = 'policy_chapter_paragraphs';
+
+    protected $fillable = ['chapter_id ', 'paragraph', 'sort_order'];
 
     public function policyChapter()
     {

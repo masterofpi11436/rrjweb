@@ -9,9 +9,9 @@ class ChapterParagraphBullet extends Model
 {
     use HasFactory;
 
-    protected $guarded = [];
-
     protected $table = 'policy_chapter_paragraph_bullets';
+
+    protected $fillable = ['paragraph_id  ', 'type', 'list', 'sort_order'];
 
     public function policyChapter()
     {
