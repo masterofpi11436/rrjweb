@@ -37,7 +37,6 @@ return new class extends Migration
             $table->date('superintendent_approval_date')->nullable();
 
             $table->string('table_of_contents')->nullable();
-            $table->foreignId('policy_id')->contrained()->cascadeOnDelete();
             $table->string('references')->nullable();
             $table->string('definitions')->nullable();
 
