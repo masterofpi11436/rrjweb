@@ -102,6 +102,14 @@
                                         Delete
                                     </button>
                                 </form>
+
+                                <a
+                                    href="{{ route('policy.builder.create-pdf', $policy->id) }}"
+                                    target="_blank"
+                                    class="inline-flex items-center rounded-lg border border-purple-900/50 bg-purple-950/50 px-3 py-2 text-sm font-medium text-purple-300 transition hover:bg-purple-900/70 hover:text-white"
+                                >
+                                    Create PDF
+                                </a>
                             </td>
                         </tr>
                     @endforeach

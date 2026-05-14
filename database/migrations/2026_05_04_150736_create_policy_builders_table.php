@@ -15,16 +15,16 @@ return new class extends Migration
             $table->id();
 
             $table->string('title');
-            $table->text('policy_statement');
-            $table->text('policy_purpose');
+            $table->longtext('policy_statement');
+            $table->longtext('policy_purpose');
 
-            $table->string('standards')->nullable();
-            $table->string('american_correctional_association')->nullable();
-            $table->string('va_board_of_local_and_regional_jails')->nullable();
-            $table->string('prison_rape_and_elimination_act')->nullable();
-            $table->string('ncchc')->nullable();
-            $table->string('policy_cross_reference')->nullable();
-            $table->string('forms')->nullable();
+            $table->longtext('standards')->nullable();
+            $table->longtext('american_correctional_association')->nullable();
+            $table->longtext('va_board_of_local_and_regional_jails')->nullable();
+            $table->longtext('prison_rape_and_elimination_act')->nullable();
+            $table->longtext('ncchc')->nullable();
+            $table->longtext('policy_cross_reference')->nullable();
+            $table->longtext('forms')->nullable();
             $table->date('policy_effective_date')->nullable();
 
             $table->json('policy_revision_dates')->nullable();
@@ -36,9 +36,9 @@ return new class extends Migration
             $table->binary('superintendent_approval_signature')->nullable();
             $table->date('superintendent_approval_date')->nullable();
 
-            $table->string('table_of_contents')->nullable();
-            $table->string('references')->nullable();
-            $table->string('definitions')->nullable();
+            $table->longtext('table_of_contents')->nullable();
+            $table->longtext('references')->nullable();
+            $table->longtext('definitions')->nullable();
 
             // Aproval Logic
             $table->boolean('revised')->default(false);

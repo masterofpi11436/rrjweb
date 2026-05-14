@@ -2,11 +2,12 @@
 
 namespace App\Livewire\Policy\Builder;
 
-use Livewire\Component;
-use App\Models\Policy\PolicyBuilder;
 use App\Models\Policy\Chapter;
 use App\Models\Policy\ChapterParagraph;
 use App\Models\Policy\ChapterParagraphBullet;
+use App\Models\Policy\ChapterSection;
+use App\Models\Policy\PolicyBuilder;
+use Livewire\Component;
 
 class PolicyBuilderForm extends Component
 {
@@ -47,7 +48,7 @@ class PolicyBuilderForm extends Component
         }
 
         $policy = PolicyBuilder::with([
-            'chapters.chapterParagraph.bullets'
+            'chapters.sections.paragraphs.bullets'
         ])->findOrFail($policyBuilderId);
 
         $this->title = $policy->title ?? '';
@@ -69,19 +70,37 @@ class PolicyBuilderForm extends Component
         $this->chapters = $policy->chapters->map(function ($chapter) {
             return [
                 'chapter_title' => $chapter->chapter_title ?? '',
-                'paragraphs' => $chapter->chapterParagraph->map(function ($paragraph) {
+
+                'sections' => $chapter->sections->map(function ($section) {
+
                     return [
-                        'paragraph' => $paragraph->paragraph ?? '',
-                        'bullets' => $paragraph->bullets->map(function ($bullet) {
+                        'section_title' => $section->section_title ?? '',
+
+                        'paragraphs' => $section->paragraphs->map(function ($paragraph) {
+
                             return [
-                                'type' => $bullet->type ?? 'bullet',
-                                'list' => is_array($bullet->list)
-                                    ? ($bullet->list['text'] ?? '')
-                                    : ($bullet->list ?? ''),
+                                'paragraph' => $paragraph->paragraph ?? '',
+
+                                'bullets' => $paragraph->bullets->map(function ($bullet) {
+
+                                    return [
+                                        'type' => $bullet->type ?? 'bullet',
+
+                                        'list' => is_array($bullet->list)
+                                            ? ($bullet->list['text'] ?? '')
+                                            : ($bullet->list ?? ''),
+                                    ];
+
+                                })->toArray(),
+
                             ];
+
                         })->toArray(),
+
                     ];
+
                 })->toArray(),
+
             ];
         })->toArray();
     }
@@ -104,7 +123,7 @@ class PolicyBuilderForm extends Component
     {
         $this->chapters[] = [
             'chapter_title' => '',
-            'paragraphs' => [],
+            'sections' => [],
         ];
     }
 
@@ -114,33 +133,59 @@ class PolicyBuilderForm extends Component
         $this->chapters = array_values($this->chapters);
     }
 
-    public function addParagraph($chapterIndex)
+    public function addParagraph($chapterIndex, $sectionIndex)
     {
-        $this->chapters[$chapterIndex]['paragraphs'][] = [
+        $this->chapters[$chapterIndex]['sections'][$sectionIndex]['paragraphs'][] = [
             'paragraph' => '',
             'bullets' => [],
         ];
     }
 
-    public function removeParagraph($chapterIndex, $paragraphIndex)
+    public function removeParagraph($chapterIndex, $sectionIndex, $paragraphIndex)
     {
-        unset($this->chapters[$chapterIndex]['paragraphs'][$paragraphIndex]);
-        $this->chapters[$chapterIndex]['paragraphs'] = array_values($this->chapters[$chapterIndex]['paragraphs']);
+        unset(
+            $this->chapters[$chapterIndex]['sections'][$sectionIndex]['paragraphs'][$paragraphIndex]
+        );
+
+        $this->chapters[$chapterIndex]['sections'][$sectionIndex]['paragraphs'] = array_values(
+            $this->chapters[$chapterIndex]['sections'][$sectionIndex]['paragraphs']
+        );
     }
 
-    public function addBullet($chapterIndex, $paragraphIndex)
+    public function addSection($chapterIndex)
     {
-        $this->chapters[$chapterIndex]['paragraphs'][$paragraphIndex]['bullets'][] = [
+        $this->chapters[$chapterIndex]['sections'][] = [
+            'section_title' => '',
+            'paragraphs' => [],
+        ];
+    }
+
+    public function removeSection($chapterIndex, $sectionIndex)
+    {
+        unset($this->chapters[$chapterIndex]['sections'][$sectionIndex]);
+
+        $this->chapters[$chapterIndex]['sections'] = array_values(
+            $this->chapters[$chapterIndex]['sections']
+        );
+    }
+
+    public function addBullet($chapterIndex, $sectionIndex, $paragraphIndex)
+    {
+        $this->chapters[$chapterIndex]['sections'][$sectionIndex]['paragraphs'][$paragraphIndex]['bullets'][] = [
             'type' => 'bullet',
             'list' => '',
         ];
     }
 
-    public function removeBullet($chapterIndex, $paragraphIndex, $bulletIndex)
+    public function removeBullet($chapterIndex, $sectionIndex, $paragraphIndex, $bulletIndex)
     {
-        unset($this->chapters[$chapterIndex]['paragraphs'][$paragraphIndex]['bullets'][$bulletIndex]);
-        $this->chapters[$chapterIndex]['paragraphs'][$paragraphIndex]['bullets'] =
-            array_values($this->chapters[$chapterIndex]['paragraphs'][$paragraphIndex]['bullets']);
+        unset(
+            $this->chapters[$chapterIndex]['sections'][$sectionIndex]['paragraphs'][$paragraphIndex]['bullets'][$bulletIndex]
+        );
+
+        $this->chapters[$chapterIndex]['sections'][$sectionIndex]['paragraphs'][$paragraphIndex]['bullets'] = array_values(
+            $this->chapters[$chapterIndex]['sections'][$sectionIndex]['paragraphs'][$paragraphIndex]['bullets']
+        );
     }
 
     public function save()
@@ -160,11 +205,13 @@ class PolicyBuilderForm extends Component
 
             'chapters' => 'nullable|array',
             'chapters.*.chapter_title' => 'nullable|string|max:255',
-            'chapters.*.paragraphs' => 'nullable|array',
-            'chapters.*.paragraphs.*.paragraph' => 'nullable|string',
-            'chapters.*.paragraphs.*.bullets' => 'nullable|array',
-            'chapters.*.paragraphs.*.bullets.*.type' => 'nullable|string',
-            'chapters.*.paragraphs.*.bullets.*.list' => 'nullable|string',
+            'chapters.*.sections' => 'nullable|array',
+            'chapters.*.sections.*.section_title' => 'nullable|string|max:255',
+            'chapters.*.sections.*.paragraphs' => 'nullable|array',
+            'chapters.*.sections.*.paragraphs.*.paragraph' => 'nullable|string',
+            'chapters.*.sections.*.paragraphs.*.bullets' => 'nullable|array',
+            'chapters.*.sections.*.paragraphs.*.bullets.*.type' => 'nullable|string',
+            'chapters.*.sections.*.paragraphs.*.bullets.*.list' => 'nullable|string',
 
             'references' => 'nullable|string',
             'definitions' => 'nullable|string',
@@ -195,30 +242,79 @@ class PolicyBuilderForm extends Component
 
         // Clear old nested records before saving updated chapters
         foreach ($policy->chapters as $existingChapter) {
-            foreach ($existingChapter->chapterParagraph as $existingParagraph) {
-                $existingParagraph->bullets()->delete();
+
+            foreach ($existingChapter->sections as $existingSection) {
+
+                foreach ($existingSection->paragraphs as $existingParagraph) {
+                    $existingParagraph->bullets()->delete();
+                }
+
+                $existingSection->paragraphs()->delete();
             }
 
-            $existingChapter->chapterParagraph()->delete();
+            $existingChapter->sections()->delete();
         }
 
         $policy->chapters()->delete();
 
         foreach ($this->chapters as $chapterIndex => $chapterData) {
+
             $chapter = Chapter::create([
                 'policy_id' => $policy->id,
                 'chapter_title' => $chapterData['chapter_title'] ?? '',
                 'sort_order' => $chapterIndex,
             ]);
 
-            foreach ($chapterData['paragraphs'] ?? [] as $paragraphIndex => $paragraphData) {
-                $paragraph = ChapterParagraph::create([
+            foreach ($chapterData['sections'] ?? [] as $sectionIndex => $sectionData) {
+
+                $section = ChapterSection::create([
                     'chapter_id' => $chapter->id,
+                    'section_title' => $sectionData['section_title'] ?? '',
+                    'sort_order' => $sectionIndex,
+                ]);
+
+                foreach ($sectionData['paragraphs'] ?? [] as $paragraphIndex => $paragraphData) {
+
+                    $paragraph = ChapterParagraph::create([
+                        'section_id' => $section->id,
+                        'paragraph' => $paragraphData['paragraph'] ?? '',
+                        'sort_order' => $paragraphIndex,
+                    ]);
+
+                    foreach ($paragraphData['bullets'] ?? [] as $bulletIndex => $bulletData) {
+
+                        ChapterParagraphBullet::create([
+                            'paragraph_id' => $paragraph->id,
+                            'type' => $bulletData['type'] ?? 'bullet',
+                            'list' => [
+                                'text' => $bulletData['list'] ?? '',
+                            ],
+                            'sort_order' => $bulletIndex,
+                        ]);
+
+                    }
+                }
+            }
+        }
+
+        foreach ($chapterData['sections'] ?? [] as $sectionIndex => $sectionData) {
+
+            $section = ChapterSection::create([
+                'chapter_id' => $chapter->id,
+                'section_title' => $sectionData['section_title'] ?? '',
+                'sort_order' => $sectionIndex,
+            ]);
+
+            foreach ($sectionData['paragraphs'] ?? [] as $paragraphIndex => $paragraphData) {
+
+                $paragraph = ChapterParagraph::create([
+                    'section_id' => $section->id,
                     'paragraph' => $paragraphData['paragraph'] ?? '',
                     'sort_order' => $paragraphIndex,
                 ]);
 
                 foreach ($paragraphData['bullets'] ?? [] as $bulletIndex => $bulletData) {
+
                     ChapterParagraphBullet::create([
                         'paragraph_id' => $paragraph->id,
                         'type' => $bulletData['type'] ?? 'bullet',
@@ -227,10 +323,10 @@ class PolicyBuilderForm extends Component
                         ],
                         'sort_order' => $bulletIndex,
                     ]);
+
                 }
             }
         }
-
         session()->flash('success', 'Policy saved successfully.');
 
         return redirect()->route('policy.builder.index');

@@ -5,15 +5,15 @@ namespace App\Models\Policy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ChapterParagraph extends Model
+class ChapterSection extends Model
 {
     use HasFactory;
 
-    protected $table = 'policy_chapter_paragraphs';
+    protected $table = 'policy_chapter_sections';
 
     protected $fillable = [
-        'section_id',
-        'paragraph',
+        'chapter_id',
+        'section_title',
         'sort_order',
     ];
 
@@ -22,9 +22,9 @@ class ChapterParagraph extends Model
         return $this->belongsTo(Chapter::class, 'chapter_id');
     }
 
-    public function bullets()
+    public function paragraphs()
     {
-        return $this->hasMany(ChapterParagraphBullet::class, 'paragraph_id')
+        return $this->hasMany(ChapterParagraph::class, 'section_id')
             ->orderBy('sort_order');
     }
 }

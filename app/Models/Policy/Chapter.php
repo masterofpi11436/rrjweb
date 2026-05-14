@@ -22,9 +22,9 @@ class Chapter extends Model
         return $this->belongsTo(PolicyBuilder::class, 'policy_id');
     }
 
-    public function chapterParagraph()
+    public function sections()
     {
-        return $this->hasMany(ChapterParagraph::class, 'chapter_id')
+        return $this->hasMany(ChapterSection::class, 'chapter_id')
             ->orderBy('sort_order');
     }
 }

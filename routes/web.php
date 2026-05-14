@@ -254,6 +254,7 @@ Route::prefix('policy')->group(function () use ($policyClass, $buildClass, $poli
             Route::get('/create', [$buildClass, 'create'])->name('policy.builder.create');
             Route::get('/edit/{id}', [$buildClass, 'edit'])->name('policy.builder.edit');
             Route::delete('/{id}', [$buildClass, 'destroy'])->name('policy.builder.destroy');
+            Route::get('/create-pdf/{id}', [$buildClass, 'createPDF'])->name('policy.builder.create-pdf');
         });
     });
 });

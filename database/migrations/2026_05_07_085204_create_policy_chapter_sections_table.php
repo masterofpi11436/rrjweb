@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('policy_chapter_paragraphs', function (Blueprint $table) {
+        Schema::create('policy_chapter_sections', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('section_id')->constrained('policy_chapter_sections')->cascadeOnDelete();
-            $table->longText('paragraph');
+            $table->foreignId('chapter_id')->constrained('policy_chapters')->cascadeOnDelete();
+            $table->string('section_title')->nullable();
             $table->unsignedInteger('sort_order')->default(0);
             $table->timestamps();
         });
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('policy_chapter_paragraphs');
+        Schema::dropIfExists('policy_chapter_sections');
     }
 };
