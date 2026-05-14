@@ -42,37 +42,30 @@ class BuilderController extends Controller
             'chapters.sections.paragraphs.bullets'
         ])->findOrFail($id);
 
-        $pdf = new TCPDF();
+        $pdf = new TCPDF('P', 'mm', 'LETTER', true, 'UTF-8', false);
 
-        // Document information
+        $pdf->setPrintHeader(false);
+        $pdf->setPrintFooter(false);
+
         $pdf->SetCreator(config('app.name'));
         $pdf->SetAuthor('Policy Builder');
         $pdf->SetTitle($policy->title);
         $pdf->SetSubject('Policy Document');
 
-        // Margins
-        $pdf->SetMargins(15, 20, 15);
+        $pdf->SetMargins(20, 18, 20);
+        $pdf->SetAutoPageBreak(true, 18);
+        $pdf->SetFont('times', '', 11);
 
-        // Auto page break
-        $pdf->SetAutoPageBreak(true, 20);
-
-        // Add first page
         $pdf->AddPage();
 
-        // Generate HTML
         $html = view('Policy.Builder.pdf.policy', [
             'policy' => $policy,
         ])->render();
 
-        // Write HTML into PDF
         $pdf->writeHTML($html, true, false, true, false, '');
 
-        // Download / stream PDF
         return response(
-            $pdf->Output(
-                str($policy->title)->slug() . '.pdf',
-                'S'
-            ),
+            $pdf->Output(str($policy->title)->slug() . '.pdf', 'S'),
             200
         )->header('Content-Type', 'application/pdf');
     }
