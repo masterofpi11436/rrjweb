@@ -124,7 +124,7 @@
     <tr>
         <td class="logo-cell">
             <img
-                src="{{ public_path('images/rrja-logo.png') }}"
+                src="{{ public_path('images/rrj-logo.jpg') }}"
                 class="logo"
             >
         </td>
