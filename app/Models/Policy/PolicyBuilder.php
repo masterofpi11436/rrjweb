@@ -15,6 +15,8 @@ class PolicyBuilder extends Model
 
     protected $casts = [
         'policy_revision_dates' => 'array',
+        'revised' => 'boolean',
+        'approved' => 'boolean',
     ];
 
     public function chapters()

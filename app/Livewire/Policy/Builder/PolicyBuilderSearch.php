@@ -21,6 +21,15 @@ class PolicyBuilderSearch extends Component
         }
     }
 
+    public function togglePublished($policyId)
+    {
+        $policy = PolicyBuilder::findOrFail($policyId);
+
+        $policy->update([
+            'approved' => ! $policy->approved,
+        ]);
+    }
+
     public function render()
     {
         $suggestions = PolicyBuilder::query()
