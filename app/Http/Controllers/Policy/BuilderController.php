@@ -57,16 +57,29 @@ class BuilderController extends Controller
         $pdf->SetFont('times', '', 11);
 
         $pdf->AddPage();
+        $this->addPageBorder($pdf);
+        $pdf->writeHTML(view('Policy.Builder.pdf.cover', compact('policy'))->render(), true, false, true, false, '');
 
-        $html = view('Policy.Builder.pdf.policy', [
-            'policy' => $policy,
-        ])->render();
+        $pdf->AddPage();
+        $this->addPageBorder($pdf);
+        $pdf->writeHTML(view('Policy.Builder.pdf.toc', compact('policy'))->render(), true, false, true, false, '');
 
-        $pdf->writeHTML($html, true, false, true, false, '');
+        $pdf->AddPage();
+        $this->addPageBorder($pdf);
+        $pdf->writeHTML(view('Policy.Builder.pdf.body', compact('policy'))->render(), true, false, true, false, '');
 
         return response(
             $pdf->Output(str($policy->title)->slug() . '.pdf', 'S'),
             200
         )->header('Content-Type', 'application/pdf');
     }
+
+    private function addPageBorder(TCPDF $pdf): void
+    {
+        $pdf->SetDrawColor(72, 190, 135);
+        $pdf->SetLineWidth(0.8);
+        $pdf->Rect(8, 8, 199, 263);
+    }
+
+
 }
