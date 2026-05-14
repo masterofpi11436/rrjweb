@@ -11,15 +11,20 @@ class Chapter extends Model
 
     protected $table = 'policy_chapters';
 
-    protected $fillable = ['policy_id', 'chapter_title', 'sort_order'];
+    protected $fillable = [
+        'policy_id',
+        'chapter_title',
+        'sort_order',
+    ];
 
     public function policyBuilder()
     {
-        return $this->belongsTo(PolicyBuilder::class, 'policy_builder_id');
+        return $this->belongsTo(PolicyBuilder::class, 'policy_id');
     }
 
     public function chapterParagraph()
     {
-        return $this->hasMany(ChapterParagraph::class, 'policy_chapter_id')->orderBy('sort_order');
+        return $this->hasMany(ChapterParagraph::class, 'chapter_id')
+            ->orderBy('sort_order');
     }
 }

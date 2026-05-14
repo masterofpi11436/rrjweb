@@ -11,15 +11,20 @@ class ChapterParagraph extends Model
 
     protected $table = 'policy_chapter_paragraphs';
 
-    protected $fillable = ['chapter_id ', 'paragraph', 'sort_order'];
+    protected $fillable = [
+        'chapter_id',
+        'paragraph',
+        'sort_order',
+    ];
 
-    public function policyChapter()
+    public function chapter()
     {
-        return $this->belongsTo(Chapter::class);
+        return $this->belongsTo(Chapter::class, 'chapter_id');
     }
 
-    public function chapterParagraphBullet()
+    public function bullets()
     {
-        return $this->hasMany(ChapterParagraphBullet::class)->orderBy('sort_order');
+        return $this->hasMany(ChapterParagraphBullet::class, 'paragraph_id')
+            ->orderBy('sort_order');
     }
 }

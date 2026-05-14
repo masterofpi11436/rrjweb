@@ -11,10 +11,19 @@ class ChapterParagraphBullet extends Model
 
     protected $table = 'policy_chapter_paragraph_bullets';
 
-    protected $fillable = ['paragraph_id  ', 'type', 'list', 'sort_order'];
+    protected $fillable = [
+        'paragraph_id',
+        'type',
+        'list',
+        'sort_order',
+    ];
 
-    public function policyChapter()
+    protected $casts = [
+        'list' => 'array',
+    ];
+
+    public function paragraph()
     {
-        return $this->belongsTo(Chapter::class);
+        return $this->belongsTo(ChapterParagraph::class, 'paragraph_id');
     }
 }

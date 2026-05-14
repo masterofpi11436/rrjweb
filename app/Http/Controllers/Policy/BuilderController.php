@@ -15,4 +15,11 @@ class BuilderController extends Controller
     {
         return view('Policy.Builder.builder.create');
     }
+
+    public function edit($id)
+    {
+        return view('Policy.Builder.builder.edit', [
+            'policyBuilderId' => $id,
+        ]);
+    }
 }

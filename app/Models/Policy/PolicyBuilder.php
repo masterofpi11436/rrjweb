@@ -19,7 +19,7 @@ class PolicyBuilder extends Model
 
     public function chapters()
     {
-        return $this->hasMany(Chapter::class, 'policy_builder_id')
+        return $this->hasMany(Chapter::class, 'policy_id')
             ->orderBy('sort_order');
     }
 }

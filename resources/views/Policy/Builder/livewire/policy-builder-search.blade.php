@@ -28,10 +28,6 @@
                                 @endif
                             </a>
                         </th>
-
-                        <th class="px-5 py-4 text-left text-xs font-semibold uppercase tracking-wider text-gray-400">
-                            Action
-                        </th>
                     </tr>
                 </thead>
 
@@ -40,20 +36,11 @@
                         <tr class="transition hover:bg-gray-900/70">
                             <td class="px-5 py-4 text-sm">
                                 <a 
-                                    href="{{ asset('storage/' . $policy->pdf) }}{{ $search ? '#search=' . urlencode($search) : '' }}" 
+                                    href="{{ route('policy.builder.edit', $policy->id) }}"
                                     target="_blank"
                                     class="font-medium text-blue-400 transition hover:text-blue-300 hover:underline"
                                 >
                                     {{ $policy->title }}
-                                </a>
-                            </td>
-
-                            <td class="px-5 py-4 text-sm">
-                                <a 
-                                    href="{{ route('policy.edit', $policy->id) }}"
-                                    class="inline-flex items-center rounded-lg border border-gray-700 bg-gray-800 px-3 py-2 text-sm font-medium text-gray-200 transition hover:border-gray-600 hover:bg-gray-700 hover:text-white"
-                                >
-                                    Edit
                                 </a>
                             </td>
                         </tr>

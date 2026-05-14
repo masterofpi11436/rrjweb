@@ -3,18 +3,13 @@
 namespace App\Livewire\Policy\Builder;
 
 use Livewire\Component;
-use Illuminate\Support\Facades\Storage;
-
-// Required Models
-use App\Models\Policy\Policy;
+use App\Models\Policy\PolicyBuilder;
 
 class PolicyBuilderSearch extends Component
 {
-    public $search = ''; // Default search term
-    public $sortColumn = 'title'; // Default sort column
-    public $sortDirection = 'asc'; // Default sort direction
-    public $confirmingDelete = false;
-    public $deleteId;
+    public $search = '';
+    public $sortColumn = 'title';
+    public $sortDirection = 'asc';
 
     public function sortBy($column)
     {
@@ -28,28 +23,24 @@ class PolicyBuilderSearch extends Component
 
     public function render()
     {
-        $policies = Policy::all();
-
-        $suggestions = $policies->filter(function ($policy) {
-            if (stripos($policy->title, $this->search) !== false) {
-                return true;
-            }
-
-            if ($policy->text && Storage::disk('public')->exists($policy->text)) {
-                $textContent = Storage::disk('public')->get($policy->text);
-                return stripos($textContent, $this->search) !== false;
-            }
-
-            return false;
-        });
-
-        // Keep search term and sort
-        $sortedSuggestions = $this->sortDirection === 'asc'
-            ? $suggestions->sortBy('title')
-            : $suggestions->sortByDesc('title');
+        $suggestions = PolicyBuilder::query()
+            ->when($this->search, function ($query) {
+                $query->where(function ($query) {
+                    $query->where('title', 'like', '%' . $this->search . '%')
+                        ->orWhere('policy_statement', 'like', '%' . $this->search . '%')
+                        ->orWhere('policy_purpose', 'like', '%' . $this->search . '%')
+                        ->orWhere('standards', 'like', '%' . $this->search . '%')
+                        ->orWhere('policy_cross_reference', 'like', '%' . $this->search . '%')
+                        ->orWhere('forms', 'like', '%' . $this->search . '%')
+                        ->orWhere('references', 'like', '%' . $this->search . '%')
+                        ->orWhere('definitions', 'like', '%' . $this->search . '%');
+                });
+            })
+            ->orderBy($this->sortColumn, $this->sortDirection)
+            ->get();
 
         return view('Policy.Builder.livewire.policy-builder-search', [
-            'suggestions' => $sortedSuggestions,
+            'suggestions' => $suggestions,
         ]);
     }
 }
