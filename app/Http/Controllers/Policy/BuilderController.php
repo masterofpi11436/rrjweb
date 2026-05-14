@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Policy;
 
 use App\Http\Controllers\Controller;
+use App\Models\Policy\PolicyBuilder;
 
 class BuilderController extends Controller
 {
@@ -21,5 +22,16 @@ class BuilderController extends Controller
         return view('Policy.Builder.builder.edit', [
             'policyBuilderId' => $id,
         ]);
+    }
+
+    public function destroy($id)
+    {
+        $policy = PolicyBuilder::findOrFail($id);
+
+        $policy->delete();
+
+        return redirect()
+            ->route('policy.builder.index')
+            ->with('success', 'Policy deleted successfully.');
     }
 }

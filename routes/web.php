@@ -253,6 +253,7 @@ Route::prefix('policy')->group(function () use ($policyClass, $buildClass, $poli
             Route::get('/index', [$buildClass, 'index'])->name('policy.builder.index');
             Route::get('/create', [$buildClass, 'create'])->name('policy.builder.create');
             Route::get('/edit/{id}', [$buildClass, 'edit'])->name('policy.builder.edit');
+            Route::delete('/{id}', [$buildClass, 'destroy'])->name('policy.builder.destroy');
         });
     });
 });

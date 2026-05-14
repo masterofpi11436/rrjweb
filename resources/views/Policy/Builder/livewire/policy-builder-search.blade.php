@@ -1,8 +1,8 @@
 <div>
     <div class="mb-5">
-        <input 
-            type="text" 
-            wire:model.live="search" 
+        <input
+            type="text"
+            wire:model.live="search"
             placeholder="Search policies..."
             class="w-full rounded-xl border border-gray-700 bg-gray-950 px-4 py-3 text-sm text-white placeholder:text-gray-500 shadow-inner focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/40"
         >
@@ -14,8 +14,8 @@
                 <thead class="bg-gray-900">
                     <tr>
                         <th class="px-5 py-4 text-left text-xs font-semibold uppercase tracking-wider text-gray-400">
-                            <a 
-                                href="#" 
+                            <a
+                                href="#"
                                 wire:click.prevent="sortBy('title')"
                                 class="inline-flex items-center gap-2 transition hover:text-white"
                             >
@@ -47,7 +47,7 @@
                     @foreach ($suggestions as $policy)
                         <tr class="transition hover:bg-gray-900/70">
                             <td class="px-5 py-4 text-sm">
-                                <a 
+                                <a
                                     href="{{ route('policy.builder.edit', $policy->id) }}"
                                     class="font-medium text-blue-400 transition hover:text-blue-300 hover:underline"
                                 >
@@ -80,12 +80,28 @@
                             </td>
 
                             <td class="px-5 py-4 text-sm">
-                                <a 
+                                <a
                                     href="{{ route('policy.builder.edit', $policy->id) }}"
                                     class="inline-flex items-center rounded-lg border border-gray-700 bg-gray-800 px-3 py-2 text-sm font-medium text-gray-200 transition hover:border-gray-600 hover:bg-gray-700 hover:text-white"
                                 >
                                     Edit
                                 </a>
+                               <form
+                                    action="{{ route('policy.builder.destroy', $policy->id) }}"
+                                    method="POST"
+                                    class="inline-block"
+                                    onsubmit="return confirm('Are you sure you want to delete this policy?');"
+                                >
+                                    @csrf
+                                    @method('DELETE')
+
+                                    <button
+                                        type="submit"
+                                        class="inline-flex items-center rounded-lg border border-red-900/50 bg-red-950/50 px-3 py-2 text-sm font-medium text-red-300 transition hover:bg-red-900/70 hover:text-white"
+                                    >
+                                        Delete
+                                    </button>
+                                </form>
                             </td>
                         </tr>
                     @endforeach
