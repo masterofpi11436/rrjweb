@@ -206,21 +206,21 @@ class PolicyBuilderForm extends Component
 
         foreach ($this->chapters as $chapterIndex => $chapterData) {
             $chapter = Chapter::create([
-                'policy_builder_id' => $policy->id,
+                'policy_id' => $policy->id,
                 'chapter_title' => $chapterData['chapter_title'] ?? '',
                 'sort_order' => $chapterIndex,
             ]);
 
             foreach ($chapterData['paragraphs'] ?? [] as $paragraphIndex => $paragraphData) {
                 $paragraph = ChapterParagraph::create([
-                    'policy_chapter_id' => $chapter->id,
+                    'chapter_id' => $chapter->id,
                     'paragraph' => $paragraphData['paragraph'] ?? '',
                     'sort_order' => $paragraphIndex,
                 ]);
 
                 foreach ($paragraphData['bullets'] ?? [] as $bulletIndex => $bulletData) {
                     ChapterParagraphBullet::create([
-                        'policy_chapter_paragraph_id' => $paragraph->id,
+                        'paragraph_id' => $paragraph->id,
                         'type' => $bulletData['type'] ?? 'bullet',
                         'list' => [
                             'text' => $bulletData['list'] ?? '',
