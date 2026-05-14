@@ -297,36 +297,6 @@ class PolicyBuilderForm extends Component
             }
         }
 
-        foreach ($chapterData['sections'] ?? [] as $sectionIndex => $sectionData) {
-
-            $section = ChapterSection::create([
-                'chapter_id' => $chapter->id,
-                'section_title' => $sectionData['section_title'] ?? '',
-                'sort_order' => $sectionIndex,
-            ]);
-
-            foreach ($sectionData['paragraphs'] ?? [] as $paragraphIndex => $paragraphData) {
-
-                $paragraph = ChapterParagraph::create([
-                    'section_id' => $section->id,
-                    'paragraph' => $paragraphData['paragraph'] ?? '',
-                    'sort_order' => $paragraphIndex,
-                ]);
-
-                foreach ($paragraphData['bullets'] ?? [] as $bulletIndex => $bulletData) {
-
-                    ChapterParagraphBullet::create([
-                        'paragraph_id' => $paragraph->id,
-                        'type' => $bulletData['type'] ?? 'bullet',
-                        'list' => [
-                            'text' => $bulletData['list'] ?? '',
-                        ],
-                        'sort_order' => $bulletIndex,
-                    ]);
-
-                }
-            }
-        }
         session()->flash('success', 'Policy saved successfully.');
 
         return redirect()->route('policy.builder.index');

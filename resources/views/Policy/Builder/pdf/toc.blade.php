@@ -82,10 +82,6 @@
     @endforeach
 </table>
 
-@if($policy->references)
-    <div class="references">REFERENCES</div>
-@endif
-
 <div class="footer-title">
     {{ $policy->policy_number ?? '' }} {{ $policy->title }}
 </div>

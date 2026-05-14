@@ -40,48 +40,83 @@
         line-height: 1.5;
     }
 
-    .revision-table {
+.revision-table {
         width: 100%;
         border-collapse: collapse;
-        margin-top: 10px;
-    }
-
-    .revision-table td {
-        border: 1px solid #9be3b1;
-        padding: 5px;
-        height: 22px;
+        margin-top: 8px;
         font-size: 10pt;
     }
 
-    .revision-header {
-        background-color: #6fd08c;
+    .revision-table td {
+        border: 1px solid #6fbf5f;
+        padding: 4px 6px;
+        height: 18px;
+    }
+
+    .revision-header td {
+        background-color: #63b946;
+        color: #fff;
         font-weight: bold;
+    }
+
+    .revision-data-row td {
+        background-color: #dfead7;
+        font-weight: bold;
+    }
+
+    .signature-title {
+        margin-top: 18px;
+        margin-bottom: 6px;
+        font-size: 10pt;
+        font-weight: bold;
+        text-transform: uppercase;
     }
 
     .signature-table {
         width: 100%;
         border-collapse: collapse;
-        margin-top: 20px;
-    }
-
-    .signature-table td {
-        border: 1px solid #666;
-        padding: 6px;
-        height: 40px;
         font-size: 10pt;
     }
 
-    .label {
-        width: 180px;
+    .signature-table td {
+        border: 1px solid #444;
+        padding: 8px;
+        vertical-align: top;
+    }
+
+    .signature-label {
+        width: 170px;
         font-weight: bold;
+        text-transform: uppercase;
+    }
+
+    .signature-person {
+        width: 260px;
     }
 
     .signature-name {
+        font-weight: normal;
+        font-size: 11pt;
+    }
+
+    .signature-position {
+        font-size: 9pt;
+        text-transform: uppercase;
+    }
+
+    .signature-box {
+        width: 220px;
+    }
+
+    .date-box {
+        width: 120px;
+        white-space: nowrap;
         font-weight: bold;
     }
 
-    .signature-title {
-        font-size: 9pt;
+    .date-value {
+        margin-left: 8px;
+        font-weight: normal;
     }
 </style>
 
@@ -175,126 +210,150 @@
 </div>
 
 <table class="revision-table">
+
     <tr class="revision-header">
         <td>Revision:</td>
         <td>Date:</td>
+
         <td>Revision:</td>
         <td>Date:</td>
+
         <td>Revision:</td>
         <td>Date:</td>
+
         <td>Revision:</td>
         <td>Date:</td>
     </tr>
 
-    @for($i = 0; $i < 8; $i += 4)
-        <tr>
-            <td>{{ $policy->policy_revision_dates[$i]['revision'] ?? '' }}</td>
-            <td>{{ $policy->policy_revision_dates[$i]['date'] ?? '' }}</td>
+    @foreach(array_chunk($policy->policy_revision_dates ?? [], 4) as $row)
+        <tr class="revision-data-row">
 
-            <td>{{ $policy->policy_revision_dates[$i+1]['revision'] ?? '' }}</td>
-            <td>{{ $policy->policy_revision_dates[$i+1]['date'] ?? '' }}</td>
+            @for($i = 0; $i < 4; $i++)
+                <td>
+                    {{ $row[$i]['revision'] ?? '' }}
+                </td>
 
-            <td>{{ $policy->policy_revision_dates[$i+2]['revision'] ?? '' }}</td>
-            <td>{{ $policy->policy_revision_dates[$i+2]['date'] ?? '' }}</td>
+                <td>
+                    {{ $row[$i]['date'] ?? '' }}
+                </td>
+            @endfor
 
-            <td>{{ $policy->policy_revision_dates[$i+3]['revision'] ?? '' }}</td>
-            <td>{{ $policy->policy_revision_dates[$i+3]['date'] ?? '' }}</td>
         </tr>
-    @endfor
+    @endforeach
 
     @for($x = 0; $x < 4; $x++)
-        <tr>
+        <tr class="revision-data-row">
+            <td>&nbsp;</td>
+            <td></td>
+
             <td></td>
             <td></td>
+
             <td></td>
             <td></td>
-            <td></td>
-            <td></td>
+
             <td></td>
             <td></td>
         </tr>
     @endfor
+
 </table>
 
 <div class="section-title" style="margin-top: 25px;">
     SIGNATURES:
 </div>
 
+<div class="signature-title">
+    SIGNATURES:
+</div>
+
 <table class="signature-table">
 
     <tr>
-        <td class="label">
+
+        <td class="signature-label">
             POLICY OWNER:
         </td>
 
-        <td>
+        <td class="signature-person">
             <div class="signature-name">
                 {{ $policy->policy_owner }}
             </div>
 
-            <div class="signature-title">
+            <div class="signature-position">
                 {{ $policy->policy_owner_title }}
             </div>
         </td>
 
-        <td>
-            {{ $policy->policy_owner_signature ?? '' }}
+        <td class="signature-box">
+            &nbsp;
         </td>
 
-        <td>
-            <strong>DATE:</strong><br>
-            {{ $policy->policy_owner_date }}
+        <td class="date-box">
+            DATE:
+            <span class="date-value">
+                {{ $policy->policy_owner_date }}
+            </span>
         </td>
+
     </tr>
 
     <tr>
-        <td class="label">
+
+        <td class="signature-label">
             POLICY REVIEWER:
         </td>
 
-        <td>
+        <td class="signature-person">
             <div class="signature-name">
                 {{ $policy->policy_reviewer }}
             </div>
 
-            <div class="signature-title">
+            <div class="signature-position">
                 {{ $policy->policy_reviewer_title }}
             </div>
         </td>
 
-        <td>
-            {{ $policy->policy_reviewer_signature ?? '' }}
+        <td class="signature-box">
+            &nbsp;
         </td>
 
-        <td>
-            <strong>DATE:</strong><br>
-            {{ $policy->policy_reviewer_date }}
+        <td class="date-box">
+            DATE:
+            <span class="date-value">
+                {{ $policy->policy_reviewer_date }}
+            </span>
         </td>
+
     </tr>
 
     <tr>
-        <td class="label">
+
+        <td class="signature-label">
             SUPERINTENDENT APPROVAL:
         </td>
 
-        <td>
+        <td class="signature-person">
             <div class="signature-name">
                 {{ $policy->superintendent_approval }}
             </div>
 
-            <div class="signature-title">
+            <div class="signature-position">
                 SUPERINTENDENT
             </div>
         </td>
 
-        <td>
-            {{ $policy->superintendent_signature ?? '' }}
+        <td class="signature-box">
+            &nbsp;
         </td>
 
-        <td>
-            <strong>DATE:</strong><br>
-            {{ $policy->superintendent_approval_date }}
+        <td class="date-box">
+            DATE:
+            <span class="date-value">
+                {{ $policy->superintendent_approval_date }}
+            </span>
         </td>
+
     </tr>
 
 </table>
