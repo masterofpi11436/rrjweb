@@ -141,6 +141,25 @@ Route::prefix('phone')->group(function () use ($phoneClass, $phoneLoginClass){
     });
 });
 
+// Camera Statuses Application
+Route::prefix('camera')->group(function () use ($phoneClass, $phoneLoginClass){
+
+    // Routes without middleware
+    Route::get('/login', [$phoneLoginClass, 'phoneLoginForm'])->name('phone.login');
+    Route::post('/login', [$phoneLoginClass, 'login']);
+    Route::get('/forgot', [$phoneLoginClass, 'phoneForgotPasswordForm'])->name('phone.forgot.form');
+    Route::post('/forgot', [$phoneLoginClass, 'forgotPassword'])->name('phone.forgot.form.submit');
+    Route::post('/logout', [$phoneLoginClass, 'logout'])->name('phone.logout');
+
+    // Routes with 'phone' middleware
+    Route::middleware('phone')->group(function () use ($phoneClass) {
+        Route::get('/dashboard', [$phoneClass, 'dashboard'])->name('phone.dashboard');
+        Route::get('/create', [$phoneClass, 'create'])->name('phone.create');
+        Route::get('/{id}/edit', [$phoneClass, 'edit'])->name('phone.edit');
+        Route::delete('/{id}', [$phoneClass, 'destroy'])->name('phone.destroy');
+    });
+});
+
 // Vehicle Fleet Maintenance Application (Admins)
 Route::prefix('vfm')->group(function () use ($vfmClass, $vfmLoginClass, $vfmVehicleClass) {
 
