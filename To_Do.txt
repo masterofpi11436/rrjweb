@@ -12,5 +12,14 @@ Down or Out App:
     2. Admin perform CRUD on People who can log in or Out
     3. User can edit if person in logged in or out manually
 
-Policy builder,
+Policy builder:
+
+    1. Adjust the form UI for collapsable chapters
+    2. Adjust margins, padding, etc for table layout.
+
+Camera Schedule:
+
+    1. Admins: CURD on all table columns, requires login account
+    2. Users: No login required, graphs and tables are visible, sortable, and searchable
+    3. Historical status changes for cameras over time.
 

@@ -9,6 +9,7 @@ use App\Http\Controllers\Login\VFMLoginController;
 use App\Http\Controllers\Login\BaseLoginController;
 use App\Http\Controllers\Login\AdminLoginController;
 use App\Http\Controllers\Login\PhoneLoginController;
+use App\Http\Controllers\Login\CameraLoginController;
 use App\Http\Controllers\Login\VFMTechLoginController;
 use App\Http\Controllers\Login\TabletLoginController;
 use App\Http\Controllers\Login\PolicyLoginController;
@@ -23,6 +24,7 @@ use App\Http\Controllers\VFM\VFMController;
 use App\Http\Controllers\VFM\VFMTechController;
 use App\Http\Controllers\VFM\VFMVehicleController;
 use App\Http\Controllers\Policy\PolicyController;
+use App\Http\Controllers\Camera\CameraController;
 use App\Http\Controllers\Policy\BuilderController;
 use App\Http\Controllers\Tablet\TabletController;
 use App\Http\Controllers\Mailroom\MailroomController;
@@ -54,6 +56,7 @@ $vfmTechLoginClass = VFMTechLoginController::class;
 $tabletLoginClass = TabletLoginController::class;
 $mailroomLoginClass = MailroomLoginController::class;
 $policyLoginClass = PolicyLoginController::class;
+$cameraLoginClass = CameraLoginController::class;
 $warehouseLoginClass = WarehouseLoginController::class;
 $jurisdictionLoginClass = JurisdictionLoginController::class;
 
@@ -67,6 +70,7 @@ $vfmTechClass = VFMTechController::class;
 $tabletClass = TabletController::class;
 $mailroomClass = MailroomController::class;
 $policyClass = PolicyController::class;
+$cameraClass = CameraController::class;
 $buildClass = BuilderController::class;
 $jurisdictionClass = JurisdictionController::class;
 $warehouseSupervisorClass = WarehouseSupervisorController::class;
@@ -142,21 +146,21 @@ Route::prefix('phone')->group(function () use ($phoneClass, $phoneLoginClass){
 });
 
 // Camera Statuses Application
-Route::prefix('camera')->group(function () use ($phoneClass, $phoneLoginClass){
+Route::prefix('camera')->group(function () use ($cameraClass, $cameraLoginClass){
 
     // Routes without middleware
-    Route::get('/login', [$phoneLoginClass, 'cameraLoginForm'])->name('camera.login');
-    Route::post('/login', [$phoneLoginClass, 'login']);
-    Route::get('/forgot', [$phoneLoginClass, 'phoneForgotPasswordForm'])->name('camera.forgot.form');
-    Route::post('/forgot', [$phoneLoginClass, 'forgotPassword'])->name('camera.forgot.form.submit');
-    Route::post('/logout', [$phoneLoginClass, 'logout'])->name('camera.logout');
+    Route::get('/login', [$cameraLoginClass, 'cameraLoginForm'])->name('camera.login');
+    Route::post('/login', [$cameraLoginClass, 'login']);
+    Route::get('/forgot', [$cameraLoginClass, 'phoneForgotPasswordForm'])->name('camera.forgot.form');
+    Route::post('/forgot', [$cameraLoginClass, 'forgotPassword'])->name('camera.forgot.form.submit');
+    Route::post('/logout', [$cameraLoginClass, 'logout'])->name('camera.logout');
 
-    // Routes with 'phone' middleware
-    Route::middleware('phone')->group(function () use ($phoneClass) {
-        Route::get('/dashboard', [$phoneClass, 'dashboard'])->name('camera.dashboard');
-        Route::get('/create', [$phoneClass, 'create'])->name('camera.create');
-        Route::get('/{id}/edit', [$phoneClass, 'edit'])->name('camera.edit');
-        Route::delete('/{id}', [$phoneClass, 'destroy'])->name('camera.destroy');
+    // Routes with 'camera' middleware
+    Route::middleware('camera')->group(function () use ($cameraClass) {
+        Route::get('/dashboard', [$cameraClass, 'dashboard'])->name('camera.dashboard');
+        Route::get('/create', [$cameraClass, 'create'])->name('camera.create');
+        Route::get('/{id}/edit', [$cameraClass, 'edit'])->name('camera.edit');
+        Route::delete('/{id}', [$cameraClass, 'destroy'])->name('camera.destroy');
     });
 });
 

@@ -9,6 +9,7 @@ use App\Http\Middleware\Auth\Admin;
 use App\Http\Middleware\Auth\Phone;
 use App\Http\Middleware\ClearCache;
 use App\Http\Middleware\Auth\Policy;
+use App\Http\Middleware\Auth\Camera;
 use App\Http\Middleware\Auth\Tablet;
 use App\Http\Middleware\Auth\VFMTech;
 use App\Http\Middleware\Auth\Mailroom;
@@ -43,6 +44,7 @@ class AppServiceProvider extends ServiceProvider
         $router->aliasMiddleware('tablet', Tablet::class);
         $router->aliasMiddleware('mailroom', Mailroom::class);
         $router->aliasMiddleware('policy', Policy::class);
+        $router->aliasMiddleware('camera', Camera::class);
         $router->aliasMiddleware('jurisdiction', Jurisdiction::class);
         $router->aliasMiddleware('warehouseSupervisor', WarehouseSupervisor::class);
         $router->aliasMiddleware('warehouseTechnician', WarehouseTechnician::class);

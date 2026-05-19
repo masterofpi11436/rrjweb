@@ -1,4 +1,4 @@
-@extends('layouts.phone-directory')
+@extends('layouts.camera')
 
 @section('title', 'Edit Camera Statuses')
 
@@ -6,8 +6,8 @@
 
 @section('content')
 
-<a href="{{ route('phone.dashboard') }}">Back</a>
+<a href="{{ route('camera.dashboard') }}">Back</a>
 
-@livewire('directory.phone-directory-form', ['id' => $phoneDirectory->id])
+@livewire('directory.camera-form', ['id' => $camera->id])
 
 @endsection

@@ -7,6 +7,6 @@
 @section('content')
 
 <!-- Livewire search component -->
-@livewire('directory.phone-directory-search-all')
+@livewire('phone.camera-search-all')
 
 @endsection

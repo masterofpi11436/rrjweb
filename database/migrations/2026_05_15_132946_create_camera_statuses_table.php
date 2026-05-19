@@ -1,5 +1,7 @@
 <?php
 
+use App\Enums\CameraStatus;
+use App\Enums\CameraType;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -16,9 +18,9 @@ return new class extends Migration
             // Public Informtion
             $table->string('camera_number')->unique();
             $table->string('camera_name');
-            $table->enum('camera_type', ['analog', 'digital']);
+            $table->enum('camera_type', CameraType::values());
             $table->string('location');
-            $table->enum('status', ['good', 'no_video', 'blurry', 'iris', 'adjust', 'clean']);
+            $table->enum('status', CameraStatus::values())->default(CameraStatus::GOOD->value);
 
             // Login Required
             $table->string('encoder_switch_location');

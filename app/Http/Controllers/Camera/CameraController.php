@@ -1,42 +1,42 @@
 <?php
 
-namespace App\Http\Controllers\Directory;
+namespace App\Http\Controllers\Camera;
 
 // Base Controller
 use App\Http\Controllers\Controller;
 
 // Models required
-use App\Models\Directory\PhoneDirectory;
+use App\Models\Camera\Camera;
 
 class CameraController extends Controller
 {
     // Unprotected route for everyone to view the directory
     public function index()
     {
-        return view('Directory.PhoneDirectory.phone-directory');
+        return view('Camera.Camera.camera');
     }
 
     // Login Required Pages
     public function dashboard()
     {
-        return view('Directory.PhoneDirectory.dashboard');
+        return view('Camera.Camera.dashboard');
     }
 
     public function create()
     {
-        return view('Directory.PhoneDirectory.create');
+        return view('Camera.Camera.create');
     }
 
     public function edit($id)
     {
-        $phoneDirectory = PhoneDirectory::findOrFail($id);
-        return view('Directory.PhoneDirectory.edit', ['phoneDirectory' => $phoneDirectory]);
+        $camera = Camera::findOrFail($id);
+        return view('Camera.Camera.edit', ['camera' => $camera]);
     }
 
     public function destroy($id)
     {
-        $phoneDirectory = PhoneDirectory::findOrFail($id);
-        $phoneDirectory->delete();
+        $Camera = Camera::findOrFail($id);
+        $Camera->delete();
 
         session()->flash('create-edit-delete-message', 'Record deleted successfully!');
         return redirect()->back();

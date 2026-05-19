@@ -46,4 +46,9 @@
     <button>Jurisdiction Time Logs</button>
 </form>
 
+<!-- Camera Schedule -->
+<form action="{{ route('camera.dashboard') }}">
+    <button>Camera Schedule</button>
+</form>
+
 @endsection

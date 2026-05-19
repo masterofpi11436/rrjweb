@@ -1,4 +1,4 @@
-@extends('layouts.phone-directory')
+@extends('layouts.camera')
 
 @section('title', 'Camera Statuses')
 
@@ -15,9 +15,9 @@
 @section('content')
 
 <!-- Link to navigate to the Create page -->
-<a href="{{ route('phone.create') }}" class="create-link">Create New Entry</a>
+<a href="{{ route('camera.create') }}" class="create-link">Create New Entry</a>
 
 <!-- Livewire search component -->
-@livewire('directory.phone-directory-search')
+@livewire('camera.camera-search')
 
 @endsection
