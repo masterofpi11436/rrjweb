@@ -145,18 +145,18 @@ Route::prefix('phone')->group(function () use ($phoneClass, $phoneLoginClass){
 Route::prefix('camera')->group(function () use ($phoneClass, $phoneLoginClass){
 
     // Routes without middleware
-    Route::get('/login', [$phoneLoginClass, 'phoneLoginForm'])->name('phone.login');
+    Route::get('/login', [$phoneLoginClass, 'cameraLoginForm'])->name('camera.login');
     Route::post('/login', [$phoneLoginClass, 'login']);
-    Route::get('/forgot', [$phoneLoginClass, 'phoneForgotPasswordForm'])->name('phone.forgot.form');
-    Route::post('/forgot', [$phoneLoginClass, 'forgotPassword'])->name('phone.forgot.form.submit');
-    Route::post('/logout', [$phoneLoginClass, 'logout'])->name('phone.logout');
+    Route::get('/forgot', [$phoneLoginClass, 'phoneForgotPasswordForm'])->name('camera.forgot.form');
+    Route::post('/forgot', [$phoneLoginClass, 'forgotPassword'])->name('camera.forgot.form.submit');
+    Route::post('/logout', [$phoneLoginClass, 'logout'])->name('camera.logout');
 
     // Routes with 'phone' middleware
     Route::middleware('phone')->group(function () use ($phoneClass) {
-        Route::get('/dashboard', [$phoneClass, 'dashboard'])->name('phone.dashboard');
-        Route::get('/create', [$phoneClass, 'create'])->name('phone.create');
-        Route::get('/{id}/edit', [$phoneClass, 'edit'])->name('phone.edit');
-        Route::delete('/{id}', [$phoneClass, 'destroy'])->name('phone.destroy');
+        Route::get('/dashboard', [$phoneClass, 'dashboard'])->name('camera.dashboard');
+        Route::get('/create', [$phoneClass, 'create'])->name('camera.create');
+        Route::get('/{id}/edit', [$phoneClass, 'edit'])->name('camera.edit');
+        Route::delete('/{id}', [$phoneClass, 'destroy'])->name('camera.destroy');
     });
 });
 
