@@ -8,6 +8,6 @@
 
 <a href="{{ route('camera.dashboard') }}">Back</a>
 
-@livewire('directory.camera-form')
+@livewire('Camera.camera-form')
 
 @endsection
