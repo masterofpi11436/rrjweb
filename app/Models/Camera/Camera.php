@@ -4,6 +4,7 @@ namespace App\Models\Camera;
 
 use App\Enums\CameraStatus;
 use App\Enums\CameraType;
+use App\Models\Camera\CameraStatusHistory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
