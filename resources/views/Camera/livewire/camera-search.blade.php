@@ -2,7 +2,7 @@
     <input
         type="text"
         wire:model.live="search"
-        placeholder="Search camera number..."
+        placeholder="Search camera..."
     >
 
     <table>
@@ -33,7 +33,7 @@
                 <tr>
                     <td><a href="{{route('camera.edit', $camera->id)}}">{{ $camera->camera_number }}</a></td>
                     <td>{{ $camera->camera_name }}</td>
-                    <td>{{ $camera->camera_type?->value ?? $camera->camera_type }}</td>
+                    <td>{{ ucfirst($camera->camera_type?->value) ?? ucfirst($camera->camera_type) }}</td>
                     <td>{{ $camera->location }}</td>
                     <td>{{ $camera->status?->value ?? $camera->status }}</td>
                     <td>{{ $camera->encoder_switch_location }}</td>
@@ -41,7 +41,7 @@
                 </tr>
             @empty
                 <tr>
-                    <td colspan="7">No cameras found.</td>
+                    <td colspan="7">No Camera Record Found.</td>
                 </tr>
             @endforelse
         </tbody>
