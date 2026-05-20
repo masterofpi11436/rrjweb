@@ -28,7 +28,8 @@ class WarehouseLoginController extends BaseLoginController
 
         // If user is not found, return error
         if (!$user) {
-            return redirect()->route('warehouse.login')->withErrors(['email_not_found' => 'No account found with this email address.']);
+            return redirect()->route('warehouse.login')->withErrors(['email_not_found' => 'No account found with this email address.
+                                                                      Please contact the Warehouse Manager to create an account']);
         }
 
         // Attempt login using BaseLoginController method
