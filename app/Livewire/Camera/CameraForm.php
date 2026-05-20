@@ -65,19 +65,19 @@ class CameraForm extends Component
 
             $camera = Camera::findOrFail($this->cameraId);
 
-            $oldStatus = $camera->status;
+            // $oldStatus = $camera->status;
 
             $camera->update($validatedData);
 
             // Log status change
-            if ($oldStatus->value !== $this->status) {
+            // if ($oldStatus->value !== $this->status) {
 
-                $camera->histories()->create([
-                    'old_status' => $oldStatus,
-                    'new_status' => $this->status,
-                    'changed_by' => auth()->id(),
-                ]);
-            }
+            //     $camera->histories()->create([
+            //         'old_status' => $oldStatus,
+            //         'new_status' => $this->status,
+            //         'changed_by' => auth()->id(),
+            //     ]);
+            // }
 
             session()->flash(
                 'create-edit-delete-message',
@@ -88,11 +88,11 @@ class CameraForm extends Component
 
             $camera = Camera::create($validatedData);
 
-            $camera->histories()->create([
-                'old_status' => $this->status,
-                'new_status' => $this->status,
-                'changed_by' => auth()->id(),
-            ]);
+            // $camera->histories()->create([
+            //     'old_status' => $this->status,
+            //     'new_status' => $this->status,
+            //     'changed_by' => auth()->id(),
+            // ]);
 
             session()->flash(
                 'create-edit-delete-message',
