@@ -360,14 +360,29 @@
         @enderror
     </div>
 
-    {{-- Submit --}}
-    <div class="flex justify-end">
+    {{-- Action Buttons --}}
+    <div class="flex items-center justify-between pt-4">
+
+        {{-- Delete Button --}}
+        @if($cameraId)
+            <button
+                type="button"
+                wire:click="deleteCamera"
+                wire:confirm="Are you sure you want to delete this camera?"
+                class="bg-[#c92a2a] hover:bg-[#a51111] text-white font-semibold px-6 py-3 rounded-xl shadow transition"
+            >
+                Delete Camera
+            </button>
+        @endif
+
+        {{-- Submit Button --}}
         <button
             type="submit"
             class="bg-[#1c7ed6] hover:bg-[#1864ab] text-white font-semibold px-6 py-3 rounded-xl shadow transition"
         >
             {{ $cameraId ? 'Update Camera' : 'Create Camera' }}
         </button>
+
     </div>
 
 </form>

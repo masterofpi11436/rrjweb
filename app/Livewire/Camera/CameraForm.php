@@ -132,6 +132,20 @@ class CameraForm extends Component
         return redirect()->route('camera.dashboard');
     }
 
+    public function deleteCamera()
+    {
+        $camera = Camera::findOrFail($this->cameraId);
+
+        $camera->delete();
+
+        session()->flash(
+            'create-edit-delete-message',
+            'Camera deleted successfully!'
+        );
+
+        return redirect()->route('camera.dashboard');
+    }
+
     public function render()
     {
         return view('Camera.livewire.camera-form');

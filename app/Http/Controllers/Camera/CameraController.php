@@ -32,13 +32,4 @@ class CameraController extends Controller
         $camera = Camera::findOrFail($id);
         return view('Camera.Camera.edit', ['camera' => $camera]);
     }
-
-    public function destroy($id)
-    {
-        $Camera = Camera::findOrFail($id);
-        $Camera->delete();
-
-        session()->flash('create-edit-delete-message', 'Record deleted successfully!');
-        return redirect()->back();
-    }
 }
