@@ -25,6 +25,10 @@ return new class extends Migration
             // Login Required
             $table->string('encoder_switch_location');
             $table->ipAddress('ip_address')->unique();
+
+            // Add to table
+            $table->text('notes')->nullable();
+
             $table->timestamps();
         });
     }

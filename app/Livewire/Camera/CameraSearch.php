@@ -32,8 +32,14 @@ class CameraSearch extends Component
         // Search for matching records
         return view('Camera.livewire.camera-search', [
             'suggestions' => Camera::where('camera_number', 'like', '%' . $this->search . '%')
-                                           ->orderBy($this->sortColumn, $this->sortDirection)
-                                           ->get(),
+                                            ->orWhere('camera_name', 'like', '%' . $this->search . '%')
+                                            ->orWhere('camera_type', 'like', '%' . $this->search . '%')
+                                            ->orWhere('location', 'like', '%' . $this->search . '%')
+                                            ->orWhere('status', 'like', '%' . $this->search . '%')
+                                            ->orWhere('encoder_switch_location', 'like', '%' . $this->search . '%')
+                                            ->orWhere('ip_address', 'like', '%' . $this->search . '%')
+                                            ->orderBy($this->sortColumn, $this->sortDirection)
+                                            ->get(),
         ]);
     }
 }

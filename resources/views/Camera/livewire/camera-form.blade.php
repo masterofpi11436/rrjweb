@@ -39,6 +39,7 @@
             <option value="iris">Iris</option>
             <option value="adjust">Adjust</option>
             <option value="clean">Clean</option>
+            <option value="pending_digital_upgrade">Pending Digital Upgrade</option>
         </select>
 
         @error('status') <span>{{ $message }}</span> @enderror

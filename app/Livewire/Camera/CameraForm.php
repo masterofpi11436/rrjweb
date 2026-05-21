@@ -30,7 +30,7 @@ class CameraForm extends Component
             'location' => 'required|max:255',
             'status' => 'required|in:' . implode(',', CameraStatus::values()),
             'encoder_switch_location' => 'required|max:255',
-            'ip_address' => 'required|ip|unique:camera_statuses,ip_address,' . $cameraId,
+            'ip_address' => 'required|ip',
         ];
     }
 
@@ -65,19 +65,7 @@ class CameraForm extends Component
 
             $camera = Camera::findOrFail($this->cameraId);
 
-            // $oldStatus = $camera->status;
-
             $camera->update($validatedData);
-
-            // Log status change
-            // if ($oldStatus->value !== $this->status) {
-
-            //     $camera->histories()->create([
-            //         'old_status' => $oldStatus,
-            //         'new_status' => $this->status,
-            //         'changed_by' => auth()->id(),
-            //     ]);
-            // }
 
             session()->flash(
                 'create-edit-delete-message',
@@ -87,12 +75,6 @@ class CameraForm extends Component
         } else {
 
             $camera = Camera::create($validatedData);
-
-            // $camera->histories()->create([
-            //     'old_status' => $this->status,
-            //     'new_status' => $this->status,
-            //     'changed_by' => auth()->id(),
-            // ]);
 
             session()->flash(
                 'create-edit-delete-message',

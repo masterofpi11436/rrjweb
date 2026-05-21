@@ -8,23 +8,67 @@
     <table>
         <thead>
             <tr>
-                <th wire:click="sortBy('camera_number')" style="cursor:pointer;">
-                    Camera #
+                <th>
+                    <a href="#" wire:click.prevent="sortBy('camera_number')">
+                        Camera#
+                        @if ($sortColumn === 'camera_number')
+                            @if ($sortDirection === 'asc') ▲ @else ▼ @endif
+                        @endif
+                    </a>
                 </th>
-                <th wire:click="sortBy('camera_name')" style="cursor:pointer;">
-                    Name
+                <th>
+                    <a href="#" wire:click.prevent="sortBy('camera_name')">
+                        Name
+                        @if ($sortColumn === 'camera_name')
+                            @if ($sortDirection === 'asc') ▲ @else ▼ @endif
+                        @endif
+                    </a>
                 </th>
-                <th wire:click="sortBy('camera_type')" style="cursor:pointer;">
-                    Type
+
+                <th>
+                    <a href="#" wire:click.prevent="sortBy('camera_type')">
+                        Type
+                        @if ($sortColumn === 'camera_type')
+                            @if ($sortDirection === 'asc') ▲ @else ▼ @endif
+                        @endif
+                    </a>
                 </th>
-                <th wire:click="sortBy('location')" style="cursor:pointer;">
-                    Location
+
+                <th>
+                    <a href="#" wire:click.prevent="sortBy('location')">
+                        Location
+                        @if ($sortColumn === 'location')
+                            @if ($sortDirection === 'asc') ▲ @else ▼ @endif
+                        @endif
+                    </a>
                 </th>
-                <th wire:click="sortBy('status')" style="cursor:pointer;">
-                    Status
+
+                <th>
+                    <a href="#" wire:click.prevent="sortBy('status')">
+                        Status
+                        @if ($sortColumn === 'status')
+                            @if ($sortDirection === 'asc') ▲ @else ▼ @endif
+                        @endif
+                    </a>
                 </th>
-                <th>Encoder/Switch Location</th>
-                <th>IP Address</th>
+
+                <th>
+                    <a href="#" wire:click.prevent="sortBy('encoder_switch_location')">
+                        Encoder/Switch Location
+                        @if ($sortColumn === 'encoder_switch_location')
+                            @if ($sortDirection === 'asc') ▲ @else ▼ @endif
+                        @endif
+                    </a>
+                </th>
+
+                <th>
+                    <a href="#" wire:click.prevent="sortBy('ip_address')">
+                        IP Address
+                        @if ($sortColumn === 'ip_address')
+                            @if ($sortDirection === 'asc') ▲ @else ▼ @endif
+                        @endif
+                    </a>
+                </th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -36,7 +80,7 @@
                     <td>{{ $camera->camera_name }}</td>
                     <td>{{ ucfirst($camera->camera_type?->value) ?? ucfirst($camera->camera_type) }}</td>
                     <td>{{ $camera->location }}</td>
-                    <td>{{ $camera->status?->value ?? $camera->status }}</td>
+                    <td>{{ $camera->status?->label() }}</td>
                     <td>{{ $camera->encoder_switch_location }}</td>
                     <td>{{ $camera->ip_address }}</td>
                     <td>
