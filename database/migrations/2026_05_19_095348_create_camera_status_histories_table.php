@@ -19,20 +19,9 @@ return new class extends Migration
                 ->constrained('camera_statuses')
                 ->cascadeOnDelete();
 
-            $table->enum('old_status', CameraStatus::values());
             $table->enum('new_status', CameraStatus::values());
 
-            $table->text('notes')->nullable();
-
-            $table->foreignId('changed_by')
-                ->nullable()
-                ->constrained('users')
-                ->nullOnDelete();
-
             $table->timestamps();
-
-            $table->index(['camera_id', 'created_at']);
-            $table->index('new_status');
         });
     }
 

@@ -15,7 +15,7 @@
         <h1>@yield('heading')</h1>
 
         <div class="header-right">
-            <form action="{{ route('phone.logout') }}" method="POST">
+            <form action="{{ route('camera.logout') }}" method="POST">
                 @csrf
                 <button>Logout</button>
             </form>
