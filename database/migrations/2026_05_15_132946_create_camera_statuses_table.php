@@ -23,8 +23,8 @@ return new class extends Migration
             $table->string('camera_model')->nullable();
             $table->ipAddress('ip_address');
             $table->string('firmware_version')->nullable();
-            $table->json('credentials');
-            $table->enum('NVR', ['nvr_1', 'nvr_2', 'nvr_3', 'nvr_4']);
+            $table->json('credentials')->nullable();
+            $table->enum('nvr', ['nvr_1', 'nvr_2', 'nvr_3', 'nvr_4']);
             $table->text('notes')->nullable();
             $table->enum('camera_type', CameraType::values());
             $table->string('location');
