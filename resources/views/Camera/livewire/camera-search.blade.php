@@ -23,8 +23,9 @@
                 <th wire:click="sortBy('status')" style="cursor:pointer;">
                     Status
                 </th>
-                <th>Encoder / Switch</th>
+                <th>Encoder/Switch Location</th>
                 <th>IP Address</th>
+                <th>Action</th>
             </tr>
         </thead>
 
@@ -38,6 +39,23 @@
                     <td>{{ $camera->status?->value ?? $camera->status }}</td>
                     <td>{{ $camera->encoder_switch_location }}</td>
                     <td>{{ $camera->ip_address }}</td>
+                    <td>
+                        <div>
+                            <a href="#" onclick="event.preventDefault(); confirmDelete({{ $camera->id }});">Delete</a>
+                            <form id="delete-form-{{ $camera->id }}" action="{{ route('camera.destroy', $camera->id) }}" method="POST" style="display: none;">
+                                @csrf
+                                @method('DELETE')
+                            </form>
+                            <!-- Custom Confirmation Modal -->
+                            <div id="custom-confirmation-modal-{{ $camera->id }}" class="confirmation-modal" style="display: none;">
+                                <div class="modal-content">
+                                    <p>Are you sure you want to delete this camera from the schedule?</p>
+                                    <button class="btn-confirm" onclick="deleteRecord({{ $camera->id }});">Yes, Delete</button>
+                                    <button class="btn-cancel" onclick="hideModal({{ $camera->id }});">Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
                 </tr>
             @empty
                 <tr>
