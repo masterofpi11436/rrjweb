@@ -14,11 +14,27 @@ class Camera extends Model
 
     protected $table = 'camera_statuses';
 
-    protected $fillable = ['camera_number', 'camera_name', 'camera_type', 'location', 'status', 'encoder_switch_location', 'ip_address'];
+    protected $fillable = [
+        'camera_number',
+        'camera_name',
+        'encoder_switch_location',
+        'encoder_switch_name',
+        'encoder_port',
+        'camera_model',
+        'ip_address',
+        'firmware_version',
+        'credentials',
+        'NVR',
+        'notes',
+        'camera_type',
+        'location',
+        'status',
+    ];
 
     protected $casts = [
-        'status' => CameraStatus::class,
+        'credentials' => 'array',
         'camera_type' => CameraType::class,
+        'status' => CameraStatus::class,
     ];
 
     public function histories()

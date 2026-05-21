@@ -78,7 +78,7 @@
                 <tr>
                     <td><a href="{{route('camera.edit', $camera->id)}}">{{ $camera->camera_number }}</a></td>
                     <td>{{ $camera->camera_name }}</td>
-                    <td>{{ ucfirst($camera->camera_type?->value) ?? ucfirst($camera->camera_type) }}</td>
+                    <td>{{ $camera->camera_type?->label() }}</td>
                     <td>{{ $camera->location }}</td>
                     <td>{{ $camera->status?->label() }}</td>
                     <td>{{ $camera->encoder_switch_location }}</td>

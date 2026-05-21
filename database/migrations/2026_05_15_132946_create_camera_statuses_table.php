@@ -15,20 +15,20 @@ return new class extends Migration
     {
         Schema::create('camera_statuses', function (Blueprint $table) {
             $table->id();
-            // Public Informtion
             $table->string('camera_number')->unique();
-            $table->string('camera_name');
+            $table->string('camera_name')->unique();
+            $table->string('encoder_switch_location');
+            $table->string('encoder_switch_name');
+            $table->string('encoder_port')->nullable();
+            $table->string('camera_model')->nullable();
+            $table->ipAddress('ip_address');
+            $table->string('firmware_version')->nullable();
+            $table->json('credentials');
+            $table->enum('NVR', ['nvr_1', 'nvr_2', 'nvr_3', 'nvr_4']);
+            $table->text('notes')->nullable();
             $table->enum('camera_type', CameraType::values());
             $table->string('location');
-            $table->enum('status', CameraStatus::values())->default(CameraStatus::GOOD->value);
-
-            // Login Required
-            $table->string('encoder_switch_location');
-            $table->ipAddress('ip_address')->unique();
-
-            // Add to table
-            $table->text('notes')->nullable();
-
+            $table->enum('status', CameraStatus::values());
             $table->timestamps();
         });
     }

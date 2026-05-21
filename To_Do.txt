@@ -22,4 +22,4 @@ Camera Schedule:
     1. Admins: CURD on all table columns, requires login account
     2. Users: No login required, graphs and tables are visible, sortable, and searchable
     3. Historical status changes for cameras over time.
-
+    4. This will replace the camera schedule and the status excel spreadsheets
