@@ -23,12 +23,7 @@
                     </p>
                 </div>
 
-                <a
-                    href="{{ route('camera.edit', $camera->id) }}"
-                    class="bg-[#1c7ed6] hover:bg-[#1864ab] text-white font-semibold px-4 py-2 rounded-xl shadow transition"
-                >
-                    Edit Camera
-                </a>
+                <a href="{{route('camera.edit', $camera->id)}}">Edit Camera Details</a>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -64,29 +59,77 @@
 
             </div>
 
-            <div class="rounded-lg bg-[#161f27] border border-[#526980] px-4 py-3">
-                <p class="text-sm text-[#a9a9a9] mb-2">
-                    Credentials
-                </p>
+            <div
+                x-data="{ showCredentials: false }"
+                class="rounded-lg bg-[#161f27] border border-[#526980] px-4 py-3"
+            >
+                <div class="flex items-center justify-between mb-3">
+
+                    <p class="text-sm text-[#a9a9a9]">
+                        Credentials
+                    </p>
+
+                    <button
+                        type="button"
+                        x-on:click="showCredentials = !showCredentials"
+                        class="text-sm px-3 py-1 rounded-lg border border-[#526980] hover:border-[#41adff] text-[#dbdbdb] transition"
+                    >
+                        <span x-show="!showCredentials">
+                            Show
+                        </span>
+
+                        <span x-show="showCredentials">
+                            Hide
+                        </span>
+                    </button>
+
+                </div>
 
                 @if (is_array($camera->credentials))
-                    <div class="space-y-1">
+
+                    <div class="space-y-2">
+
                         @foreach ($camera->credentials as $key => $value)
-                            <p>
+
+                            <div class="flex items-center justify-between gap-4">
+
                                 <span class="font-semibold text-[#dbdbdb]">
                                     {{ ucfirst($key) }}:
                                 </span>
 
-                                <span class="text-[#dbdbdb]">
-                                    {{ $value ?: 'N/A' }}
+                                <span class="text-[#dbdbdb] font-mono">
+
+                                    {{-- Password Hidden --}}
+                                    @if ($key === 'password')
+
+                                        <span x-show="!showCredentials">
+                                            ••••••••
+                                        </span>
+
+                                        <span x-show="showCredentials">
+                                            {{ $value ?: 'N/A' }}
+                                        </span>
+
+                                    @else
+
+                                        {{ $value ?: 'N/A' }}
+
+                                    @endif
+
                                 </span>
-                            </p>
+
+                            </div>
+
                         @endforeach
+
                     </div>
+
                 @else
+
                     <p class="font-semibold text-[#dbdbdb]">
                         {{ $camera->credentials ?? 'N/A' }}
                     </p>
+
                 @endif
             </div>
 
