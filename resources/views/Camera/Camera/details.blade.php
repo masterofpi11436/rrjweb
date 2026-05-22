@@ -100,7 +100,7 @@
                                 <span class="text-[#dbdbdb] font-mono">
 
                                     {{-- Password Hidden --}}
-                                    @if ($key === 'password')
+                                    @if ($key)
 
                                         <span x-show="!showCredentials">
                                             ••••••••
