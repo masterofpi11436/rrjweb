@@ -69,7 +69,7 @@
                         @endif
                     </a>
                 </th>
-                <th>Action</th>
+                <th>Details</th>
             </tr>
         </thead>
 
@@ -83,7 +83,7 @@
                     <td>{{ $camera->status?->label() }}</td>
                     <td>{{ $camera->encoder_switch_location }}</td>
                     <td>{{ $camera->ip_address }}</td>
-                    <td><a href="{{route('camera.details', $camera->id)}}">View Details</a></td>
+                    <td><a href="{{route('camera.details', $camera->id)}}">View</a></td>
                 </tr>
             @empty
                 <tr>
