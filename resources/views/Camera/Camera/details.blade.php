@@ -19,7 +19,7 @@
                     </h2>
 
                     <p class="text-sm text-[#a9a9a9] mt-1">
-                        {{ $camera->camera_number }} - {{ $camera->camera_name }}
+                        {{ $camera->camera_name }}
                     </p>
                 </div>
 

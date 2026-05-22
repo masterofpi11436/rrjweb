@@ -34,7 +34,7 @@ Camera Schedule:
         ip_address,
         firmware_version,
         credentials,
-        NVR,
+        nvr,
         notes,
         camera_type,
         location,
@@ -43,4 +43,4 @@ Camera Schedule:
         updated_at
     ) VALUES
 
-="('"&A404&"','"&A404&" - "&I404&"','"&B404&"','"&C404&"',"&IF(D404="","NULL","'"&D404&"'")&","&IF(E404="","NULL","'"&E404&"'")&",'"&F404&"',"&IF(G404="","NULL","'"&G404&"'")&",JSON_OBJECT('credentials','"&H404&"'),'"&LOWER(SUBSTITUTE(J404,"-","_"))&"',"&IF(K404="","NULL","'"&K404&"'")&",'digital','"&B404&"','good',NOW(),NOW()),"
+="('"&A404&"','"&A404&" - "&I404&"','"&B404&"','"&C404&"',"&IF(D404="","NULL","'"&D404&"'")&","&IF(E404="","NULL","'"&E404&"'")&",'"&F404&"',"&IF(G404="","NULL","'"&G404&"'")&",JSON_OBJECT('credentials','"&H404&"'),'"&LOWER(SUBSTITUTE(J404,"-","_"))&"',"&IF(K404="","NULL","'"&K404&"'")&",'analog','"&B404&"','good',NOW(),NOW()),"
