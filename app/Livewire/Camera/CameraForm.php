@@ -6,6 +6,7 @@ use Livewire\Component;
 use App\Models\Camera\Camera;
 use App\Enums\CameraStatus;
 use App\Enums\CameraType;
+use App\Enums\CameraNVR;
 
 class CameraForm extends Component
 {
@@ -23,7 +24,7 @@ class CameraForm extends Component
         'username' => '',
         'password' => '',
     ];
-    public $NVR;
+    public $nvr;
     public $notes;
     public $camera_type;
     public $location;
@@ -45,7 +46,7 @@ class CameraForm extends Component
             'credentials' => 'required|array',
             'credentials.username' => 'required|max:255',
             'credentials.password' => 'required|max:255',
-            'NVR' => 'required|in:nvr_1,nvr_2,nvr_3,nvr_4',
+            'nvr' => 'required|in:' . implode(',', CameraNVR::values()),
             'notes' => 'nullable|string',
             'camera_type' => 'required|in:' . implode(',', CameraType::values()),
             'location' => 'required|max:255',
@@ -72,7 +73,7 @@ class CameraForm extends Component
                 'username' => '',
                 'password' => '',
             ];
-            $this->NVR = $camera->NVR;
+            $this->nvr = $camera->nvr?->value;
             $this->notes = $camera->notes;
             $this->camera_type = $camera->camera_type->value;
             $this->location = $camera->location;
@@ -117,7 +118,7 @@ class CameraForm extends Component
             'ip_address',
             'firmware_version',
             'credentials',
-            'NVR',
+            'nvr',
             'notes',
             'camera_type',
             'location',

@@ -4,6 +4,7 @@ namespace App\Models\Camera;
 
 use App\Enums\CameraStatus;
 use App\Enums\CameraType;
+use App\Enums\CameraNVR;
 use App\Models\Camera\CameraStatusHistory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -24,7 +25,7 @@ class Camera extends Model
         'ip_address',
         'firmware_version',
         'credentials',
-        'NVR',
+        'nvr',
         'notes',
         'camera_type',
         'location',
@@ -35,6 +36,7 @@ class Camera extends Model
         'credentials' => 'array',
         'camera_type' => CameraType::class,
         'status' => CameraStatus::class,
+        'nvr' => CameraNVR::class,
     ];
 
     public function histories()

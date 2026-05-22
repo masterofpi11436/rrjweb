@@ -160,6 +160,7 @@ Route::prefix('camera')->group(function () use ($cameraClass, $cameraLoginClass)
         Route::get('/dashboard', [$cameraClass, 'dashboard'])->name('camera.dashboard');
         Route::get('/create', [$cameraClass, 'create'])->name('camera.create');
         Route::get('/{id}/edit', [$cameraClass, 'edit'])->name('camera.edit');
+        Route::get('/{id}/details', [$cameraClass, 'details'])->name('camera.details');
         Route::delete('/{id}', [$cameraClass, 'destroy'])->name('camera.destroy');
     });
 });

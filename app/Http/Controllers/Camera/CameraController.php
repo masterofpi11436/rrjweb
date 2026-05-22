@@ -32,4 +32,10 @@ class CameraController extends Controller
         $camera = Camera::findOrFail($id);
         return view('Camera.Camera.edit', ['camera' => $camera]);
     }
+
+    public function details($id)
+    {
+        $camera = Camera::findOrFail($id);
+        return view('Camera.Camera.details', ['camera' => $camera]);
+    }
 }

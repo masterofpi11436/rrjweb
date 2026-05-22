@@ -235,15 +235,15 @@
         {{-- NVR --}}
         <div>
             <label
-                for="NVR"
+                for="nvr"
                 class="block text-sm font-medium text-[#dbdbdb] mb-1"
             >
                 Storage NVR
             </label>
 
             <select
-                id="NVR"
-                wire:model.live="NVR"
+                id="nvr"
+                wire:model.live="nvr"
                 class="w-full rounded-lg bg-[#161f27] text-[#dbdbdb] border border-[#526980] px-4 py-2 placeholder-[#a9a9a9] focus:border-[#41adff] focus:ring focus:ring-[#41adff]/30 outline-none"
             >
                 <option value="">Select NVR</option>
@@ -255,7 +255,7 @@
                 @endforeach
             </select>
 
-            @error('NVR')
+            @error('nvr')
                 <span class="text-sm text-[#ffbe85]">{{ $message }}</span>
             @enderror
         </div>
