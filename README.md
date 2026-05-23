@@ -24,6 +24,7 @@ Lists all the extensions with some outside vendor numbers
 # Policy
 Search through the RRJ's policies to find specific policy based on string search. Admins can upload and remove policies.
 Public users are able to search through policies.
+Has a policy builder that allows admins to create policies to the correct format.
 
 # Vehicle Repair Tracker
 Maintenance departments online vehicle repair tracker. There is a VFM admin and tech version. Admin can edit and delete whereas Tech cannot
@@ -42,6 +43,9 @@ Warehouse Technician can approve, edit, and deny requests. Can also add or remov
 
 # Jurisdiction Tracker
 Tracker used by officer to log the in/out times of officers entering the facility plus other actions performed.
+
+# Camera Schedule
+Used in place of camera schedule and the camera status. Allows technicians to view camera information and status of the camera. Users can see a graph of percentage of cameras in good standing and sort through lists of cameras that need prioritization.
 
 # Logging
 Time and date of when a user logs in to any application is logged.
