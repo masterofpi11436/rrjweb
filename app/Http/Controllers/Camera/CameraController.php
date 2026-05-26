@@ -4,8 +4,6 @@ namespace App\Http\Controllers\Camera;
 
 // Base Controller
 use App\Http\Controllers\Controller;
-
-// Models required
 use App\Models\Camera\Camera;
 
 class CameraController extends Controller
@@ -13,7 +11,14 @@ class CameraController extends Controller
     // Unprotected route for everyone to view the directory
     public function index()
     {
-        return view('Camera.Camera.camera');
+        return view('Camera.Camera.index');
+    }
+
+    public function stats()
+    {
+        $cameras = Camera::all();
+
+        return view('Camera.Camera.stats', compact('cameras'));
     }
 
     // Login Required Pages

@@ -157,6 +157,10 @@ Route::prefix('camera')->group(function () use ($cameraClass, $cameraLoginClass)
     Route::post('/forgot', [$cameraLoginClass, 'forgotPassword'])->name('camera.forgot.form.submit');
     Route::post('/logout', [$cameraLoginClass, 'logout'])->name('camera.logout');
 
+    // Public routes
+    Route::get('/index', [$cameraClass, 'index'])->name('camera.index');
+    Route::get('/stats', [$cameraClass, 'stats'])->name('camera.stats');
+
     // Routes with 'camera' middleware
     Route::middleware('camera')->group(function () use ($cameraClass) {
         Route::get('/dashboard', [$cameraClass, 'dashboard'])->name('camera.dashboard');
