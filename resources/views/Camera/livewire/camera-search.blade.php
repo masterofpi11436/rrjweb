@@ -76,7 +76,7 @@
         <tbody>
             @forelse ($suggestions as $camera)
                 <tr>
-                    <td><a href="{{route('camera.edit', $camera->id)}}">{{ $camera->camera_number }}</a></td>
+                    <td>{{ $camera->camera_number }}</td>
                     <td>{{ $camera->camera_name }}</td>
                     <td>{{ $camera->camera_type?->label() }}</td>
                     <td>{{ $camera->location }}</td>
