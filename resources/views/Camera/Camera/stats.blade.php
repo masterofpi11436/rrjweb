@@ -6,7 +6,7 @@
 
 @section('content')
 
-<a href="{{ route('camera.index') }}">View List</a>
+<a href="{{ route('camera.index') }}">View List</a><br>
 
 <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:24px; margin-top:24px;">
     <div>
@@ -14,17 +14,17 @@
         <canvas id="statusChart"></canvas>
     </div>
 
-    <div>
+    {{-- <div>
         <h3>Cameras by NVR</h3>
         <canvas id="nvrChart"></canvas>
-    </div>
+    </div> --}}
 
     <div>
         <h3>Cameras by Type</h3>
         <canvas id="typeChart"></canvas>
     </div>
 
-    <div>
+    {{-- <div>
         <h3>Cameras by Model</h3>
         <canvas id="modelChart"></canvas>
     </div>
@@ -37,7 +37,7 @@
     <div>
         <h3>Cameras by Encoder Switch</h3>
         <canvas id="switchChart"></canvas>
-    </div>
+    </div> --}}
 </div>
 
 @push('scripts')

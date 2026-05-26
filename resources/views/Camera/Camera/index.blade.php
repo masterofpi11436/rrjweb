@@ -6,7 +6,7 @@
 
 @section('content')
 
-<a href="{{ route('camera.stats') }}">Statistics</a>
+<a href="{{ route('camera.stats') }}">View Statistics</a><br><br>
 
 <!-- Livewire search component -->
 @livewire('camera.camera-search-all')
