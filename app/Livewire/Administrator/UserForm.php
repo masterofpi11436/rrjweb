@@ -24,6 +24,7 @@ class UserForm extends Component
     public $policy = false;
     public $warehouse_role = 'Requestor';
     public $jurisdiction = false;
+    public $camera = false;
 
     public function mount($id = null)
     {
@@ -50,6 +51,7 @@ class UserForm extends Component
             $this->policy = $user->policy;
             $this->warehouse_role = $user->warehouse_role;
             $this->jurisdiction = $user->jurisdiction;
+            $this->camera = $user->camera;
         }
     }
 
@@ -69,6 +71,7 @@ class UserForm extends Component
             'policy' => 'boolean',
             'warehouse_role' => 'nullable|in:Warehouse Supervisor,Warehouse Technician,Property,Supervisor,Requestor',
             'jurisdiction' => 'boolean',
+            'camera' => 'boolean',
         ];
     }
 
@@ -103,6 +106,7 @@ class UserForm extends Component
         $user->policy = $this->policy;
         $user->warehouse_role = $this->warehouse_role ?: null;
         $user->jurisdiction = $this->jurisdiction;
+        $user->camera = $this->camera;
 
         $isCreating = !$this->userId;
 

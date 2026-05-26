@@ -87,7 +87,16 @@
                 <th>
                     <a href="#" wire:click.prevent="sortBy('jurisdiction')" title="Can remove/upload Time Logs for the jurisdiction logger">
                         Jurisdiction
-                        @if ($sortColumn === 'policy')
+                        @if ($sortColumn === 'jurisdiction')
+                            @if ($sortDirection === 'asc') ▲ @else ▼ @endif
+                        @endif
+                    </a>
+                </th>
+
+                <th>
+                    <a href="#" wire:click.prevent="sortBy('camera')" title="Can remove/upload Time Logs for the camera logger">
+                        Camera
+                        @if ($sortColumn === 'camera')
                             @if ($sortDirection === 'asc') ▲ @else ▼ @endif
                         @endif
                     </a>
@@ -109,6 +118,7 @@
                     <td>{{ $user->policy ? 'Yes' : 'No' }}</td>
                     <td>{{ $user->warehouse_role ?? "No"}}</td>
                     <td>{{ $user->jurisdiction ? 'Yes' : 'No' }}</td>
+                    <td>{{ $user->camera ? 'Yes' : 'No' }}</td>
                     <td>
                         <a href="{{ route('admin.edit', $user->id) }}">Edit</a>/
                         <div>

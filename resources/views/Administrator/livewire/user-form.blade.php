@@ -68,6 +68,11 @@
         </div>
 
         <div>
+            <label for="camera">Camera</label>
+            <input type="checkbox" id="camera" wire:model.defer="camera" {{ $camera ? 'checked' : '' }}>
+        </div>
+
+        <div>
             <button type="submit">{{ $userId ? 'Update User' : 'Create User' }}</button>
         </div>
 
