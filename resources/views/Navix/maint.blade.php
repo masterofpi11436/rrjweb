@@ -6,7 +6,7 @@
 
 @section('content')
 
-<a href="{{ route('navix.maint') }}">Maintenance Building</a>
+<a href="{{ route('navix.indoor') }}">Admin</a>
 
 <div
     id="navix-container"

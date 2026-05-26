@@ -510,5 +510,6 @@ Route::prefix('jurisdiction')->group(function () use ($jurisdictionClass, $juris
 Route::prefix('navix')->group(function () use ($navixClass) {
 
     Route::get('/indoor', [$navixClass, 'admin'])->name('navix.indoor');
+    Route::get('/maint', [$navixClass, 'maint'])->name('navix.maint');
 
 });
