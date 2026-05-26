@@ -1,8 +1,8 @@
 @extends('layouts.camera')
 
-@section('title', 'Create Camera Statuses')
+@section('title', 'Create Camera')
 
-@section('heading', 'Create Camera Statuses')
+@section('heading', 'Create Camera')
 
 @section('content')
 

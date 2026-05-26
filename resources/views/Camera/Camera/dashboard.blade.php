@@ -1,8 +1,8 @@
 @extends('layouts.camera')
 
-@section('title', 'Camera Statuses')
+@section('title', 'Camera Schedule')
 
-@section('heading', 'Camera Statuses')
+@section('heading', 'Camera Schedule')
 
 <!-- Flash Message -->
 @if (session()->has('create-edit-delete-message'))
