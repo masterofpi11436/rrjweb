@@ -19,6 +19,7 @@ use App\Http\Controllers\Login\JurisdictionLoginController;
 
 // Class Controllers
 
+use App\Http\Controllers\Navix\NavixSceneController;
 use App\Http\Controllers\VFM\VFMTechVehicleController;
 use App\Http\Controllers\VFM\VFMController;
 use App\Http\Controllers\VFM\VFMTechController;
@@ -61,6 +62,7 @@ $warehouseLoginClass = WarehouseLoginController::class;
 $jurisdictionLoginClass = JurisdictionLoginController::class;
 
 // Shorthand Controller Classes
+$navixClass = NavixSceneController::class;
 $adminClass = AdministratorController::class;
 $phoneClass = PhoneDirectoryController::class;
 $vfmClass = VFMController::class;
@@ -502,4 +504,11 @@ Route::prefix('jurisdiction')->group(function () use ($jurisdictionClass, $juris
         Route::get('/edit-time-log/{id}', [$jurisdictionClass, 'editTimeLog'])->name('jurisdiction.edit-time-log');
         Route::get('/destroy-time-log/{id}', [$jurisdictionClass, 'destroyTimeLog'])->name('jurisdiction.destroy-time-log');
     });
+});
+
+// 3D NAvigational Tool
+Route::prefix('navix')->group(function () use ($navixClass) {
+
+    Route::get('/indoor', [$navixClass, 'admin'])->name('navix.indoor');
+
 });
