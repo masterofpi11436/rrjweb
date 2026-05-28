@@ -24,7 +24,6 @@
                         @endif
                     </a>
                 </th>
-
                 <th>
                     <a href="#" wire:click.prevent="sortBy('camera_type')">
                         Type
@@ -34,6 +33,14 @@
                     </a>
                 </th>
 
+                <th>
+                    <a href="#" wire:click.prevent="sortBy('location')">
+                        Location
+                        @if ($sortColumn === 'location')
+                            @if ($sortDirection === 'asc') ▲ @else ▼ @endif
+                        @endif
+                    </a>
+                </th>
                 <th>
                     <a href="#" wire:click.prevent="sortBy('status')">
                         Status
@@ -51,6 +58,7 @@
                     <td>{{ $camera->camera_number }}</td>
                     <td>{{ $camera->camera_name }}</td>
                     <td>{{ $camera->camera_type?->label() }}</td>
+                    <td>{{ $camera->location }}</td>
                     <td>
                         @php
                             $statusClasses = match($camera->status) {
