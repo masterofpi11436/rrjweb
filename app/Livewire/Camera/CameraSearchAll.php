@@ -35,6 +35,7 @@ class CameraSearchAll extends Component
                                             ->orWhere('camera_name', 'like', '%' . $this->search . '%')
                                             ->orWhere('camera_type', 'like', '%' . $this->search . '%')
                                             ->orWhere('status', 'like', '%' . $this->search . '%')
+                                            ->orWhere('location', 'like', '%' . $this->search . '%')
                                             ->orderBy($this->sortColumn, $this->sortDirection)
                                             ->get(),
         ]);
