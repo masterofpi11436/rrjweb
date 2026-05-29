@@ -19,28 +19,6 @@ Policy builder:
 
 Camera Schedule:
 
-    1. Admins: CURD on all table columns, requires login account
-    2. Users: No login required, graphs and tables are visible, sortable, and searchable
-    3. Historical status changes for cameras over time.
-    4. This will replace the camera schedule and the status excel spreadsheets
+    1. Added future IP addresses.
 
-    5. INSERT INTO camera_statuses (
-        camera_number,
-        camera_name,
-        encoder_switch_location,
-        encoder_switch_name,
-        encoder_port,
-        camera_model,
-        ip_address,
-        firmware_version,
-        credentials,
-        nvr,
-        notes,
-        camera_type,
-        location,
-        status,
-        created_at,
-        updated_at
-    ) VALUES
 
-="('"&A404&"','"&A404&" - "&I404&"','"&B404&"','"&C404&"',"&IF(D404="","NULL","'"&D404&"'")&","&IF(E404="","NULL","'"&E404&"'")&",'"&F404&"',"&IF(G404="","NULL","'"&G404&"'")&",JSON_OBJECT('credentials','"&H404&"'),'"&LOWER(SUBSTITUTE(J404,"-","_"))&"',"&IF(K404="","NULL","'"&K404&"'")&",'analog','"&B404&"','good',NOW(),NOW()),"
