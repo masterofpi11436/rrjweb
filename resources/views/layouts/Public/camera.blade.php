@@ -23,6 +23,7 @@
                 </label>
                 <span class="theme-label">Light/Dark Theme</span>
             </div>
+        </div>
     </header>
 
     <a href="#" id="back-to-top" class="back-to-top">⬆️ Back to Top</a>
