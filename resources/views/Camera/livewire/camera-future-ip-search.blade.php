@@ -32,6 +32,9 @@
                         @endif
                     </a>
                 </th>
+                <th>
+                    Change in Use Status
+                </th>
             </tr>
         </thead>
 
@@ -51,6 +54,13 @@
                         <span class="{{ $statusClass }}">
                             {{ $camera->is_used ? 'Yes' : 'No' }}
                         </span>
+                    </td>
+                    <td class="px-4 py-3">
+                        <button
+                            wire:click="toggleUsed({{ $camera->id }})"
+                        >
+                            {{ $camera->is_used ? 'Mark Unused' : 'Mark Used' }}
+                        </button>
                     </td>
                 </tr>
             @empty

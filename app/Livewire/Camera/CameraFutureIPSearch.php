@@ -27,6 +27,15 @@ class CameraFutureIPSearch extends Component
         }
     }
 
+    public function toggleUsed($id)
+    {
+        $camera = CameraFutureIPAddress::findOrFail($id);
+
+        $camera->update([
+            'is_used' => ! $camera->is_used,
+        ]);
+    }
+
     public function render()
     {
         // Search for matching records
