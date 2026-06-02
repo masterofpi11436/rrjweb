@@ -18,6 +18,6 @@
 <a href="{{ route('camera.dashboard') }}" class="create-link">Dashboard</a>
 
 <!-- Livewire search component -->
-@livewire('camera.camera-future-ip-search')
+@livewire('Camera.Camera.camera-future-ip-search')
 
 @endsection
