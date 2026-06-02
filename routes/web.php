@@ -322,7 +322,7 @@ Route::prefix('warehouse')->group(function () use ($warehouseLoginClass, $wareho
             });
 
         // Warehouse Supervisor Routes
-        Route::prefix('warehouse-supervisor')->middleware('warehouseSupervisor', 'cache')->group(function () use ($warehouseSupervisorClass, $itemClass, $categoryClass, $sectionClass, $userClass, $inventoryClass, $reportsClass, $historyClass, $createOrderClass, $createExchangeClass, $pendingOrderClass, $pendingExchangeOrderClass) {
+        Route::prefix('warehouse-supervisor')->middleware(['warehouseSupervisor', 'cache'])->group(function () use ($warehouseSupervisorClass, $itemClass, $categoryClass, $sectionClass, $userClass, $inventoryClass, $reportsClass, $historyClass, $createOrderClass, $createExchangeClass, $pendingOrderClass, $pendingExchangeOrderClass) {
             Route::get('/dashboard', [$warehouseSupervisorClass, 'dashboard'])->name('warehouse.warehouse-supervisor.dashboard');
 
             // User Management
@@ -435,7 +435,7 @@ Route::prefix('warehouse')->group(function () use ($warehouseLoginClass, $wareho
         // Warehouse Technician
 
         // Property
-        Route::prefix('property')->middleware('property', 'cache')->group(function () use ($propertyClass) {
+        Route::prefix('property')->middleware(['property', 'cache'])->group(function () use ($propertyClass) {
             Route::get('/dashboard', [$propertyClass, 'dashboard'])->name('warehouse.property.dashboard');
             Route::get('/checkout', [$propertyClass, 'checkOut'])->name('warehouse.property.checkout');
             Route::get('/exchange', [$propertyClass, 'exchange'])->name('warehouse.property.exchange');
@@ -451,7 +451,7 @@ Route::prefix('warehouse')->group(function () use ($warehouseLoginClass, $wareho
         });
 
         // Supervisors
-        Route::prefix('supervisor')->middleware('supervisor', 'cache')->group(function () use ($supervisorClass) {
+        Route::prefix('supervisor')->middleware(['supervisor', 'cache'])->group(function () use ($supervisorClass) {
             Route::get('/dashboard', [$supervisorClass, 'dashboard'])->name('warehouse.supervisor.dashboard');
             Route::get('/checkout', [$supervisorClass, 'checkOut'])->name('warehouse.supervisor.checkout');
             Route::get('/exchange', [$supervisorClass, 'exchange'])->name('warehouse.supervisor.exchange');
@@ -469,7 +469,7 @@ Route::prefix('warehouse')->group(function () use ($warehouseLoginClass, $wareho
         });
 
         // Requestors
-        Route::prefix('requestor')->middleware('requestor', 'cache')->group(function () use ($requestorClass) {
+        Route::prefix('requestor')->middleware(['requestor', 'cache'])->group(function () use ($requestorClass) {
             Route::get('/dashboard', [$requestorClass, 'dashboard'])->name('warehouse.requestor.dashboard');
             Route::get('/checkout', [$requestorClass, 'checkout'])->name('warehouse.requestor.checkout');
             Route::get('/exchange', [$requestorClass, 'exchange'])->name('warehouse.requestor.exchange');
