@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('camera_number');
             $table->ipAddress('future_ip_address');
-            $table->bool('is_used')->default('false');
+            $table->boolean('is_used')->default(false);
             $table->timestamps();
         });
     }

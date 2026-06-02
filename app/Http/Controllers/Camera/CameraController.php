@@ -43,4 +43,10 @@ class CameraController extends Controller
         $camera = Camera::findOrFail($id);
         return view('Camera.Camera.details', ['camera' => $camera]);
     }
+
+    // Future IP addresses
+    public function future()
+    {
+        return view('Camera.Camera.future');
+    }
 }

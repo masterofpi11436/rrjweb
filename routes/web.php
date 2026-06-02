@@ -168,6 +168,8 @@ Route::prefix('camera')->group(function () use ($cameraClass, $cameraLoginClass)
         Route::get('/{id}/edit', [$cameraClass, 'edit'])->name('camera.edit');
         Route::get('/{id}/details', [$cameraClass, 'details'])->name('camera.details');
         Route::delete('/{id}', [$cameraClass, 'destroy'])->name('camera.destroy');
+
+        Route::get('/future', [$cameraClass, 'future'])->name('camera.future');
     });
 });
 
