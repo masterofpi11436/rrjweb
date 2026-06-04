@@ -65,9 +65,26 @@ public function createPDF($id)
     $pdf->writeHTML(view('Policy.Builder.pdf.toc', compact('policy'))->render(), true, false, true, false, '');
     $this->addPolicyFooter($pdf, $policy);
 
-    $pdf->AddPage();
+$bodyStartPage = $pdf->getPage() + 1;
+
+$pdf->AddPage();
+
+$pdf->writeHTML(
+    view('Policy.Builder.pdf.body', compact('policy'))->render(),
+    true,
+    false,
+    true,
+    false,
+    ''
+);
+
+$bodyEndPage = $pdf->getPage();
+
+for ($page = $bodyStartPage; $page <= $bodyEndPage; $page++) {
+    $pdf->setPage($page);
     $this->addPageBorder($pdf);
-    $pdf->writeHTML(view('Policy.Builder.pdf.body', compact('policy'))->render(), true, false, true, false, '');
+    $this->addPolicyFooter($pdf, $policy);
+}
 
     return response(
         $pdf->Output(str($policy->title)->slug() . '.pdf', 'S'),
@@ -84,17 +101,23 @@ private function addPageBorder(TCPDF $pdf): void
 
 private function addPolicyFooter(TCPDF $pdf, PolicyBuilder $policy): void
 {
-    $pdf->SetFont('times', 'B', 11);
+    $autoPageBreak = $pdf->getAutoPageBreak();
+    $breakMargin = $pdf->getBreakMargin();
 
-    $pdf->SetXY(125, 250);
+    $pdf->SetAutoPageBreak(false, 0);
+
+    $pdf->SetFont('times', 'B', 8);
+    $pdf->SetXY(115, 263);
 
     $pdf->Cell(
-        70,
+        80,
         5,
         trim(($policy->policy_number ?? '') . ' ' . ($policy->title ?? '')),
         0,
         0,
         'R'
     );
+
+    $pdf->SetAutoPageBreak($autoPageBreak, $breakMargin);
 }
 }

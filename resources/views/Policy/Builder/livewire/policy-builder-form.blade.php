@@ -148,17 +148,6 @@
         </div>
     </div>
 
-    {{-- Table of Contents --}}
-    <div class="{{ $sectionClass }}">
-        <label class="{{ $labelClass }}">Table of Contents</label>
-        <p>This section may go away. This can be automatically generated based on chapters and subsections entered below</p>
-        <textarea
-            wire:model="table_of_contents"
-            rows="6"
-            class="{{ $textareaClass }}"
-        ></textarea>
-    </div>
-
     {{-- Chapters --}}
     <div class="{{ $sectionClass }}">
         <div class="flex items-center justify-between">
