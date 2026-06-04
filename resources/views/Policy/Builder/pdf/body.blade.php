@@ -106,5 +106,4 @@
             @endforeach<br>
             </table>
     @endforeach
-    <br><br>
 @endforeach

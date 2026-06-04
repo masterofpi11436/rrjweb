@@ -86,6 +86,23 @@ for ($page = $bodyStartPage; $page <= $bodyEndPage; $page++) {
     $this->addPolicyFooter($pdf, $policy);
 }
 
+if (!empty($policy->references)) {
+    $pdf->AddPage();
+
+    $this->addPageBorder($pdf);
+
+    $pdf->writeHTML(
+        view('Policy.Builder.pdf.references', compact('policy'))->render(),
+        true,
+        false,
+        true,
+        false,
+        ''
+    );
+
+    $this->addPolicyFooter($pdf, $policy);
+}
+
     return response(
         $pdf->Output(str($policy->title)->slug() . '.pdf', 'S'),
         200
