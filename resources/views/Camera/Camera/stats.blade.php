@@ -7,7 +7,7 @@
 @section('content')
 
 @if(Auth::user()->admin === 1 || Auth::user()->camera === 1)
-    <a href="{{ route('camera.index') }}" class="create-link" {{-- create-link just floats link right--}}>
+    <a href="{{ route('camera.dashboard') }}" class="create-link" {{-- create-link just floats link right--}}>
         Back To Dashboard
     </a>
 @endif
