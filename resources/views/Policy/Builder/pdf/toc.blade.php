@@ -1,14 +1,6 @@
-{{-- resources/views/Policy/Builder/pdf/toc.blade.php --}}
-
 <style>
-    body {
-        font-family: times;
-        font-size: 11pt;
-        color: #000;
-    }
-
     .toc-title {
-        font-size: 16pt;
+        font-size: 13pt;
         font-weight: bold;
         margin-bottom: 18px;
     }
@@ -20,11 +12,11 @@
 
     td {
         vertical-align: top;
-        padding: 4px 0;
+        padding: 3px 0;
     }
 
     .chapter-number {
-        width: 90px;
+        width: 75px;
         font-weight: bold;
     }
 
@@ -34,54 +26,61 @@
 
     .section-number {
         width: 90px;
-        padding-left: 90px;
+        padding-left: 80px;
     }
 
     .section-title {
-        padding-left: 20px;
+        padding-left: 10px;
     }
 
     .references {
-        margin-top: 18px;
+        margin-top: 12px;
         font-weight: bold;
         text-transform: uppercase;
     }
 
-    .footer-title {
-        position: absolute;
-        bottom: 12px;
-        right: 20px;
+    .footer-table {
+        margin-top: 660px;
         font-size: 9pt;
         font-weight: bold;
     }
+
+    .footer-policy {
+        text-align: right;
+    }
 </style>
+
 
 <div class="toc-title">Table of Contents</div>
 
+<br>
+
 <table>
     @foreach($policy->chapters as $chapterIndex => $chapter)
+<br>
         <tr>
             <td class="chapter-number">
                 Chapter {{ $chapterIndex + 1 }} -
             </td>
+
             <td class="chapter-title">
                 {{ $chapter->chapter_title }}
             </td>
         </tr>
 
         @foreach($chapter->sections as $sectionIndex => $section)
+
             <tr>
-                <td class="section-number">
-                    {{ $chapterIndex + 1 }}.{{ $sectionIndex + 1 }}
-                </td>
+                <td></td>
+
                 <td class="section-title">
+                    {{ $chapterIndex + 1 }}.{{ $sectionIndex + 1 }}
+                    &nbsp;&nbsp;&nbsp;
                     {{ $section->section_title }}
                 </td>
             </tr>
+
         @endforeach
+
     @endforeach
 </table>
-
-<div class="footer-title">
-    {{ $policy->policy_number ?? '' }} {{ $policy->title }}
-</div>
