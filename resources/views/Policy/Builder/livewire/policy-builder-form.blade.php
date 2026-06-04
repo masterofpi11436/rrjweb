@@ -148,28 +148,51 @@
         </div>
     </div>
 
+    {{-- Table of Contents --}}
+    <div class="{{ $sectionClass }}">
+        <label class="{{ $labelClass }}">Table of Contents</label>
+
+        <textarea
+            wire:model="table_of_contents"
+            rows="6"
+            class="{{ $textareaClass }}"
+        ></textarea>
+    </div>
+
     {{-- Chapters --}}
     <div class="{{ $sectionClass }}">
         <div class="flex items-center justify-between">
             <h3 class="text-xl font-semibold text-white">
                 Policy Chapters
             </h3>
-
-            <button type="button"
-                    wire:click="addChapter"
-                    class="{{ $addButtonClass }}">
-                Add Chapter
-            </button>
         </div>
 
         <div class="space-y-6">
             @foreach ($chapters as $chapterIndex => $chapter)
 
-                <div class="rounded-2xl border border-gray-800 bg-gray-950 p-6 space-y-5">
+                <details class="rounded-2xl border border-gray-800 bg-gray-950 p-6">
+                    <summary class="cursor-pointer list-none">
+                        <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+                            <div>
+                                <h4 class="text-lg font-semibold text-white">
+                                    {{ $chapter['chapter_title'] ?: 'Untitled Chapter' }}
+                                </h4>
 
-                    <div class="flex flex-col gap-4 md:flex-row md:items-center">
+                                <p class="text-sm text-gray-400">
+                                    Click to expand/collapse
+                                </p>
+                            </div>
 
-                        <div class="flex-1 space-y-2">
+                            <button type="button"
+                                    wire:click.stop="removeChapter({{ $chapterIndex }})"
+                                    class="{{ $removeButtonClass }}">
+                                Remove Chapter
+                            </button>
+                        </div>
+                    </summary>
+
+                    <div class="mt-5 space-y-5">
+                        <div class="space-y-2">
                             <label class="{{ $labelClass }}">Chapter Title</label>
 
                             <input
@@ -180,147 +203,145 @@
                             >
                         </div>
 
-                        <button type="button"
-                                wire:click="removeChapter({{ $chapterIndex }})"
-                                class="{{ $removeButtonClass }}">
-                            Remove Chapter
-                        </button>
+                        {{-- Sections --}}
+                        <div class="space-y-5">
 
-                    </div>
+                            @foreach ($chapter['sections'] as $sectionIndex => $section)
 
-                    {{-- Sections --}}
-                    <div class="space-y-5">
+                                <div class="rounded-xl border border-gray-800 bg-gray-900/60 p-5 space-y-5">
 
-                        @foreach ($chapter['sections'] as $sectionIndex => $section)
+                                    <div class="flex flex-col gap-4 md:flex-row md:items-center">
+                                        <div class="flex-1 space-y-2">
+                                            <label class="{{ $labelClass }}">Section Title</label>
 
-                            <div class="rounded-xl border border-gray-800 bg-gray-900/60 p-5 space-y-5">
+                                            <input
+                                                type="text"
+                                                wire:model="chapters.{{ $chapterIndex }}.sections.{{ $sectionIndex }}.section_title"
+                                                placeholder="Section Title"
+                                                class="{{ $inputClass }}"
+                                            >
+                                        </div>
 
-                                <div class="flex flex-col gap-4 md:flex-row md:items-center">
-                                    <div class="flex-1 space-y-2">
-                                        <label class="{{ $labelClass }}">Section Title</label>
-
-                                        <input
-                                            type="text"
-                                            wire:model="chapters.{{ $chapterIndex }}.sections.{{ $sectionIndex }}.section_title"
-                                            placeholder="Section Title"
-                                            class="{{ $inputClass }}"
+                                        <button
+                                            type="button"
+                                            wire:click="removeSection({{ $chapterIndex }}, {{ $sectionIndex }})"
+                                            class="{{ $removeButtonClass }}"
                                         >
+                                            Remove Section
+                                        </button>
                                     </div>
 
-                                    <button
-                                        type="button"
-                                        wire:click="removeSection({{ $chapterIndex }}, {{ $sectionIndex }})"
-                                        class="{{ $removeButtonClass }}"
-                                    >
-                                        Remove Section
-                                    </button>
-                                </div>
+                                    {{-- Paragraphs --}}
+                                    <div class="space-y-5">
 
-                                {{-- Paragraphs --}}
-                                <div class="space-y-5">
+                                        @foreach ($section['paragraphs'] as $paragraphIndex => $paragraph)
 
-                                    @foreach ($section['paragraphs'] as $paragraphIndex => $paragraph)
+                                            <div class="rounded-xl border border-gray-800 bg-gray-950 p-5 space-y-4">
 
-                                        <div class="rounded-xl border border-gray-800 bg-gray-950 p-5 space-y-4">
+                                                <div class="space-y-2">
+                                                    <label class="{{ $labelClass }}">Paragraph</label>
 
-                                            <div class="space-y-2">
-                                                <label class="{{ $labelClass }}">Paragraph</label>
-
-                                                <textarea
-                                                    wire:model="chapters.{{ $chapterIndex }}.sections.{{ $sectionIndex }}.paragraphs.{{ $paragraphIndex }}.paragraph"
-                                                    placeholder="Paragraph text"
-                                                    rows="4"
-                                                    class="{{ $textareaClass }}"
-                                                ></textarea>
-                                            </div>
-
-                                            <button
-                                                type="button"
-                                                wire:click="removeParagraph({{ $chapterIndex }}, {{ $sectionIndex }}, {{ $paragraphIndex }})"
-                                                class="{{ $removeButtonClass }}"
-                                            >
-                                                Remove Paragraph
-                                            </button>
-
-                                            {{-- Bullets --}}
-                                            <div class="space-y-4">
-
-                                                <h5 class="text-sm font-semibold uppercase tracking-wide text-gray-400">
-                                                    Bullets
-                                                </h5>
-
-                                                @foreach ($paragraph['bullets'] as $bulletIndex => $bullet)
-
-                                                    <div class="grid grid-cols-1 gap-3 rounded-xl border border-gray-800 bg-gray-900 p-4 md:grid-cols-3">
-
-                                                        <select
-                                                            wire:model="chapters.{{ $chapterIndex }}.sections.{{ $sectionIndex }}.paragraphs.{{ $paragraphIndex }}.bullets.{{ $bulletIndex }}.type"
-                                                            class="{{ $inputClass }}"
-                                                        >
-                                                            <option value="bullet">Bullet</option>
-                                                            <option value="ordered">Ordered</option>
-                                                        </select>
-
-                                                        <input
-                                                            type="text"
-                                                            wire:model="chapters.{{ $chapterIndex }}.sections.{{ $sectionIndex }}.paragraphs.{{ $paragraphIndex }}.bullets.{{ $bulletIndex }}.list"
-                                                            placeholder="Bullet text"
-                                                            class="{{ $inputClass }}"
-                                                        >
-
-                                                        <button
-                                                            type="button"
-                                                            wire:click="removeBullet({{ $chapterIndex }}, {{ $sectionIndex }}, {{ $paragraphIndex }}, {{ $bulletIndex }})"
-                                                            class="{{ $removeButtonClass }}"
-                                                        >
-                                                            Remove Bullet
-                                                        </button>
-
-                                                    </div>
-
-                                                @endforeach
+                                                    <textarea
+                                                        wire:model="chapters.{{ $chapterIndex }}.sections.{{ $sectionIndex }}.paragraphs.{{ $paragraphIndex }}.paragraph"
+                                                        placeholder="Paragraph text"
+                                                        rows="4"
+                                                        class="{{ $textareaClass }}"
+                                                    ></textarea>
+                                                </div>
 
                                                 <button
                                                     type="button"
-                                                    wire:click="addBullet({{ $chapterIndex }}, {{ $sectionIndex }}, {{ $paragraphIndex }})"
-                                                    class="{{ $addButtonClass }}"
+                                                    wire:click="removeParagraph({{ $chapterIndex }}, {{ $sectionIndex }}, {{ $paragraphIndex }})"
+                                                    class="{{ $removeButtonClass }}"
                                                 >
-                                                    Add Bullet
+                                                    Remove Paragraph
                                                 </button>
+
+                                                {{-- Bullets --}}
+                                                <div class="space-y-4">
+
+                                                    <h5 class="text-sm font-semibold uppercase tracking-wide text-gray-400">
+                                                        Bullets
+                                                    </h5>
+
+                                                    @foreach ($paragraph['bullets'] as $bulletIndex => $bullet)
+
+                                                        <div class="grid grid-cols-1 gap-3 rounded-xl border border-gray-800 bg-gray-900 p-4 md:grid-cols-3">
+
+                                                            <select
+                                                                wire:model="chapters.{{ $chapterIndex }}.sections.{{ $sectionIndex }}.paragraphs.{{ $paragraphIndex }}.bullets.{{ $bulletIndex }}.type"
+                                                                class="{{ $inputClass }}"
+                                                            >
+                                                                <option value="bullet">Bullet</option>
+                                                                <option value="ordered">Ordered</option>
+                                                            </select>
+
+                                                            <input
+                                                                type="text"
+                                                                wire:model="chapters.{{ $chapterIndex }}.sections.{{ $sectionIndex }}.paragraphs.{{ $paragraphIndex }}.bullets.{{ $bulletIndex }}.list"
+                                                                placeholder="Bullet text"
+                                                                class="{{ $inputClass }}"
+                                                            >
+
+                                                            <button
+                                                                type="button"
+                                                                wire:click="removeBullet({{ $chapterIndex }}, {{ $sectionIndex }}, {{ $paragraphIndex }}, {{ $bulletIndex }})"
+                                                                class="{{ $removeButtonClass }}"
+                                                            >
+                                                                Remove Bullet
+                                                            </button>
+
+                                                        </div>
+
+                                                    @endforeach
+
+                                                    <button
+                                                        type="button"
+                                                        wire:click="addBullet({{ $chapterIndex }}, {{ $sectionIndex }}, {{ $paragraphIndex }})"
+                                                        class="{{ $addButtonClass }}"
+                                                    >
+                                                        Add Bullet
+                                                    </button>
+
+                                                </div>
 
                                             </div>
 
-                                        </div>
+                                        @endforeach
 
-                                    @endforeach
+                                        <button
+                                            type="button"
+                                            wire:click="addParagraph({{ $chapterIndex }}, {{ $sectionIndex }})"
+                                            class="{{ $addButtonClass }}"
+                                        >
+                                            Add Paragraph
+                                        </button>
 
-                                    <button
-                                        type="button"
-                                        wire:click="addParagraph({{ $chapterIndex }}, {{ $sectionIndex }})"
-                                        class="{{ $addButtonClass }}"
-                                    >
-                                        Add Paragraph
-                                    </button>
+                                    </div>
 
                                 </div>
 
-                            </div>
+                            @endforeach
 
-                        @endforeach
+                            <button
+                                type="button"
+                                wire:click="addSection({{ $chapterIndex }})"
+                                class="{{ $addButtonClass }}"
+                            >
+                                Add Section
+                            </button>
 
-                        <button
-                            type="button"
-                            wire:click="addSection({{ $chapterIndex }})"
-                            class="{{ $addButtonClass }}"
-                        >
-                            Add Section
-                        </button>
-
+                        </div>
                     </div>
-
-                </div>
+                </details>
 
             @endforeach
+
+            <button type="button"
+                    wire:click="addChapter"
+                    class="{{ $addButtonClass }}">
+                Add Chapter
+            </button>
         </div>
     </div>
 
