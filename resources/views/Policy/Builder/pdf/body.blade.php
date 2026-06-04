@@ -23,6 +23,7 @@
 
     .section-number {
         width: 12mm;
+        font-size: 12pt;
         font-weight: bold;
     }
 
