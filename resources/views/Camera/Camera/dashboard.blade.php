@@ -17,6 +17,7 @@
 <!-- Link to navigate to the Create page -->
 <a href="{{ route('camera.create') }}" class="create-link">Create New Entry</a>
 <a href="{{ route('camera.future') }}" class="create-link">Future IP addresses</a>
+<a href="{{ route('camera.stats') }}" class="create-link">Statistics</a>
 
 <!-- Livewire search component -->
 @livewire('camera.camera-search')
