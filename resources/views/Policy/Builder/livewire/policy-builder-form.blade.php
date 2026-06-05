@@ -159,7 +159,13 @@
         <div class="space-y-6">
             @foreach ($chapters as $chapterIndex => $chapter)
 
-                <details class="rounded-2xl border border-gray-800 bg-gray-950 p-6">
+                    <details
+                        wire:key="chapter-{{ $chapterIndex }}"
+                        x-data="{ open: false }"
+                        x-bind:open="open"
+                        x-on:toggle="open = $el.open"
+                        class="rounded-2xl border border-gray-800 bg-gray-950 p-6"
+                    >
                     <summary class="cursor-pointer list-none">
                         <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
                             <div>
@@ -197,7 +203,10 @@
 
                             @foreach ($chapter['sections'] as $sectionIndex => $section)
 
-                                <div class="rounded-xl border border-gray-800 bg-gray-900/60 p-5 space-y-5">
+                                    <div
+                                        wire:key="section-{{ $chapterIndex }}-{{ $sectionIndex }}"
+                                        class="rounded-xl border border-gray-800 bg-gray-900/60 p-5 space-y-5"
+                                    >
 
                                     <div class="flex flex-col gap-4 md:flex-row md:items-center">
                                         <div class="flex-1 space-y-2">
@@ -225,7 +234,10 @@
 
                                         @foreach ($section['paragraphs'] as $paragraphIndex => $paragraph)
 
-                                            <div class="rounded-xl border border-gray-800 bg-gray-950 p-5 space-y-4">
+                                                <div
+                                                    wire:key="paragraph-{{ $chapterIndex }}-{{ $sectionIndex }}-{{ $paragraphIndex }}"
+                                                    class="rounded-xl border border-gray-800 bg-gray-950 p-5 space-y-4"
+                                                >
 
                                                 <div class="space-y-2">
                                                     <label class="{{ $labelClass }}">Paragraph</label>
@@ -255,7 +267,10 @@
 
                                                     @foreach ($paragraph['bullets'] as $bulletIndex => $bullet)
 
-                                                        <div class="grid grid-cols-1 gap-3 rounded-xl border border-gray-800 bg-gray-900 p-4 md:grid-cols-3">
+                                                        <div
+                                                            wire:key="bullet-{{ $chapterIndex }}-{{ $sectionIndex }}-{{ $paragraphIndex }}-{{ $bulletIndex }}"
+                                                            class="grid grid-cols-1 gap-3 rounded-xl border border-gray-800 bg-gray-900 p-4 md:grid-cols-3"
+                                                        >
 
                                                             <select
                                                                 wire:model="chapters.{{ $chapterIndex }}.sections.{{ $sectionIndex }}.paragraphs.{{ $paragraphIndex }}.bullets.{{ $bulletIndex }}.type"
