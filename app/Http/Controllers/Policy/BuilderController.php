@@ -93,24 +93,24 @@ class BuilderController extends Controller
             $pdf->setPage($page);
             $this->addPageBorder($pdf);
         $this->addPolicyFooter($pdf, $policy);
-    }
+        }
 
-    if (!empty($policy->references)) {
-        $pdf->AddPage();
+        if (!empty($policy->references)) {
+            $pdf->AddPage();
 
-        $this->addPageBorder($pdf);
+            $this->addPageBorder($pdf);
 
-        $pdf->writeHTML(
-            view('Policy.Builder.pdf.references', compact('policy'))->render(),
-            true,
-            false,
-            true,
-            false,
-            ''
-        );
+            $pdf->writeHTML(
+                view('Policy.Builder.pdf.references', compact('policy'))->render(),
+                true,
+                false,
+                true,
+                false,
+                ''
+            );
 
-        $this->addPolicyFooter($pdf, $policy);
-    }
+            $this->addPolicyFooter($pdf, $policy);
+        }
 
         return response(
             $pdf->Output(str($policy->title)->slug() . '.pdf', 'S'),
