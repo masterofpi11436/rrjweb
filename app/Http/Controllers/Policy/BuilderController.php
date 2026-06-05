@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Policy;
 use App\Http\Controllers\Controller;
 use App\Models\Policy\PolicyBuilder;
 use TCPDF;
+use TCPDF_FONTS;
 
 class BuilderController extends Controller
 {
@@ -54,6 +55,14 @@ public function createPDF($id)
 
     $pdf->SetMargins(20, 18, 20);
     $pdf->SetAutoPageBreak(true, 18);
+    $font = TCPDF_FONTS::addTTFfont(
+        storage_path('fonts/candara.ttf'),
+        'TrueTypeUnicode',
+        '',
+        96
+    );
+
+    $pdf->SetFont($font, '', 11);
     $pdf->SetFont('candara', '', 11);
 
     $pdf->AddPage();
