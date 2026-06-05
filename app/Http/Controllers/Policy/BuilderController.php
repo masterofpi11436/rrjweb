@@ -54,7 +54,7 @@ public function createPDF($id)
 
     $pdf->SetMargins(20, 18, 20);
     $pdf->SetAutoPageBreak(true, 18);
-    $pdf->SetFont('times', '', 11);
+    $pdf->SetFont('candara', '', 11);
 
     $pdf->AddPage();
     $this->addPageBorder($pdf);
