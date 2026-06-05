@@ -55,6 +55,8 @@ public function createPDF($id)
 
     $pdf->SetMargins(20, 18, 20);
     $pdf->SetAutoPageBreak(true, 18);
+
+    define('K_TCPDF_FONTS', storage_path('fonts') . DIRECTORY_SEPARATOR);
     $font = TCPDF_FONTS::addTTFfont(
         storage_path('fonts/candara.ttf'),
         'TrueTypeUnicode',
@@ -63,7 +65,6 @@ public function createPDF($id)
     );
 
     $pdf->SetFont($font, '', 11);
-    $pdf->SetFont('candara', '', 11);
 
     $pdf->AddPage();
     $this->addPageBorder($pdf);
