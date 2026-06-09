@@ -24,4 +24,10 @@ class PolicyBuilder extends Model
         return $this->hasMany(Chapter::class, 'policy_id')
             ->orderBy('sort_order');
     }
+
+    public function references()
+    {
+        return $this->hasMany(Reference::class, 'policy_id')
+            ->orderBy('sort_order');
+    }
 }

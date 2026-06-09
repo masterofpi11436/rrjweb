@@ -351,13 +351,203 @@
 
     {{-- References --}}
     <div class="{{ $sectionClass }}">
-        <label class="{{ $labelClass }}">References</label>
+        <div class="flex items-center justify-between">
+            <h3 class="text-xl font-semibold text-white">
+                Policy References
+            </h3>
+        </div>
 
-        <textarea
-            wire:model="references"
-            rows="5"
-            class="{{ $textareaClass }}"
-        ></textarea>
+        <div class="space-y-6">
+            @foreach ($references as $referenceIndex => $reference)
+
+                    <details
+                        wire:key="reference-{{ $referenceIndex }}"
+                        x-data="{ open: false }"
+                        x-bind:open="open"
+                        x-on:toggle="open = $el.open"
+                        class="rounded-2xl border border-gray-800 bg-gray-950 p-6"
+                    >
+                    <summary class="cursor-pointer list-none">
+                        <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+                            <div>
+                                <h4 class="text-lg font-semibold text-white">
+                                    {{ $reference['reference_title'] ?: 'Untitled Reference' }}
+                                </h4>
+
+                                <p class="text-sm text-gray-400">
+                                    Click to expand/collapse
+                                </p>
+                            </div>
+
+                            <button type="button"
+                                    wire:click.stop="removeReference({{ $referenceIndex }})"
+                                    class="{{ $removeButtonClass }}">
+                                Remove Reference
+                            </button>
+                        </div>
+                    </summary>
+
+                    <div class="mt-5 space-y-5">
+                        <div class="space-y-2">
+                            <label class="{{ $labelClass }}">Reference Title</label>
+
+                            <input
+                                type="text"
+                                wire:model="references.{{ $referenceIndex }}.reference_title"
+                                placeholder="Reference Title"
+                                class="{{ $inputClass }}"
+                            >
+                        </div>
+
+                        {{-- Sections --}}
+                        <div class="space-y-5">
+
+                            @foreach ($reference['sections'] as $sectionIndex => $section)
+
+                                    <div
+                                        wire:key="reference-section-{{ $referenceIndex }}-{{ $sectionIndex }}"
+                                        class="rounded-xl border border-gray-800 bg-gray-900/60 p-5 space-y-5"
+                                    >
+
+                                    <div class="flex flex-col gap-4 md:flex-row md:items-center">
+                                        <div class="flex-1 space-y-2">
+                                            <label class="{{ $labelClass }}">Section Title</label>
+
+                                            <input
+                                                type="text"
+                                                wire:model="references.{{ $referenceIndex }}.sections.{{ $sectionIndex }}.section_title"
+                                                placeholder="Section Title"
+                                                class="{{ $inputClass }}"
+                                            >
+                                        </div>
+
+                                        <button
+                                            type="button"
+                                            wire:click="removeReferenceSection({{ $referenceIndex }}, {{ $sectionIndex }})"
+                                            class="{{ $removeButtonClass }}"
+                                        >
+                                            Remove Section
+                                        </button>
+                                    </div>
+
+                                    {{-- Paragraphs --}}
+                                    <div class="space-y-5">
+
+                                        @foreach ($section['paragraphs'] as $paragraphIndex => $paragraph)
+
+                                                <div
+                                                    wire:key="reference-paragraph-{{ $referenceIndex }}-{{ $sectionIndex }}-{{ $paragraphIndex }}"
+                                                    class="rounded-xl border border-gray-800 bg-gray-950 p-5 space-y-4"
+                                                >
+
+                                                <div class="space-y-2">
+                                                    <label class="{{ $labelClass }}">Paragraph</label>
+
+                                                    <textarea
+                                                        wire:model="references.{{ $referenceIndex }}.sections.{{ $sectionIndex }}.paragraphs.{{ $paragraphIndex }}.paragraph"
+                                                        placeholder="Paragraph text"
+                                                        rows="4"
+                                                        class="{{ $textareaClass }}"
+                                                    ></textarea>
+                                                </div>
+
+                                                <button
+                                                    type="button"
+                                                    wire:click="removeReferenceParagraph({{ $referenceIndex }}, {{ $sectionIndex }}, {{ $paragraphIndex }})"
+                                                    class="{{ $removeButtonClass }}"
+                                                >
+                                                    Remove Paragraph
+                                                </button>
+
+                                                {{-- Bullets --}}
+                                                <div class="space-y-4">
+
+                                                    <h5 class="text-sm font-semibold uppercase tracking-wide text-gray-400">
+                                                        Bullets
+                                                    </h5>
+
+                                                    @foreach ($paragraph['bullets'] as $bulletIndex => $bullet)
+
+                                                        <div
+                                                            wire:key="reference-bullet-{{ $referenceIndex }}-{{ $sectionIndex }}-{{ $paragraphIndex }}-{{ $bulletIndex }}"
+                                                            class="grid grid-cols-1 gap-3 rounded-xl border border-gray-800 bg-gray-900 p-4 md:grid-cols-3"
+                                                        >
+
+                                                            <select
+                                                                wire:model="references.{{ $referenceIndex }}.sections.{{ $sectionIndex }}.paragraphs.{{ $paragraphIndex }}.bullets.{{ $bulletIndex }}.type"
+                                                                class="{{ $inputClass }}"
+                                                            >
+                                                                <option value="bullet">Bullet</option>
+                                                                <option value="ordered">Ordered</option>
+                                                            </select>
+
+                                                            <input
+                                                                type="text"
+                                                                wire:model="references.{{ $referenceIndex }}.sections.{{ $sectionIndex }}.paragraphs.{{ $paragraphIndex }}.bullets.{{ $bulletIndex }}.list"
+                                                                placeholder="Bullet text"
+                                                                class="{{ $inputClass }}"
+                                                            >
+
+                                                            <button
+                                                                type="button"
+                                                                wire:click="removeReferenceBullet({{ $referenceIndex }}, {{ $sectionIndex }}, {{ $paragraphIndex }}, {{ $bulletIndex }})"
+                                                                class="{{ $removeButtonClass }}"
+                                                            >
+                                                                Remove Bullet
+                                                            </button>
+
+                                                        </div>
+
+                                                    @endforeach
+
+                                                    <button
+                                                        type="button"
+                                                        wire:click="addReferenceBullet({{ $referenceIndex }}, {{ $sectionIndex }}, {{ $paragraphIndex }})"
+                                                        class="{{ $addButtonClass }}"
+                                                    >
+                                                        Add Bullet
+                                                    </button>
+
+                                                </div>
+
+                                            </div>
+
+                                        @endforeach
+
+                                        <button
+                                            type="button"
+                                            wire:click="addReferenceParagraph({{ $referenceIndex }}, {{ $sectionIndex }})"
+                                            class="{{ $addButtonClass }}"
+                                        >
+                                            Add Paragraph
+                                        </button>
+
+                                    </div>
+
+                                </div>
+
+                            @endforeach
+
+                            <button
+                                type="button"
+                                wire:click="addReferenceSection({{ $referenceIndex }})"
+                                class="{{ $addButtonClass }}"
+                            >
+                                Add Section
+                            </button>
+
+                        </div>
+                    </div>
+                </details>
+
+            @endforeach
+
+            <button type="button"
+                    wire:click="addReference"
+                    class="{{ $addButtonClass }}">
+                Add Reference
+            </button>
+        </div>
     </div>
 
     {{-- Definitions --}}

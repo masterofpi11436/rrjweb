@@ -37,7 +37,6 @@ return new class extends Migration
             $table->date('superintendent_approval_date')->nullable();
 
             $table->longtext('table_of_contents')->nullable();
-            $table->longtext('references')->nullable();
             $table->longtext('definitions')->nullable();
 
             // Aproval Logic

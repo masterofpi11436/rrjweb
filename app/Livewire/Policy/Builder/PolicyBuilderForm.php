@@ -7,6 +7,10 @@ use App\Models\Policy\ChapterParagraph;
 use App\Models\Policy\ChapterParagraphBullet;
 use App\Models\Policy\ChapterSection;
 use App\Models\Policy\PolicyBuilder;
+use App\Models\Policy\Reference;
+use App\Models\Policy\ReferenceParagraph;
+use App\Models\Policy\ReferenceParagraphBullet;
+use App\Models\Policy\ReferenceSection;
 use Livewire\Component;
 
 class PolicyBuilderForm extends Component
@@ -34,7 +38,7 @@ class PolicyBuilderForm extends Component
 
     public string $table_of_contents = '';
     public array $chapters = [];
-    public string $references = '';
+    public array $references = [];
     public string $definitions = '';
 
     public $policyBuilderId = null;
@@ -48,7 +52,8 @@ class PolicyBuilderForm extends Component
         }
 
         $policy = PolicyBuilder::with([
-            'chapters.sections.paragraphs.bullets'
+            'chapters.sections.paragraphs.bullets',
+            'references.sections.paragraphs.bullets',
         ])->findOrFail($policyBuilderId);
 
         $this->title = $policy->title ?? '';
@@ -64,7 +69,6 @@ class PolicyBuilderForm extends Component
         $this->policy_effective_date = $policy->policy_effective_date;
         $this->policy_revision_dates = $policy->policy_revision_dates ?? [];
         $this->table_of_contents = $policy->table_of_contents ?? '';
-        $this->references = $policy->references ?? '';
         $this->definitions = $policy->definitions ?? '';
 
         $this->chapters = $policy->chapters->map(function ($chapter) {
@@ -72,6 +76,43 @@ class PolicyBuilderForm extends Component
                 'chapter_title' => $chapter->chapter_title ?? '',
 
                 'sections' => $chapter->sections->map(function ($section) {
+
+                    return [
+                        'section_title' => $section->section_title ?? '',
+
+                        'paragraphs' => $section->paragraphs->map(function ($paragraph) {
+
+                            return [
+                                'paragraph' => $paragraph->paragraph ?? '',
+
+                                'bullets' => $paragraph->bullets->map(function ($bullet) {
+
+                                    return [
+                                        'type' => $bullet->type ?? 'bullet',
+
+                                        'list' => is_array($bullet->list)
+                                            ? ($bullet->list['text'] ?? '')
+                                            : ($bullet->list ?? ''),
+                                    ];
+
+                                })->toArray(),
+
+                            ];
+
+                        })->toArray(),
+
+                    ];
+
+                })->toArray(),
+
+            ];
+        })->toArray();
+
+        $this->references = $policy->references->map(function ($reference) {
+            return [
+                'reference_title' => $reference->reference_title ?? '',
+
+                'sections' => $reference->sections->map(function ($section) {
 
                     return [
                         'section_title' => $section->section_title ?? '',
@@ -119,6 +160,9 @@ class PolicyBuilderForm extends Component
         $this->policy_revision_dates = array_values($this->policy_revision_dates);
     }
 
+    /*
+    ** Chapters
+    */
     public function addChapter()
     {
         $this->chapters[] = [
@@ -188,6 +232,80 @@ class PolicyBuilderForm extends Component
         );
     }
 
+    /*
+    ** Revisions
+    */
+    public function addReference()
+    {
+        $this->references[] = [
+            'reference_title' => '',
+            'sections' => [],
+        ];
+    }
+
+    public function removeReference($referenceIndex)
+    {
+        unset($this->references[$referenceIndex]);
+        $this->references = array_values($this->references);
+    }
+
+    public function addReferenceParagraph($referenceIndex, $sectionIndex)
+    {
+        $this->references[$referenceIndex]['sections'][$sectionIndex]['paragraphs'][] = [
+            'paragraph' => '',
+            'bullets' => [],
+        ];
+    }
+
+    public function removeReferenceParagraph($referenceIndex, $sectionIndex, $paragraphIndex)
+    {
+        unset(
+            $this->references[$referenceIndex]['sections'][$sectionIndex]['paragraphs'][$paragraphIndex]
+        );
+
+        $this->references[$referenceIndex]['sections'][$sectionIndex]['paragraphs'] = array_values(
+            $this->references[$referenceIndex]['sections'][$sectionIndex]['paragraphs']
+        );
+    }
+
+    public function addReferenceSection($referenceIndex)
+    {
+        $this->references[$referenceIndex]['sections'][] = [
+            'section_title' => '',
+            'paragraphs' => [],
+        ];
+    }
+
+    public function removeReferenceSection($referenceIndex, $sectionIndex)
+    {
+        unset($this->references[$referenceIndex]['sections'][$sectionIndex]);
+
+        $this->references[$referenceIndex]['sections'] = array_values(
+            $this->references[$referenceIndex]['sections']
+        );
+    }
+
+    public function addReferenceBullet($referenceIndex, $sectionIndex, $paragraphIndex)
+    {
+        $this->references[$referenceIndex]['sections'][$sectionIndex]['paragraphs'][$paragraphIndex]['bullets'][] = [
+            'type' => 'bullet',
+            'list' => '',
+        ];
+    }
+
+    public function removeReferenceBullet($referenceIndex, $sectionIndex, $paragraphIndex, $bulletIndex)
+    {
+        unset(
+            $this->references[$referenceIndex]['sections'][$sectionIndex]['paragraphs'][$paragraphIndex]['bullets'][$bulletIndex]
+        );
+
+        $this->references[$referenceIndex]['sections'][$sectionIndex]['paragraphs'][$paragraphIndex]['bullets'] = array_values(
+            $this->references[$referenceIndex]['sections'][$sectionIndex]['paragraphs'][$paragraphIndex]['bullets']
+        );
+    }
+
+
+
     public function save()
     {
         $this->validate([
@@ -213,7 +331,16 @@ class PolicyBuilderForm extends Component
             'chapters.*.sections.*.paragraphs.*.bullets.*.type' => 'nullable|string',
             'chapters.*.sections.*.paragraphs.*.bullets.*.list' => 'nullable|string',
 
-            'references' => 'nullable|string',
+            'references' => 'nullable|array',
+            'references.*.reference_title' => 'nullable|string|max:255',
+            'references.*.sections' => 'nullable|array',
+            'references.*.sections.*.section_title' => 'nullable|string|max:255',
+            'references.*.sections.*.paragraphs' => 'nullable|array',
+            'references.*.sections.*.paragraphs.*.paragraph' => 'nullable|string',
+            'references.*.sections.*.paragraphs.*.bullets' => 'nullable|array',
+            'references.*.sections.*.paragraphs.*.bullets.*.type' => 'nullable|string',
+            'references.*.sections.*.paragraphs.*.bullets.*.list' => 'nullable|string',
+
             'definitions' => 'nullable|string',
         ]);
 
@@ -233,12 +360,15 @@ class PolicyBuilderForm extends Component
                 'policy_effective_date' => $this->policy_effective_date,
                 'policy_revision_dates' => $this->policy_revision_dates,
                 'table_of_contents' => $this->table_of_contents,
-                'references' => $this->references,
                 'definitions' => $this->definitions,
             ]
         );
 
         $this->policyBuilderId = $policy->id;
+        $policy->load([
+            'chapters.sections.paragraphs.bullets',
+            'references.sections.paragraphs.bullets',
+        ]);
 
         // Clear old nested records before saving updated chapters
         foreach ($policy->chapters as $existingChapter) {
@@ -284,6 +414,61 @@ class PolicyBuilderForm extends Component
                     foreach ($paragraphData['bullets'] ?? [] as $bulletIndex => $bulletData) {
 
                         ChapterParagraphBullet::create([
+                            'paragraph_id' => $paragraph->id,
+                            'type' => $bulletData['type'] ?? 'bullet',
+                            'list' => [
+                                'text' => $bulletData['list'] ?? '',
+                            ],
+                            'sort_order' => $bulletIndex,
+                        ]);
+
+                    }
+                }
+            }
+        }
+
+        // Clear old nested records before saving updated references
+        foreach ($policy->references as $existingReference) {
+
+            foreach ($existingReference->sections as $existingSection) {
+
+                foreach ($existingSection->paragraphs as $existingParagraph) {
+                    $existingParagraph->bullets()->delete();
+                }
+
+                $existingSection->paragraphs()->delete();
+            }
+
+            $existingReference->sections()->delete();
+        }
+
+        foreach ($this->references as $referenceIndex => $referenceData) {
+
+            $reference = Reference::create([
+                'policy_id' => $policy->id,
+                'reference_title' => $referenceData['reference_title'] ?? '',
+                'sort_order' => $referenceIndex,
+            ]);
+
+            foreach ($referenceData['sections'] ?? [] as $sectionIndex => $sectionData) {
+
+                $section = ReferenceSection::create([
+                    'reference_id' => $reference->id,
+                    'section_title' => $sectionData['section_title'] ?? '',
+                    'sort_order' => $sectionIndex,
+                ]);
+
+                foreach ($sectionData['paragraphs'] ?? [] as $paragraphIndex => $paragraphData) {
+
+                    $paragraph = ReferenceParagraph::create([
+                        'section_id' => $section->id,
+                        'paragraph' => $paragraphData['paragraph'] ?? '',
+                        'sort_order' => $paragraphIndex,
+                    ]);
+
+                    foreach ($paragraphData['bullets'] ?? [] as $bulletIndex => $bulletData) {
+
+                        ReferenceParagraphBullet::create([
                             'paragraph_id' => $paragraph->id,
                             'type' => $bulletData['type'] ?? 'bullet',
                             'list' => [
