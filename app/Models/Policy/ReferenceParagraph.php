@@ -13,6 +13,7 @@ class ReferenceParagraph extends Model
 
     protected $fillable = [
         'section_id',
+        'outside_reference',
         'paragraph',
         'sort_order',
     ];

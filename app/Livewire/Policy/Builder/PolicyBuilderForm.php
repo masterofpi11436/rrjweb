@@ -85,8 +85,6 @@ class PolicyBuilderForm extends Component
                             return [
                                 'paragraph' => $paragraph->paragraph ?? '',
 
-                                'outside_reference' => $paragraph->outside_reference ?? '',
-
                                 'bullets' => $paragraph->bullets->map(function ($bullet) {
 
                                     return [
@@ -123,6 +121,8 @@ class PolicyBuilderForm extends Component
 
                             return [
                                 'paragraph' => $paragraph->paragraph ?? '',
+
+                                'outside_reference' => $paragraph->outside_reference ?? '',
 
                                 'bullets' => $paragraph->bullets->map(function ($bullet) {
 
@@ -465,7 +465,7 @@ class PolicyBuilderForm extends Component
 
                     $paragraph = ReferenceParagraph::create([
                         'section_id' => $section->id,
-                        'outside_reference' => $paragraphData['outside_reference'] ?? null,
+                        'outside_reference' => $paragraphData['outside_reference'] ?? '',
                         'paragraph' => $paragraphData['paragraph'] ?? '',
                         'sort_order' => $paragraphIndex,
                     ]);
