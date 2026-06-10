@@ -24,7 +24,7 @@ class Reference extends Model
 
     public function sections()
     {
-        return $this->hasMany(ReferenceSection::class, 'chapter_id')
+        return $this->hasMany(ReferenceSection::class, 'reference_id')
             ->orderBy('sort_order');
     }
 }

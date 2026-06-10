@@ -434,13 +434,19 @@
                                     <div class="space-y-5">
 
                                         @foreach ($section['paragraphs'] as $paragraphIndex => $paragraph)
-
+<h1>test</h1>
                                                 <div
                                                     wire:key="reference-paragraph-{{ $referenceIndex }}-{{ $sectionIndex }}-{{ $paragraphIndex }}"
                                                     class="rounded-xl border border-gray-800 bg-gray-950 p-5 space-y-4"
                                                 >
 
                                                 <div class="space-y-2">
+
+                                                    <div class="space-y-2">
+                                                        <label class="{{ $labelClass }}">Outside Reference</label>
+                                                        <input type="text" wire:model="outside_reference" required class="{{ $inputClass }}">
+                                                    </div>
+
                                                     <label class="{{ $labelClass }}">Paragraph</label>
 
                                                     <textarea

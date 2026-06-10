@@ -38,6 +38,7 @@ class PolicyBuilderForm extends Component
 
     public string $table_of_contents = '';
     public array $chapters = [];
+    public ?string $outside_reference = null;
     public array $references = [];
     public string $definitions = '';
 
@@ -107,6 +108,8 @@ class PolicyBuilderForm extends Component
 
             ];
         })->toArray();
+
+        $this->outside_reference = $policy->outside_reference;
 
         $this->references = $policy->references->map(function ($reference) {
             return [
@@ -331,6 +334,8 @@ class PolicyBuilderForm extends Component
             'chapters.*.sections.*.paragraphs.*.bullets.*.type' => 'nullable|string',
             'chapters.*.sections.*.paragraphs.*.bullets.*.list' => 'nullable|string',
 
+            'outside_reference' => 'nullable|string',
+
             'references' => 'nullable|array',
             'references.*.reference_title' => 'nullable|string|max:255',
             'references.*.sections' => 'nullable|array',
@@ -360,6 +365,7 @@ class PolicyBuilderForm extends Component
                 'policy_effective_date' => $this->policy_effective_date,
                 'policy_revision_dates' => $this->policy_revision_dates,
                 'table_of_contents' => $this->table_of_contents,
+                'outside_reference' => $this->outside_reference,
                 'definitions' => $this->definitions,
             ]
         );
@@ -453,7 +459,7 @@ class PolicyBuilderForm extends Component
             foreach ($referenceData['sections'] ?? [] as $sectionIndex => $sectionData) {
 
                 $section = ReferenceSection::create([
-                    'reference_id' => $reference->id,
+                    'id' => $reference->id,
                     'section_title' => $sectionData['section_title'] ?? '',
                     'sort_order' => $sectionIndex,
                 ]);
