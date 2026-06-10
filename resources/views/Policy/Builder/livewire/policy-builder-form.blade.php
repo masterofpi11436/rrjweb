@@ -107,58 +107,58 @@
     </div>
 
     {{-- Revision Dates --}}
-<div class="{{ $sectionClass }}">
-    <div class="flex items-center justify-between">
-        <h3 class="text-lg font-semibold text-white">
-            Revision Dates
-        </h3>
+    <div class="{{ $sectionClass }}">
+        <div class="flex items-center justify-between">
+            <h3 class="text-lg font-semibold text-white">
+                Revision Dates
+            </h3>
 
-        <button type="button"
-                wire:click="addRevisionDate"
-                class="{{ $addButtonClass }}">
-            Add Revision Date
-        </button>
-    </div>
-
-    <details
-        x-data="{ open: false }"
-        x-bind:open="open"
-        x-on:toggle="open = $el.open"
-        class="rounded-xl border border-gray-800 bg-gray-950 p-4"
-    >
-        <summary class="cursor-pointer list-none text-sm font-medium text-gray-300">
-            Show / Hide Revision Entries
-        </summary>
-
-        <div class="mt-4 space-y-3">
-            @foreach ($policy_revision_dates as $index => $revision)
-                <div
-                    wire:key="revision-date-{{ $index }}"
-                    class="grid grid-cols-1 gap-3 rounded-xl border border-gray-800 bg-gray-950 p-4 md:grid-cols-3"
-                >
-                    <input
-                        type="text"
-                        wire:model="policy_revision_dates.{{ $index }}.revision"
-                        placeholder="Revision"
-                        class="{{ $inputClass }}"
-                    >
-
-                    <input
-                        type="date"
-                        wire:model="policy_revision_dates.{{ $index }}.date"
-                        class="{{ $inputClass }}"
-                    >
-
-                    <button type="button"
-                            wire:click="removeRevisionDate({{ $index }})"
-                            class="{{ $removeButtonClass }}">
-                        Remove
-                    </button>
-                </div>
-            @endforeach
+            <button type="button"
+                    wire:click="addRevisionDate"
+                    class="{{ $addButtonClass }}">
+                Add Revision Date
+            </button>
         </div>
-    </details>
-</div>
+
+        <details
+            x-data="{ open: false }"
+            x-bind:open="open"
+            x-on:toggle="open = $el.open"
+            class="rounded-xl border border-gray-800 bg-gray-950 p-4"
+        >
+            <summary class="cursor-pointer list-none text-sm font-medium text-gray-300">
+                Show / Hide Revision Entries
+            </summary>
+
+            <div class="mt-4 space-y-3">
+                @foreach ($policy_revision_dates as $index => $revision)
+                    <div
+                        wire:key="revision-date-{{ $index }}"
+                        class="grid grid-cols-1 gap-3 rounded-xl border border-gray-800 bg-gray-950 p-4 md:grid-cols-3"
+                    >
+                        <input
+                            type="text"
+                            wire:model="policy_revision_dates.{{ $index }}.revision"
+                            placeholder="Revision"
+                            class="{{ $inputClass }}"
+                        >
+
+                        <input
+                            type="date"
+                            wire:model="policy_revision_dates.{{ $index }}.date"
+                            class="{{ $inputClass }}"
+                        >
+
+                        <button type="button"
+                                wire:click="removeRevisionDate({{ $index }})"
+                                class="{{ $removeButtonClass }}">
+                            Remove
+                        </button>
+                    </div>
+                @endforeach
+            </div>
+        </details>
+    </div>
 
     {{-- Chapters --}}
     <div class="{{ $sectionClass }}">
