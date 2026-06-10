@@ -38,7 +38,6 @@ class PolicyBuilderForm extends Component
 
     public string $table_of_contents = '';
     public array $chapters = [];
-    public ?string $outside_reference = null;
     public array $references = [];
     public string $definitions = '';
 
@@ -86,6 +85,8 @@ class PolicyBuilderForm extends Component
                             return [
                                 'paragraph' => $paragraph->paragraph ?? '',
 
+                                'outside_reference' => $paragraph->outside_reference ?? '',
+
                                 'bullets' => $paragraph->bullets->map(function ($bullet) {
 
                                     return [
@@ -108,8 +109,6 @@ class PolicyBuilderForm extends Component
 
             ];
         })->toArray();
-
-        $this->outside_reference = $policy->outside_reference;
 
         $this->references = $policy->references->map(function ($reference) {
             return [
@@ -252,6 +251,23 @@ class PolicyBuilderForm extends Component
         $this->references = array_values($this->references);
     }
 
+    public function addReferenceSection($referenceIndex)
+    {
+        $this->references[$referenceIndex]['sections'][] = [
+            'section_title' => '',
+            'paragraphs' => [],
+        ];
+    }
+
+    public function removeReferenceSection($referenceIndex, $sectionIndex)
+    {
+        unset($this->references[$referenceIndex]['sections'][$sectionIndex]);
+
+        $this->references[$referenceIndex]['sections'] = array_values(
+            $this->references[$referenceIndex]['sections']
+        );
+    }
+
     public function addReferenceParagraph($referenceIndex, $sectionIndex)
     {
         $this->references[$referenceIndex]['sections'][$sectionIndex]['paragraphs'][] = [
@@ -268,23 +284,6 @@ class PolicyBuilderForm extends Component
 
         $this->references[$referenceIndex]['sections'][$sectionIndex]['paragraphs'] = array_values(
             $this->references[$referenceIndex]['sections'][$sectionIndex]['paragraphs']
-        );
-    }
-
-    public function addReferenceSection($referenceIndex)
-    {
-        $this->references[$referenceIndex]['sections'][] = [
-            'section_title' => '',
-            'paragraphs' => [],
-        ];
-    }
-
-    public function removeReferenceSection($referenceIndex, $sectionIndex)
-    {
-        unset($this->references[$referenceIndex]['sections'][$sectionIndex]);
-
-        $this->references[$referenceIndex]['sections'] = array_values(
-            $this->references[$referenceIndex]['sections']
         );
     }
 
@@ -306,8 +305,6 @@ class PolicyBuilderForm extends Component
             $this->references[$referenceIndex]['sections'][$sectionIndex]['paragraphs'][$paragraphIndex]['bullets']
         );
     }
-
-
 
     public function save()
     {
@@ -334,13 +331,12 @@ class PolicyBuilderForm extends Component
             'chapters.*.sections.*.paragraphs.*.bullets.*.type' => 'nullable|string',
             'chapters.*.sections.*.paragraphs.*.bullets.*.list' => 'nullable|string',
 
-            'outside_reference' => 'nullable|string',
-
             'references' => 'nullable|array',
             'references.*.reference_title' => 'nullable|string|max:255',
             'references.*.sections' => 'nullable|array',
             'references.*.sections.*.section_title' => 'nullable|string|max:255',
             'references.*.sections.*.paragraphs' => 'nullable|array',
+            'references.*.sections.*.paragraphs.*.outside_reference' => 'nullable|string|max:255',
             'references.*.sections.*.paragraphs.*.paragraph' => 'nullable|string',
             'references.*.sections.*.paragraphs.*.bullets' => 'nullable|array',
             'references.*.sections.*.paragraphs.*.bullets.*.type' => 'nullable|string',
@@ -365,7 +361,6 @@ class PolicyBuilderForm extends Component
                 'policy_effective_date' => $this->policy_effective_date,
                 'policy_revision_dates' => $this->policy_revision_dates,
                 'table_of_contents' => $this->table_of_contents,
-                'outside_reference' => $this->outside_reference,
                 'definitions' => $this->definitions,
             ]
         );
@@ -448,6 +443,8 @@ class PolicyBuilderForm extends Component
             $existingReference->sections()->delete();
         }
 
+        $policy->references()->delete();
+
         foreach ($this->references as $referenceIndex => $referenceData) {
 
             $reference = Reference::create([
@@ -459,7 +456,7 @@ class PolicyBuilderForm extends Component
             foreach ($referenceData['sections'] ?? [] as $sectionIndex => $sectionData) {
 
                 $section = ReferenceSection::create([
-                    'id' => $reference->id,
+                    'reference_id' => $reference->id,
                     'section_title' => $sectionData['section_title'] ?? '',
                     'sort_order' => $sectionIndex,
                 ]);
@@ -468,6 +465,7 @@ class PolicyBuilderForm extends Component
 
                     $paragraph = ReferenceParagraph::create([
                         'section_id' => $section->id,
+                        'outside_reference' => $paragraphData['outside_reference'] ?? null,
                         'paragraph' => $paragraphData['paragraph'] ?? '',
                         'sort_order' => $paragraphIndex,
                     ]);

@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
 
             $table->foreignId('section_id')->constrained('policy_reference_sections')->cascadeOnDelete();
-            $table->string('outside_reference');
+            $table->string('outside_reference')->nullable();
             $table->longText('paragraph');
             $table->unsignedInteger('sort_order')->default(0);
 

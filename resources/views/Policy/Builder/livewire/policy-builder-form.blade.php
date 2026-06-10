@@ -432,9 +432,7 @@
 
                                     {{-- Paragraphs --}}
                                     <div class="space-y-5">
-
                                         @foreach ($section['paragraphs'] as $paragraphIndex => $paragraph)
-<h1>test</h1>
                                                 <div
                                                     wire:key="reference-paragraph-{{ $referenceIndex }}-{{ $sectionIndex }}-{{ $paragraphIndex }}"
                                                     class="rounded-xl border border-gray-800 bg-gray-950 p-5 space-y-4"
@@ -444,7 +442,11 @@
 
                                                     <div class="space-y-2">
                                                         <label class="{{ $labelClass }}">Outside Reference</label>
-                                                        <input type="text" wire:model="outside_reference" required class="{{ $inputClass }}">
+                                                        <input
+                                                            type="text"
+                                                            wire:model="references.{{ $referenceIndex }}.sections.{{ $sectionIndex }}.paragraphs.{{ $paragraphIndex }}.outside_reference"
+                                                            class="{{ $inputClass }}"
+                                                        >
                                                     </div>
 
                                                     <label class="{{ $labelClass }}">Paragraph</label>
@@ -503,9 +505,7 @@
                                                             </button>
 
                                                         </div>
-
                                                     @endforeach
-
                                                     <button
                                                         type="button"
                                                         wire:click="addReferenceBullet({{ $referenceIndex }}, {{ $sectionIndex }}, {{ $paragraphIndex }})"
@@ -513,11 +513,8 @@
                                                     >
                                                         Add Bullet
                                                     </button>
-
                                                 </div>
-
                                             </div>
-
                                         @endforeach
 
                                         <button
@@ -529,9 +526,7 @@
                                         </button>
 
                                     </div>
-
                                 </div>
-
                             @endforeach
 
                             <button
