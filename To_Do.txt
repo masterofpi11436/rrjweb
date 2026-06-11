@@ -12,13 +12,28 @@ Down or Out App:
     2. Admin perform CRUD on People who can log in or Out
     3. User can edit if person in logged in or out manually
 
-Policy builder:
-
-    1. Adjust the form UI for collapsable chapters
-    2. Adjust margins, padding, etc for table layout.
-
 Camera Schedule:
 
     1. Add future IP addresses.
 
+Policy builder:
 
+    Short term:
+    1. Remove the excess blank space throughout the form so there is no need for excess scrolling.
+    2. Create collapsible section(s) for every section.
+    3. Make a quick reference (jump to this chapter, section, reference) menu for quick finding.
+    4. Change size of font for cover, toc, body, references, and definitions page to match the current policies and other UI issues
+    5. Reformat the references page and remove the outside reference column and UI entry
+    6. Automatically enter in the revisions, auto increment the revision number
+
+    Mid term:
+    1. Create a way to share and allow reviewers to annotate or change policies
+    2. Make the approval and sign off process from compliance staff up to superintendent for policies
+    3. Make a historical section where users can archive policies.
+
+    Long term:
+    1. Advance search searches indexed paragraphs and bullets.
+    2. Include a search feature with predictive searches similar to google (did you mean XYZ)
+    3. Provide a web of policies that show correlations between policies what talk about same material
+    4. Have a way to determine which polices may be outdated and need review (Example: Policy XYZ was last reviewed X amount of years ago
+    5. Auto correct for policies looking for syntax consistency (A semi colon was used instead of a colon)
