@@ -21,13 +21,16 @@ class PolicyBuilder extends Model
 
     public function chapters()
     {
-        return $this->hasMany(Chapter::class, 'policy_id')
-            ->orderBy('sort_order');
+        return $this->hasMany(Chapter::class, 'policy_id')->orderBy('sort_order');
     }
 
     public function references()
     {
-        return $this->hasMany(Reference::class, 'policy_id')
-            ->orderBy('sort_order');
+        return $this->hasMany(Reference::class, 'policy_id')->orderBy('sort_order');
+    }
+
+    public function policyDefinitions()
+    {
+        return $this->hasMany(PolicyDefinition::class, 'policy_id');
     }
 }

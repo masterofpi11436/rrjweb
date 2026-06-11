@@ -39,7 +39,7 @@ class PolicyBuilderForm extends Component
     public string $table_of_contents = '';
     public array $chapters = [];
     public array $references = [];
-    public string $definitions = '';
+    public array $definitions = [];
 
     public $policyBuilderId = null;
 
@@ -54,6 +54,7 @@ class PolicyBuilderForm extends Component
         $policy = PolicyBuilder::with([
             'chapters.sections.paragraphs.bullets',
             'references.sections.paragraphs.bullets',
+            'policyDefinitions',
         ])->findOrFail($policyBuilderId);
 
         $this->title = $policy->title ?? '';
@@ -69,7 +70,6 @@ class PolicyBuilderForm extends Component
         $this->policy_effective_date = $policy->policy_effective_date;
         $this->policy_revision_dates = $policy->policy_revision_dates ?? [];
         $this->table_of_contents = $policy->table_of_contents ?? '';
-        $this->definitions = $policy->definitions ?? '';
 
         $this->chapters = $policy->chapters->map(function ($chapter) {
             return [
@@ -146,6 +146,12 @@ class PolicyBuilderForm extends Component
 
             ];
         })->toArray();
+
+        $this->definitions = $policy->policyDefinitions
+            ->map(fn ($definition) => [
+                'word' => $definition->word,
+                'definition' => $definition->definition,
+            ])->toArray();
     }
 
     public function addRevisionDate()
@@ -306,6 +312,20 @@ class PolicyBuilderForm extends Component
         );
     }
 
+    public function addDefinition()
+    {
+        $this->definitions[] = [
+            'word' => '',
+            'definition' => '',
+        ];
+    }
+
+    public function removeDefinition($index)
+    {
+        unset($this->definitions[$index]);
+        $this->definitions = array_values($this->definitions);
+    }
+
     public function save()
     {
         $this->validate([
@@ -342,7 +362,9 @@ class PolicyBuilderForm extends Component
             'references.*.sections.*.paragraphs.*.bullets.*.type' => 'nullable|string',
             'references.*.sections.*.paragraphs.*.bullets.*.list' => 'nullable|string',
 
-            'definitions' => 'nullable|string',
+            'definitions' => 'nullable|array',
+            'definitions.*.word' => 'nullable|string|max:255',
+            'definitions.*.definition' => 'nullable|string',
         ]);
 
         $policy = PolicyBuilder::updateOrCreate(
@@ -361,7 +383,6 @@ class PolicyBuilderForm extends Component
                 'policy_effective_date' => $this->policy_effective_date,
                 'policy_revision_dates' => $this->policy_revision_dates,
                 'table_of_contents' => $this->table_of_contents,
-                'definitions' => $this->definitions,
             ]
         );
 
@@ -369,6 +390,7 @@ class PolicyBuilderForm extends Component
         $policy->load([
             'chapters.sections.paragraphs.bullets',
             'references.sections.paragraphs.bullets',
+            'policyDefinitions',
         ]);
 
         // Clear old nested records before saving updated chapters
@@ -484,6 +506,19 @@ class PolicyBuilderForm extends Component
                     }
                 }
             }
+        }
+
+        $policy->policyDefinitions()->delete();
+
+        foreach ($this->definitions as $definition) {
+            if (blank($definition['word'] ?? null) && blank($definition['definition'] ?? null)) {
+                continue;
+            }
+
+            $policy->policyDefinitions()->create([
+                'word' => $definition['word'] ?? '',
+                'definition' => $definition['definition'] ?? '',
+            ]);
         }
 
         session()->flash('success', 'Policy saved successfully.');
