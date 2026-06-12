@@ -21,6 +21,7 @@
         rounded-2xl border border-gray-800
         bg-gray-900/80 p-6 space-y-4
         shadow-xl shadow-black/20
+        scroll-mt-24
     ';
 
     $addButtonClass = '
@@ -40,13 +41,14 @@
 <div class="hidden xl:block">
 
     {{-- Floating nav --}}
-    <aside class="fixed left-10 top-1/2 z-40 w-64 -translate-y-1/2">
+    <aside class="fixed left-20 top-1/2 z-40 w-64 -translate-y-1/2">
         <div class="max-h-[80vh] overflow-y-auto rounded-2xl border border-gray-800 bg-gray-950 p-4 shadow-2xl">
             <h3 class="mb-4 text-sm font-semibold uppercase tracking-wide text-gray-400">
                 Policy Navigation
             </h3>
 
             <nav class="space-y-2 text-sm">
+
                 <a href="#policy-info" class="block rounded-lg px-3 py-2 text-gray-300 hover:bg-gray-800">
                     Policy Information
                 </a>
@@ -55,26 +57,66 @@
                     Revision Dates
                 </a>
 
-                <a href="#chapters" class="block rounded-lg px-3 py-2 text-gray-300 hover:bg-gray-800">
-                    Chapters
-                </a>
+                {{-- Chapters --}}
+                <div class="pt-3">
+                    <div class="px-3 text-xs font-semibold uppercase tracking-wide text-gray-500">
+                        Chapters ({{ count($chapters) }})
+                    </div>
 
-                <a href="#references" class="block rounded-lg px-3 py-2 text-gray-300 hover:bg-gray-800">
-                    References
-                </a>
+                    <div class="ml-3 mt-2 space-y-1">
+                        @foreach ($chapters as $chapterIndex => $chapter)
+                            <a href="#chapter-{{ $chapterIndex }}"
+                            x-on:click="document.getElementById('chapter-{{ $chapterIndex }}')?.setAttribute('open', true)"
+                            class="block truncated rounded-lg px-3 py-1 text-xs text-gray-400 hover:bg-gray-800 hover:text-gray-200">
+                                {{ $chapter['chapter_title'] ?: 'Untitled Chapter ' . ($chapterIndex + 1) }}
+                            </a>
+                        @endforeach
+                    </div>
+                </div>
 
-                <a href="#definitions" class="block rounded-lg px-3 py-2 text-gray-300 hover:bg-gray-800">
-                    Definitions
-                </a>
+                {{-- References --}}
+                <div class="pt-3 border-t border-gray-800">
+                    <div class="px-3 text-xs font-semibold uppercase tracking-wide text-gray-500">
+                        References ({{ count($references) }})
+                    </div>
+
+                    <div class="ml-3 mt-2 space-y-1">
+                        @foreach ($references as $referenceIndex => $reference)
+                            <a href="#reference-{{ $referenceIndex }}"
+                            x-on:click="document.getElementById('reference-{{ $referenceIndex }}')?.setAttribute('open', true)"
+                            class="block truncated rounded-lg px-3 py-1 text-xs text-gray-400 hover:bg-gray-800 hover:text-gray-200">
+                                {{ $reference['reference_title'] ?: 'Untitled Reference ' . ($referenceIndex + 1) }}
+                            </a>
+                        @endforeach
+                    </div>
+                </div>
+
+                <div class="pt-3 border-t border-gray-800">
+                    <a href="#definitions" class="block rounded-lg px-3 py-2 text-gray-300 hover:bg-gray-800">
+                        Definitions
+                    </a>
+                </div>
+                    <div class="border-t border-gray-800 pt-4 space-y-2">
+                        <a href="{{ route('policy.builder.index') }}"
+                        class="block rounded-lg border border-gray-700 px-3 py-2 text-center text-sm text-gray-300 hover:bg-gray-800">
+                            Back
+                        </a>
+
+                        <button type="submit"
+                                form="policy-builder-form"
+                                class="w-full rounded-lg bg-green-600 px-3 py-2 text-sm font-semibold text-white hover:bg-green-500">
+                            Save Policy
+                        </button>
+                    </div>
             </nav>
         </div>
     </aside>
 
-    <form wire:submit.prevent="save"
+    <form id="policy-builder-form" wire:submit.prevent="save"
         class="mx-auto max-w-5xl space-y-6 rounded-3xl border border-gray-800 bg-gray-950 p-8 shadow-2xl shadow-black/40">
 
         {{-- Policy Header Information --}}
-        <div id="policy-info" class="{{ $sectionClass }}">
+        <div id="policy-info" class="{{ $sectionClass }} scroll-mt-50">
             <h2 class="text-xl font-semibold text-white">
                 Policy Information
             </h2>
@@ -205,6 +247,7 @@
                 @foreach ($chapters as $chapterIndex => $chapter)
 
                         <details
+                            id="chapter-{{ $chapterIndex }}"
                             wire:key="chapter-{{ $chapterIndex }}"
                             x-data="{ open: false }"
                             x-bind:open="open"
@@ -222,6 +265,12 @@
                                         Click to expand/collapse
                                     </p>
                                 </div>
+
+                                <button type="button"
+                                        wire:click.stop="insertChapterAfter({{ $chapterIndex }})"
+                                        class="{{ $addButtonClass }}">
+                                    Insert Chapter Below
+                                </button>
 
                                 <button type="button"
                                         wire:click.stop="removeChapter({{ $chapterIndex }})"
@@ -406,6 +455,7 @@
                 @foreach ($references as $referenceIndex => $reference)
 
                         <details
+                            id="reference-{{ $referenceIndex }}"
                             wire:key="reference-{{ $referenceIndex }}"
                             x-data="{ open: false }"
                             x-bind:open="open"
@@ -423,6 +473,12 @@
                                         Click to expand/collapse
                                     </p>
                                 </div>
+
+                                <button type="button"
+                                        wire:click.stop="insertReferenceAfter({{ $referenceIndex }})"
+                                        class="{{ $addButtonClass }}">
+                                    Insert Reference Below
+                                </button>
 
                                 <button type="button"
                                         wire:click.stop="removeReference({{ $referenceIndex }})"

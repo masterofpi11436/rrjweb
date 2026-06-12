@@ -238,6 +238,25 @@ class PolicyBuilderForm extends Component
     }
 
     /*
+    ** Inserting chapters and revisions
+    */
+    public function insertChapterAfter($chapterIndex)
+    {
+        array_splice($this->chapters, $chapterIndex + 1, 0, [[
+            'chapter_title' => '',
+            'sections' => [],
+        ]]);
+    }
+
+    public function insertReferenceAfter($referenceIndex)
+    {
+        array_splice($this->references, $referenceIndex + 1, 0, [[
+            'reference_title' => '',
+            'paragraphs' => [],
+        ]]);
+    }
+
+    /*
     ** Revisions
     */
     public function addReference()
