@@ -9,7 +9,7 @@ class ReferenceParagraphBullet extends Model
 {
     use HasFactory;
 
-    protected $table = 'policy_reference_sections_paragraph_bullets';
+    protected $table = 'policy_reference_paragraph_bullets';
 
     protected $fillable = [
         'paragraph_id',
@@ -24,6 +24,6 @@ class ReferenceParagraphBullet extends Model
 
     public function paragraph()
     {
-        return $this->belongsTo(ReferenceParagraph::class, 'paragraph_id');
+        return $this->belongsTo(ReferenceParagraph::class, 'paragrap_id');
     }
 }

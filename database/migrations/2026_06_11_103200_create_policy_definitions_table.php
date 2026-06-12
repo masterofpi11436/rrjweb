@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('policy_definitions', function (Blueprint $table) {
             $table->id();
             $table->foreignId('policy_id')->constrained('policy_builders')->cascadeOnDelete();
-            $table->string('word');
-            $table->text('definition');
+            $table->string('word')->nullable();
+            $table->text('definition')->nullable();
             $table->unsignedInteger('sort_order')->default(0);
             $table->timestamps();
         });

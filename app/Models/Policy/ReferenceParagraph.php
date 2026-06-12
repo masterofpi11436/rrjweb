@@ -12,15 +12,15 @@ class ReferenceParagraph extends Model
     protected $table = 'policy_reference_paragraphs';
 
     protected $fillable = [
-        'section_id',
-        'outside_reference',
+        'reference_id',
+        'aca_reference',
         'paragraph',
         'sort_order',
     ];
 
-    public function chapter()
+    public function reference()
     {
-        return $this->belongsTo(Reference::class, 'chapter_id');
+        return $this->belongsTo(Reference::class, 'reference_id');
     }
 
     public function bullets()

@@ -22,9 +22,9 @@ class Reference extends Model
         return $this->belongsTo(PolicyBuilder::class, 'policy_id');
     }
 
-    public function sections()
+    public function paragraphs()
     {
-        return $this->hasMany(ReferenceSection::class, 'reference_id')
+        return $this->hasMany(ReferenceParagraph::class, 'reference_id')
             ->orderBy('sort_order');
     }
 }

@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('policy_reference_paragraphs', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignId('section_id')->constrained('policy_reference_sections')->cascadeOnDelete();
+            $table->foreignId('reference_id')->constrained('policy_references')->cascadeOnDelete();
+            $table->string('aca_reference')->nullable();
             $table->longText('paragraph');
             $table->unsignedInteger('sort_order')->default(0);
 

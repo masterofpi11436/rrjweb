@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('policy_reference_sections_paragraph_bullets', function (Blueprint $table) {
+        Schema::create('policy_reference_paragraph_bullets', function (Blueprint $table) {
             $table->id();
 
             $table->foreignId('paragraph_id')->constrained('policy_reference_paragraphs')->cascadeOnDelete();
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('policy_reference_sections_paragraph_bullets');
+        Schema::dropIfExists('policy_reference_paragraph_bullets');
     }
 };
