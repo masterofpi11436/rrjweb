@@ -24,7 +24,7 @@ Lists all the extensions with some outside vendor numbers
 # Policy
 Search through the RRJ's policies to find specific policy based on string search. Admins can upload and remove policies.
 Public users are able to search through policies.
-Has a policy builder that allows admins to create policies to the correct format.
+Has a policy builder that allows admins to create policies to the current format.
 
 # Vehicle Repair Tracker
 Maintenance departments online vehicle repair tracker. There is a VFM admin and tech version. Admin can edit and delete whereas Tech cannot

@@ -156,9 +156,16 @@ class PolicyBuilderForm extends Component
 
     public function addRevisionDate()
     {
+        $highest = collect($this->policy_revision_dates)
+            ->pluck('revision')
+            ->map(fn ($r) => (int) str_replace('.', '', $r))
+            ->max();
+
+        $nextRevision = '.' . str_pad(($highest ?: 0) + 1, 3, '0', STR_PAD_LEFT);
+
         $this->policy_revision_dates[] = [
-            'revision' => '',
-            'date' => '',
+            'revision' => $nextRevision,
+            'date' => now()->format('Y-m-d'),
         ];
     }
 
