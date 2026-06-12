@@ -107,7 +107,7 @@
     </div>
 
     {{-- Revision Dates --}}
-    <div class="{{ $sectionClass }}">
+    <div class="{{ $sectionClass }}" x-data="{ revisionOpen: false }">
         <div class="flex items-center justify-between">
             <h3 class="text-lg font-semibold text-white">
                 Revision Dates
@@ -115,15 +115,15 @@
 
             <button type="button"
                     wire:click="addRevisionDate"
+                    x-on:click="revisionOpen = true"
                     class="{{ $addButtonClass }}">
                 Add Revision Date
             </button>
         </div>
 
         <details
-            x-data="{ open: false }"
-            x-bind:open="open"
-            x-on:toggle="open = $el.open"
+            x-bind:open="revisionOpen"
+            x-on:toggle="revisionOpen = $el.open"
             class="rounded-xl border border-gray-800 bg-gray-950 p-4"
         >
             <summary class="cursor-pointer list-none text-sm font-medium text-gray-300">
@@ -523,7 +523,7 @@
     </div>
 
 {{-- Definitions --}}
-<div class="{{ $sectionClass }}">
+<div class="{{ $sectionClass }}" x-data="{ definitionsOpen: false }">
     <div class="flex items-center justify-between">
         <h3 class="text-lg font-semibold text-white">
             Definitions
@@ -531,15 +531,15 @@
 
         <button type="button"
                 wire:click="addDefinition"
+                x-on:click="definitionsOpen = true"
                 class="{{ $addButtonClass }}">
             Add Definition
         </button>
     </div>
 
     <details
-        x-data="{ open: false }"
-        x-bind:open="open"
-        x-on:toggle="open = $el.open"
+        x-bind:open="definitionsOpen"
+        x-on:toggle="definitionsOpen = $el.open"
         class="rounded-xl border border-gray-800 bg-gray-950 p-4"
     >
         <summary class="cursor-pointer list-none text-sm font-medium text-gray-300">
