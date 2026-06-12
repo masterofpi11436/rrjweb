@@ -40,7 +40,9 @@ class BuilderController extends Controller
     public function createPDF($id)
     {
         $policy = PolicyBuilder::with([
-            'chapters.sections.paragraphs.bullets'
+            'chapters.sections.paragraphs.bullets',
+            'references.paragraphs.bullets',
+            'policyDefinitions',
         ])->findOrFail($id);
 
         $pdf = new TCPDF('P', 'mm', 'LETTER', true, 'UTF-8', false);
@@ -102,6 +104,24 @@ class BuilderController extends Controller
 
             $pdf->writeHTML(
                 view('Policy.Builder.pdf.references', compact('policy'))->render(),
+                true,
+                false,
+                true,
+                false,
+                ''
+            );
+
+            $this->addPolicyFooter($pdf, $policy);
+        }
+
+        if ($policy->policyDefinitions->isNotEmpty()) {
+
+            $pdf->AddPage();
+
+            $this->addPageBorder($pdf);
+
+            $pdf->writeHTML(
+                view('Policy.Builder.pdf.definitions', compact('policy'))->render(),
                 true,
                 false,
                 true,
