@@ -505,12 +505,9 @@
                                     >
                                         Add Paragraph
                                     </button>
-
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </details>
+                        </details>
 
             @endforeach
 
