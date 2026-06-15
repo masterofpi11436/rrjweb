@@ -25,12 +25,10 @@
     .section-title {
         font-weight: bold;
         text-transform: uppercase;
-        line-height: 1.1;
     }
 
     .section-content {
         line-height: 1.2;
-        margin-bottom: 2px;
     }
 
     .policy-title {
@@ -81,13 +79,13 @@
         width: 100%;
         table-layout: fixed;
         border-collapse: collapse;
-        font-size: 8pt;
+        font-size: 10pt;
     }
 
     .signature-table td {
         border: 1px solid #444;
         padding: 4px 5px;
-        height: 32px;
+        height: 30px;
         overflow: hidden;
     }
 
@@ -122,7 +120,7 @@
             <img src="{{ public_path('images/rrj-logo.jpg') }}" width="120">
         </td>
 
-        <td width="73%" style="vertical-align:top; font-size:9pt; line-height:1.2;"><strong>POLICY TITLE:</strong><br><strong>{{ $policy->title }}</strong><br><br><strong>POLICY STATEMENT:</strong><br>{{ $policy->policy_statement }}<br><br><strong>PURPOSE STATEMENT:</strong><br>{{ $policy->policy_purpose }}
+        <td width="73%" style="vertical-align:top; font-size:9pt; line-height:1.2;"><strong style="font-size:14">POLICY TITLE:</strong><br><strong style="font-size:14">{{ $policy->title }}</strong><br><br><strong style="font-size:12">POLICY STATEMENT:</strong><br>{{ $policy->policy_statement }}<br><br><strong style="font-size:12">PURPOSE STATEMENT:</strong><br>{{ $policy->policy_purpose }}
         </td>
     </tr>
 </table>

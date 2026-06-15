@@ -97,13 +97,14 @@ class BuilderController extends Controller
         $this->addPolicyFooter($pdf, $policy);
         }
 
-        if (!empty($policy->references)) {
+        if ($policy->policyDefinitions->isNotEmpty()) {
+
             $pdf->AddPage();
 
             $this->addPageBorder($pdf);
 
             $pdf->writeHTML(
-                view('Policy.Builder.pdf.references', compact('policy'))->render(),
+                view('Policy.Builder.pdf.definitions', compact('policy'))->render(),
                 true,
                 false,
                 true,
@@ -114,14 +115,13 @@ class BuilderController extends Controller
             $this->addPolicyFooter($pdf, $policy);
         }
 
-        if ($policy->policyDefinitions->isNotEmpty()) {
-
+        if (!empty($policy->references)) {
             $pdf->AddPage();
 
             $this->addPageBorder($pdf);
 
             $pdf->writeHTML(
-                view('Policy.Builder.pdf.definitions', compact('policy'))->render(),
+                view('Policy.Builder.pdf.references', compact('policy'))->render(),
                 true,
                 false,
                 true,
