@@ -3,13 +3,9 @@
 namespace Database\Seeders;
 
 // Required Models
-use App\Models\ICS\ICS;
-use App\Models\VFM\VFM;
-use App\Models\VFM30\VFM30;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use App\Models\Directory\PhoneDirectory;
 
 class DatabaseSeeder extends Seeder
 {
@@ -32,6 +28,8 @@ class DatabaseSeeder extends Seeder
                 'ics' => false,
                 'policy' => false,
                 'warehouse_role' => 'Warehouse Supervisor',
+                'jurisdiction' => false,
+                'camera' => false,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -39,9 +37,9 @@ class DatabaseSeeder extends Seeder
 
         DB::table('users')->insert([
             [
-                'last_name' => 'Property',
-                'first_name' => 'Property',
-                'email' => 'prop@rrjva.org',
+                'last_name' => 'Abrams',
+                'first_name' => 'Jarrett',
+                'email' => 'abramsj@rrjva.org',
                 'password' => Hash::make('asd'),
                 'admin' => false,
                 'phone' => false,
@@ -49,46 +47,10 @@ class DatabaseSeeder extends Seeder
                 'vfm30' => false,
                 'vfm_tech' => false,
                 'ics' => false,
-                'policy' => false,
-                'warehouse_role' => 'Property',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-        ]);
-
-        DB::table('users')->insert([
-            [
-                'last_name' => 'Supervisor',
-                'first_name' => 'Supervisor',
-                'email' => 'super@rrjva.org',
-                'password' => Hash::make('asd'),
-                'admin' => false,
-                'phone' => false,
-                'vfm' => false,
-                'vfm30' => false,
-                'vfm_tech' => false,
-                'ics' => false,
-                'policy' => false,
-                'warehouse_role' => 'Supervisor',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-        ]);
-
-        DB::table('users')->insert([
-            [
-                'last_name' => 'Requestor',
-                'first_name' => 'Requestor',
-                'email' => 'req@rrjva.org',
-                'password' => Hash::make('asd'),
-                'admin' => false,
-                'phone' => false,
-                'vfm' => false,
-                'vfm30' => false,
-                'vfm_tech' => false,
-                'ics' => false,
-                'policy' => false,
+                'policy' => true,
                 'warehouse_role' => 'Requestor',
+                'jurisdiction' => false,
+                'camera' => false,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
