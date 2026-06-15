@@ -79,13 +79,13 @@
         width: 100%;
         table-layout: fixed;
         border-collapse: collapse;
-        font-size: 10pt;
+        font-size: 8pt;
     }
 
     .signature-table td {
         border: 1px solid #444;
         padding: 4px 5px;
-        height: 30px;
+        height: 32px;
         overflow: hidden;
     }
 
