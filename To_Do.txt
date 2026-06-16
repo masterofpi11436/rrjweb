@@ -14,7 +14,7 @@ Down or Out App:
 
 Camera Schedule:
 
-    1. Add future IP addresses.
+    1. Add the Lan Schedule(s)
 
 Policy builder:
 
