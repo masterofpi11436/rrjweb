@@ -38,10 +38,10 @@
     ';
 @endphp
 
-<div class="hidden xl:block">
+<div class="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 xl:pl-80">
 
     {{-- Floating nav --}}
-    <aside class="fixed left-20 top-1/2 z-40 w-64 -translate-y-1/2">
+    <aside class="hidden xl:block fixed left-6 2xl:left-20 top-1/2 z-40 w-64 -translate-y-1/2">
         <div class="max-h-[80vh] overflow-y-auto rounded-2xl border border-gray-800 bg-gray-950 p-4 shadow-2xl">
             <h3 class="mb-4 text-sm font-semibold uppercase tracking-wide text-gray-400">
                 Policy Navigation
@@ -112,8 +112,8 @@
         </div>
     </aside>
 
-    <form id="policy-builder-form" wire:submit.prevent="save"
-        class="mx-auto max-w-5xl space-y-6 rounded-3xl border border-gray-800 bg-gray-950 p-8 shadow-2xl shadow-black/40">
+    <form id="policy-builder-form"
+          class="mx-auto max-w-5xl space-y-6 rounded-3xl border border-gray-800 bg-gray-950 p-4 sm:p-6 lg:p-8 shadow-2xl shadow-black/40">
 
         {{-- Policy Header Information --}}
         <div id="policy-info" class="{{ $sectionClass }} scroll-mt-50">
@@ -608,62 +608,62 @@
             </div>
         </div>
 
-    {{-- Definitions --}}
-    <div id="definitions" class="{{ $sectionClass }}" x-data="{ definitionsOpen: false }">
-        <div class="flex items-center justify-between">
-            <h3 class="text-lg font-semibold text-white">
-                Definitions
-            </h3>
+        {{-- Definitions --}}
+        <div id="definitions" class="{{ $sectionClass }}" x-data="{ definitionsOpen: false }">
+            <div class="flex items-center justify-between">
+                <h3 class="text-lg font-semibold text-white">
+                    Definitions
+                </h3>
 
-            <button type="button"
-                    wire:click="addDefinition"
-                    x-on:click="definitionsOpen = true"
-                    class="{{ $addButtonClass }}">
-                Add Definition
-            </button>
-        </div>
-
-        <details
-            x-bind:open="definitionsOpen"
-            x-on:toggle="definitionsOpen = $el.open"
-            class="rounded-xl border border-gray-800 bg-gray-950 p-4"
-        >
-            <summary class="cursor-pointer list-none text-sm font-medium text-gray-300">
-                Show / Hide Definition Entries
-            </summary>
-
-            <div class="mt-4 space-y-3">
-                @foreach ($definitions as $index => $definition)
-                    <div
-                        wire:key="definition-{{ $index }}"
-                        class="space-y-3 rounded-xl border border-gray-800 bg-gray-950 p-4"
-                    >
-                        <div class="grid grid-cols-1 gap-3 md:grid-cols-3">
-                            <input
-                                type="text"
-                                wire:model="definitions.{{ $index }}.word"
-                                placeholder="Word / Title"
-                                class="{{ $inputClass }}"
-                            >
-
-                            <button type="button"
-                                    wire:click="removeDefinition({{ $index }})"
-                                    class="{{ $removeButtonClass }} md:col-start-3">
-                                Remove
-                            </button>
-                        </div>
-
-                        <textarea
-                            wire:model="definitions.{{ $index }}.definition"
-                            rows="5"
-                            placeholder="Definition"
-                            class="{{ $textareaClass }}"
-                        ></textarea>
-                    </div>
-                @endforeach
+                <button type="button"
+                        wire:click="addDefinition"
+                        x-on:click="definitionsOpen = true"
+                        class="{{ $addButtonClass }}">
+                    Add Definition
+                </button>
             </div>
-        </details>
-    </div>
+
+            <details
+                x-bind:open="definitionsOpen"
+                x-on:toggle="definitionsOpen = $el.open"
+                class="rounded-xl border border-gray-800 bg-gray-950 p-4"
+            >
+                <summary class="cursor-pointer list-none text-sm font-medium text-gray-300">
+                    Show / Hide Definition Entries
+                </summary>
+
+                <div class="mt-4 space-y-3">
+                    @foreach ($definitions as $index => $definition)
+                        <div
+                            wire:key="definition-{{ $index }}"
+                            class="space-y-3 rounded-xl border border-gray-800 bg-gray-950 p-4"
+                        >
+                            <div class="grid grid-cols-1 gap-3 md:grid-cols-3">
+                                <input
+                                    type="text"
+                                    wire:model="definitions.{{ $index }}.word"
+                                    placeholder="Word / Title"
+                                    class="{{ $inputClass }}"
+                                >
+
+                                <button type="button"
+                                        wire:click="removeDefinition({{ $index }})"
+                                        class="{{ $removeButtonClass }} md:col-start-3">
+                                    Remove
+                                </button>
+                            </div>
+
+                            <textarea
+                                wire:model="definitions.{{ $index }}.definition"
+                                rows="5"
+                                placeholder="Definition"
+                                class="{{ $textareaClass }}"
+                            ></textarea>
+                        </div>
+                    @endforeach
+                </div>
+            </details>
+        </div>
 
         {{-- Submit --}}
         <div class="flex justify-end">
