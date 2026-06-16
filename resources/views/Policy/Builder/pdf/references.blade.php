@@ -34,34 +34,28 @@
     REFERENCES
 </div>
 
-@foreach($policy->references as $reference)
-
+@foreach ($policy->references as $reference)
     <div class="reference-title">
         {{ $reference->reference_title }}
     </div>
 
-    @foreach($reference->paragraphs as $paragraph)
-
-        @if($paragraph->aca_reference)
+    @foreach ($reference->paragraphs as $paragraph)
+        @if ($paragraph->aca_reference)
             <div class="aca-reference">
                 {{ $paragraph->aca_reference }}
             </div>
         @endif
 
-        @if($paragraph->paragraph)
+        @if ($paragraph->paragraph)
             <div class="paragraph">
                 {{ $paragraph->paragraph }}
             </div>
         @endif
 
-        @foreach($paragraph->bullets as $bullet)
-
+        @foreach ($paragraph->bullets as $bullet)
             <div class="bullet">
                 • {{ $bullet->list['text'] ?? '' }}
             </div>
-
         @endforeach
-
     @endforeach
-
 @endforeach

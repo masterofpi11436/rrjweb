@@ -20,8 +20,7 @@
     DEFINITIONS
 </div>
 
-@foreach($policy->policyDefinitions as $definition)
-
+@foreach ($policy->policyDefinitions as $definition)
     <div class="definition">
         <span class="term">
             {{ $definition->word }}
@@ -29,5 +28,4 @@
 
         — {{ $definition->definition }}
     </div>
-
 @endforeach

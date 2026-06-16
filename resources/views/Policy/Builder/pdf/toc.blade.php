@@ -56,8 +56,8 @@
 <br>
 
 <table>
-    @foreach($policy->chapters as $chapterIndex => $chapter)
-<br>
+    @foreach ($policy->chapters as $chapterIndex => $chapter)
+        <br>
         <tr>
             <td class="chapter-number">
                 Chapter {{ $chapterIndex + 1 }} -
@@ -68,8 +68,7 @@
             </td>
         </tr>
 
-        @foreach($chapter->sections as $sectionIndex => $section)
-
+        @foreach ($chapter->sections as $sectionIndex => $section)
             <tr>
                 <td></td>
 
@@ -79,8 +78,6 @@
                     {{ $section->section_title }}
                 </td>
             </tr>
-
         @endforeach
-
     @endforeach
 </table>

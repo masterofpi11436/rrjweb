@@ -6,8 +6,8 @@
 
 @section('content')
 
-<a href="{{ route('policy.builder.index') }}">Back to Builder</a>
+    <a href="{{ route('policy.builder.index') }}">Back to Builder</a>
 
-@livewire('policy.builder.policy-builder-form', ['policyBuilderId' => $policyBuilderId ?? null])
+    @livewire('policy.builder.policy-builder-form', ['policyBuilderId' => $policyBuilderId ?? null])
 
 @endsection

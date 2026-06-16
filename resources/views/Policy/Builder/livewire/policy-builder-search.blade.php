@@ -1,11 +1,7 @@
 <div>
     <div class="mb-5">
-        <input
-            type="text"
-            wire:model.live="search"
-            placeholder="Search policies..."
-            class="w-full rounded-xl border border-gray-700 bg-gray-950 px-4 py-3 text-sm text-white placeholder:text-gray-500 shadow-inner focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/40"
-        >
+        <input type="text" wire:model.live="search" placeholder="Search policies..."
+            class="w-full rounded-xl border border-gray-700 bg-gray-950 px-4 py-3 text-sm text-white placeholder:text-gray-500 shadow-inner focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/40">
     </div>
 
     @if ($suggestions->isNotEmpty())
@@ -14,16 +10,17 @@
                 <thead class="bg-gray-900">
                     <tr>
                         <th class="px-5 py-4 text-left text-xs font-semibold uppercase tracking-wider text-gray-400">
-                            <a
-                                href="#"
-                                wire:click.prevent="sortBy('title')"
-                                class="inline-flex items-center gap-2 transition hover:text-white"
-                            >
+                            <a href="#" wire:click.prevent="sortBy('title')"
+                                class="inline-flex items-center gap-2 transition hover:text-white">
                                 Title
 
                                 @if ($sortColumn === 'title')
                                     <span class="text-blue-400">
-                                        @if ($sortDirection === 'asc') ▲ @else ▼ @endif
+                                        @if ($sortDirection === 'asc')
+                                            ▲
+                                        @else
+                                            ▼
+                                        @endif
                                     </span>
                                 @endif
                             </a>
@@ -47,67 +44,53 @@
                     @foreach ($suggestions as $policy)
                         <tr class="transition hover:bg-gray-900/70">
                             <td class="px-5 py-4 text-sm">
-                                <a
-                                    href="{{ route('policy.builder.edit', $policy->id) }}"
-                                    class="font-medium text-blue-400 transition hover:text-blue-300 hover:underline"
-                                >
+                                <a href="{{ route('policy.builder.edit', $policy->id) }}"
+                                    class="font-medium text-blue-400 transition hover:text-blue-300 hover:underline">
                                     {{ $policy->title }}
                                 </a>
                             </td>
 
                             <td class="px-5 py-4 text-sm">
                                 @if ($policy->approved)
-                                    <span class="inline-flex rounded-full border border-green-800 bg-green-950 px-3 py-1 text-xs font-semibold text-green-300">
+                                    <span
+                                        class="inline-flex rounded-full border border-green-800 bg-green-950 px-3 py-1 text-xs font-semibold text-green-300">
                                         Published
                                     </span>
                                 @else
-                                    <span class="inline-flex rounded-full border border-yellow-800 bg-yellow-950 px-3 py-1 text-xs font-semibold text-yellow-300">
+                                    <span
+                                        class="inline-flex rounded-full border border-yellow-800 bg-yellow-950 px-3 py-1 text-xs font-semibold text-yellow-300">
                                         Not Published
                                     </span>
                                 @endif
                             </td>
 
                             <td class="px-5 py-4 text-sm">
-                                <button
-                                    type="button"
-                                    wire:click="togglePublished({{ $policy->id }})"
-                                    class="relative inline-flex h-6 w-11 items-center rounded-full transition {{ $policy->approved ? 'bg-green-600' : 'bg-gray-700' }}"
-                                >
+                                <button type="button" wire:click="togglePublished({{ $policy->id }})"
+                                    class="relative inline-flex h-6 w-11 items-center rounded-full transition {{ $policy->approved ? 'bg-green-600' : 'bg-gray-700' }}">
                                     <span
-                                        class="inline-block h-5 w-5 transform rounded-full bg-white transition {{ $policy->approved ? 'translate-x-5' : 'translate-x-1' }}"
-                                    ></span>
+                                        class="inline-block h-5 w-5 transform rounded-full bg-white transition {{ $policy->approved ? 'translate-x-5' : 'translate-x-1' }}"></span>
                                 </button>
                             </td>
 
                             <td class="px-5 py-4 text-sm">
-                                <a
-                                    href="{{ route('policy.builder.edit', $policy->id) }}"
-                                    class="inline-flex items-center rounded-lg border border-gray-700 bg-gray-800 px-3 py-2 text-sm font-medium text-gray-200 transition hover:border-gray-600 hover:bg-gray-700 hover:text-white"
-                                >
+                                <a href="{{ route('policy.builder.edit', $policy->id) }}"
+                                    class="inline-flex items-center rounded-lg border border-gray-700 bg-gray-800 px-3 py-2 text-sm font-medium text-gray-200 transition hover:border-gray-600 hover:bg-gray-700 hover:text-white">
                                     Edit
                                 </a>
-                               <form
-                                    action="{{ route('policy.builder.destroy', $policy->id) }}"
-                                    method="POST"
+                                <form action="{{ route('policy.builder.destroy', $policy->id) }}" method="POST"
                                     class="inline-block"
-                                    onsubmit="return confirm('Are you sure you want to delete this policy?');"
-                                >
+                                    onsubmit="return confirm('Are you sure you want to delete this policy?');">
                                     @csrf
                                     @method('DELETE')
 
-                                    <button
-                                        type="submit"
-                                        class="inline-flex items-center rounded-lg border border-red-900/50 bg-red-950/50 px-3 py-2 text-sm font-medium text-red-300 transition hover:bg-red-900/70 hover:text-white"
-                                    >
+                                    <button type="submit"
+                                        class="inline-flex items-center rounded-lg border border-red-900/50 bg-red-950/50 px-3 py-2 text-sm font-medium text-red-300 transition hover:bg-red-900/70 hover:text-white">
                                         Delete
                                     </button>
                                 </form>
 
-                                <a
-                                    href="{{ route('policy.builder.create-pdf', $policy->id) }}"
-                                    target="_blank"
-                                    class="inline-flex items-center rounded-lg border border-purple-900/50 bg-purple-950/50 px-3 py-2 text-sm font-medium text-purple-300 transition hover:bg-purple-900/70 hover:text-white"
-                                >
+                                <a href="{{ route('policy.builder.create-pdf', $policy->id) }}" target="_blank"
+                                    class="inline-flex items-center rounded-lg border border-purple-900/50 bg-purple-950/50 px-3 py-2 text-sm font-medium text-purple-300 transition hover:bg-purple-900/70 hover:text-white">
                                     Create PDF
                                 </a>
                             </td>

@@ -120,7 +120,10 @@
             <img src="{{ public_path('images/rrj-logo.jpg') }}" width="120">
         </td>
 
-        <td width="73%" style="vertical-align:top; font-size:9pt; line-height:1.2;"><strong style="font-size:14">POLICY TITLE:</strong><br><strong style="font-size:14">{{ $policy->title }}</strong><br><br><strong style="font-size:12">POLICY STATEMENT:</strong><br>{{ $policy->policy_statement }}<br><br><strong style="font-size:12">PURPOSE STATEMENT:</strong><br>{{ $policy->policy_purpose }}
+        <td width="73%" style="vertical-align:top; font-size:9pt; line-height:1.2;"><strong style="font-size:14">POLICY
+                TITLE:</strong><br><strong style="font-size:14">{{ $policy->title }}</strong><br><br><strong
+                style="font-size:12">POLICY STATEMENT:</strong><br>{{ $policy->policy_statement }}<br><br><strong
+                style="font-size:12">PURPOSE STATEMENT:</strong><br>{{ $policy->policy_purpose }}
         </td>
     </tr>
 </table>
@@ -128,20 +131,20 @@
 <br>
 
 <div class="section-content">
-<span class="standard-title">STANDARDS:</span>
-{{ $policy->standards }}<br>
+    <span class="standard-title">STANDARDS:</span>
+    {{ $policy->standards }}<br>
 
-<span class="standard-title">AMERICAN CORRECTIONAL ASSOCIATION:</span>
-{{ $policy->american_correctional_association }}<br>
+    <span class="standard-title">AMERICAN CORRECTIONAL ASSOCIATION:</span>
+    {{ $policy->american_correctional_association }}<br>
 
-<span class="standard-title">VA BOARD OF LOCAL AND REGIONAL JAILS:</span>
-{{ $policy->va_board_of_local_and_regional_jails }}<br>
+    <span class="standard-title">VA BOARD OF LOCAL AND REGIONAL JAILS:</span>
+    {{ $policy->va_board_of_local_and_regional_jails }}<br>
 
-<span class="standard-title">PRISON RAPE ELIMINATION ACT:</span>
-{{ $policy->prison_rape_and_elimination_act }}<br>
+    <span class="standard-title">PRISON RAPE ELIMINATION ACT:</span>
+    {{ $policy->prison_rape_and_elimination_act }}<br>
 
-<span class="standard-title">NCCHC:</span>
-{{ $policy->ncchc }}
+    <span class="standard-title">NCCHC:</span>
+    {{ $policy->ncchc }}
 </div>
 
 <br>
@@ -179,13 +182,12 @@
 
             @for ($col = 0; $col < $columns; $col++)
                 @php
-                    $index = ($col * $rowsNeeded) + $row;
+                    $index = $col * $rowsNeeded + $row;
                     $item = $dates[$index] ?? null;
                 @endphp
 
                 <td>{{ $item['revision'] ?? '' }}</td>
                 <td>{{ isset($item['date']) ? \Carbon\Carbon::parse($item['date'])->format('m/d/y') : '' }}</td>
-
             @endfor
 
         </tr>
@@ -238,5 +240,3 @@
         </td>
     </tr>
 </table>
-
-

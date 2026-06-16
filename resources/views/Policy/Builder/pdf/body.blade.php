@@ -64,8 +64,7 @@
     }
 </style>
 
-@foreach($policy->chapters as $chapterIndex => $chapter)
-
+@foreach ($policy->chapters as $chapterIndex => $chapter)
     <table width="100%" cellpadding="0" cellspacing="0">
         <tr>
             <td class="chapter-number">Chapter {{ $chapterIndex + 1 }}</td>
@@ -73,7 +72,7 @@
             <td class="chapter-title">{{ $chapter->chapter_title }}</td>
         </tr>
     </table><br><br>
-    @foreach($chapter->sections as $sectionIndex => $section)
+    @foreach ($chapter->sections as $sectionIndex => $section)
         <table width="100%" cellpadding="0" cellspacing="0">
             <tr>
                 <td colspan="2" style="height:5mm;"></td>
@@ -83,19 +82,21 @@
 
                 <td class="section-title">{{ $section->section_title }}</td>
             </tr><br>
-            @foreach($section->paragraphs as $paragraphIndex => $paragraph)
+            @foreach ($section->paragraphs as $paragraphIndex => $paragraph)
                 <tr>
-                    <td class="paragraph-number">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $chapterIndex + 1 }}.{{ $sectionIndex + 1 }}.{{ $paragraphIndex + 1 }}</td>
+                    <td class="paragraph-number">
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $chapterIndex + 1 }}.{{ $sectionIndex + 1 }}.{{ $paragraphIndex + 1 }}
+                    </td>
 
                     <td class="paragraph-text">{{ $paragraph->paragraph }}</td>
                 </tr>
-                @if($paragraph->bullets->count())
+                @if ($paragraph->bullets->count())
                     <tr>
                         <br>
                         <td></td>
                         <td class="paragraph-text">
                             <ul class="bullet-list">
-                                @foreach($paragraph->bullets as $bullet)
+                                @foreach ($paragraph->bullets as $bullet)
                                     • {{ $bullet->list['text'] ?? '' }}<br>
                                 @endforeach
                             </ul>
@@ -103,7 +104,8 @@
                     </tr>
                 @endif
                 <br>
-            @endforeach<br>
-            </table>
+            @endforeach
+            <br>
+        </table>
     @endforeach
 @endforeach
