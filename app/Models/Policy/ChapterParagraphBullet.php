@@ -26,4 +26,10 @@ class ChapterParagraphBullet extends Model
     {
         return $this->belongsTo(ChapterParagraph::class, 'paragraph_id');
     }
+
+    public function bulletBullets()
+    {
+        return $this->hasMany(ChapterParagraphBulletBullet::class, 'bullet_id')
+            ->orderBy('sort_order');
+    }
 }

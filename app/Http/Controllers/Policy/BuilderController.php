@@ -40,7 +40,7 @@ class BuilderController extends Controller
     public function createPDF($id)
     {
         $policy = PolicyBuilder::with([
-            'chapters.sections.paragraphs.bullets',
+            'chapters.sections.paragraphs.bullets.bulletBullets',
             'references.paragraphs.bullets',
             'policyDefinitions',
         ])->findOrFail($id);

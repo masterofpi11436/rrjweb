@@ -5,6 +5,7 @@ namespace App\Livewire\Policy\Builder;
 use App\Models\Policy\Chapter;
 use App\Models\Policy\ChapterParagraph;
 use App\Models\Policy\ChapterParagraphBullet;
+use App\Models\Policy\ChapterParagraphBulletBullet;
 use App\Models\Policy\ChapterSection;
 use App\Models\Policy\PolicyBuilder;
 use App\Models\Policy\Reference;
@@ -51,7 +52,7 @@ class PolicyBuilderForm extends Component
         }
 
         $policy = PolicyBuilder::with([
-            'chapters.sections.paragraphs.bullets',
+            'chapters.sections.paragraphs.bullets.bulletBullets',
             'references.paragraphs.bullets',
             'policyDefinitions',
         ])->findOrFail($policyBuilderId);
@@ -92,8 +93,17 @@ class PolicyBuilderForm extends Component
                                         'list' => is_array($bullet->list)
                                             ? ($bullet->list['text'] ?? '')
                                             : ($bullet->list ?? ''),
-                                    ];
 
+                                        'bullet_bullets' => $bullet->bulletBullets->map(function ($childBullet) {
+                                            return [
+                                                'type' => $childBullet->type ?? 'bullet',
+
+                                                'list' => is_array($childBullet->list)
+                                                    ? ($childBullet->list['text'] ?? '')
+                                                    : ($childBullet->list ?? ''),
+                                            ];
+                                        })->toArray(),
+                                    ];
                                 })->toArray(),
 
                             ];
@@ -223,6 +233,7 @@ class PolicyBuilderForm extends Component
         $this->chapters[$chapterIndex]['sections'][$sectionIndex]['paragraphs'][$paragraphIndex]['bullets'][] = [
             'type' => 'bullet',
             'list' => '',
+            'bullet_bullets' => [],
         ];
     }
 
@@ -237,6 +248,24 @@ class PolicyBuilderForm extends Component
         );
     }
 
+    public function addBulletBullet($chapterIndex, $sectionIndex, $paragraphIndex, $bulletIndex)
+    {
+        $this->chapters[$chapterIndex]['sections'][$sectionIndex]['paragraphs'][$paragraphIndex]['bullets'][$bulletIndex]['bullet_bullets'][] = [
+            'type' => 'bullet',
+            'list' => '',
+        ];
+    }
+
+    public function removeBulletBullet($chapterIndex, $sectionIndex, $paragraphIndex, $bulletIndex, $childBulletIndex)
+    {
+        unset(
+            $this->chapters[$chapterIndex]['sections'][$sectionIndex]['paragraphs'][$paragraphIndex]['bullets'][$bulletIndex]['bullet_bullets'][$childBulletIndex]
+        );
+
+        $this->chapters[$chapterIndex]['sections'][$sectionIndex]['paragraphs'][$paragraphIndex]['bullets'][$bulletIndex]['bullet_bullets'] = array_values(
+            $this->chapters[$chapterIndex]['sections'][$sectionIndex]['paragraphs'][$paragraphIndex]['bullets'][$bulletIndex]['bullet_bullets']
+        );
+    }
     /*
     ** Inserting chapters and revisions
     */
@@ -350,6 +379,9 @@ class PolicyBuilderForm extends Component
             'chapters.*.sections.*.paragraphs.*.bullets' => 'nullable|array',
             'chapters.*.sections.*.paragraphs.*.bullets.*.type' => 'nullable|string',
             'chapters.*.sections.*.paragraphs.*.bullets.*.list' => 'nullable|string',
+            'chapters.*.sections.*.paragraphs.*.bullets.*.bullet_bullets' => 'nullable|array',
+            'chapters.*.sections.*.paragraphs.*.bullets.*.bullet_bullets.*.type' => 'nullable|string',
+            'chapters.*.sections.*.paragraphs.*.bullets.*.bullet_bullets.*.list' => 'nullable|string',
 
             'references' => 'nullable|array',
             'references.*.reference_title' => 'nullable|string|max:255',
@@ -387,7 +419,7 @@ class PolicyBuilderForm extends Component
 
         $this->policyBuilderId = $policy->id;
         $policy->load([
-            'chapters.sections.paragraphs.bullets',
+            'chapters.sections.paragraphs.bullets.bulletBullets',
             'references.paragraphs.bullets',
             'policyDefinitions',
         ]);
@@ -398,6 +430,10 @@ class PolicyBuilderForm extends Component
             foreach ($existingChapter->sections as $existingSection) {
 
                 foreach ($existingSection->paragraphs as $existingParagraph) {
+                    foreach ($existingParagraph->bullets as $existingBullet) {
+                        $existingBullet->bulletBullets()->delete();
+                    }
+
                     $existingParagraph->bullets()->delete();
                 }
 
@@ -435,7 +471,7 @@ class PolicyBuilderForm extends Component
 
                     foreach ($paragraphData['bullets'] ?? [] as $bulletIndex => $bulletData) {
 
-                        ChapterParagraphBullet::create([
+                        $bullet = ChapterParagraphBullet::create([
                             'paragraph_id' => $paragraph->id,
                             'type' => $bulletData['type'] ?? 'bullet',
                             'list' => [
@@ -444,6 +480,16 @@ class PolicyBuilderForm extends Component
                             'sort_order' => $bulletIndex,
                         ]);
 
+                        foreach ($bulletData['bullet_bullets'] ?? [] as $childBulletIndex => $childBulletData) {
+                            ChapterParagraphBulletBullet::create([
+                                'bullet_id' => $bullet->id,
+                                'type' => $childBulletData['type'] ?? 'bullet',
+                                'list' => [
+                                    'text' => $childBulletData['list'] ?? '',
+                                ],
+                                'sort_order' => $childBulletIndex,
+                            ]);
+                        }
                     }
                 }
             }

@@ -97,7 +97,11 @@
                         <td class="paragraph-text">
                             <ul class="bullet-list">
                                 @foreach ($paragraph->bullets as $bullet)
-                                    • {{ $bullet->list['text'] ?? '' }}<br>
+                                    X {{ $bullet->list['text'] ?? '' }}<br>
+
+                                    @foreach ($bullet->bulletBullets as $childBullet)
+                                        &nbsp;&nbsp;&nbsp;&nbsp;o {{ $childBullet->list['text'] ?? '' }}<br>
+                                    @endforeach
                                 @endforeach
                             </ul>
                         </td>

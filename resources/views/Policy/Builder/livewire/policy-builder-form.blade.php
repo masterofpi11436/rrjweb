@@ -115,7 +115,7 @@
         </div>
     </aside>
 
-    <form id="policy-builder-form"
+    <form id="policy-builder-form" wire:submit.prevent="save"
         class="mx-auto max-w-5xl space-y-6 rounded-3xl border border-gray-800 bg-gray-950 p-4 sm:p-6 lg:p-8 shadow-2xl shadow-black/40">
 
         {{-- Policy Header Information --}}
@@ -309,8 +309,9 @@
                                                                     wire:model="chapters.{{ $chapterIndex }}.sections.{{ $sectionIndex }}.paragraphs.{{ $paragraphIndex }}.bullets.{{ $bulletIndex }}.type"
                                                                     class="{{ $inputClass }}"
                                                                 >
-                                                                    <option value="bullet">Bullet</option>
-                                                                    <option value="ordered">Ordered</option>
+                                                                    <option value="bullet">Bulleted</option>
+                                                                    <option value="ordered">Numbered</option>
+                                                                    <option value="custom">Cusom</option>
                                                                 </select> --}}
 
                                                                 <input type="text"
@@ -323,6 +324,32 @@
                                                                     class="{{ $removeButtonClass }}">
                                                                     Remove
                                                                 </button>
+                                                            </div>
+
+                                                            <div class="mt-3 space-y-3 pl-6 border-l border-gray-800">
+                                                                @foreach ($bullet['bullet_bullets'] ?? [] as $childBulletIndex => $childBullet)
+                                                                    <div wire:key="bullet-child-{{ $chapterIndex }}-{{ $sectionIndex }}-{{ $paragraphIndex }}-{{ $bulletIndex }}-{{ $childBulletIndex }}"
+                                                                        class="grid grid-cols-1 gap-3 md:grid-cols-[1fr_auto]">
+                                                                        <input type="text"
+                                                                            wire:model="chapters.{{ $chapterIndex }}.sections.{{ $sectionIndex }}.paragraphs.{{ $paragraphIndex }}.bullets.{{ $bulletIndex }}.bullet_bullets.{{ $childBulletIndex }}.list"
+                                                                            placeholder="Nested bullet text"
+                                                                            class="{{ $inputClass }}">
+
+                                                                        <button type="button"
+                                                                            wire:click="removeBulletBullet({{ $chapterIndex }}, {{ $sectionIndex }}, {{ $paragraphIndex }}, {{ $bulletIndex }}, {{ $childBulletIndex }})"
+                                                                            class="{{ $removeButtonClass }}">
+                                                                            Remove
+                                                                        </button>
+                                                                    </div>
+                                                                @endforeach
+
+                                                                <div class="flex justify-end">
+                                                                    <button type="button"
+                                                                        wire:click="addBulletBullet({{ $chapterIndex }}, {{ $sectionIndex }}, {{ $paragraphIndex }}, {{ $bulletIndex }})"
+                                                                        class="{{ $addButtonClass }}">
+                                                                        Add Nested Bullet
+                                                                    </button>
+                                                                </div>
                                                             </div>
                                                         @endforeach
 
