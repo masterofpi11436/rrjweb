@@ -92,7 +92,8 @@
                 </div>
 
                 <div class="pt-3 border-t border-gray-800">
-                    <a href="#definitions" class="block rounded-lg px-3 py-2 text-gray-300 hover:bg-gray-800">
+                    <a href="#definitions" class="block rounded-lg px-3 py-2 text-gray-300 hover:bg-gray-800"
+                        x-on:click="document.getElementById('definitions-details')?.setAttribute('open', true)">
                         Definitions
                     </a>
                 </div>
@@ -624,6 +625,7 @@
             </div>
 
             <details
+                id="definitions-details"
                 x-bind:open="definitionsOpen"
                 x-on:toggle="definitionsOpen = $el.open"
                 class="rounded-xl border border-gray-800 bg-gray-950 p-4"
