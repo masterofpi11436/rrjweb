@@ -519,9 +519,11 @@
                     </div>
                 @endforeach
 
-                <button type="button" wire:click="addReference" class="{{ $addButtonClass }}">
-                    Add Reference
-                </button>
+                <div class="flex justify-end">
+                    <button type="button" wire:click="addReference" class="{{ $addButtonClass }}">
+                        Add Reference
+                    </button>
+                </div>
             </div>
         </div>
 
