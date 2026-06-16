@@ -6,6 +6,15 @@
 
 @section('content')
 
+    @auth
+        @if (Auth::user()->admin == 1 || Auth::user()->camera === 1)
+            <a href="{{ route('camera.dashboard') }}" class="create-link">
+                Back To Dashboard
+            </a>
+        @endif
+    @endauth
+
+
     <a href="{{ route('camera.index') }}">View List</a><br>
 
     <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:24px; margin-top:24px;">
