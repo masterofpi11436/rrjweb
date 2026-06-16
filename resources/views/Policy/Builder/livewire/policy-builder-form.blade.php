@@ -26,8 +26,8 @@
 
     $addButtonClass = '
         inline-flex items-center rounded-lg
-        bg-blue-600 px-4 py-2 text-sm font-medium
-        text-white transition hover:bg-blue-500
+        bg-blue-800 px-4 py-2 text-sm font-medium
+        text-white transition hover:bg-blue-900
     ';
 
     $removeButtonClass = '
@@ -53,9 +53,12 @@
                     Policy Information
                 </a>
 
-                <a href="#revision-dates" class="block rounded-lg px-3 py-2 text-gray-300 hover:bg-gray-800">
-                    Revision Dates
-                </a>
+                <div class="pt-3 border-t border-gray-800">
+                    <a href="#revision-dates" class="block rounded-lg px-3 py-2 text-gray-300 hover:bg-gray-800"
+                        x-on:click="document.getElementById('revision-dates-details')?.setAttribute('open', true)">
+                        Revision Dates
+                    </a>
+                </div>
 
                 {{-- Chapters --}}
                 <div class="pt-3">
@@ -198,6 +201,7 @@
             </div>
 
             <details
+                id="revision-dates-details"
                 x-bind:open="revisionOpen"
                 x-on:toggle="revisionOpen = $el.open"
                 class="rounded-xl border border-gray-800 bg-gray-950 p-4"
@@ -294,19 +298,16 @@
                             </div>
 
                             {{-- Sections --}}
-                            <div class="space-y-5">
+                            <div class="divide-y divide-gray-800">
 
                                 @foreach ($chapter['sections'] as $sectionIndex => $section)
-
-                                        <div
-                                            wire:key="section-{{ $chapterIndex }}-{{ $sectionIndex }}"
-                                            class="rounded-xl border border-gray-800 bg-gray-900/60 p-5 space-y-5"
-                                        >
-
-                                        <div class="flex flex-col gap-4 md:flex-row md:items-center">
+                                    <section
+                                        wire:key="section-{{ $chapterIndex }}-{{ $sectionIndex }}"
+                                        class="py-6 space-y-5"
+                                    >
+                                        <div class="flex flex-col gap-3 md:flex-row md:items-end">
                                             <div class="flex-1 space-y-2">
                                                 <label class="{{ $labelClass }}">Section Title</label>
-
                                                 <input
                                                     type="text"
                                                     wire:model="chapters.{{ $chapterIndex }}.sections.{{ $sectionIndex }}.section_title"
@@ -326,16 +327,15 @@
 
                                         {{-- Paragraphs --}}
                                         <div class="space-y-5">
-
                                             @foreach ($section['paragraphs'] as $paragraphIndex => $paragraph)
-
-                                                    <div
-                                                        wire:key="paragraph-{{ $chapterIndex }}-{{ $sectionIndex }}-{{ $paragraphIndex }}"
-                                                        class="rounded-xl border border-gray-800 bg-gray-950 p-5 space-y-4"
-                                                    >
-
+                                                <div
+                                                    wire:key="paragraph-{{ $chapterIndex }}-{{ $sectionIndex }}-{{ $paragraphIndex }}"
+                                                    class="space-y-4 border-l-2 border-gray-800 pl-4"
+                                                >
                                                     <div class="space-y-2">
-                                                        <label class="{{ $labelClass }}">Paragraph</label>
+                                                        <label class="{{ $labelClass }}">
+                                                            Paragraph {{ $paragraphIndex + 1 }}
+                                                        </label>
 
                                                         <textarea
                                                             wire:model="chapters.{{ $chapterIndex }}.sections.{{ $sectionIndex }}.paragraphs.{{ $paragraphIndex }}.paragraph"
@@ -345,28 +345,13 @@
                                                         ></textarea>
                                                     </div>
 
-                                                    <button
-                                                        type="button"
-                                                        wire:click="removeParagraph({{ $chapterIndex }}, {{ $sectionIndex }}, {{ $paragraphIndex }})"
-                                                        class="{{ $removeButtonClass }}"
-                                                    >
-                                                        Remove Paragraph
-                                                    </button>
-
                                                     {{-- Bullets --}}
-                                                    <div class="space-y-4">
-
-                                                        <h5 class="text-sm font-semibold uppercase tracking-wide text-gray-400">
-                                                            Bullets
-                                                        </h5>
-
+                                                    <div class="space-y-3 pl-4">
                                                         @foreach ($paragraph['bullets'] as $bulletIndex => $bullet)
-
                                                             <div
                                                                 wire:key="bullet-{{ $chapterIndex }}-{{ $sectionIndex }}-{{ $paragraphIndex }}-{{ $bulletIndex }}"
-                                                                class="grid grid-cols-1 gap-3 rounded-xl border border-gray-800 bg-gray-900 p-4 md:grid-cols-3"
+                                                                class="grid grid-cols-1 gap-3 md:grid-cols-[160px_1fr_auto]"
                                                             >
-
                                                                 <select
                                                                     wire:model="chapters.{{ $chapterIndex }}.sections.{{ $sectionIndex }}.paragraphs.{{ $paragraphIndex }}.bullets.{{ $bulletIndex }}.type"
                                                                     class="{{ $inputClass }}"
@@ -387,11 +372,9 @@
                                                                     wire:click="removeBullet({{ $chapterIndex }}, {{ $sectionIndex }}, {{ $paragraphIndex }}, {{ $bulletIndex }})"
                                                                     class="{{ $removeButtonClass }}"
                                                                 >
-                                                                    Remove Bullet
+                                                                    Remove
                                                                 </button>
-
                                                             </div>
-
                                                         @endforeach
 
                                                         <button
@@ -401,11 +384,17 @@
                                                         >
                                                             Add Bullet
                                                         </button>
-
                                                     </div>
 
-                                                </div>
+                                                    <button
+                                                        type="button"
+                                                        wire:click="removeParagraph({{ $chapterIndex }}, {{ $sectionIndex }}, {{ $paragraphIndex }})"
+                                                        class="{{ $removeButtonClass }}"
+                                                    >
+                                                        Remove Paragraph
+                                                    </button>
 
+                                                </div>
                                             @endforeach
 
                                             <button
@@ -415,13 +404,13 @@
                                             >
                                                 Add Paragraph
                                             </button>
-
                                         </div>
-
-                                    </div>
-
+                                    </section>
                                 @endforeach
 
+                            </div>
+
+                            <div class="flex justify-end pt-4">
                                 <button
                                     type="button"
                                     wire:click="addSection({{ $chapterIndex }})"
@@ -429,18 +418,20 @@
                                 >
                                     Add Section
                                 </button>
-
                             </div>
+
                         </div>
                     </details>
 
                 @endforeach
 
-                <button type="button"
-                        wire:click="addChapter"
-                        class="{{ $addButtonClass }}">
-                    Add Chapter
-                </button>
+                <div class="flex justify-end">
+                    <button type="button"
+                            wire:click="addChapter"
+                            class="{{ $addButtonClass }}">
+                        Add Chapter
+                    </button>
+                </div>
             </div>
         </div>
 
