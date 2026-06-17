@@ -8,8 +8,8 @@
 
     .definition {
         font-size: 11pt;
-        margin-bottom: 10px;
-        line-height: 1.4;
+        margin-bottom: 2px;
+        line-height: 1.1;
         font-weight: normal;
     }
 
