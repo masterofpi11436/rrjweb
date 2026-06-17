@@ -58,84 +58,89 @@ class BuilderController extends Controller
         $pdf->SetMargins(20, 18, 20);
         $pdf->SetAutoPageBreak(true, 18);
 
-        $fontname = TCPDF_FONTS::addTTFfont(
+        $fontName = TCPDF_FONTS::addTTFfont(
             public_path('fonts/CANDARA.TTF'),
             'TrueTypeUnicode',
             '',
             96
         );
 
-        $pdf->SetFont($fontname, '', 11);
+        $pdf->SetFont($fontName, '', 11);
 
-        $pdf->AddPage();
-        $this->addPageBorder($pdf);
-        $pdf->writeHTML(view('Policy.Builder.pdf.cover', compact('policy'))->render(), true, false, true, false, '');
-
-        $pdf->AddPage();
-        $this->addPageBorder($pdf);
-        $pdf->writeHTML(view('Policy.Builder.pdf.toc', compact('policy'))->render(), true, false, true, false, '');
-        $this->addPolicyFooter($pdf, $policy);
-
-        $bodyStartPage = $pdf->getPage() + 1;
-
-        $pdf->AddPage();
-
-        $pdf->writeHTML(
-            view('Policy.Builder.pdf.body', compact('policy'))->render(),
-            true,
-            false,
-            true,
-            false,
-            ''
+        $this->writePdfPage(
+            $pdf,
+            $policy,
+            view('Policy.Builder.pdf.cover', compact('policy'))->render(),
+            $fontName,
+            false
         );
 
-        $bodyEndPage = $pdf->getPage();
+        $this->writePdfPage(
+            $pdf,
+            $policy,
+            view('Policy.Builder.pdf.toc', compact('policy'))->render(),
+            $fontName,
+            true
+        );
 
-        for ($page = $bodyStartPage; $page <= $bodyEndPage; $page++) {
-            $pdf->setPage($page);
-            $this->addPageBorder($pdf);
-        $this->addPolicyFooter($pdf, $policy);
-        }
+        $this->writePdfPage(
+            $pdf,
+            $policy,
+            view('Policy.Builder.pdf.body', compact('policy'))->render(),
+            $fontName,
+            true
+        );
 
         if ($policy->policyDefinitions->isNotEmpty()) {
-
-            $pdf->AddPage();
-
-            $this->addPageBorder($pdf);
-
-            $pdf->writeHTML(
+            $this->writePdfPage(
+                $pdf,
+                $policy,
                 view('Policy.Builder.pdf.definitions', compact('policy'))->render(),
-                true,
-                false,
-                true,
-                false,
-                ''
+                $fontName,
+                true
             );
-
-            $this->addPolicyFooter($pdf, $policy);
         }
 
         if ($policy->references->isNotEmpty()) {
-            $pdf->AddPage();
-
-            $this->addPageBorder($pdf);
-
-            $pdf->writeHTML(
+            $this->writePdfPage(
+                $pdf,
+                $policy,
                 view('Policy.Builder.pdf.references', compact('policy'))->render(),
-                true,
-                false,
-                true,
-                false,
-                ''
+                $fontName,
+                true
             );
-
-            $this->addPolicyFooter($pdf, $policy);
         }
 
         return response(
             $pdf->Output(str($policy->title)->slug() . '.pdf', 'S'),
             200
         )->header('Content-Type', 'application/pdf');
+    }
+
+    private function writePdfPage(
+        TCPDF $pdf,
+        PolicyBuilder $policy,
+        string $html,
+        string $fontName,
+        bool $withFooter = true
+    ): void {
+        $pdf->AddPage();
+        $startPage = $pdf->getPage();
+
+        $pdf->SetFont($fontName, '', 11);
+
+        $pdf->writeHTML($html, true, false, true, false, '');
+
+        $endPage = $pdf->getPage();
+
+        for ($page = $startPage; $page <= $endPage; $page++) {
+            $pdf->setPage($page);
+            $this->addPageBorder($pdf);
+
+            if ($withFooter) {
+                $this->addPolicyFooter($pdf, $policy, $fontName);
+            }
+        }
     }
 
     private function addPageBorder(TCPDF $pdf): void
@@ -145,14 +150,14 @@ class BuilderController extends Controller
         $pdf->Rect(8, 8, 199, 263);
     }
 
-    private function addPolicyFooter(TCPDF $pdf, PolicyBuilder $policy): void
+    private function addPolicyFooter(TCPDF $pdf, PolicyBuilder $policy, string $fontName): void
     {
         $autoPageBreak = $pdf->getAutoPageBreak();
         $breakMargin = $pdf->getBreakMargin();
 
         $pdf->SetAutoPageBreak(false, 0);
 
-        $pdf->SetFont('times', '', 11);
+        $pdf->SetFont($fontName, '', 11);
         $pdf->SetXY(115, 263);
 
         $pdf->Cell(
