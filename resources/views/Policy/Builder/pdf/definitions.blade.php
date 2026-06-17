@@ -3,7 +3,7 @@
         font-size: 18pt;
         font-weight: bold;
         text-align: center;
-        margin-bottom: 20px;
+        margin-bottom: 10px;
     }
 
     .definition {
