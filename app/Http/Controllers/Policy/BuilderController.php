@@ -115,7 +115,7 @@ class BuilderController extends Controller
             $this->addPolicyFooter($pdf, $policy);
         }
 
-        if (!empty($policy->references)) {
+        if ($policy->references->isNotEmpty()) {
             $pdf->AddPage();
 
             $this->addPageBorder($pdf);
@@ -152,7 +152,7 @@ class BuilderController extends Controller
 
         $pdf->SetAutoPageBreak(false, 0);
 
-        $pdf->SetFont('times', 'B', 8);
+        $pdf->SetFont('times', '', 11);
         $pdf->SetXY(115, 263);
 
         $pdf->Cell(
