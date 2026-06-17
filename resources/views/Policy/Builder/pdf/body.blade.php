@@ -10,6 +10,10 @@
         vertical-align: top;
     }
 
+    .chapter-table {
+        margin-top: 15mm;
+    }
+
     .chapter-number {
         width: 22mm;
         font-size: 14pt;
@@ -65,13 +69,18 @@
 </style>
 
 @foreach ($policy->chapters as $chapterIndex => $chapter)
-    <table width="100%" cellpadding="0" cellspacing="0">
+    <table class="chapter-table" width="100%" cellpadding="0" cellspacing="0">
+        @if ($chapterIndex > 0)
+            <tr>
+                <td colspan="2" style="height:10mm;"></td>
+            </tr>
+        @endif
+
         <tr>
             <td class="chapter-number">Chapter {{ $chapterIndex + 1 }}</td>
-
             <td class="chapter-title">{{ $chapter->chapter_title }}</td>
         </tr>
-    </table><br><br>
+    </table>
     @foreach ($chapter->sections as $sectionIndex => $section)
         <table width="100%" cellpadding="0" cellspacing="0">
             <tr>
