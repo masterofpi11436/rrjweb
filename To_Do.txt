@@ -15,6 +15,9 @@ Down or Out App:
 Camera Schedule:
 
     1. Add the Lan Schedule(s)
+    2. Add TSC Schedule(s)
+    3. Add Encoder Schedule
+    4. Add IP rules for camera, encoder, and TSC subnets
 
 Policy builder:
 

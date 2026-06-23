@@ -9,9 +9,8 @@ class PhoneDirectory extends Model
 {
     // use HasFactory;
 
-    protected $connection = 'phone';
-    protected $table = 'phone';
-    public $timestamps = false;
+    protected $table = 'phone_directory';
+
 
     protected $fillable = ['name', 'title', 'section', 'extension'];
 }
