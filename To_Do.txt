@@ -18,6 +18,7 @@ Camera Schedule:
     2. Add TSC Schedule(s)
     3. Add Encoder Schedule
     4. Add IP rules for camera, encoder, and TSC subnets
+    5. Livewire function to update camera statuses from the public page
 
 Policy builder:
 

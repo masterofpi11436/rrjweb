@@ -6,6 +6,7 @@ use Livewire\Component;
 
 // Required Models
 use App\Models\Camera\Camera;
+use App\Enums\CameraStatus;
 
 class CameraSearchAll extends Component
 {
@@ -14,6 +15,8 @@ class CameraSearchAll extends Component
     public $sortDirection = 'asc'; // Default sort direction
     public $confirmingDelete = false;
     public $deleteId;
+
+    public $cameraId;
 
     public function sortBy($column)
     {
@@ -25,6 +28,15 @@ class CameraSearchAll extends Component
             $this->sortColumn = $column;
             $this->sortDirection = 'asc';
         }
+    }
+
+    public function changeStatus($id, $status)
+    {
+        $camera = Camera::findOrFail($id);
+
+        $camera->status = CameraStatus::from($status);
+
+        $camera->save();
     }
 
     public function render()
