@@ -14,22 +14,21 @@
         </div>
     @endif
 
-@section('content')
-
     @php
 
         $caseworkers = [
             ['id' => 1, 'name' => 'Giles', 'area' => 'HU 1/5'],
             ['id' => 2, 'name' => 'Plaskett', 'area' => 'HU 2 (Interim) / 4A MH'],
             ['id' => 3, 'name' => 'Peterkin', 'area' => 'HU 2'],
-            ['id' => 4, 'name' => 'Coleman', 'area' => 'HU 3'],
-            ['id' => 5, 'name' => 'Johnson', 'area' => 'HU 4'],
-            ['id' => 6, 'name' => 'Smith', 'area' => 'HU 5'],
+            ['id' => 4, 'name' => 'Combined', 'area' => 'HU 3'],
+            ['id' => 6, 'name' => 'Weeks', 'area' => 'HU 4'],
+            ['id' => 7, 'name' => 'Jarmon', 'area' => 'HU 6'],
         ];
 
         $counselors = [
-            ['id' => 101, 'name' => 'Counselor A', 'area' => 'TC'],
-            ['id' => 102, 'name' => 'Counselor B', 'area' => 'COG'],
+            ['id' => 101, 'name' => 'Seward', 'area' => 'HU 2A TC/COG Women'],
+            ['id' => 102, 'name' => 'Hall', 'area' => 'HU 4D COG / Veterans'],
+            ['id' => 102, 'name' => 'Keaton', 'area' => 'HU 4E TC Men'],
         ];
 
         $caseworkerMetrics = [
@@ -82,6 +81,46 @@
 
     @endphp
 
+    @php
+        $loggedInUser = 1;
+
+        $labelCell = 'border border-[#d9e2ec] bg-white px-3 py-3 text-base font-semibold text-black';
+        $workerHeader = 'border border-[#d9e2ec] bg-[#eaf3ef] px-3 py-3 text-base font-bold text-black';
+        $weekCell = 'border border-[#d9e2ec] bg-[#fffdf6] px-2 py-2 text-center';
+        $totalCell = 'border border-[#d9e2ec] bg-[#dcebf5] px-3 py-3 text-center font-bold text-black';
+        $inputClass = '
+            w-20
+            rounded
+            border-2
+            border-blue-500
+            bg-white
+            text-black
+            text-center
+            font-semibold
+            px-2
+            py-1
+            shadow-sm
+            focus:ring-2
+            focus:ring-blue-500
+            focus:border-blue-500
+        ';
+        $disabledInputClass = '
+            w-20
+            rounded
+            border
+            border-gray-300
+            bg-gray-200
+            text-gray-500
+            text-center
+            px-2
+            py-1
+            cursor-not-allowed
+            opacity-70
+        ';
+        $notesInputClass = 'w-full rounded border border-gray-300 bg-white px-2 py-1 text-black';
+        $homelessInputClass = 'w-full rounded border border-gray-300 bg-white px-2 py-1 text-black';
+    @endphp
+
     <div class="min-h-screen bg-gray-100 p-6">
         <div class="mx-auto max-w-7xl overflow-hidden rounded-lg bg-white shadow">
 
@@ -96,11 +135,7 @@
             <div class="grid grid-cols-1 gap-4 bg-[#fff7d6] p-4 md:grid-cols-2">
                 <div class="flex items-center gap-3">
                     <label class="font-bold text-gray-800">Month:</label>
-                    <input type="month" wire:model="month" class="rounded border border-gray-300 px-3 py-2">
-                </div>
-
-                <div class="font-semibold text-gray-800">
-                    Enter weekly numbers in columns B–E. Monthly totals calculate automatically.
+                    <input type="month" class="rounded border border-gray-300 px-3 py-2">
                 </div>
             </div>
 
@@ -135,36 +170,122 @@
 
                             @foreach ($caseworkerMetrics as $metric => $label)
                                 <tr>
-                                    <td class="border border-[#d9e2ec] bg-white px-3 py-2 text-gray-800">
+                                    <td class="{{ $labelCell }}">
                                         {{ $label }}
                                     </td>
 
                                     @for ($week = 1; $week <= 4; $week++)
-                                        <td class="border border-[#d9e2ec] bg-[#fffdf6] px-2 py-1 text-center">
-                                            <input type="number" min="0"
-                                                wire:model.live="reports.{{ $worker['id'] }}.{{ $metric }}_week_{{ $week }}"
-                                                class="w-20 rounded border border-gray-300 bg-white px-2 py-1 text-center"
-                                                @disabled(!$canEditCaseworkerFields)>
+                                        <td class="{{ $weekCell }}">
+                                            @if ($loggedInUser == $worker['id'])
+                                                <input type="number" class="week-input">
+                                            @else
+                                                <input type="number" class="{{ $disabledInputClass }}" disabled>
+                                            @endif
                                         </td>
                                     @endfor
 
-                                    <td
-                                        class="border border-[#d9e2ec] bg-[#eaf2f8] px-3 py-2 text-center font-bold text-gray-800">
-                                        {{ ($reports[$worker['id']][$metric . '_week_1'] ?? 0) +
-                                            ($reports[$worker['id']][$metric . '_week_2'] ?? 0) +
-                                            ($reports[$worker['id']][$metric . '_week_3'] ?? 0) +
-                                            ($reports[$worker['id']][$metric . '_week_4'] ?? 0) }}
-                                    </td>
+                                    <input type="text" class="row-total" readonly>
 
                                     <td class="border border-[#d9e2ec] bg-white px-2 py-1">
-                                        <input type="text"
-                                            wire:model.live="reports.{{ $worker['id'] }}.{{ $metric }}_notes"
-                                            class="w-full rounded border border-gray-300 px-2 py-1"
-                                            @disabled(!$canEditCaseworkerFields)>
+                                        <input type="text" id="total" @disabled(!$canEditCaseworkerFields)>
                                     </td>
                                 </tr>
                             @endforeach
                         @endforeach
+
+                        {{-- ========================================================= --}}
+                        {{-- HOMELESS UPDATES --}}
+                        {{-- ========================================================= --}}
+
+                        <tr>
+                            <td colspan="7" class="bg-[#d4af37] px-3 py-2 text-lg font-bold text-gray-900">
+                                HOMELESS UPDATES
+                            </td>
+                        </tr>
+
+                        <tr class="bg-[#0f2d3f] text-white">
+                            <th class="border border-[#d9e2ec] px-3 py-2 text-left">
+                                Name
+                            </th>
+
+                            <th class="border border-[#d9e2ec] px-3 py-2">
+                                Release Date
+                            </th>
+
+                            <th class="border border-[#d9e2ec] px-3 py-2">
+                                Assigned Staff
+                            </th>
+
+                            <th class="border border-[#d9e2ec] px-3 py-2">
+                                Housing Status
+                            </th>
+
+                            <th class="border border-[#d9e2ec] px-3 py-2">
+                                Referral Status
+                            </th>
+
+                            <th class="border border-[#d9e2ec] px-3 py-2">
+                                Follow-up
+                            </th>
+
+                            <th class="border border-[#d9e2ec] px-3 py-2">
+                                Notes
+                            </th>
+                        </tr>
+
+                        @for ($i = 1; $i <= 3; $i++)
+                            <tr>
+
+                                <td class="border border-[#d9e2ec] p-2">
+                                    <input type="text" class="{{ $homelessInputClass }}" placeholder="Resident Name">
+                                </td>
+
+                                <td class="border border-[#d9e2ec] p-2">
+                                    <input type="date" class="{{ $homelessInputClass }}">
+                                </td>
+
+                                <td class="border border-[#d9e2ec] p-2">
+                                    <select class="{{ $homelessInputClass }}">
+                                        <option></option>
+                                        <option>Giles</option>
+                                        <option>Plaskett</option>
+                                        <option>Peterkin</option>
+                                        <option>Coleman</option>
+                                    </select>
+                                </td>
+
+                                <td class="border border-[#d9e2ec] p-2">
+                                    <select class="w-full rounded border border-gray-300 px-2 py-1">
+                                        <option></option>
+                                        <option>Pending</option>
+                                        <option>Shelter</option>
+                                        <option>Family</option>
+                                        <option>Hotel</option>
+                                        <option>Permanent Housing</option>
+                                    </select>
+                                </td>
+
+                                <td class="border border-[#d9e2ec] p-2">
+                                    <select class="w-full rounded border border-gray-300 px-2 py-1">
+                                        <option></option>
+                                        <option>Pending</option>
+                                        <option>Submitted</option>
+                                        <option>Approved</option>
+                                        <option>Denied</option>
+                                    </select>
+                                </td>
+
+                                <td class="border border-[#d9e2ec] p-2">
+                                    <input type="date" class="w-full rounded border border-gray-300 px-2 py-1">
+                                </td>
+
+                                <td class="border border-[#d9e2ec] p-2">
+                                    <input type="text" class="w-full rounded border border-gray-300 px-2 py-1"
+                                        placeholder="Notes">
+                                </td>
+
+                            </tr>
+                        @endfor
 
                         <tr>
                             <td colspan="7" class="bg-[#d4af37] px-3 py-2 text-lg font-bold text-gray-900">
@@ -182,31 +303,24 @@
 
                             @foreach ($counselorMetrics as $metric => $label)
                                 <tr>
-                                    <td class="border border-[#d9e2ec] bg-white px-3 py-2">
+                                    <td class="{{ $labelCell }}">
                                         {{ $label }}
                                     </td>
 
                                     @for ($week = 1; $week <= 4; $week++)
-                                        <td class="border border-[#d9e2ec] bg-[#fffdf6] px-2 py-1 text-center">
-                                            <input type="number" min="0"
-                                                wire:model.live="reports.{{ $counselor['id'] }}.{{ $metric }}_week_{{ $week }}"
-                                                class="w-20 rounded border border-gray-300 bg-white px-2 py-1 text-center"
-                                                @disabled(!$canEditCounselorFields)>
+                                        <td class="{{ $weekCell }}">
+                                            @if ($loggedInUser == $counselor['id'])
+                                                <input type="number" class="week-input">
+                                            @else
+                                                <input type="number" class="{{ $disabledInputClass }}" disabled>
+                                            @endif
                                         </td>
                                     @endfor
 
-                                    <td class="border border-[#d9e2ec] bg-[#eaf2f8] px-3 py-2 text-center font-bold">
-                                        {{ ($reports[$counselor['id']][$metric . '_week_1'] ?? 0) +
-                                            ($reports[$counselor['id']][$metric . '_week_2'] ?? 0) +
-                                            ($reports[$counselor['id']][$metric . '_week_3'] ?? 0) +
-                                            ($reports[$counselor['id']][$metric . '_week_4'] ?? 0) }}
-                                    </td>
+                                    <input type="text" id="total" readonly>
 
                                     <td class="border border-[#d9e2ec] bg-white px-2 py-1">
-                                        <input type="text"
-                                            wire:model.live="reports.{{ $counselor['id'] }}.{{ $metric }}_notes"
-                                            class="w-full rounded border border-gray-300 px-2 py-1"
-                                            @disabled(!$canEditCounselorFields)>
+                                        <input type="text" class="row-total" readonly>
                                     </td>
                                 </tr>
                             @endforeach
@@ -217,7 +331,7 @@
 
             <div class="border-t border-[#d9e2ec] bg-white p-4">
                 <label class="mb-2 block font-bold text-gray-800">Announcements / Updates</label>
-                <textarea wire:model.live="announcements" rows="5" class="w-full rounded border border-gray-300 px-3 py-2"></textarea>
+                <textarea rows="5" class="w-full rounded border border-gray-300 bg-white text-black px-2 py-1"></textarea>
             </div>
 
             <div class="flex justify-end bg-gray-50 p-4">
@@ -228,4 +342,21 @@
             </div>
         </div>
     </div>
+
+    <script>
+        document.querySelectorAll('.week-input').forEach(input => {
+            input.addEventListener('input', function() {
+
+                const row = this.closest('tr');
+
+                let total = 0;
+
+                row.querySelectorAll('.week-input').forEach(input => {
+                    total += Number(input.value) || 0;
+                });
+
+                row.querySelector('.row-total').value = total;
+            });
+        });
+    </script>
 @endsection
