@@ -29,6 +29,8 @@ return new class extends Migration
             $table->enum('warehouse_role', ['Warehouse Supervisor', 'Warehouse Technician', 'Property', 'Supervisor', 'Requestor'])->default('Requestor')->nullable();
             $table->boolean('jurisdiction')->default(false);
             $table->boolean('camera')->default(false);
+            $table->boolean('tc_counselor')->default(false);
+            $table->boolean('tc_caseworker')->default(false);
             $table->timestamps();
         });
 

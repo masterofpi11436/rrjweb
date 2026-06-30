@@ -522,7 +522,7 @@ Route::prefix('navix')->group(function () use ($navixClass) {
 
 });
 
-// Phone Application
+// TC Application
 Route::prefix('tc')->group(function () use ($tcClass){
 
     // Routes without middleware
