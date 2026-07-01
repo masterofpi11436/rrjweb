@@ -412,6 +412,7 @@ Route::prefix('warehouse')->group(function () use ($warehouseLoginClass, $wareho
 
 
                 Route::post('/download', [$reportsClass, 'downloadMonthlyReport'])->withoutMiddleware('cache')->name('warehouse.warehouse-supervisor.reports.monthly.download');
+                Route::post('/download-fiscal', [$reportsClass, 'downloadFiscalReport'])->withoutMiddleware('cache')->name('warehouse.warehouse-supervisor.reports.fiscal.download');
 
                 // Reports pages
                 Route::prefix('recipients')->group(function () use ($reportsClass) {

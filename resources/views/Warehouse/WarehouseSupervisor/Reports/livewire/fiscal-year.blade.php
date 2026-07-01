@@ -18,19 +18,26 @@
 
             <!-- Filter Button -->
             <div>
-                <button wire:click="loadReportData"
-                    class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+                <button wire:click="loadReportData" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
                     Apply Filter
                 </button>
             </div>
         </div>
 
+        <form method="POST" action="{{ route('warehouse.warehouse-supervisor.reports.fiscal.download') }}">
+            @csrf
+            <input type="hidden" name="year" value="{{ $selectedYear }}">
+
+            <button type="submit" class="px-4 py-2 bg-blue-700 text-white rounded hover:bg-blue-800">
+                Download Fiscal Report (CSV)
+            </button>
+        </form>
+
         <!-- View Graph Button -->
         <div class="flex flex-wrap justify-end gap-4 mt-4">
             <form method="GET" action="{{ route('warehouse.warehouse-supervisor.reports.fiscal-year-graph') }}">
                 <input type="hidden" name="year" value="{{ $selectedYear }}">
-                <button type="submit"
-                    class="px-4 py-2 bg-purple-700 text-white rounded hover:bg-purple-800">
+                <button type="submit" class="px-4 py-2 bg-purple-700 text-white rounded hover:bg-purple-800">
                     View Fiscal Year Graph
                 </button>
             </form>
@@ -51,9 +58,13 @@
                 <tr>
                     <th class="border border-gray-600 p-2">Item Name</th>
                     @php
-                        $allSections = collect($reportData)->flatMap(function ($entries) {
-                            return collect($entries)->pluck('section');
-                        })->unique()->sort()->values();
+                        $allSections = collect($reportData)
+                            ->flatMap(function ($entries) {
+                                return collect($entries)->pluck('section');
+                            })
+                            ->unique()
+                            ->sort()
+                            ->values();
                     @endphp
                     @foreach ($allSections as $section)
                         <th class="border border-gray-600 p-2 text-center">{{ $section }}</th>
@@ -64,7 +75,8 @@
             <tbody>
                 @foreach ($reportData as $item => $entries)
                     <tr class="bg-gray-900">
-                        <td class="border border-gray-600 p-2 font-semibold">{{ \Illuminate\Support\Str::title($displayNames[$item] ?? $item) }}</td>
+                        <td class="border border-gray-600 p-2 font-semibold">
+                            {{ \Illuminate\Support\Str::title($displayNames[$item] ?? $item) }}</td>
                         @php
                             $sectionCounts = $entries->groupBy('section')->map->sum('quantity');
                             $total = $sectionCounts->sum();

@@ -823,4 +823,109 @@ class ReportsController extends Controller
             'Content-Disposition' => "attachment; filename=\"{$filename}\"",
         ]);
     }
+
+    // Download the fiscal report to user's computer. Only prints the item and the total count of that item
+    public function downloadFiscalReport(Request $request): \Symfony\Component\HttpFoundation\StreamedResponse
+    {
+        $year = (int) $request->input('year');
+
+        $startDate = \Carbon\Carbon::create($year, 7, 1)->startOfDay();
+        $endDate   = \Carbon\Carbon::create($year + 1, 6, 30)->endOfDay();
+
+        // OLD DB
+        $oldOrders = DB::connection('old_db')->table('orders')
+            ->join('section', 'orders.section_id', '=', 'section.id')
+            ->join('user', 'orders.supervisor_id', '=', 'user.id')
+            ->select(
+                'orders.items',
+                'section.name as section_name',
+                DB::raw("CONCAT(user.first_name, ' ', user.last_name) as supervisor_name"),
+                'orders.approved_denied_at'
+            )
+            ->where('orders.status', 'APPROVED')
+            ->whereBetween('orders.approved_denied_at', [$startDate, $endDate])
+            ->get();
+
+        // NEW DB
+        $newOrders = DB::connection('mysql')->table('orders')
+            ->select('items', 'section_name', 'supervisor_name', 'approved_denied_at')
+            ->where('status', 'APPROVED')
+            ->whereBetween('approved_denied_at', [$startDate, $endDate])
+            ->get();
+
+        $allOrders = $oldOrders->merge($newOrders);
+
+        $grouped = [];
+        $sectionsSet = [];
+
+        foreach ($allOrders as $order) {
+            $decoded = json_decode($order->items ?? '[]', true);
+
+            if (is_string($decoded)) {
+                $decoded = json_decode($decoded, true);
+            }
+
+            if (!is_array($decoded) || empty($decoded)) {
+                continue;
+            }
+
+            $section = trim($order->section_name ?? 'Unknown');
+            $sectionsSet[$section] = true;
+
+            foreach ($decoded as $item) {
+                $rawName = $item['name'] ?? 'Unnamed Item';
+                $nameKey = strtolower(trim($rawName));
+                $display = trim($rawName);
+                $qty = (int) ($item['quantity'] ?? 0);
+
+                if (!isset($grouped[$nameKey])) {
+                    $grouped[$nameKey] = [
+                        'display' => $display,
+                        'sections' => [],
+                    ];
+                }
+
+                if (!isset($grouped[$nameKey]['sections'][$section])) {
+                    $grouped[$nameKey]['sections'][$section] = 0;
+                }
+
+                $grouped[$nameKey]['sections'][$section] += $qty;
+            }
+        }
+
+        $sections = array_values(array_map('strval', array_keys($sectionsSet)));
+        sort($sections, SORT_NATURAL | SORT_FLAG_CASE);
+
+        $filename = "fiscal_report_{$year}_" . ($year + 1) . ".csv";
+
+        return response()->streamDownload(function () use ($grouped, $sections) {
+            $out = fopen('php://output', 'w');
+
+            fputcsv($out, array_merge(['Item Name'], $sections, ['Total']));
+
+            ksort($grouped, SORT_NATURAL | SORT_FLAG_CASE);
+
+            foreach ($grouped as $entry) {
+                $row = [$entry['display']];
+                $total = 0;
+
+                foreach ($sections as $section) {
+                    $qty = (int) ($entry['sections'][$section] ?? 0);
+                    $row[] = $qty > 0 ? $qty : '';
+                    $total += $qty;
+                }
+
+                $row[] = $total;
+
+                fputcsv($out, $row);
+            }
+
+            fclose($out);
+        }, $filename, [
+            'Content-Type' => 'text/csv; charset=UTF-8',
+            'Cache-Control' => 'no-store, no-cache, must-revalidate',
+            'Pragma' => 'no-cache',
+            'Content-Disposition' => "attachment; filename=\"{$filename}\"",
+        ]);
+    }
 }
