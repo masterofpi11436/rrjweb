@@ -9,24 +9,34 @@
     .reference-title {
         font-size: 12pt;
         font-weight: bold;
-        margin-top: 12px;
-        margin-bottom: 8px;
     }
 
-    .aca-reference {
+    .aca-table {
+        width: 100%;
+    }
+
+    .aca-left {
+        width: 28%;
         font-weight: bold;
-        margin-bottom: 4px;
+        vertical-align: top;
+        padding-right: 8px;
+        line-height: 1.1;
+    }
+
+    .aca-right {
+        width: 72%;
+        vertical-align: top;
+        text-align: justify;
+        line-height: 1.1;
     }
 
     .paragraph {
         text-align: justify;
-        line-height: 1.4;
-        margin-bottom: 5px;
+        line-height: 1.1;
     }
 
     .bullet {
         margin-left: 20px;
-        margin-bottom: 2px;
     }
 </style>
 
@@ -35,27 +45,33 @@
 </div>
 
 @foreach ($policy->references as $reference)
-    <div class="reference-title">
-        {{ $reference->reference_title }}
-    </div>
+    <div class="reference-title">{{ $reference->reference_title }}</div>
 
     @foreach ($reference->paragraphs as $paragraph)
         @if ($paragraph->aca_reference)
-            <div class="aca-reference">
-                {{ $paragraph->aca_reference }}
-            </div>
-        @endif
+            <div></div>
+            <table class="aca-table" cellpadding="0" cellspacing="0">
+                <tr>
+                    <td class="aca-left">{{ $paragraph->aca_reference }}</td>
+                    <td class="aca-right">{{ $paragraph->paragraph }}
 
-        @if ($paragraph->paragraph)
-            <div class="paragraph">
-                {{ $paragraph->paragraph }}
-            </div>
-        @endif
+                        @foreach ($paragraph->bullets as $bullet)
+                            <br>&bull; {{ $bullet->list['text'] ?? '' }}
+                        @endforeach
+                    </td>
+                </tr>
+            </table>
+        @else
+            @if ($paragraph->paragraph)
+                <div class="paragraph">{{ $paragraph->paragraph }}
+                </div>
+            @endif
 
-        @foreach ($paragraph->bullets as $bullet)
-            <div class="bullet">
-                • {{ $bullet->list['text'] ?? '' }}
-            </div>
-        @endforeach
+            @foreach ($paragraph->bullets as $bullet)
+                <div class="bullet">&bull; {{ $bullet->list['text'] ?? '' }}
+                </div>
+            @endforeach
+        @endif
     @endforeach
+    <div></div>
 @endforeach
