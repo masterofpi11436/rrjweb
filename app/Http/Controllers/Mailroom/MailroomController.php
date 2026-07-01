@@ -10,6 +10,12 @@ use App\Models\Mailroom\Mailroom;
 
 class MailroomController extends Controller
 {
+    // Public page for viewing
+    public function index()
+    {
+        return view('Mailroom.mailroom.index');
+    }
+
     // Login Required Pages
     public function dashboard()
     {

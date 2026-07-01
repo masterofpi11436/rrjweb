@@ -109,6 +109,7 @@ Route::get('/', function () {
 // Public Routes
 Route::get('/phone-directory', [$phoneClass, 'phoneDirectory']);
 Route::get('/policy-search', [$policyClass, 'policySearch']);
+Route::get('/mailroom-names', [$mailroomClass, 'index']);
 
 // Admin Routes
 Route::prefix('admin')->group(function () use ($adminClass, $adminLoginClass) {
@@ -527,5 +528,5 @@ Route::prefix('navix')->group(function () use ($navixClass) {
 Route::prefix('tc')->group(function () use ($tcClass){
 
     // Routes without middleware
-    Route::get('/dashbaord', [$tcClass, 'monthlyDashboard'])->name('tc.dashbaord');
+    Route::get('/dashboard', [$tcClass, 'monthlyDashboard'])->name('tc.dashboard');
 });
