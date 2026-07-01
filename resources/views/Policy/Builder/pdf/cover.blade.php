@@ -77,40 +77,40 @@
 
     .signature-table {
         width: 100%;
-        table-layout: fixed;
         border-collapse: collapse;
         font-size: 8pt;
     }
 
     .signature-table td {
-        border: 1px solid #444;
-        padding: 4px 5px;
-        height: 32px;
-        overflow: hidden;
+        border: 1px solid #000;
+        padding: 4px 6px;
+        height: 34px;
     }
 
     .signature-label {
-        width: 25%;
+        width: 24%;
         font-weight: bold;
         text-transform: uppercase;
+        white-space: nowrap;
     }
 
     .signature-person {
-        width: 25%;
+        width: 24%;
+        line-height: 1.2;
     }
 
     .signature-box {
-        width: 30%;
+        width: 32%;
     }
 
     .date-box {
         width: 20%;
-        font-weight: bold;
         white-space: nowrap;
     }
 
     .date-value {
         font-weight: normal;
+        padding-left: 8px;
     }
 </style>
 
@@ -130,21 +130,14 @@
 
 <br>
 
-<div class="section-content">
-    <span class="standard-title">STANDARDS:</span>
-    {{ $policy->standards }}<br>
-
-    <span class="standard-title">AMERICAN CORRECTIONAL ASSOCIATION:</span>
-    {{ $policy->american_correctional_association }}<br>
-
-    <span class="standard-title">VA BOARD OF LOCAL AND REGIONAL JAILS:</span>
-    {{ $policy->va_board_of_local_and_regional_jails }}<br>
-
-    <span class="standard-title">PRISON RAPE ELIMINATION ACT:</span>
-    {{ $policy->prison_rape_and_elimination_act }}<br>
-
-    <span class="standard-title">NCCHC:</span>
-    {{ $policy->ncchc }}
+<div class="section-content"><span
+        class="standard-title"><strong>STANDARDS:</strong></span>{{ $policy->standards }}<br><span
+        class="standard-title">AMERICAN CORRECTIONAL
+        ASSOCIATION:</span>{{ $policy->american_correctional_association }}<br><span class="standard-title">VA BOARD OF
+        LOCAL AND REGIONAL JAILS:</span>{{ $policy->va_board_of_local_and_regional_jails }}<br><span
+        class="standard-title">PRISON RAPE ELIMINATION
+        ACT:</span>{{ $policy->prison_rape_and_elimination_act }}<br><span
+        class="standard-title">NCCHC:</span>{{ $policy->ncchc }}
 </div>
 
 <br>
@@ -186,7 +179,7 @@
                     $item = $dates[$index] ?? null;
                 @endphp
 
-                <td>{{ $item['revision'] ?? '' }}</td>
+                <td><strong>{{ $item['revision'] ?? '' }}</strong></td>
                 <td>{{ isset($item['date']) ? \Carbon\Carbon::parse($item['date'])->format('m/d/y') : '' }}</td>
             @endfor
 
@@ -200,43 +193,58 @@
 
 <br>
 
-<table class="signature-table">
+<table class="signature-table" cellpadding="0" cellspacing="0">
     <tr>
-        <td class="signature-label">POLICY OWNER:</td>
-        <td class="signature-person">
-            <div class="signature-name">{{ $policy->policy_owner }}</div>
-            <div class="signature-position">{{ $policy->policy_owner_title }}</div>
+        <td class="signature-label" valign="middle" align="left">
+            <span style="font-size:9pt; line-height:34px;">POLICY OWNER:</span>
         </td>
+
+        <td class="signature-person">
+            <strong>{{ $policy->policy_owner }}</strong>
+        </td>
+
         <td class="signature-box">&nbsp;</td>
-        <td class="date-box">
-            DATE:
-            <span class="date-value">{{ $policy->policy_owner_date }}</span>
+
+        <td class="date-box" valign="middle" align="left">
+            <span style="line-height:34px;">
+                <strong>DATE:</strong>
+            </span>
         </td>
     </tr>
 
     <tr>
-        <td class="signature-label">POLICY REVIEWER:</td>
-        <td class="signature-person">
-            <div class="signature-name">{{ $policy->policy_reviewer }}</div>
-            <div class="signature-position">{{ $policy->policy_reviewer_title }}</div>
+        <td class="signature-label" valign="middle" align="left">
+            <span style="font-size:9pt; line-height:34px;">POLICY REVIEWER:</span>
         </td>
+
+        <td class="signature-person">
+            <strong>{{ $policy->policy_reviewer }}</strong>
+        </td>
+
         <td class="signature-box">&nbsp;</td>
-        <td class="date-box">
-            DATE:
-            <span class="date-value">{{ $policy->policy_reviewer_date }}</span>
+
+        <td class="date-box" valign="middle" align="left">
+            <span style="line-height:34px;">
+                <strong>DATE:</strong>
+            </span>
         </td>
     </tr>
 
     <tr>
-        <td class="signature-label">SUPERINTENDENT APPROVAL:</td>
-        <td class="signature-person">
-            <div class="signature-name">{{ $policy->superintendent_approval }}</div>
-            <div class="signature-position"></div>
+        <td class="signature-label" valign="middle" align="left">
+            <span style="font-size:9pt; line-height:34px;">SUPERINTENDENT</span>
         </td>
+
+        <td class="signature-person">
+            <strong>{{ $policy->superintendent_approval }}</strong>
+        </td>
+
         <td class="signature-box">&nbsp;</td>
-        <td class="date-box">
-            DATE:
-            <span class="date-value">{{ $policy->superintendent_approval_date }}</span>
+
+        <td class="date-box" valign="middle" align="left">
+            <span style="line-height:34px;">
+                <strong>DATE:</strong>
+            </span>
         </td>
     </tr>
 </table>

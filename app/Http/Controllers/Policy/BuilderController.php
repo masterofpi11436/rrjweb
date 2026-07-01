@@ -59,6 +59,13 @@ class BuilderController extends Controller
         $pdf->SetAutoPageBreak(true, 18);
 
         $fontName = TCPDF_FONTS::addTTFfont(
+            public_path('fonts/CANDARAB.TTF'),
+            'TrueTypeUnicode',
+            '',
+            96
+        );
+
+        $fontName = TCPDF_FONTS::addTTFfont(
             public_path('fonts/CANDARA.TTF'),
             'TrueTypeUnicode',
             '',
