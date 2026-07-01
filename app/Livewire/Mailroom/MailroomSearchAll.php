@@ -28,7 +28,7 @@ class MailroomSearchAll extends Component
     public function render()
     {
         // Search for matching records
-        return view('Mailroom.livewire.mailroom-search', [
+        return view('Mailroom.livewire.mailroom-search-all', [
             'suggestions' => Mailroom::where('last_name', 'like', '%' . $this->search . '%')
                                            ->orWhere('first_name', 'like', '%' . $this->search . '%')
                                            ->orWhere('inmate_number', 'like', '%' . $this->search . '%')
