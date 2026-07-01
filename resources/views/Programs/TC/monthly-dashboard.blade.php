@@ -132,12 +132,6 @@
                 Caseworker + Counselor Monthly Metrics | Website-Style Administrative Layout
             </div>
 
-            <div class="grid grid-cols-1 gap-4 bg-[#fff7d6] p-4 md:grid-cols-2">
-                <div class="flex items-center gap-3">
-                    <label class="font-bold text-gray-800">Month:</label>
-                    <input type="month" class="rounded border border-gray-300 px-3 py-2">
-                </div>
-            </div>
 
             <div class="overflow-x-auto">
                 <table class="w-full min-w-[1100px] border-collapse text-sm">
@@ -177,17 +171,19 @@
                                     @for ($week = 1; $week <= 4; $week++)
                                         <td class="{{ $weekCell }}">
                                             @if ($loggedInUser == $worker['id'])
-                                                <input type="number" class="week-input">
+                                                <input type="number" min="0" class="week-input {{ $inputClass }}">
                                             @else
                                                 <input type="number" class="{{ $disabledInputClass }}" disabled>
                                             @endif
                                         </td>
                                     @endfor
 
-                                    <input type="text" class="row-total" readonly>
+                                    <td class="{{ $totalCell }}">
+                                        <span class="row-total">0</span>
+                                    </td>
 
                                     <td class="border border-[#d9e2ec] bg-white px-2 py-1">
-                                        <input type="text" id="total" @disabled(!$canEditCaseworkerFields)>
+                                        <input type="text" class="{{ $notesInputClass }}" @disabled(!$canEditCaseworkerFields)>
                                     </td>
                                 </tr>
                             @endforeach
@@ -310,17 +306,20 @@
                                     @for ($week = 1; $week <= 4; $week++)
                                         <td class="{{ $weekCell }}">
                                             @if ($loggedInUser == $counselor['id'])
-                                                <input type="number" class="week-input">
+                                                <input type="number" min="0"
+                                                    class="week-input {{ $inputClass }}">
                                             @else
                                                 <input type="number" class="{{ $disabledInputClass }}" disabled>
                                             @endif
                                         </td>
                                     @endfor
 
-                                    <input type="text" id="total" readonly>
+                                    <td class="{{ $totalCell }}">
+                                        <span class="row-total">0</span>
+                                    </td>
 
                                     <td class="border border-[#d9e2ec] bg-white px-2 py-1">
-                                        <input type="text" class="row-total" readonly>
+                                        <input type="text" class="{{ $notesInputClass }}" @disabled(!$canEditCounselorFields)>
                                     </td>
                                 </tr>
                             @endforeach
@@ -355,7 +354,7 @@
                     total += Number(input.value) || 0;
                 });
 
-                row.querySelector('.row-total').value = total;
+                row.querySelector('.row-total').textContent = total;
             });
         });
     </script>
