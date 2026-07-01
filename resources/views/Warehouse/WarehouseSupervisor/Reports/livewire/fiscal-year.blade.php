@@ -1,47 +1,65 @@
 <div class="p-6 space-y-4">
 
     <!-- Fiscal Year Filter -->
-    <div class="bg-gray-800 p-4 rounded-md shadow-sm border border-gray-700">
-        <h2 class="text-lg font-semibold text-white mb-4">Filter by Fiscal Year</h2>
+    <div class="bg-gray-800 rounded-lg border border-gray-700 shadow-lg p-6">
 
-        <div class="flex flex-wrap gap-4 items-end">
-            <!-- Fiscal Year Dropdown -->
-            <div>
-                <label for="fiscal-year" class="block text-sm text-gray-300 mb-1">Fiscal Year</label>
-                <select id="fiscal-year" wire:model="selectedYear"
-                    class="p-2 rounded bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring focus:border-blue-500">
-                    @foreach ($availableYears ?? [] as $year)
-                        <option value="{{ $year }}">{{ $year }} – {{ $year + 1 }}</option>
-                    @endforeach
-                </select>
-            </div>
+        <h2 class="text-xl font-semibold text-white mb-6">
+            Fiscal Year Report
+        </h2>
 
-            <!-- Filter Button -->
-            <div>
-                <button wire:click="loadReportData" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+        <div class="flex flex-wrap items-end justify-between gap-6">
+
+            {{-- Left Side --}}
+            <div class="flex flex-wrap items-end gap-4">
+
+                <div>
+                    <label for="fiscal-year" class="block text-sm font-medium text-gray-300 mb-2">
+                        Fiscal Year
+                    </label>
+
+                    <select id="fiscal-year" wire:model="selectedYear"
+                        class="rounded-md border border-gray-600 bg-gray-700 px-3 py-2 text-white focus:border-blue-500 focus:outline-none">
+                        @foreach ($availableYears ?? [] as $year)
+                            <option value="{{ $year }}">
+                                {{ $year }} – {{ $year + 1 }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <button wire:click="loadReportData"
+                    class="rounded-md bg-blue-600 px-5 py-2 text-white transition hover:bg-blue-700">
                     Apply Filter
                 </button>
+
             </div>
+
+            {{-- Right Side --}}
+            <div class="flex flex-wrap gap-3">
+
+                <form method="POST" action="{{ route('warehouse.warehouse-supervisor.reports.fiscal.download') }}">
+                    @csrf
+                    <input type="hidden" name="year" value="{{ $selectedYear }}">
+
+                    <button type="submit"
+                        class="rounded-md bg-green-600 px-5 py-2 text-white transition hover:bg-green-700">
+                        Download CSV
+                    </button>
+                </form>
+
+                <form method="GET" action="{{ route('warehouse.warehouse-supervisor.reports.fiscal-year-graph') }}">
+                    <input type="hidden" name="year" value="{{ $selectedYear }}">
+
+                    <button type="submit"
+                        class="rounded-md bg-purple-600 px-5 py-2 text-white transition hover:bg-purple-700">
+                        View Graph
+                    </button>
+                </form>
+
+            </div>
+
         </div>
 
-        <form method="POST" action="{{ route('warehouse.warehouse-supervisor.reports.fiscal.download') }}">
-            @csrf
-            <input type="hidden" name="year" value="{{ $selectedYear }}">
-
-            <button type="submit" class="px-4 py-2 bg-blue-700 text-white rounded hover:bg-blue-800">
-                Download Fiscal Report (CSV)
-            </button>
-        </form>
-
-        <!-- View Graph Button -->
-        <div class="flex flex-wrap justify-end gap-4 mt-4">
-            <form method="GET" action="{{ route('warehouse.warehouse-supervisor.reports.fiscal-year-graph') }}">
-                <input type="hidden" name="year" value="{{ $selectedYear }}">
-                <button type="submit" class="px-4 py-2 bg-purple-700 text-white rounded hover:bg-purple-800">
-                    View Fiscal Year Graph
-                </button>
-            </form>
-        </div>
     </div>
 
     <p class="text-sm text-gray-400">
