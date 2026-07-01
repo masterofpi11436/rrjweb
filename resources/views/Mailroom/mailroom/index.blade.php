@@ -1,4 +1,4 @@
-@extends('layouts.public.mailroom')
+@extends('layouts.Public.mailroom')
 
 @section('title', 'Mailroom')
 
