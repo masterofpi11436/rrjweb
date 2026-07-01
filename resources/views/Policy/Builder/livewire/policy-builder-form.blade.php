@@ -416,6 +416,47 @@
             </div>
         </div>
 
+        {{-- Definitions --}}
+        <div id="definitions" class="{{ $sectionClass }}" x-data="{ definitionsOpen: false }">
+            <div class="flex items-center justify-between">
+                <h3 class="text-lg font-semibold text-white">
+                    Definitions
+                </h3>
+
+                <button type="button" wire:click="addDefinition" x-on:click="definitionsOpen = true"
+                    class="{{ $addButtonClass }}">
+                    Add Definition
+                </button>
+            </div>
+
+            <details id="definitions-details" x-bind:open="definitionsOpen" x-on:toggle="definitionsOpen = $el.open"
+                class="rounded-xl border border-gray-800 bg-gray-950 p-4">
+                <summary class="cursor-pointer list-none text-sm font-medium text-gray-300">
+                    Show / Hide Definition Entries
+                </summary>
+
+                <div class="mt-4 space-y-3">
+                    @foreach ($definitions as $index => $definition)
+                        <div wire:key="definition-{{ $index }}"
+                            class="space-y-3 rounded-xl border border-gray-800 bg-gray-950 p-4">
+                            <div class="grid grid-cols-1 gap-3 md:grid-cols-3">
+                                <input type="text" wire:model="definitions.{{ $index }}.word"
+                                    placeholder="Word / Title" class="{{ $inputClass }}">
+
+                                <button type="button" wire:click="removeDefinition({{ $index }})"
+                                    class="{{ $removeButtonClass }} md:col-start-3">
+                                    Remove
+                                </button>
+                            </div>
+
+                            <textarea wire:model="definitions.{{ $index }}.definition" rows="5" placeholder="Definition"
+                                class="{{ $textareaClass }}"></textarea>
+                        </div>
+                    @endforeach
+                </div>
+            </details>
+        </div>
+
         {{-- References --}}
         <div id="references" class="{{ $sectionClass }}">
             <div class="flex items-center justify-between">
@@ -552,47 +593,6 @@
                     </button>
                 </div>
             </div>
-        </div>
-
-        {{-- Definitions --}}
-        <div id="definitions" class="{{ $sectionClass }}" x-data="{ definitionsOpen: false }">
-            <div class="flex items-center justify-between">
-                <h3 class="text-lg font-semibold text-white">
-                    Definitions
-                </h3>
-
-                <button type="button" wire:click="addDefinition" x-on:click="definitionsOpen = true"
-                    class="{{ $addButtonClass }}">
-                    Add Definition
-                </button>
-            </div>
-
-            <details id="definitions-details" x-bind:open="definitionsOpen" x-on:toggle="definitionsOpen = $el.open"
-                class="rounded-xl border border-gray-800 bg-gray-950 p-4">
-                <summary class="cursor-pointer list-none text-sm font-medium text-gray-300">
-                    Show / Hide Definition Entries
-                </summary>
-
-                <div class="mt-4 space-y-3">
-                    @foreach ($definitions as $index => $definition)
-                        <div wire:key="definition-{{ $index }}"
-                            class="space-y-3 rounded-xl border border-gray-800 bg-gray-950 p-4">
-                            <div class="grid grid-cols-1 gap-3 md:grid-cols-3">
-                                <input type="text" wire:model="definitions.{{ $index }}.word"
-                                    placeholder="Word / Title" class="{{ $inputClass }}">
-
-                                <button type="button" wire:click="removeDefinition({{ $index }})"
-                                    class="{{ $removeButtonClass }} md:col-start-3">
-                                    Remove
-                                </button>
-                            </div>
-
-                            <textarea wire:model="definitions.{{ $index }}.definition" rows="5" placeholder="Definition"
-                                class="{{ $textareaClass }}"></textarea>
-                        </div>
-                    @endforeach
-                </div>
-            </details>
         </div>
 
         {{-- Submit --}}
