@@ -35,14 +35,7 @@ class PolicyBuilderSearch extends Component
         $suggestions = PolicyBuilder::query()
             ->when($this->search, function ($query) {
                 $query->where(function ($query) {
-                    $query->where('title', 'like', '%' . $this->search . '%')
-                        ->orWhere('policy_statement', 'like', '%' . $this->search . '%')
-                        ->orWhere('policy_purpose', 'like', '%' . $this->search . '%')
-                        ->orWhere('standards', 'like', '%' . $this->search . '%')
-                        ->orWhere('policy_cross_reference', 'like', '%' . $this->search . '%')
-                        ->orWhere('forms', 'like', '%' . $this->search . '%')
-                        ->orWhere('references', 'like', '%' . $this->search . '%')
-                        ->orWhere('definitions', 'like', '%' . $this->search . '%');
+                    $query->where('title', 'like', '%' . $this->search . '%');
                 });
             })
             ->orderBy($this->sortColumn, $this->sortDirection)

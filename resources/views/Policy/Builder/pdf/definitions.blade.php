@@ -15,6 +15,7 @@
 
     .term {
         font-weight: bold;
+        font-size: 11.5pt;
     }
 </style>
 
@@ -23,5 +24,8 @@
 </div>
 
 @foreach ($policy->policyDefinitions as $definition)
-    <div class="definition"><span class="term">{{ $definition->word }}</span> — {{ $definition->definition }}</div>
+    <div class="definition">
+        <span class="term">{{ $definition->word }}</span>
+        — {{ $definition->definition }}
+    </div>
 @endforeach

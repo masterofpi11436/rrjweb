@@ -290,6 +290,8 @@ Route::prefix('policy')->group(function () use ($policyClass, $buildClass, $poli
             Route::get('/edit/{id}', [$buildClass, 'edit'])->name('policy.builder.edit');
             Route::delete('/{id}', [$buildClass, 'destroy'])->name('policy.builder.destroy');
             Route::get('/create-pdf/{id}', [$buildClass, 'createPDF'])->name('policy.builder.create-pdf');
+
+            Route::get('/policy/builder/{id}/web', [BuilderController::class, 'webView'])->name('policy.builder.web');
         });
     });
 });

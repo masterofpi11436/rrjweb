@@ -77,6 +77,7 @@
                                     class="inline-flex items-center rounded-lg border border-gray-700 bg-gray-800 px-3 py-2 text-sm font-medium text-gray-200 transition hover:border-gray-600 hover:bg-gray-700 hover:text-white">
                                     Edit
                                 </a>
+
                                 <form action="{{ route('policy.builder.destroy', $policy->id) }}" method="POST"
                                     class="inline-block"
                                     onsubmit="return confirm('Are you sure you want to delete this policy?');">
@@ -92,6 +93,11 @@
                                 <a href="{{ route('policy.builder.create-pdf', $policy->id) }}" target="_blank"
                                     class="inline-flex items-center rounded-lg border border-purple-900/50 bg-purple-950/50 px-3 py-2 text-sm font-medium text-purple-300 transition hover:bg-purple-900/70 hover:text-white">
                                     Create PDF
+                                </a>
+
+                                <a href="{{ route('policy.builder.web', $policy->id) }}" target="_blank"
+                                    class="inline-flex items-center rounded-lg border border-blue-900/50 bg-blue-950/50 px-3 py-2 text-sm font-medium text-blue-300 transition hover:bg-blue-900/70 hover:text-white">
+                                    Web View
                                 </a>
                             </td>
                         </tr>

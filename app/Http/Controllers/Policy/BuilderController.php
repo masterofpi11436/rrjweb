@@ -178,4 +178,17 @@ class BuilderController extends Controller
 
         $pdf->SetAutoPageBreak($autoPageBreak, $breakMargin);
     }
+
+    public function webView($id)
+    {
+        $policy = PolicyBuilder::with([
+            'chapters.sections.paragraphs.bullets.bulletBullets',
+            'references.paragraphs.bullets',
+            'policyDefinitions',
+        ])->findOrFail($id);
+
+        return view('Policy.Builder.builder.web', [
+            'policy' => $policy,
+        ]);
+    }
 }
