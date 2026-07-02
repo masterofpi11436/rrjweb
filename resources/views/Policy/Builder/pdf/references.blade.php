@@ -40,30 +40,22 @@
     }
 </style>
 
-<div class="page-title">
-    REFERENCES
-</div>
+<div class="page-title">REFERENCES</div>
 
 @foreach ($policy->references as $reference)
     <div class="reference-title">{{ $reference->reference_title }}</div>
 
     @foreach ($reference->paragraphs as $paragraph)
         @if ($paragraph->aca_reference)
-            <div class="aca-reference">
-                {{ $paragraph->aca_reference }}
-            </div>
+            <div class="aca-reference"><strong>{{ $paragraph->aca_reference }}</strong></div>
         @endif
 
         @if ($paragraph->paragraph)
-            <div class="paragraph">
-                {{ $paragraph->paragraph }}
-            </div>
+            <div class="paragraph">{{ $paragraph->paragraph }}</div>
         @endif
 
         @foreach ($paragraph->bullets as $bullet)
-            <div class="bullet">
-                • {{ $bullet->list['text'] ?? '' }}
-            </div>
+            <div class="bullet">• {{ $bullet->list['text'] ?? '' }}</div>
         @endforeach
     @endforeach
     <div></div>
