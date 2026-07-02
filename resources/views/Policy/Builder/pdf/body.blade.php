@@ -106,8 +106,8 @@
                         <td class="paragraph-text">
                             <ul class="bullet-list">
                                 @foreach ($paragraph->bullets as $bullet)
-                                    X {{ $bullet->list['text'] ?? '' }}<br>
-
+                                    <img src="{{ public_path('images/four-diamond-square-bullet.svg') }}" width="8"
+                                        height="8">{{ $bullet->list['text'] ?? '' }}<br>
                                     @foreach ($bullet->bulletBullets as $childBullet)
                                         &nbsp;&nbsp;&nbsp;&nbsp;o {{ $childBullet->list['text'] ?? '' }}<br>
                                     @endforeach

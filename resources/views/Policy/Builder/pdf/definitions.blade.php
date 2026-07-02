@@ -23,8 +23,5 @@
 </div>
 
 @foreach ($policy->policyDefinitions as $definition)
-    <div class="definition">
-        <span class="term">{{ $definition->word }}</span>
-        — {{ $definition->definition }}
-    </div>
+    <div class="definition"><span class="term">{{ $definition->word }}</span> — {{ $definition->definition }}</div>
 @endforeach

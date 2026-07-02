@@ -31,6 +31,7 @@
 
     .section-title {
         padding-left: 10px;
+        width: 500px;
     }
 
     .references {
