@@ -26,11 +26,14 @@ Search through the RRJ's policies to find specific policy based on string search
 Public users are able to search through policies.
 Has a policy builder that allows admins to create policies to the current format.
 
-# Vehicle Repair Tracker
+# VFM (Vehicle Fleet Maintenance)
 Maintenance departments online vehicle repair tracker. There is a VFM admin and tech version. Admin can edit and delete whereas Tech cannot
 
-# ICS
+# Tablet
 List of inmates who are restricted from getting tablets. List is maintained by ICS staff and the mailroom, OPR, and Command Staff
+
+# Mailroom
+Just a list of names to check against incoming mail to be forwarded to OPR
 
 # Warehouse Store
 Users can submit orders to the warehouse for delivery. Users are managed by the warehouse manager but can be managed by the IT Administrator.
@@ -46,6 +49,12 @@ Tracker used by officer to log the in/out times of officers entering the facilit
 
 # Camera Schedule
 Used in place of camera schedule and the camera status. Allows technicians to view camera information and status of the camera.
+
+# Programs
+Demo page for a tracker for couselors and caseworkers to report monthly numbers. May be deleted soon
+
+# Navix 
+Experimental 3D search tool to find assets located within a building.
 
 # Logging
 Time and date of when a user logs in to any application is logged.
