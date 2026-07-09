@@ -27,7 +27,6 @@ use App\Http\Controllers\VFM\VFMVehicleController;
 use App\Http\Controllers\Policy\PolicyController;
 use App\Http\Controllers\Camera\CameraController;
 use App\Http\Controllers\Policy\BuilderController;
-use App\Http\Controllers\Programs\TC\WeeklyReportsController;
 use App\Http\Controllers\Tablet\TabletController;
 use App\Http\Controllers\Mailroom\MailroomController;
 use App\Http\Controllers\Directory\PhoneDirectoryController;
@@ -91,7 +90,6 @@ $historyClass = HistoryController::class;
 $requestorClass = RequestorController::class;
 $supervisorClass = SupervisorController::class;
 $propertyClass = PropertyController::class;
-$tcClass = WeeklyReportsController::class;
 
 // Forgot password link for all applications
 Route::get('forgot', [$baseLoginClass, 'showForgotPasswordForm'])->name('login.forgot');
@@ -524,11 +522,4 @@ Route::prefix('navix')->group(function () use ($navixClass) {
     Route::get('/indoor', [$navixClass, 'admin'])->name('navix.indoor');
     Route::get('/maint', [$navixClass, 'maint'])->name('navix.maint');
 
-});
-
-// TC Application
-Route::prefix('tc')->group(function () use ($tcClass){
-
-    // Routes without middleware
-    Route::get('/dashboard', [$tcClass, 'monthlyDashboard'])->name('tc.dashboard');
 });

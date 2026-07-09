@@ -1,16 +1,4 @@
-Simple Inventory App:
-
-    1. 1D barcode created for scanning items to conduct a periodic inventory.
-    2. 2 tables:
-        a. Items
-        b. Category
-    3. Admin for performing CRUD on authorizing users
-    4. User for performing inventory report
-
-Down or Out App:
-    1. Scan a barcode on ID for logging people who are checked in or Out
-    2. Admin perform CRUD on People who can log in or Out
-    3. User can edit if person in logged in or out manually
+*** In Progress Apps ***
 
 Camera Schedule:
 
@@ -19,6 +7,9 @@ Camera Schedule:
     3. Add Encoder Schedule
     4. Add IP rules for camera, encoder, and TSC subnets
     5. Livewire function to update camera statuses from the public page
+
+Programs TS
+    1. Delete file and contents program will not be used
 
 Policy builder:
 
@@ -41,4 +32,25 @@ Policy builder:
     4. Have a way to determine which polices may be outdated and need review (Example: Policy XYZ was last reviewed X amount of years ago
     5. Auto correct for policies looking for syntax consistency (A semi colon was used instead of a colon)
 
-Camera status public page
+*** Future App Ideas ***
+Simple Inventory App:
+
+    1. 1D barcode created for scanning items to conduct a periodic inventory.
+    2. 2 tables:
+        a. Items
+        b. Category
+    3. Admin for performing CRUD on authorizing users
+    4. User for performing inventory report
+
+Down or Out App:
+    1. Scan a barcode on ID for logging people who are checked in or Out
+    2. Admin perform CRUD on People who can log in or Out
+    3. User can edit if person in logged in or out manually
+
+*** Training Tracker ***
+    1. Replacing physical training booklets with web app.
+    2. Electronic signing agreement form for digitally signing training.
+    3. User types
+        a. Admin - CRUD on users, assign training material to users, and make tests
+        b. Trainers - Sign off of training conducted and conduct training. (May have multiple levels of access)
+        c. Trainees - Take training courses, sign fill out materials
