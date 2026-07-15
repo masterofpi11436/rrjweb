@@ -47,6 +47,7 @@ use App\Http\Controllers\Warehouse\WarehouseSupervisor\PendingOrderController;
 use App\Http\Controllers\Warehouse\WarehouseSupervisor\CreateExchangeOrderController;
 use App\Http\Controllers\Warehouse\WarehouseSupervisor\WarehouseSupervisorController;
 use App\Http\Controllers\Warehouse\WarehouseSupervisor\PendingExchangeOrderController;
+use App\Http\Controllers\Training\Admin\AdminController;
 
 // Shorthand login Classes
 $baseLoginClass = BaseLoginController::class;
@@ -90,6 +91,7 @@ $historyClass = HistoryController::class;
 $requestorClass = RequestorController::class;
 $supervisorClass = SupervisorController::class;
 $propertyClass = PropertyController::class;
+$trainingClass = AdminController::class;
 
 // Forgot password link for all applications
 Route::get('forgot', [$baseLoginClass, 'showForgotPasswordForm'])->name('login.forgot');
@@ -522,4 +524,12 @@ Route::prefix('navix')->group(function () use ($navixClass) {
     Route::get('/indoor', [$navixClass, 'admin'])->name('navix.indoor');
     Route::get('/maint', [$navixClass, 'maint'])->name('navix.maint');
 
+});
+
+// Training Application
+Route::prefix('training')->group(function () use ($trainingClass){
+
+    // Routes without middleware
+
+    Route::get('/dashboard', [$trainingClass, 'dashboard'])->name('training.dashboard');
 });

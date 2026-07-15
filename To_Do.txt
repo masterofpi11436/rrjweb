@@ -55,6 +55,3 @@ Down or Out App:
         b. Trainers - Sign off of training conducted and conduct training. (May have multiple levels of access)
         c. Trainees - Take training courses, sign fill out materials
 
-    Questions for Training Dept.
-
-    1. Business Logic:
