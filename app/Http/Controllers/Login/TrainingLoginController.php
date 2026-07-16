@@ -71,7 +71,7 @@ class TrainingLoginController extends BaseLoginController
         return parent::showForgotPasswordForm('Login.Forgots.warehouse-store-forgot-password');
     }
 
-    public function logout(Request $request, $route = 'warehouse.login')
+    public function logout(Request $request, $route = 'training.login')
     {
         // Perform the standard logout
         Auth::logout();

@@ -542,6 +542,6 @@ Route::prefix('training')->group(function () use ($traingingLoginClass, $trainin
     Route::post('/logout', [$traingingLoginClass, 'logout'])->name('training.logout');
 
      Route::prefix('admin')->middleware(['trainingAdmin', 'cache'])->group(function () use ($trainingClass) {
-            Route::get('/dashboard', [$trainingClass, 'dashboard'])->name('training.dashboard');
+            Route::get('/dashboard', [$trainingClass, 'dashboard'])->name('training.admin.dashboard');
     });
 });
