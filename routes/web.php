@@ -4,7 +4,6 @@ use Illuminate\Support\Facades\Route;
 
 // Login Controllers
 
-
 use App\Http\Controllers\Login\VFMLoginController;
 use App\Http\Controllers\Login\BaseLoginController;
 use App\Http\Controllers\Login\AdminLoginController;
@@ -16,6 +15,7 @@ use App\Http\Controllers\Login\PolicyLoginController;
 use App\Http\Controllers\Login\MailroomLoginController;
 use App\Http\Controllers\Login\WarehouseLoginController;
 use App\Http\Controllers\Login\JurisdictionLoginController;
+use App\Http\Controllers\Login\TrainingLoginController;
 
 // Class Controllers
 
@@ -47,6 +47,8 @@ use App\Http\Controllers\Warehouse\WarehouseSupervisor\PendingOrderController;
 use App\Http\Controllers\Warehouse\WarehouseSupervisor\CreateExchangeOrderController;
 use App\Http\Controllers\Warehouse\WarehouseSupervisor\WarehouseSupervisorController;
 use App\Http\Controllers\Warehouse\WarehouseSupervisor\PendingExchangeOrderController;
+
+// Training Application
 use App\Http\Controllers\Training\Admin\AdminController;
 
 // Shorthand login Classes
@@ -61,6 +63,7 @@ $policyLoginClass = PolicyLoginController::class;
 $cameraLoginClass = CameraLoginController::class;
 $warehouseLoginClass = WarehouseLoginController::class;
 $jurisdictionLoginClass = JurisdictionLoginController::class;
+$traingingLoginClass = TrainingLoginController::class;
 
 // Shorthand Controller Classes
 $navixClass = NavixSceneController::class;
@@ -91,6 +94,8 @@ $historyClass = HistoryController::class;
 $requestorClass = RequestorController::class;
 $supervisorClass = SupervisorController::class;
 $propertyClass = PropertyController::class;
+
+// Training Application
 $trainingClass = AdminController::class;
 
 // Forgot password link for all applications
@@ -527,9 +532,16 @@ Route::prefix('navix')->group(function () use ($navixClass) {
 });
 
 // Training Application
-Route::prefix('training')->group(function () use ($trainingClass){
+Route::prefix('training')->group(function () use ($traingingLoginClass, $trainingClass){
 
     // Routes without middleware
+    Route::get('/login', [$traingingLoginClass, 'trainingLoginForm'])->name('training.login');
+    Route::post('/login', [$traingingLoginClass, 'login']);
+    Route::get('/forgot', [$traingingLoginClass, 'trainingForgotPasswordForm'])->name('training.forgot.form');
+    Route::post('/forgot', [$traingingLoginClass, 'forgotPassword'])->name('training.forgot.form.submit');
+    Route::post('/logout', [$traingingLoginClass, 'logout'])->name('training.logout');
 
-    Route::get('/dashboard', [$trainingClass, 'dashboard'])->name('training.dashboard');
+     Route::prefix('admin')->middleware(['trainingAdmin', 'cache'])->group(function () use ($trainingClass) {
+            Route::get('/dashboard', [$trainingClass, 'dashboard'])->name('training.dashboard');
+    });
 });

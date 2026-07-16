@@ -20,6 +20,7 @@ use App\Http\Middleware\Auth\Warehouse\Requestor;
 use App\Http\Middleware\Auth\Warehouse\Supervisor;
 use App\Http\Middleware\Auth\Warehouse\WarehouseSupervisor;
 use App\Http\Middleware\Auth\Warehouse\WarehouseTechnician;
+use App\Http\Middleware\Auth\Training\TrainingAdmin;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -51,6 +52,8 @@ class AppServiceProvider extends ServiceProvider
         $router->aliasMiddleware('property', Property::class);
         $router->aliasMiddleware('supervisor', Supervisor::class);
         $router->aliasMiddleware('requestor', Requestor::class);
+
+        $router->aliasMiddleware('trainingAdmin', TrainingAdmin::class);
         $router->aliasMiddleware('cache', ClearCache::class);
         $router->aliasMiddleware('clear-cart', ClearCart::class);
     }

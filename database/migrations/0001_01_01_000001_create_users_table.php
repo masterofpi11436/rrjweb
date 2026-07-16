@@ -1,8 +1,9 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
+use App\Enums\TrainingUser;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
@@ -29,8 +30,7 @@ return new class extends Migration
             $table->enum('warehouse_role', ['Warehouse Supervisor', 'Warehouse Technician', 'Property', 'Supervisor', 'Requestor'])->default('Requestor')->nullable();
             $table->boolean('jurisdiction')->default(false);
             $table->boolean('camera')->default(false);
-            $table->boolean('tc_counselor')->default(false);
-            $table->boolean('tc_caseworker')->default(false);
+            $table->enum('training_role', TrainingUser::values());
             $table->timestamps();
         });
 
