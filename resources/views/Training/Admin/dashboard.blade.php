@@ -1,4 +1,3 @@
-```blade
 @extends('layouts.Training.admin')
 
 @section('title', 'Training Administration Dashboard')
