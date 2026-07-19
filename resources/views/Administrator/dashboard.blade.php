@@ -6,49 +6,54 @@
 
 @section('content')
 
-<!-- Link to manage users -->
-<form action="{{ route('admin.index') }}">
-    <button>Application Users</button>
-</form>
+    <!-- Link to manage users -->
+    <form action="{{ route('admin.index') }}">
+        <button>Application Users</button>
+    </form>
 
-<!-- Link to navigate to the Phone Directory App -->
-<form action="{{ route('phone.dashboard') }}">
-    <button>Phone Directory</button>
-</form>
+    <!-- Link to navigate to the Phone Directory App -->
+    <form action="{{ route('phone.dashboard') }}">
+        <button>Phone Directory</button>
+    </form>
 
-<!-- Link to navigate to the VFM App. No need for the tech, they are the same -->
-<form action="{{ route('vfm.dashboard') }}">
-    <button>Vehicle Fleet Maintenance (VFM) Tracker</button>
-</form>
+    <!-- Link to navigate to the VFM App. No need for the tech, they are the same -->
+    <form action="{{ route('vfm.dashboard') }}">
+        <button>Vehicle Fleet Maintenance (VFM) Tracker</button>
+    </form>
 
-<!-- Link to navigate to the Tablet App -->
-<form action="{{ route('tablet.dashboard') }}">
-    <button>Tablet Restricted Tablets</button>
-</form>
+    <!-- Link to navigate to the Tablet App -->
+    <form action="{{ route('tablet.dashboard') }}">
+        <button>Tablet Restricted Tablets</button>
+    </form>
 
-<!-- Link to navigate to the Mailroom App -->
-<form action="{{ route('mailroom.dashboard') }}">
-    <button>Mailroom Names</button>
-</form>
+    <!-- Link to navigate to the Mailroom App -->
+    <form action="{{ route('mailroom.dashboard') }}">
+        <button>Mailroom Names</button>
+    </form>
 
-<!-- Link to navigate to the Wareouse Store App as Warehouse Supervisor login -->
-<form action="{{ route('warehouse.warehouse-supervisor.dashboard') }}">
-    <button>Warehouse Supervisor Dashboard</button>
-</form>
+    <!-- Link to navigate to the Wareouse Store App as Warehouse Supervisor login -->
+    <form action="{{ route('warehouse.warehouse-supervisor.dashboard') }}">
+        <button>Warehouse Supervisor Dashboard</button>
+    </form>
 
-<!-- Navigate to Policy pages -->
-<form action="{{ route('policy.dashboard') }}">
-    <button>Policies</button>
-</form>
+    <!-- Navigate to Policy pages -->
+    <form action="{{ route('policy.dashboard') }}">
+        <button>Policies</button>
+    </form>
 
-<!-- Jurisidction Time Logs -->
-<form action="{{ route('jurisdiction.dashboard') }}">
-    <button>Jurisdiction Time Logs</button>
-</form>
+    <!-- Jurisidction Time Logs -->
+    <form action="{{ route('jurisdiction.dashboard') }}">
+        <button>Jurisdiction Time Logs</button>
+    </form>
 
-<!-- Camera Schedule -->
-<form action="{{ route('camera.dashboard') }}">
-    <button>Camera Schedule</button>
-</form>
+    <!-- Camera Schedule -->
+    <form action="{{ route('camera.dashboard') }}">
+        <button>Camera Schedule</button>
+    </form>
+
+    <!-- Camera Schedule -->
+    <form action="{{ route('training.admin.dashboard') }}">
+        <button>Camera Schedule</button>
+    </form>
 
 @endsection
