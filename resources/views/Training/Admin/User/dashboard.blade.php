@@ -6,8 +6,6 @@
 
 @section('content')
 
-    <form action="{{ route('training.admin.user.dashboard') }}">
-        <button>Users</button>
-    </form>
+    <h1>Manage Users</h1>
 
 @endsection

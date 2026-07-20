@@ -50,11 +50,11 @@ Tracker used by officer to log the in/out times of officers entering the facilit
 # Camera Schedule
 Used in place of camera schedule and the camera status. Allows technicians to view camera information and status of the camera.
 
-# Programs
-Demo page for a tracker for couselors and caseworkers to report monthly numbers. May be deleted soon
-
 # Navix 
 Experimental 3D search tool to find assets located within a building.
+
+# Training
+
 
 # Logging
 Time and date of when a user logs in to any application is logged.
