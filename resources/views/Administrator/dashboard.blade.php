@@ -53,7 +53,7 @@
 
     <!-- Camera Schedule -->
     <form action="{{ route('training.admin.dashboard') }}">
-        <button>Camera Schedule</button>
+        <button>Training Tracker</button>
     </form>
 
 @endsection
