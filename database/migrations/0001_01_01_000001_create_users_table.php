@@ -30,7 +30,7 @@ return new class extends Migration
             $table->enum('warehouse_role', ['Warehouse Supervisor', 'Warehouse Technician', 'Property', 'Supervisor', 'Requestor'])->default('Requestor')->nullable();
             $table->boolean('jurisdiction')->default(false);
             $table->boolean('camera')->default(false);
-            $table->enum('training_role', TrainingUser::values());
+            $table->enum('training_role', TrainingUser::values())->default('trainee');
             $table->timestamps();
         });
 

@@ -551,7 +551,7 @@ Route::prefix('training')->group(function () use ($traingingLoginClass, $trainin
             Route::get('/dashboard', [$trainingUserClass, 'dashboard'])->name('training.admin.user.dashboard');
             Route::get('/create', [$trainingUserClass, 'create'])->name('training.admin.user.create');
             Route::get('/{id}/edit', [$trainingUserClass, 'edit'])->name('training.admin.user.edit');
-            Route::get('/{id}', [$trainingUserClass, 'edit'])->name('training.admin.user.delete');
+            Route::delete('/{id}', [$trainingUserClass, 'destroy'])->name('training.admin.user.destroy');
         });
     });
 });
