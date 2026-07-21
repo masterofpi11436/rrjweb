@@ -10,4 +10,16 @@
         <button>Users</button>
     </form>
 
+    <form action="">
+        <button>Assign Books</button>
+    </form>
+
+    <form action="">
+        <button>User Training Statuses</button>
+    </form>
+
+    <form action="">
+        <button>Manage Training Materials</button>
+    </form>
+
 @endsection

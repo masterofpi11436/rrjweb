@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Login;
 
+use App\Enums\TrainingUser;
+use App\Http\Controllers\Login\BaseLoginController;
+use App\Models\Login\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
-use App\Http\Controllers\Login\BaseLoginController;
 
 class TrainingLoginController extends BaseLoginController
 {
@@ -43,27 +45,37 @@ class TrainingLoginController extends BaseLoginController
         return redirect()->route('training.login')->withErrors(['password_incorrect' => 'Password is incorrect.']);
     }
 
-    public function redirectTrainingUser($user)
+    public function redirectTrainingUser(User $user)
     {
-        switch ($user->training_role) {
-            case 'admin':
-                return redirect()->route('training.admin.dashboard');
-            case 'director':
-                return redirect()->route('training.director.dashboard');
-            case 'unit':
-                return redirect()->route('training.unit.dashboard');
-            case 'supervisor':
-                return redirect()->route('training.supervisor.dashboard');
-            case 'sergeant':
-                return redirect()->route('training.sergeant.dashboard');
-            case 'fto':
-                return redirect()->route('training.fto.dashboard');
-            case 'trainee':
-                return redirect()->route('training.trainee.dashboard');
-            default:
-                return redirect()->route('warehouse.login')->withErrors(
-                    ['email' => 'Something is wrong with you account. Please contact MIU']);
-        }
+        return match ($user->training_role) {
+            TrainingUser::ADMIN =>
+                redirect()->route('training.admin.dashboard'),
+
+            TrainingUser::DIRECTOR =>
+                redirect()->route('training.director.dashboard'),
+
+            TrainingUser::UNIT =>
+                redirect()->route('training.unit.dashboard'),
+
+            TrainingUser::SUPERVISOR =>
+                redirect()->route('training.supervisor.dashboard'),
+
+            TrainingUser::SERGEANT =>
+                redirect()->route('training.sergeant.dashboard'),
+
+            TrainingUser::FTO =>
+                redirect()->route('training.fto.dashboard'),
+
+            TrainingUser::TRAINEE =>
+                redirect()->route('training.trainee.dashboard'),
+
+            default =>
+                redirect()
+                    ->route('training.login')
+                    ->withErrors([
+                        'email' => 'Something is wrong with your account. Please contact MIU.',
+                    ]),
+        };
     }
 
     public function warehouseForgotPasswordForm()

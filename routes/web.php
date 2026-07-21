@@ -51,6 +51,7 @@ use App\Http\Controllers\Warehouse\WarehouseSupervisor\PendingExchangeOrderContr
 // Training Application
 use App\Http\Controllers\Training\Admin\TrainingAdminController;
 use App\Http\Controllers\Training\Admin\TrainingUserController;
+use App\Http\Controllers\Training\Admin\TrainingBookController;
 
 // Shorthand login Classes
 $baseLoginClass = BaseLoginController::class;
@@ -99,6 +100,7 @@ $propertyClass = PropertyController::class;
 // Training Application
 $trainingAdminClass = TrainingAdminController::class;
 $trainingUserClass = TrainingUserController::class;
+$trainingBookClass = TrainingBookController::class;
 
 // Forgot password link for all applications
 Route::get('forgot', [$baseLoginClass, 'showForgotPasswordForm'])->name('login.forgot');
@@ -534,7 +536,7 @@ Route::prefix('navix')->group(function () use ($navixClass) {
 });
 
 // Training Application
-Route::prefix('training')->group(function () use ($traingingLoginClass, $trainingAdminClass, $trainingUserClass){
+Route::prefix('training')->group(function () use ($traingingLoginClass, $trainingAdminClass, $trainingUserClass, $trainingBookClass){
 
     // Routes without middleware
     Route::get('/login', [$traingingLoginClass, 'trainingLoginForm'])->name('training.login');
@@ -543,7 +545,7 @@ Route::prefix('training')->group(function () use ($traingingLoginClass, $trainin
     Route::post('/forgot', [$traingingLoginClass, 'forgotPassword'])->name('training.forgot.form.submit');
     Route::post('/logout', [$traingingLoginClass, 'logout'])->name('training.logout');
 
-     Route::prefix('admin')->middleware(['trainingAdmin', 'cache'])->group(function () use ($trainingAdminClass, $trainingUserClass) {
+     Route::prefix('admin')->middleware(['trainingAdmin', 'cache'])->group(function () use ($trainingAdminClass, $trainingUserClass, $trainingBookClass) {
         Route::get('/dashboard', [$trainingAdminClass, 'dashboard'])->name('training.admin.dashboard');
 
         // User Management
@@ -552,6 +554,14 @@ Route::prefix('training')->group(function () use ($traingingLoginClass, $trainin
             Route::get('/create', [$trainingUserClass, 'create'])->name('training.admin.user.create');
             Route::get('/{id}/edit', [$trainingUserClass, 'edit'])->name('training.admin.user.edit');
             Route::delete('/{id}', [$trainingUserClass, 'destroy'])->name('training.admin.user.destroy');
+        });
+
+        // Training Books Management
+        Route::prefix('books')->group(function () use ($trainingBookClass) {
+            Route::get('/dashboard', [$trainingBookClass, 'dashboard'])->name('training.admin.user.dashboard');
+            Route::get('/create', [$trainingBookClass, 'create'])->name('training.admin.user.create');
+            Route::get('/{id}/edit', [$trainingBookClass, 'edit'])->name('training.admin.user.edit');
+            Route::delete('/{id}', [$trainingBookClass, 'destroy'])->name('training.admin.user.destroy');
         });
     });
 });
