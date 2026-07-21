@@ -26,6 +26,12 @@
         </div>
     @endif
 
+
+    <a href="{{ route('training.admin.dashboard') }}"
+        class="px-4 py-2 mb-4 ml-4.5 bg-blue-600 text-white rounded-md border border-white hover:bg-blue-700 transition inline-block text-center">
+        Back To Dasboard
+    </a>
+
     <!-- Livewire search component -->
     @livewire('Training.User.user-search')
 
