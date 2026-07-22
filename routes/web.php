@@ -545,7 +545,8 @@ Route::prefix('training')->group(function () use ($traingingLoginClass, $trainin
     Route::post('/forgot', [$traingingLoginClass, 'forgotPassword'])->name('training.forgot.form.submit');
     Route::post('/logout', [$traingingLoginClass, 'logout'])->name('training.logout');
 
-     Route::prefix('admin')->middleware(['trainingAdmin', 'cache'])->group(function () use ($trainingAdminClass, $trainingUserClass, $trainingBookClass) {
+    // Admin Routes
+    Route::prefix('admin')->middleware(['trainingAdmin', 'cache'])->group(function () use ($trainingAdminClass, $trainingUserClass, $trainingBookClass) {
         Route::get('/dashboard', [$trainingAdminClass, 'dashboard'])->name('training.admin.dashboard');
 
         // User Management
@@ -558,10 +559,7 @@ Route::prefix('training')->group(function () use ($traingingLoginClass, $trainin
 
         // Training Books Management
         Route::prefix('books')->group(function () use ($trainingBookClass) {
-            Route::get('/dashboard', [$trainingBookClass, 'dashboard'])->name('training.admin.user.dashboard');
-            Route::get('/create', [$trainingBookClass, 'create'])->name('training.admin.user.create');
-            Route::get('/{id}/edit', [$trainingBookClass, 'edit'])->name('training.admin.user.edit');
-            Route::delete('/{id}', [$trainingBookClass, 'destroy'])->name('training.admin.user.destroy');
+            Route::get('/dashboard', [$trainingBookClass, 'dashboard'])->name('training.admin.books.dashboard');
         });
     });
 });

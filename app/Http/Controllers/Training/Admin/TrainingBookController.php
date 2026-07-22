@@ -10,7 +10,7 @@ class TrainingBookController extends Controller
 {
     public function dashboard()
     {
-        return view('Training.Admin.User.dashboard');
+        return view('Training.Admin.Books.dashboard');
     }
 
     public function create()

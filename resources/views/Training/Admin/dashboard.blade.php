@@ -10,8 +10,8 @@
         <button>Users</button>
     </form>
 
-    <form action="">
-        <button>Assign Books</button>
+    <form action="{{ route('training.admin.books.dashboard') }}">
+        <button>Manage Books</button>
     </form>
 
     <form action="">
