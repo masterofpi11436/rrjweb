@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('training_book_part_module_forms', function (Blueprint $table) {
+        Schema::create('training_book_part_module_checklists', function (Blueprint $table) {
             $table->id();
             $table->foreignId('module_id')->constrained('training_book_part_modules')->cascadeOnDelete();
-            $table->string('pdf');
-            $table->date('completion_date');
+            $table->string('title');
+            $table->string('item');
             $table->unsignedInteger('sort_order')->default(0);
             $table->timestamps();
         });
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('training_book_part_module_forms');
+        Schema::dropIfExists('training_book_part_module_checklists');
     }
 };

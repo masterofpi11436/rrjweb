@@ -13,10 +13,12 @@ return new class extends Migration
     {
         Schema::create('training_book_part_module_sop_checklist', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('module_id')->constrained('training_book_part_modules')->cascadeOnDelete();
             $table->string('number');
             $table->string('title');
+            $table->string('link'); // Links to pdf web view
             $table->date('completion_date');
-            $table->unsignedInteger('sort_order');
+            $table->unsignedInteger('sort_order')->default(0);
             $table->timestamps();
         });
     }
