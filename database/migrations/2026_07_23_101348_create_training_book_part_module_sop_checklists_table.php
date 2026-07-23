@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('training_book_part_module_sop_checklist', function (Blueprint $table) {
+        Schema::create('training_book_part_module_sop_checklists', function (Blueprint $table) {
             $table->id();
             $table->foreignId('module_id')->constrained('training_book_part_modules')->cascadeOnDelete();
             $table->string('number');
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('training_book_part_module_sop_checklist');
+        Schema::dropIfExists('training_book_part_module_sop_checklists');
     }
 };

@@ -10,9 +10,14 @@ class TrainingBookPart extends Model
 {
     use HasFactory;
 
-    protected $table = 'training_books';
+    protected $table = 'training_book_parts';
 
-    protected $fillable = ['title'];
+    protected $fillable = ['title', 'book_id', 'sort_order'];
+
+    public function book()
+    {
+        return $this->belongsTo(TrainingBook::class);
+    }
 
     public function modules()
     {
