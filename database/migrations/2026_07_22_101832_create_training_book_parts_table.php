@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('training_book_parts', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-
+            $table->foreignId('book_id')->constrained('training_books')->cascadeOnDelete();
+            $table->unsignedInteger('sort_order')->default(0);
             $table->timestamps();
         });
     }
