@@ -11,6 +11,8 @@ class TrainingBookPartModuleMedia extends Model
 
     protected $table = 'training_book_part_module_medias';
 
+    protected $fillable = ['module_id', 'title', 'move', 'complettion_date', 'sort_order'];
+
     public function module()
     {
         return $this->belongsTo(TrainingBookPartModule::class);

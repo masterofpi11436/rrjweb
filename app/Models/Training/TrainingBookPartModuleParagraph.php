@@ -11,6 +11,8 @@ class TrainingBookPartModuleParagraph extends Model
 
     protected $table = 'training_book_part_module_paragraphs';
 
+    protected $fillable = ['module_id', 'title', 'content', 'sort_order'];
+
     public function module()
     {
         return $this->belongsTo(TrainingBookPartModule::class);

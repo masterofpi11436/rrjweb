@@ -11,6 +11,8 @@ class TrainingBookPartModuleParagraphBullet extends Model
 
     protected $table = 'training_book_part_module_paragraph_bullets';
 
+    protected $fillable = ['paragraph_id', 'type', 'list', 'sort_order'];
+
     public function paragraph()
     {
         return $this->belongsTo(TrainingBookPartModuleParagraph::class);

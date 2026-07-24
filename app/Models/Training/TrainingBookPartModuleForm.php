@@ -11,6 +11,8 @@ class TrainingBookPartModuleForm extends Model
 
     protected $table = 'training_book_part_module_forms';
 
+    protected $fillable = ['module_id', 'pdf', 'completion_date', 'sort_order'];
+
     public function module()
     {
         return $this->belongsTo(TrainingBookPartModule::class);
