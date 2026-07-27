@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Training\Admin;
 // Base Controller
 use App\Http\Controllers\Controller;
 use App\Models\Login\User;
+use App\Models\Training\TrainingBook;
 
 class TrainingBookController extends Controller
 {
@@ -15,22 +16,22 @@ class TrainingBookController extends Controller
 
     public function create()
     {
-        return view('Training.Admin.User.create');
+        return view('Training.Admin.Books.create');
     }
 
     public function edit($id)
     {
-        $user = User::findOrFail($id);
-        return view('Training.Admin.User.edit', ['user' => $user]);
+        $book = User::findOrFail($id);
+        return view('Training.Admin.Book.edit', ['book' => $book]);
     }
 
-        // Delete an existing user
+    // Delete an existing user
     public function destroy($id)
     {
-        $user = User::findOrFail($id);
-        $user->delete();
+        $book = TrainingBook::findOrFail($id);
+        $book->delete();
 
-        session()->flash('create-edit-delete-message', 'User deleted successfully!');
+        session()->flash('create-edit-delete-message', 'Book deleted successfully!');
         return redirect()->back();
     }
 }

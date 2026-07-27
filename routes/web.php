@@ -560,6 +560,8 @@ Route::prefix('training')->group(function () use ($traingingLoginClass, $trainin
         // Training Books Management
         Route::prefix('books')->group(function () use ($trainingBookClass) {
             Route::get('/dashboard', [$trainingBookClass, 'dashboard'])->name('training.admin.books.dashboard');
+            Route::get('/create', [$trainingBookClass, 'create'])->name('training.admin.books.create');
+            Route::delete('/{id}', [$trainingBookClass, 'destroy'])->name('training.admin.books.destroy');
         });
     });
 });

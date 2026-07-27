@@ -21,7 +21,7 @@
         Back To Dasboard
     </a>
 
-    <h1>Books are managed here</h1>
+    @livewire('Training.Book.BookSearch')
 
 
 @endsection
