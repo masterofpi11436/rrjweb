@@ -2,7 +2,6 @@
 
 namespace App\Models\Training;
 
-use App\Models\Training\TrainingBookPartModule;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -21,6 +20,6 @@ class TrainingBookPart extends Model
 
     public function modules()
     {
-        return $this->hasMany(TrainingBookPartModule::class, 'part_id');
+        return $this->hasMany(TrainingBookPartModule::class, 'book_part_id')->orderBy('sort_order');
     }
 }

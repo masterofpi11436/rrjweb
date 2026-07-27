@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Training\Admin;
 
 // Base Controller
 use App\Http\Controllers\Controller;
-use App\Models\Login\User;
 use App\Models\Training\TrainingBook;
 
 class TrainingBookController extends Controller
@@ -21,8 +20,11 @@ class TrainingBookController extends Controller
 
     public function edit($id)
     {
-        $book = User::findOrFail($id);
-        return view('Training.Admin.Book.edit', ['book' => $book]);
+        $book = TrainingBook::findOrFail($id);
+
+        return view('Training.Admin.Books.edit', [
+            'trainingBookId' => $book->id,
+        ]);
     }
 
     // Delete an existing user

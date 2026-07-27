@@ -52,6 +52,7 @@ use App\Http\Controllers\Warehouse\WarehouseSupervisor\PendingExchangeOrderContr
 use App\Http\Controllers\Training\Admin\TrainingAdminController;
 use App\Http\Controllers\Training\Admin\TrainingUserController;
 use App\Http\Controllers\Training\Admin\TrainingBookController;
+use App\Http\Controllers\Training\Admin\TrainingModuleController;
 
 // Shorthand login Classes
 $baseLoginClass = BaseLoginController::class;
@@ -101,6 +102,7 @@ $propertyClass = PropertyController::class;
 $trainingAdminClass = TrainingAdminController::class;
 $trainingUserClass = TrainingUserController::class;
 $trainingBookClass = TrainingBookController::class;
+$trainingModuleClass = TrainingModuleController::class;
 
 // Forgot password link for all applications
 Route::get('forgot', [$baseLoginClass, 'showForgotPasswordForm'])->name('login.forgot');
@@ -536,7 +538,7 @@ Route::prefix('navix')->group(function () use ($navixClass) {
 });
 
 // Training Application
-Route::prefix('training')->group(function () use ($traingingLoginClass, $trainingAdminClass, $trainingUserClass, $trainingBookClass){
+Route::prefix('training')->group(function () use ($traingingLoginClass, $trainingAdminClass, $trainingUserClass, $trainingBookClass, $trainingModuleClass){
 
     // Routes without middleware
     Route::get('/login', [$traingingLoginClass, 'trainingLoginForm'])->name('training.login');
@@ -546,7 +548,7 @@ Route::prefix('training')->group(function () use ($traingingLoginClass, $trainin
     Route::post('/logout', [$traingingLoginClass, 'logout'])->name('training.logout');
 
     // Admin Routes
-    Route::prefix('admin')->middleware(['trainingAdmin', 'cache'])->group(function () use ($trainingAdminClass, $trainingUserClass, $trainingBookClass) {
+    Route::prefix('admin')->middleware(['trainingAdmin', 'cache'])->group(function () use ($trainingAdminClass, $trainingUserClass, $trainingBookClass, $trainingModuleClass) {
         Route::get('/dashboard', [$trainingAdminClass, 'dashboard'])->name('training.admin.dashboard');
 
         // User Management
@@ -558,10 +560,18 @@ Route::prefix('training')->group(function () use ($traingingLoginClass, $trainin
         });
 
         // Training Books Management
-        Route::prefix('books')->group(function () use ($trainingBookClass) {
+        Route::prefix('books')->group(function () use ($trainingBookClass, $trainingModuleClass) {
             Route::get('/dashboard', [$trainingBookClass, 'dashboard'])->name('training.admin.books.dashboard');
             Route::get('/create', [$trainingBookClass, 'create'])->name('training.admin.books.create');
+            Route::get('/edit/{id}', [$trainingBookClass, 'edit'])->name('training.admin.books.edit');
             Route::delete('/{id}', [$trainingBookClass, 'destroy'])->name('training.admin.books.destroy');
+
+            Route::prefix('modules')->group(function () use ($trainingModuleClass) {
+                Route::get('/dashboard', [$trainingModuleClass, 'dashboard'])->name('training.admin.modules.dashboard');
+                Route::get('/create', [$trainingModuleClass, 'create'])->name('training.admin.modules.create');
+                Route::get('/edit/{id}', [$trainingModuleClass, 'edit'])->name('training.admin.modules.edit');
+                Route::delete('/{id}', [$trainingModuleClass, 'destroy'])->name('training.admin.modules.destroy');
+            });
         });
     });
 });

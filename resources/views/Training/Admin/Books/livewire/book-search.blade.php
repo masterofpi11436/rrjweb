@@ -40,18 +40,17 @@
                 <tbody class="divide-y divide-gray-800 bg-gray-950">
                     @foreach ($suggestions as $book)
                         <tr class="transition hover:bg-gray-900/70">
-                            <td class="px-5 py-4 text-sm">
-                                class="font-medium text-blue-400 transition hover:text-blue-300 hover:underline">
+                            <td class="font-medium text-blue-400 transition hover:text-blue-300 hover:underline">
                                 {{ $book->title }}
                             </td>
 
                             <td class="px-5 py-4 text-sm">
-                                <a href=""
+                                <a href="{{ route('training.admin.books.edit', $book->id) }}"
                                     class="inline-flex items-center rounded-lg border border-gray-700 bg-gray-800 px-3 py-2 text-sm font-medium text-gray-200 transition hover:border-gray-600 hover:bg-gray-700 hover:text-white">
                                     Edit
                                 </a>
 
-                                <form action="{{ route('policy.builder.destroy', $book->id) }}" method="POST"
+                                <form action="{{ route('training.admin.books.destroy', $book->id) }}" method="POST"
                                     class="inline-block"
                                     onsubmit="return confirm('Are you sure you want to delete this book?');">
                                     @csrf

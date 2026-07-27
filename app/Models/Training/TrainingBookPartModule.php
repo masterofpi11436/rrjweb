@@ -15,36 +15,36 @@ class TrainingBookPartModule extends Model
 
     public function part()
     {
-        return $this->belongsTo(TrainingBookPart::class);
+        return $this->belongsTo(TrainingBookPart::class, 'book_part_id');
     }
 
     public function checklists()
     {
-        return $this->hasMany(TrainingBookPartModuleChecklist::class, 'module_id');
+        return $this->hasMany(TrainingBookPartModuleChecklist::class, 'module_id')->orderBy('sort_order');
     }
 
     public function forms()
     {
-        return $this->hasMany(TrainingBookPartModuleForm::class, 'module_id');
+        return $this->hasMany(TrainingBookPartModuleForm::class, 'module_id')->orderBy('sort_order');
     }
 
-    public function medias()
+    public function media()
     {
-        return $this->hasMany(TrainingBookPartModuleMedia::class, 'module_id');
+        return $this->hasMany(TrainingBookPartModuleMedia::class, 'module_id')->orderBy('sort_order');
     }
 
     public function sopChecklists()
     {
-        return $this->hasMany(TrainingBookPartModuleSOPChecklist::class, 'module_id');
+        return $this->hasMany(TrainingBookPartModuleSOPChecklist::class, 'module_id')->orderBy('sort_order');
     }
 
     public function tests()
     {
-        return $this->hasMany(TrainingBookPartModuleTest::class, 'module_id');
+        return $this->hasMany(TrainingBookPartModuleTest::class, 'module_id')->orderBy('sort_order');
     }
 
     public function paragraphs()
     {
-        return $this->hasMany(TrainingBookPartModuleParagraph::class, 'module_id');
+        return $this->hasMany(TrainingBookPartModuleParagraph::class, 'module_id')->orderBy('sort_order');
     }
 }
