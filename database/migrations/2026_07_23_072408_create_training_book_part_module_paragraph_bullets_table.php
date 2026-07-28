@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('training_book_part_module_paragraph_bullets', function (Blueprint $table) {
             $table->id();
             $table->foreignId('paragraph_id')->constrained('training_book_part_module_paragraphs')->cascadeOnDelete();
-            $table->string('type'); // Bullet, ordered list
+            $table->string('type');
             $table->json('list');
             $table->unsignedInteger('sort_order')->default(0);
             $table->timestamps();

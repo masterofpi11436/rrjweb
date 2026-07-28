@@ -11,15 +11,18 @@ class TrainingBookPartModuleParagraph extends Model
 
     protected $table = 'training_book_part_module_paragraphs';
 
-    protected $fillable = ['module_id', 'title', 'content', 'sort_order'];
-
-    public function module()
-    {
-        return $this->belongsTo(TrainingBookPartModule::class);
-    }
+    protected $fillable = [
+        'title',
+        'content',
+        'sort_order',
+    ];
 
     public function bullets()
     {
-        return $this->hasMany(TrainingBookPartModuleParagraphBullet::class, 'module_id');
+        return $this->hasMany(
+            TrainingBookPartModuleParagraphBullet::class,
+            'paragraph_id',
+            'id'
+        )->orderBy('sort_order');
     }
 }

@@ -57,7 +57,7 @@ use App\Http\Controllers\Training\Admin\TrainingParagraphModuleController;
 use App\Http\Controllers\Training\Admin\TrainingFormModuleController;
 use App\Http\Controllers\Training\Admin\TrainingMediaModuleController;
 use App\Http\Controllers\Training\Admin\TrainingChecklistModuleController;
-use App\Http\Controllers\Training\Admin\TrainingSopChecklistModuleController;
+use App\Http\Controllers\Training\Admin\TrainingSOPChecklistModuleController;
 use App\Http\Controllers\Training\Admin\TrainingTestModuleController;
 
 // Shorthand login Classes
@@ -609,11 +609,11 @@ Route::prefix('training')->group(function () use ($traingingLoginClass, $trainin
                 Route::delete('/checklists/{checklist}', [TrainingChecklistModuleController::class, 'destroy'])->name('checklists.destroy');
 
                 // SOP Checklist Modules
-                Route::get('/sop-checklists/create', [TrainingSopChecklistModuleController::class, 'create'])->name('sop-checklists.create');
-                Route::post('/sop-checklists', [TrainingSopChecklistModuleController::class, 'store'])->name('sop-checklists.store');
-                Route::get('/sop-checklists/{sopChecklist}/edit', [TrainingSopChecklistModuleController::class, 'edit'])->name('sop-cecklists.edit');
-                Route::put('/sop-checklists/{sopChecklist}', [TrainingSopChecklistModuleController::class, 'update'])->name('sop-checklists.update');
-                Route::delete('/sop-checklists/{sopChecklist}', [TrainingSopChecklistModuleController::class, 'destroy'])->name('sop-checklists.destroy');
+                Route::get('/sop-checklists/create', [TrainingSOPChecklistModuleController::class, 'create'])->name('sop-checklists.create');
+                Route::post('/sop-checklists', [TrainingSOPChecklistModuleController::class, 'store'])->name('sop-checklists.store');
+                Route::get('/sop-checklists/{sopChecklist}/edit', [TrainingSOPChecklistModuleController::class, 'edit'])->name('sop-cecklists.edit');
+                Route::put('/sop-checklists/{sopChecklist}', [TrainingSOPChecklistModuleController::class, 'update'])->name('sop-checklists.update');
+                Route::delete('/sop-checklists/{sopChecklist}', [TrainingSOPChecklistModuleController::class, 'destroy'])->name('sop-checklists.destroy');
 
                 // Test Modules
                 Route::get('/tests/create', [TrainingTestModuleController::class, 'create'])->name('tests.create');
