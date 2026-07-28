@@ -18,8 +18,8 @@
         <button>User Training Statuses</button>
     </form>
 
-    <form action="">
-        <button>Manage Training Materials</button>
+    <form action="{{ route('training.admin.modules.dashboard') }}">
+        <button>Manage Training Modules</button>
     </form>
 
 @endsection

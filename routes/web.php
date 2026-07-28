@@ -53,6 +53,12 @@ use App\Http\Controllers\Training\Admin\TrainingAdminController;
 use App\Http\Controllers\Training\Admin\TrainingUserController;
 use App\Http\Controllers\Training\Admin\TrainingBookController;
 use App\Http\Controllers\Training\Admin\TrainingModuleController;
+use App\Http\Controllers\Training\Admin\TrainingParagraphModuleController;
+use App\Http\Controllers\Training\Admin\TrainingFormModuleController;
+use App\Http\Controllers\Training\Admin\TrainingMediaModuleController;
+use App\Http\Controllers\Training\Admin\TrainingChecklistModuleController;
+use App\Http\Controllers\Training\Admin\TrainingSopChecklistModuleController;
+use App\Http\Controllers\Training\Admin\TrainingTestModuleController;
 
 // Shorthand login Classes
 $baseLoginClass = BaseLoginController::class;
@@ -566,11 +572,55 @@ Route::prefix('training')->group(function () use ($traingingLoginClass, $trainin
             Route::get('/edit/{id}', [$trainingBookClass, 'edit'])->name('training.admin.books.edit');
             Route::delete('/{id}', [$trainingBookClass, 'destroy'])->name('training.admin.books.destroy');
 
-            Route::prefix('modules')->group(function () use ($trainingModuleClass) {
-                Route::get('/dashboard', [$trainingModuleClass, 'dashboard'])->name('training.admin.modules.dashboard');
-                Route::get('/create', [$trainingModuleClass, 'create'])->name('training.admin.modules.create');
-                Route::get('/edit/{id}', [$trainingModuleClass, 'edit'])->name('training.admin.modules.edit');
-                Route::delete('/{id}', [$trainingModuleClass, 'destroy'])->name('training.admin.modules.destroy');
+        // Training Module Management
+        Route::prefix('modules')
+            ->name('training.admin.modules.')
+            ->group(function () use ($trainingModuleClass) {
+
+                // Main module dashboard
+                Route::get('/dashboard', [$trainingModuleClass, 'dashboard'])->name('dashboard');
+
+                // Paragraph Modules
+                Route::get('/paragraphs/create', [TrainingParagraphModuleController::class, 'create'])->name('paragraphs.create');
+                Route::post('/paragraphs', [TrainingParagraphModuleController::class, 'store'])->name('paragraphs.store');
+                Route::get('/paragraphs/{paragraph}/edit', [TrainingParagraphModuleController::class, 'edit'])->name('paragraphs.edit');
+                Route::put('/paragraphs/{paragraph}', [TrainingParagraphModuleController::class, 'update'])->name('paragraphs.update');
+                Route::delete('/paragraphs/{paragraph}', [TrainingParagraphModuleController::class, 'destroy'])->name('paragraphs.destroy');
+
+                // Form Modules
+                Route::get('/forms/create', [TrainingFormModuleController::class, 'create'])->name('forms.create');
+                Route::post('/forms', [TrainingFormModuleController::class, 'store'])->name('forms.store');
+                Route::get('/forms/{form}/edit', [TrainingFormModuleController::class, 'edit'])->name('forms.edit');
+                Route::put('/forms/{form}', [TrainingFormModuleController::class, 'update'])->name('forms.update');
+                Route::delete('/forms/{form}', [TrainingFormModuleController::class, 'destroy'])->name('forms.destroy');
+
+                // Media Modules
+                Route::get('/media/create', [TrainingMediaModuleController::class, 'create'])->name('media.create');
+                Route::post('/media', [TrainingMediaModuleController::class, 'store'])->name('media.store');
+                Route::get('/media/{media}/edit', [TrainingMediaModuleController::class, 'edit'])->name('media.edit');
+                Route::put('/media/{media}', [TrainingMediaModuleController::class, 'update'])->name('media.update');
+                Route::delete('/media/{media}', [TrainingMediaModuleController::class, 'destroy'])->name('media.destroy');
+
+                // Checklist Modules
+                Route::get('/checklists/create', [TrainingChecklistModuleController::class, 'create'])->name('checklists.create');
+                Route::post('/checklists', [TrainingChecklistModuleController::class, 'store'])->name('checklists.store');
+                Route::get('/checklists/{checklist}/edit', [TrainingChecklistModuleController::class, 'edit'])->name('checklists.edit');
+                Route::put('/checklists/{checklist}', [TrainingChecklistModuleController::class, 'update'])->name('checklists.update');
+                Route::delete('/checklists/{checklist}', [TrainingChecklistModuleController::class, 'destroy'])->name('checklists.destroy');
+
+                // SOP Checklist Modules
+                Route::get('/sop-checklists/create', [TrainingSopChecklistModuleController::class, 'create'])->name('sop-checklists.create');
+                Route::post('/sop-checklists', [TrainingSopChecklistModuleController::class, 'store'])->name('sop-checklists.store');
+                Route::get('/sop-checklists/{sopChecklist}/edit', [TrainingSopChecklistModuleController::class, 'edit'])->name('sop-cecklists.edit');
+                Route::put('/sop-checklists/{sopChecklist}', [TrainingSopChecklistModuleController::class, 'update'])->name('sop-checklists.update');
+                Route::delete('/sop-checklists/{sopChecklist}', [TrainingSopChecklistModuleController::class, 'destroy'])->name('sop-checklists.destroy');
+
+                // Test Modules
+                Route::get('/tests/create', [TrainingTestModuleController::class, 'create'])->name('tests.create');
+                Route::post('/tests', [TrainingTestModuleController::class, 'store'])->name('tests.store');
+                Route::get('/tests/{test}/edit', [TrainingTestModuleController::class, 'edit'])->name('tests.edit');
+                Route::put('/tests/{test}', [TrainingTestModuleController::class, 'update'])->name('tests.update');
+                Route::delete('/tests/{test}', [TrainingTestModuleController::class, 'destroy'])->name('tests.destroy');
             });
         });
     });

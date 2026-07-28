@@ -2,36 +2,25 @@
 
 namespace App\Http\Controllers\Training\Admin;
 
-// Base Controller
 use App\Http\Controllers\Controller;
-use App\Models\Login\User;
-use App\Models\Training\TrainingBookPartModule;
+use App\Models\Training\TrainingBookPartModuleChecklist;
+use App\Models\Training\TrainingBookPartModuleForm;
+use App\Models\Training\TrainingBookPartModuleMedia;
+use App\Models\Training\TrainingBookPartModuleParagraph;
+use App\Models\Training\TrainingBookPartModuleSOPChecklist;
+use App\Models\Training\TrainingBookPartModuleTest;
 
 class TrainingModuleController extends Controller
 {
     public function dashboard()
     {
-        return view('Training.Admin.Modules.dashboard');
-    }
-
-    public function create()
-    {
-        return view('Training.Admin.Modules.create');
-    }
-
-    public function edit($id)
-    {
-        $module = User::findOrFail($id);
-        return view('Training.Admin.Module.edit', ['module' => $module]);
-    }
-
-    // Delete an existing user
-    public function destroy($id)
-    {
-        $module = TrainingBookPartModule::findOrFail($id);
-        $module->delete();
-
-        session()->flash('create-edit-delete-message', 'Module deleted successfully!');
-        return redirect()->back();
+        return view('Training.Admin.Modules.dashboard', [
+            'paragraphModules' => TrainingBookPartModuleParagraph::latest()->get(),
+            'formModules' => TrainingBookPartModuleForm::latest()->get(),
+            'mediaModules' => TrainingBookPartModuleMedia::latest()->get(),
+            'checklistModules' => TrainingBookPartModuleChecklist::latest()->get(),
+            'sopChecklistModules' => TrainingBookPartModuleSOPChecklist::latest()->get(),
+            'testModules' => TrainingBookPartModuleTest::latest()->get(),
+        ]);
     }
 }
