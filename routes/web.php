@@ -582,7 +582,6 @@ Route::prefix('training')->group(function () use ($traingingLoginClass, $trainin
 
                 // Paragraph Modules
                 Route::get('/paragraphs/create', [TrainingParagraphModuleController::class, 'create'])->name('paragraphs.create');
-                Route::post('/paragraphs', [TrainingParagraphModuleController::class, 'store'])->name('paragraphs.store');
                 Route::get('/paragraphs/{paragraph}/edit', [TrainingParagraphModuleController::class, 'edit'])->name('paragraphs.edit');
                 Route::put('/paragraphs/{paragraph}', [TrainingParagraphModuleController::class, 'update'])->name('paragraphs.update');
                 Route::delete('/paragraphs/{paragraph}', [TrainingParagraphModuleController::class, 'destroy'])->name('paragraphs.destroy');

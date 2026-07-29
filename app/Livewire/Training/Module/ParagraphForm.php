@@ -12,9 +12,9 @@ class ParagraphForm extends Component
 
     public string $title = '';
 
-    public string $content = '';
+    public string $description = '';
 
-    public array $bullets = [];
+    public array $paragraphs = [];
 
     public function mount(?int $paragraphId = null): void
     {
@@ -25,44 +25,147 @@ class ParagraphForm extends Component
         }
     }
 
-    protected function loadParagraph(): void
+    public function loadParagraph(): void
     {
-        $paragraph = TrainingBookPartModuleParagraph::with('bullets')
-            ->findOrFail($this->paragraphId);
+        $paragraphModule = TrainingBookPartModuleParagraph::with([
+            'paragraphs.lists.items',
+        ])->findOrFail($this->paragraphId);
 
-        $this->title = $paragraph->title;
-        $this->content = $paragraph->content;
+        $this->title = $paragraphModule->title;
+        $this->description = $paragraphModule->description ?? '';
 
-        $this->bullets = $paragraph->bullets
-            ->map(function ($bullet) {
+        $this->paragraphs = $paragraphModule->paragraphs
+            ->map(function ($paragraph) {
                 return [
-                    'id' => $bullet->id,
-                    'type' => $bullet->type,
-                    'text' => $bullet->list['text'] ?? '',
+                    'id' => $paragraph->id,
+                    'heading' => $paragraph->heading ?? '',
+                    'content' => $paragraph->content,
+                    'lists' => $paragraph->lists
+                        ->map(function ($list) {
+                            return [
+                                'id' => $list->id,
+                                'type' => $list->type,
+                                'items' => $list->items
+                                    ->map(function ($item) {
+                                        return [
+                                            'id' => $item->id,
+                                            'content' => $item->content,
+                                        ];
+                                    })
+                                    ->values()
+                                    ->toArray(),
+                            ];
+                        })
+                        ->values()
+                        ->toArray(),
                 ];
             })
             ->values()
             ->toArray();
     }
 
-    public function addBullet(): void
+    public function addParagraph(): void
     {
-        $this->bullets[] = [
+        $this->paragraphs[] = [
             'id' => null,
-            'type' => 'bullet',
-            'text' => '',
+            'heading' => '',
+            'content' => '',
+            'lists' => [],
         ];
     }
 
-    public function removeBullet(int $index): void
+    public function removeParagraph(int $paragraphIndex): void
     {
-        if (!array_key_exists($index, $this->bullets)) {
+        if (!isset($this->paragraphs[$paragraphIndex])) {
             return;
         }
 
-        unset($this->bullets[$index]);
+        unset($this->paragraphs[$paragraphIndex]);
 
-        $this->bullets = array_values($this->bullets);
+        $this->paragraphs = array_values($this->paragraphs);
+    }
+
+    public function addList(int $paragraphIndex): void
+    {
+        if (!isset($this->paragraphs[$paragraphIndex])) {
+            return;
+        }
+
+        $this->paragraphs[$paragraphIndex]['lists'][] = [
+            'id' => null,
+            'type' => 'bullet',
+            'items' => [
+                [
+                    'id' => null,
+                    'content' => '',
+                ],
+            ],
+        ];
+    }
+
+    public function removeList(int $paragraphIndex, int $listIndex): void
+    {
+        if (
+            !isset(
+                $this->paragraphs[$paragraphIndex]['lists'][$listIndex]
+            )
+        ) {
+            return;
+        }
+
+        unset($this->paragraphs[$paragraphIndex]['lists'][$listIndex]);
+
+        $this->paragraphs[$paragraphIndex]['lists'] = array_values(
+            $this->paragraphs[$paragraphIndex]['lists']
+        );
+    }
+
+    public function addListItem(
+        int $paragraphIndex,
+        int $listIndex
+    ): void {
+        if (
+            !isset(
+                $this->paragraphs[$paragraphIndex]['lists'][$listIndex]
+            )
+        ) {
+            return;
+        }
+
+        $this->paragraphs[$paragraphIndex]['lists'][$listIndex]['items'][] = [
+            'id' => null,
+            'content' => '',
+        ];
+    }
+
+    public function removeListItem(
+        int $paragraphIndex,
+        int $listIndex,
+        int $itemIndex
+    ): void {
+        if (
+            !isset(
+                $this->paragraphs[$paragraphIndex]
+                    ['lists'][$listIndex]
+                    ['items'][$itemIndex]
+            )
+        ) {
+            return;
+        }
+
+        unset(
+            $this->paragraphs[$paragraphIndex]
+                ['lists'][$listIndex]
+                ['items'][$itemIndex]
+        );
+
+        $this->paragraphs[$paragraphIndex]
+            ['lists'][$listIndex]
+            ['items'] = array_values(
+                $this->paragraphs[$paragraphIndex]
+                    ['lists'][$listIndex]
+                    ['items']
+            );
     }
 
     protected function rules(): array
@@ -74,24 +177,62 @@ class ParagraphForm extends Component
                 'max:255',
             ],
 
-            'content' => [
+            'description' => [
+                'nullable',
+                'string',
+                'max:1000',
+            ],
+
+            'paragraphs' => [
+                'required',
+                'array',
+                'min:1',
+            ],
+
+            'paragraphs.*.id' => [
+                'nullable',
+                'integer',
+            ],
+
+            'paragraphs.*.heading' => [
+                'nullable',
+                'string',
+                'max:255',
+            ],
+
+            'paragraphs.*.content' => [
                 'required',
                 'string',
             ],
 
-            'bullets' => [
+            'paragraphs.*.lists' => [
                 'array',
             ],
 
-            'bullets.*.type' => [
+            'paragraphs.*.lists.*.id' => [
+                'nullable',
+                'integer',
+            ],
+
+            'paragraphs.*.lists.*.type' => [
                 'required',
                 'in:bullet,ordered',
             ],
 
-            'bullets.*.text' => [
+            'paragraphs.*.lists.*.items' => [
+                'required',
+                'array',
+                'min:1',
+            ],
+
+            'paragraphs.*.lists.*.items.*.id' => [
+                'nullable',
+                'integer',
+            ],
+
+            'paragraphs.*.lists.*.items.*.content' => [
                 'required',
                 'string',
-                'max:2000',
             ],
         ];
     }
@@ -102,45 +243,89 @@ class ParagraphForm extends Component
 
         $wasEditing = $this->paragraphId !== null;
 
-        DB::transaction(function () use ($validated) {
-            $paragraph = TrainingBookPartModuleParagraph::updateOrCreate(
+        DB::transaction(function () use ($validated): void {
+            $paragraphModule = TrainingBookPartModuleParagraph::updateOrCreate(
                 [
                     'id' => $this->paragraphId,
                 ],
                 [
                     'title' => $validated['title'],
-                    'content' => $validated['content'],
+                    'description' => $validated['description'] ?: null,
                 ]
             );
 
-            $savedBulletIds = [];
+            $savedParagraphIds = [];
 
-            foreach ($validated['bullets'] as $index => $bulletData) {
-                $bullet = $paragraph->bullets()->updateOrCreate(
-                    [
-                        'id' => $bulletData['id'] ?? null,
-                    ],
-                    [
-                        'type' => $bulletData['type'],
-                        'list' => [
-                            'text' => $bulletData['text'],
+            foreach (
+                $validated['paragraphs'] as
+                $paragraphIndex => $paragraphData
+            ) {
+                $paragraph = $paragraphModule->paragraphs()
+                    ->updateOrCreate(
+                        [
+                            'id' => $paragraphData['id'] ?? null,
                         ],
-                        'sort_order' => $index,
-                    ]
-                );
+                        [
+                            'heading' => $paragraphData['heading'] ?: null,
+                            'content' => $paragraphData['content'],
+                            'sort_order' => $paragraphIndex,
+                        ]
+                    );
 
-                $savedBulletIds[] = $bullet->id;
-            }
+                $savedParagraphIds[] = $paragraph->id;
 
-            if (empty($savedBulletIds)) {
-                $paragraph->bullets()->delete();
-            } else {
-                $paragraph->bullets()
-                    ->whereNotIn('id', $savedBulletIds)
+                $savedListIds = [];
+
+                foreach (
+                    $paragraphData['lists'] as
+                    $listIndex => $listData
+                ) {
+                    $list = $paragraph->lists()->updateOrCreate(
+                        [
+                            'id' => $listData['id'] ?? null,
+                        ],
+                        [
+                            'type' => $listData['type'],
+                            'sort_order' => $listIndex,
+                        ]
+                    );
+
+                    $savedListIds[] = $list->id;
+
+                    $savedItemIds = [];
+
+                    foreach (
+                        $listData['items'] as
+                        $itemIndex => $itemData
+                    ) {
+                        $item = $list->items()->updateOrCreate(
+                            [
+                                'id' => $itemData['id'] ?? null,
+                            ],
+                            [
+                                'content' => $itemData['content'],
+                                'sort_order' => $itemIndex,
+                            ]
+                        );
+
+                        $savedItemIds[] = $item->id;
+                    }
+
+                    $list->items()
+                        ->whereNotIn('id', $savedItemIds)
+                        ->delete();
+                }
+
+                $paragraph->lists()
+                    ->whereNotIn('id', $savedListIds)
                     ->delete();
             }
 
-            $this->paragraphId = $paragraph->id;
+            $paragraphModule->paragraphs()
+                ->whereNotIn('id', $savedParagraphIds)
+                ->delete();
+
+            $this->paragraphId = $paragraphModule->id;
         });
 
         session()->flash(

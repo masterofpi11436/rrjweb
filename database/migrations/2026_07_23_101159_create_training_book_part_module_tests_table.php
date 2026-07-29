@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('question');
             $table->json('answers');
             $table->date('completion_date');
-            $table->unsignedInteger('sort_order')->default(0);
+            $table->string('description');
             $table->timestamps();
         });
     }

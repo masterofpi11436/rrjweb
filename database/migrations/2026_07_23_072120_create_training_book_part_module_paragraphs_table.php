@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('training_book_part_module_paragraphs', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->longText('content');
+            $table->string('description')->nullable();
             $table->timestamps();
         });
     }

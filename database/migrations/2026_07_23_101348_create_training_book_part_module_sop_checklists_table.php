@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('title');
             $table->string('link'); // Links to pdf web view
             $table->date('completion_date');
-            $table->unsignedInteger('sort_order')->default(0);
+            $table->string('description');
             $table->timestamps();
         });
     }

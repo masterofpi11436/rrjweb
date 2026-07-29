@@ -8,7 +8,9 @@ Camera Schedule:
     4. Add IP rules for camera, encoder, and TSC subnets
 
 Training Tracker:
-    1. Build it
+    1. Modules
+        a. Paragraphs need to have multple paragprapghs to form one module. Same for other modules as well like the forms.
+
 
 Policy builder:
 

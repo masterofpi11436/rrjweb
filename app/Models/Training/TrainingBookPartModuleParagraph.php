@@ -2,27 +2,23 @@
 
 namespace App\Models\Training;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class TrainingBookPartModuleParagraph extends Model
 {
-    use HasFactory;
-
     protected $table = 'training_book_part_module_paragraphs';
 
     protected $fillable = [
         'title',
-        'content',
-        'sort_order',
+        'description',
     ];
 
-    public function bullets()
+    public function paragraphs(): HasMany
     {
         return $this->hasMany(
-            TrainingBookPartModuleParagraphBullet::class,
-            'paragraph_id',
-            'id'
+            TrainingBookPartModuleParagraphContent::class,
+            'paragraph_module_id'
         )->orderBy('sort_order');
     }
 }

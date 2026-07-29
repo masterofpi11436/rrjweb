@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('title');
             $table->string('movie');
             $table->date('comletion_date');
-            $table->unsignedInteger('sort_order')->default(0);
+            $table->string('description');
             $table->timestamps();
         });
     }

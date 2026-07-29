@@ -17,100 +17,166 @@
             @enderror
         </div>
 
-        {{-- Content --}}
         <div>
-            <label for="content" class="mb-2 block text-sm font-medium text-gray-200">
-                Paragraph Content
+            <label for="description" class="mb-2 block text-sm font-medium text-gray-200">
+                Module Description
             </label>
 
-            <textarea id="content" wire:model="content" rows="10" placeholder="Enter the paragraph content"
+            <textarea id="description" wire:model="description" rows="3" placeholder="Enter an optional description"
                 class="w-full rounded-lg border border-gray-600 bg-gray-800 px-4 py-3 text-white placeholder:text-gray-500 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/30"></textarea>
 
-            @error('content')
+            @error('description')
                 <p class="mt-2 text-sm text-red-400">
                     {{ $message }}
                 </p>
             @enderror
         </div>
 
-        {{-- Bullets --}}
         <section class="overflow-hidden rounded-xl border border-gray-700 bg-gray-900">
             <div
                 class="flex flex-col gap-4 border-b border-gray-700 px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
                 <div>
                     <h2 class="font-semibold text-white">
-                        Paragraph Bullets
+                        Module Paragraphs
                     </h2>
 
                     <p class="mt-1 text-sm text-gray-400">
-                        Add optional bullet points to this paragraph module.
+                        Add paragraphs in the order the trainee should read them.
                     </p>
                 </div>
 
-                <button type="button" wire:click="addBullet"
-                    class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-500">
-                    Add Bullet
+                <button type="button" wire:click="addParagraph"
+                    class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-500">
+                    Add Paragraph
                 </button>
             </div>
 
-            @if (empty($bullets))
+            @if (empty($paragraphs))
                 <div class="px-5 py-8 text-center text-sm text-gray-400">
-                    No bullet points have been added.
+                    No paragraphs have been added.
                 </div>
             @else
-                <div class="space-y-4 p-5">
-                    @foreach ($bullets as $index => $bullet)
-                        <div wire:key="paragraph-bullet-{{ $bullet['id'] ?? 'new' }}-{{ $index }}"
-                            class="rounded-lg border border-gray-700 bg-gray-800/60 p-4">
-                            <div class="grid gap-4 md:grid-cols-[180px_1fr_auto]">
+                <div class="space-y-6 p-5">
+                    @foreach ($paragraphs as $paragraphIndex => $paragraph)
+                        <div wire:key="paragraph-{{ $paragraph['id'] ?? 'new' }}-{{ $paragraphIndex }}"
+                            class="rounded-xl border border-gray-700 bg-gray-800/60 p-5">
+
+                            <div class="mb-5 flex items-center justify-between">
+                                <h3 class="font-semibold text-white">
+                                    Paragraph {{ $paragraphIndex + 1 }}
+                                </h3>
+
+                                <button type="button" wire:click="removeParagraph({{ $paragraphIndex }})"
+                                    wire:confirm="Remove this paragraph?"
+                                    class="rounded-lg border border-red-800 px-3 py-2 text-sm text-red-400 hover:bg-red-950/50">
+                                    Remove Paragraph
+                                </button>
+                            </div>
+
+                            <div class="space-y-5">
                                 <div>
-                                    <label for="bullet-type-{{ $index }}"
-                                        class="mb-2 block text-sm font-medium text-gray-200">
-                                        Type
+                                    <label class="mb-2 block text-sm font-medium text-gray-200">
+                                        Heading
                                     </label>
 
-                                    <select id="bullet-type-{{ $index }}"
-                                        wire:model="bullets.{{ $index }}.type"
-                                        class="w-full rounded-lg border border-gray-600 bg-gray-800 px-3 py-2 text-white">
-                                        <option value="bullet">
-                                            Bullet
-                                        </option>
-
-                                        <option value="ordered">
-                                            Ordered List
-                                        </option>
-                                    </select>
-
-                                    @error("bullets.$index.type")
-                                        <p class="mt-2 text-sm text-red-400">
-                                            {{ $message }}
-                                        </p>
-                                    @enderror
+                                    <input type="text" wire:model="paragraphs.{{ $paragraphIndex }}.heading"
+                                        placeholder="Optional paragraph heading"
+                                        class="w-full rounded-lg border border-gray-600 bg-gray-800 px-4 py-3 text-white">
                                 </div>
 
                                 <div>
-                                    <label for="bullet-text-{{ $index }}"
-                                        class="mb-2 block text-sm font-medium text-gray-200">
-                                        Text
+                                    <label class="mb-2 block text-sm font-medium text-gray-200">
+                                        Content
                                     </label>
 
-                                    <textarea id="bullet-text-{{ $index }}" wire:model="bullets.{{ $index }}.text" rows="3"
-                                        class="w-full rounded-lg border border-gray-600 bg-gray-800 px-3 py-2 text-white"></textarea>
-
-                                    @error("bullets.$index.text")
-                                        <p class="mt-2 text-sm text-red-400">
-                                            {{ $message }}
-                                        </p>
-                                    @enderror
+                                    <textarea wire:model="paragraphs.{{ $paragraphIndex }}.content" rows="6" placeholder="Enter the paragraph content"
+                                        class="w-full rounded-lg border border-gray-600 bg-gray-800 px-4 py-3 text-white"></textarea>
                                 </div>
 
-                                <div class="md:pt-7">
-                                    <button type="button" wire:click="removeBullet({{ $index }})"
-                                        wire:confirm="Remove this bullet?"
-                                        class="rounded-lg border border-red-800 px-3 py-2 text-sm font-medium text-red-400 hover:bg-red-950/50">
-                                        Remove
-                                    </button>
-                                </div>
+                                <section class="rounded-lg border border-gray-700">
+                                    <div class="flex items-center justify-between border-b border-gray-700 px-4 py-3">
+                                        <div>
+                                            <h4 class="font-medium text-white">
+                                                Lists
+                                            </h4>
+
+                                            <p class="text-sm text-gray-400">
+                                                Add optional bullet or numbered lists.
+                                            </p>
+                                        </div>
+
+                                        <button type="button" wire:click="addList({{ $paragraphIndex }})"
+                                            class="rounded-lg bg-gray-700 px-3 py-2 text-sm text-white hover:bg-gray-600">
+                                            Add List
+                                        </button>
+                                    </div>
+
+                                    <div class="space-y-4 p-4">
+                                        @foreach ($paragraph['lists'] ?? [] as $listIndex => $list)
+                                            <div wire:key="paragraph-{{ $paragraphIndex }}-list-{{ $list['id'] ?? 'new' }}-{{ $listIndex }}"
+                                                class="rounded-lg border border-gray-600 bg-gray-900/50 p-4">
+
+                                                <div class="mb-4 flex items-end gap-4">
+                                                    <div class="flex-1">
+                                                        <label class="mb-2 block text-sm font-medium text-gray-200">
+                                                            List Type
+                                                        </label>
+
+                                                        <select
+                                                            wire:model="paragraphs.{{ $paragraphIndex }}.lists.{{ $listIndex }}.type"
+                                                            class="w-full rounded-lg border border-gray-600 bg-gray-800 px-3 py-2 text-white">
+                                                            <option value="bullet">
+                                                                Bullet List
+                                                            </option>
+
+                                                            <option value="ordered">
+                                                                Ordered List
+                                                            </option>
+                                                        </select>
+                                                    </div>
+
+                                                    <button type="button"
+                                                        wire:click="removeList({{ $paragraphIndex }}, {{ $listIndex }})"
+                                                        wire:confirm="Remove this list?"
+                                                        class="rounded-lg border border-red-800 px-3 py-2 text-sm text-red-400">
+                                                        Remove List
+                                                    </button>
+                                                </div>
+
+                                                <div class="space-y-3">
+                                                    @foreach ($list['items'] ?? [] as $itemIndex => $item)
+                                                        <div wire:key="paragraph-{{ $paragraphIndex }}-list-{{ $listIndex }}-item-{{ $item['id'] ?? 'new' }}-{{ $itemIndex }}"
+                                                            class="flex items-start gap-3">
+
+                                                            <div class="pt-3 text-sm text-gray-400">
+                                                                {{ ($list['type'] ?? 'bullet') === 'ordered' ? $itemIndex + 1 . '.' : '•' }}
+                                                            </div>
+
+                                                            <textarea wire:model="paragraphs.{{ $paragraphIndex }}.lists.{{ $listIndex }}.items.{{ $itemIndex }}.content"
+                                                                rows="2" class="flex-1 rounded-lg border border-gray-600 bg-gray-800 px-3 py-2 text-white"></textarea>
+
+                                                            <button type="button"
+                                                                wire:click="removeListItem(
+                                                            {{ $paragraphIndex }},
+                                                            {{ $listIndex }},
+                                                            {{ $itemIndex }}
+                                                        )"
+                                                                class="mt-1 rounded-lg px-3 py-2 text-sm text-red-400 hover:bg-red-950/50">
+                                                                Remove
+                                                            </button>
+                                                        </div>
+                                                    @endforeach
+
+                                                    <button type="button"
+                                                        wire:click="addListItem({{ $paragraphIndex }}, {{ $listIndex }})"
+                                                        class="text-sm font-medium text-blue-400 hover:text-blue-300">
+                                                        Add List Item
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                </section>
                             </div>
                         </div>
                     @endforeach

@@ -6,8 +6,8 @@
 
 @section('content')
 
-    <h1>Edit paragraph</h1>
-
     <a href="{{ route('training.admin.modules.dashboard') }}">Back</a>
+
+    @livewire('Training.Module.paragraphform', ['paragraphId' => $paragraphId ?? null])
 
 @endsection

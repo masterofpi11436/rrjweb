@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('module_id')->constrained('training_book_part_modules')->cascadeOnDelete();
             $table->string('title');
             $table->string('item');
-            $table->unsignedInteger('sort_order')->default(0);
+            $table->string('description')->nullable();
             $table->timestamps();
         });
     }

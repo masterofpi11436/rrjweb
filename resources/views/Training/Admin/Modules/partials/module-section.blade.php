@@ -55,8 +55,7 @@
                             </td>
 
                             <td class="px-6 py-4 text-sm text-gray-300">
-                                {{ $module->item ??
-                                    ($module->paragraph ?? ($module->pdf ?? ($module->movie ?? ($module->description ?? 'No summary available')))) }}
+                                {{ $module->description ?? 'No summary available' }}
                             </td>
 
                             <td class="whitespace-nowrap px-6 py-4 text-sm text-gray-400">
