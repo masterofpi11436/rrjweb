@@ -21,7 +21,9 @@ class TrainingFormModuleController extends Controller
 
     public function edit($id)
     {
-        //
+        return view('Training.Admin.Modules.Forms.edit', [
+            'formId' => $id,
+        ]);
     }
 
     public function update(Request $request, $id)

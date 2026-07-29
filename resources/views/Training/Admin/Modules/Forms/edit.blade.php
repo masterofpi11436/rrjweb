@@ -1,13 +1,15 @@
 @extends('layouts.Training.admin')
 
-@section('title', 'Edit Media Module')
+@section('title', 'Edit Form Module')
 
-@section('heading', 'Edit Media Module')
+@section('heading', 'Edit Form Module')
 
 @section('content')
 
-    <h1>Edit Media</h1>
-
     <a href="{{ route('training.admin.modules.dashboard') }}">Back</a>
+
+    @livewire('training.module.form-form', [
+        'formId' => $formId,
+    ])
 
 @endsection

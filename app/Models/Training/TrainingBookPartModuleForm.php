@@ -4,6 +4,7 @@ namespace App\Models\Training;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class TrainingBookPartModuleForm extends Model
 {
@@ -11,10 +12,16 @@ class TrainingBookPartModuleForm extends Model
 
     protected $table = 'training_book_part_module_forms';
 
-    protected $fillable = ['module_id', 'pdf', 'completion_date', 'sort_order'];
+    protected $fillable = [
+        'title',
+        'description',
+    ];
 
-    public function module()
+    public function documents(): HasMany
     {
-        return $this->belongsTo(TrainingBookPartModule::class);
+        return $this->hasMany(
+            TrainingBookPartModuleFormDocument::class,
+            'form_module_id'
+        )->orderBy('sort_order');
     }
 }

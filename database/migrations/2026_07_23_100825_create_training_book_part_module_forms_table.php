@@ -13,10 +13,8 @@ return new class extends Migration
     {
         Schema::create('training_book_part_module_forms', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('module_id')->constrained('training_book_part_modules')->cascadeOnDelete();
-            $table->string('pdf');
-            $table->date('completion_date');
-            $table->string('description');
+            $table->string('title');
+            $table->text('description')->nullable();
             $table->timestamps();
         });
     }
