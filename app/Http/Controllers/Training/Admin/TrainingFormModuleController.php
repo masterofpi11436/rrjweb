@@ -4,19 +4,13 @@ namespace App\Http\Controllers\Training\Admin;
 
 // Base Controller
 use App\Http\Controllers\Controller;
-
-use Illuminate\Http\Request;
+use App\Models\Training\TrainingBookPartModuleForm;
 
 class TrainingFormModuleController extends Controller
 {
     public function create()
     {
         return view('Training.Admin.Modules.Forms.create');
-    }
-
-    public function store(Request $request)
-    {
-        //
     }
 
     public function edit($id)
@@ -26,13 +20,14 @@ class TrainingFormModuleController extends Controller
         ]);
     }
 
-    public function update(Request $request, $id)
+    public function destroy(int $id)
     {
-        //
-    }
+        $paragraph = TrainingBookPartModuleForm::findOrFail($id);
 
-    public function destroy($id)
-    {
-        //
+        $paragraph->delete();
+
+        return redirect()
+            ->route('training.admin.modules.dashboard')
+            ->with('success', 'Form deleted successfully.');
     }
 }
