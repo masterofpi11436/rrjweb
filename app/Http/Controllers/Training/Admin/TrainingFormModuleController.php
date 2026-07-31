@@ -22,9 +22,9 @@ class TrainingFormModuleController extends Controller
 
     public function destroy(int $id)
     {
-        $paragraph = TrainingBookPartModuleForm::findOrFail($id);
+        $form = TrainingBookPartModuleForm::findOrFail($id);
 
-        $paragraph->delete();
+        $form->delete();
 
         return redirect()
             ->route('training.admin.modules.dashboard')

@@ -4,8 +4,7 @@ namespace App\Http\Controllers\Training\Admin;
 
 // Base Controller
 use App\Http\Controllers\Controller;
-
-use Illuminate\Http\Request;
+use App\Models\Training\TrainingBookPartModuleChecklist;
 
 class TrainingChecklistModuleController extends Controller
 {
@@ -14,23 +13,21 @@ class TrainingChecklistModuleController extends Controller
         return view('Training.Admin.Modules.Checklists.create');
     }
 
-    public function store(Request $request)
-    {
-        //
-    }
-
     public function edit($id)
     {
-        //
+        return view('Training.Admin.Modules.Checklists.edit', [
+            'checklistId' => $id,
+        ]);
     }
 
-    public function update(Request $request, $id)
+    public function destroy(int $id)
     {
-        //
-    }
+        $checklist = TrainingBookPartModuleChecklist::findOrFail($id);
 
-    public function destroy($id)
-    {
-        //
+        $checklist->delete();
+
+        return redirect()
+            ->route('training.admin.modules.dashboard')
+            ->with('success', 'Form deleted successfully.');
     }
 }

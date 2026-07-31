@@ -5,9 +5,9 @@
 @section('heading', 'Edit Checklist Module')
 
 @section('content')
+    <a href="{{ route('training.admin.modules.dashboard') }}">
+        Back
+    </a>
 
-    <h1>Edit Checklists</h1>
-
-    <a href="{{ route('training.admin.modules.dashboard') }}">Back</a>
-
+    @livewire('Training.Module.ChecklistForm', ['checklistId' => $checklistId])
 @endsection

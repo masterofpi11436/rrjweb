@@ -14,8 +14,11 @@ return new class extends Migration
         Schema::create('training_book_part_module_test_question_answers', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignId('question_id')
-                ->constrained('training_book_part_module_test_questions')
+            $table->unsignedBigInteger('question_id');
+
+            $table->foreign('question_id', 'test_answer_question_fk')
+                ->references('id')
+                ->on('training_book_part_module_test_questions')
                 ->cascadeOnDelete();
 
             $table->text('answer');

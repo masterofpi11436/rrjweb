@@ -11,18 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('training_book_part_module_test_question_options', function (Blueprint $table) {
+        Schema::create('training_book_part_module_checklist_items', function (Blueprint $table) {
             $table->id();
 
-            $table->unsignedBigInteger('question_id');
-
-            $table->foreign('question_id', 'test_option_question_fk')
-                ->references('id')
-                ->on('training_book_part_module_test_questions')
+            $table->foreignId('checklist_id')
+                ->constrained('training_book_part_module_checklists')
                 ->cascadeOnDelete();
 
-            $table->text('option');
-            $table->boolean('is_correct')->nullable();
+            $table->string('item');
+
+            $table->text('description')->nullable();
+
             $table->unsignedInteger('sort_order')->default(0);
 
             $table->timestamps();
@@ -34,6 +33,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('training_book_part_module_test_question_options');
+        Schema::dropIfExists('training_book_part_module_checklist_items');
     }
 };
