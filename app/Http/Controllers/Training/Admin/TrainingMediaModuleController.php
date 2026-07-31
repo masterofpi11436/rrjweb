@@ -4,8 +4,7 @@ namespace App\Http\Controllers\Training\Admin;
 
 // Base Controller
 use App\Http\Controllers\Controller;
-
-use Illuminate\Http\Request;
+use App\Models\Training\TrainingBookPartModuleMedia;
 
 class TrainingMediaModuleController extends Controller
 {
@@ -14,23 +13,21 @@ class TrainingMediaModuleController extends Controller
         return view('Training.Admin.Modules.Media.create');
     }
 
-    public function store(Request $request)
-    {
-        //
-    }
-
     public function edit($id)
     {
-        //
+        return view('Training.Admin.Modules.Media.edit', [
+            'mediaId' => $id,
+        ]);
     }
 
-    public function update(Request $request, $id)
+    public function destroy(int $id)
     {
-        //
-    }
+        $paragraph = TrainingBookPartModuleMedia::findOrFail($id);
 
-    public function destroy($id)
-    {
-        //
+        $paragraph->delete();
+
+        return redirect()
+            ->route('training.admin.modules.dashboard')
+            ->with('success', 'Media deleted successfully.');
     }
 }

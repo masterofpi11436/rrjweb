@@ -9,12 +9,15 @@ class TrainingBookPartModuleMedia extends Model
 {
     use HasFactory;
 
-    protected $table = 'training_book_part_module_medias';
+    protected $table = 'training_book_part_module_media';
 
-    protected $fillable = ['module_id', 'title', 'move', 'complettion_date', 'sort_order'];
+    protected $fillable = ['title', 'description'];
 
-    public function module()
+    public function files()
     {
-        return $this->belongsTo(TrainingBookPartModule::class);
+        return $this->hasMany(
+            TrainingBookPartModuleMediaFile::class,
+            'media_id'
+        )->orderBy('sort_order');
     }
 }

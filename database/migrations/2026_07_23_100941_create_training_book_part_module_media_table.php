@@ -11,13 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('training_book_part_module_medias', function (Blueprint $table) {
+        Schema::create('training_book_part_module_media', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('module_id')->constrained('training_book_part_modules')->cascadeOnDelete();
             $table->string('title');
-            $table->string('movie');
-            $table->date('comletion_date');
-            $table->string('description');
+            $table->text('description')->nullable();
             $table->timestamps();
         });
     }
