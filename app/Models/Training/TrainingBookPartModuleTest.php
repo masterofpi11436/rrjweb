@@ -11,10 +11,13 @@ class TrainingBookPartModuleTest extends Model
 
     protected $table = 'training_book_part_module_tests';
 
-    protected $fillable = ['module_id', 'question', 'answers', 'completion_date', 'sort_order'];
+    protected $fillable = ['title', 'description', 'passing_score', 'sort_order'];
 
-    public function module()
+    public function questions()
     {
-        return $this->belongsTo(TrainingBookPartModule::class);
+        return $this->hasMany(
+            TrainingBookPartModuleTestQuestion::class,
+            'test_id'
+        )->orderBy('sort_order');
     }
 }

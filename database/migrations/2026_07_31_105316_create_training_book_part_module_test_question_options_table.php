@@ -11,13 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('training_book_part_module_tests', function (Blueprint $table) {
+        Schema::create('training_book_part_module_test_question_options', function (Blueprint $table) {
             $table->id();
 
-            $table->string('title');
-            $table->text('description')->nullable();
+            $table->foreignId('question_id')
+                ->constrained('training_book_part_module_test_questions')
+                ->cascadeOnDelete();
 
-            $table->unsignedInteger('passing_score')->nullable();
+            $table->text('option');
+            $table->boolean('is_correct')->default(false);
             $table->unsignedInteger('sort_order')->default(0);
 
             $table->timestamps();
@@ -29,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('training_book_part_module_tests');
+        Schema::dropIfExists('training_book_part_module_test_question_options');
     }
 };

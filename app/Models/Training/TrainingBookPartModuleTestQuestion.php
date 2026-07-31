@@ -1,0 +1,39 @@
+<?php
+
+namespace App\Models\Training;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class TrainingBookPartModuleTestQuestion extends Model
+{
+    use HasFactory;
+
+    protected $table = 'training_book_part_module_test_questions';
+
+    protected $fillable = ['test_id', 'type', 'question', 'points', 'sort_order'];
+
+    public function test()
+    {
+        return $this->belongsTo(
+            TrainingBookPartModuleTest::class,
+            'test_id'
+        );
+    }
+
+    public function options()
+    {
+        return $this->hasMany(
+            TrainingBookPartModuleTestQuestionOption::class,
+            'question_id'
+        )->orderBy('sort_order');
+    }
+
+    public function acceptedAnswers()
+    {
+        return $this->hasMany(
+            TrainingBookPartModuleTestQuestionAnswer::class,
+            'question_id'
+        );
+    }
+}
