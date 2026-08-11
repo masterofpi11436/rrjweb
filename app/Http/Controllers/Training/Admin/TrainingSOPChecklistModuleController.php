@@ -5,7 +5,8 @@ namespace App\Http\Controllers\Training\Admin;
 // Base Controller
 use App\Http\Controllers\Controller;
 
-use Illuminate\Http\Request;
+// Models
+use App\Models\Training\TrainingBookPartModuleSOPChecklist;
 
 class TrainingSOPChecklistModuleController extends Controller
 {
@@ -14,23 +15,21 @@ class TrainingSOPChecklistModuleController extends Controller
         return view('Training.Admin.Modules.SOPChecklists.create');
     }
 
-    public function store(Request $request)
-    {
-        //
-    }
-
     public function edit($id)
     {
-        //
+        return view('Training.Admin.Modules.SOPChecklists.edit', [
+            'checklistId' => $id,
+        ]);
     }
 
-    public function update(Request $request, $id)
+    public function destroy(int $id)
     {
-        //
-    }
+        $checklist = TrainingBookPartModuleSOPChecklist::findOrFail($id);
 
-    public function destroy($id)
-    {
-        //
+        $checklist->delete();
+
+        return redirect()
+            ->route('training.admin.modules.dashboard')
+            ->with('success', 'Form deleted successfully.');
     }
 }

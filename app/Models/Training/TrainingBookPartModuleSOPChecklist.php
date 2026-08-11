@@ -2,19 +2,23 @@
 
 namespace App\Models\Training;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Training\TrainingBookPartModuleSOPChecklistItem;
 use Illuminate\Database\Eloquent\Model;
 
 class TrainingBookPartModuleSOPChecklist extends Model
 {
-    use HasFactory;
-
     protected $table = 'training_book_part_module_sop_checklists';
 
-    protected $fillable = ['module_id', 'number', 'title', 'link', 'completion_date', 'sort_order'];
+    protected $fillable = [
+        'title',
+        'description',
+    ];
 
-    public function module()
+    public function items()
     {
-        return $this->belongsTo(TrainingBookPartModule::class);
+        return $this->hasMany(
+            TrainingBookPartModuleSOPChecklistItem::class,
+            'sop_checklist_id'
+        );
     }
 }

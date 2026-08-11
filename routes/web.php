@@ -610,7 +610,7 @@ Route::prefix('training')->group(function () use ($traingingLoginClass, $trainin
                 // SOP Checklist Modules
                 Route::get('/sop-checklists/create', [TrainingSOPChecklistModuleController::class, 'create'])->name('sop-checklists.create');
                 Route::post('/sop-checklists', [TrainingSOPChecklistModuleController::class, 'store'])->name('sop-checklists.store');
-                Route::get('/sop-checklists/{sopChecklist}/edit', [TrainingSOPChecklistModuleController::class, 'edit'])->name('sop-cecklists.edit');
+                Route::get('/sop-checklists/{sopChecklist}/edit', [TrainingSOPChecklistModuleController::class, 'edit'])->name('sop-checklists.edit');
                 Route::put('/sop-checklists/{sopChecklist}', [TrainingSOPChecklistModuleController::class, 'update'])->name('sop-checklists.update');
                 Route::delete('/sop-checklists/{sopChecklist}', [TrainingSOPChecklistModuleController::class, 'destroy'])->name('sop-checklists.destroy');
 
