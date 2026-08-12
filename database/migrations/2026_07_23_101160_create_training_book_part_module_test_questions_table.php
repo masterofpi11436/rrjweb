@@ -14,24 +14,24 @@ return new class extends Migration
         Schema::create('training_book_part_module_test_questions', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignId('test_id')
-                ->constrained('training_book_part_module_tests')
-                ->cascadeOnDelete();
+            $table->unsignedBigInteger('test_id');
 
             $table->enum('type', [
                 'multiple_choice',
-                'fill_blank',
-                'freeform',
+                'true_false',
+                'free_form',
             ]);
 
             $table->text('question');
 
-            $table->unsignedInteger('points')->default(1);
             $table->unsignedInteger('sort_order')->default(0);
 
-            $table->boolean('required')->default(true);
-
             $table->timestamps();
+
+            $table->foreign('test_id', 'test_questions_test_fk')
+                ->references('id')
+                ->on('training_book_part_module_tests')
+                ->cascadeOnDelete();
         });
     }
 

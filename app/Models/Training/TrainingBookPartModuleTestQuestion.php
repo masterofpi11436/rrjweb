@@ -9,9 +9,12 @@ class TrainingBookPartModuleTestQuestion extends Model
 {
     use HasFactory;
 
-    protected $table = 'training_book_part_module_test_questions';
-
-    protected $fillable = ['test_id', 'type', 'question', 'points', 'sort_order'];
+    protected $fillable = [
+        'test_id',
+        'type',
+        'question',
+        'sort_order',
+    ];
 
     public function test()
     {
@@ -27,13 +30,5 @@ class TrainingBookPartModuleTestQuestion extends Model
             TrainingBookPartModuleTestQuestionOption::class,
             'question_id'
         )->orderBy('sort_order');
-    }
-
-    public function acceptedAnswers()
-    {
-        return $this->hasMany(
-            TrainingBookPartModuleTestQuestionAnswer::class,
-            'question_id'
-        );
     }
 }

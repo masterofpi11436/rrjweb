@@ -9,13 +9,15 @@ class TrainingBookPartModuleTestQuestionOption extends Model
 {
     use HasFactory;
 
-    protected $table = 'training_book_part_module_test_question_options';
-
     protected $fillable = [
         'question_id',
         'option',
         'is_correct',
         'sort_order',
+    ];
+
+    protected $casts = [
+        'is_correct' => 'boolean',
     ];
 
     public function question()

@@ -4,8 +4,7 @@ namespace App\Http\Controllers\Training\Admin;
 
 // Base Controller
 use App\Http\Controllers\Controller;
-
-use Illuminate\Http\Request;
+use App\Models\Training\TrainingBookPartModuleTest;
 
 class TrainingTestModuleController extends Controller
 {
@@ -14,23 +13,23 @@ class TrainingTestModuleController extends Controller
         return view('Training.Admin.Modules.Tests.create');
     }
 
-    public function store(Request $request)
+    public function edit(int $id)
     {
-        //
+        $test = TrainingBookPartModuleTest::findOrFail($id);
+
+        return view('Training.Admin.Modules.Tests.edit', [
+            'testId' => $test->id,
+        ]);
     }
 
-    public function edit($id)
+    public function destroy(int $id)
     {
-        //
-    }
+        $test = TrainingBookPartModuleTest::findOrFail($id);
 
-    public function update(Request $request, $id)
-    {
-        //
-    }
+        $test->delete();
 
-    public function destroy($id)
-    {
-        //
+        return redirect()
+            ->route('training.admin.modules.dashboard')
+            ->with('success', 'Paragraph deleted successfully.');
     }
 }

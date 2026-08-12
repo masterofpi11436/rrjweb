@@ -9,9 +9,12 @@ class TrainingBookPartModuleTest extends Model
 {
     use HasFactory;
 
-    protected $table = 'training_book_part_module_tests';
-
-    protected $fillable = ['title', 'description', 'passing_score', 'sort_order'];
+    protected $fillable = [
+        'title',
+        'description',
+        'passing_score',
+        'sort_order',
+    ];
 
     public function questions()
     {

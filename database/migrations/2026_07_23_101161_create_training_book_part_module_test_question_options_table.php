@@ -16,16 +16,18 @@ return new class extends Migration
 
             $table->unsignedBigInteger('question_id');
 
-            $table->foreign('question_id', 'test_option_question_fk')
-                ->references('id')
-                ->on('training_book_part_module_test_questions')
-                ->cascadeOnDelete();
-
             $table->text('option');
-            $table->boolean('is_correct')->nullable();
+
+            $table->boolean('is_correct')->default(false);
+
             $table->unsignedInteger('sort_order')->default(0);
 
             $table->timestamps();
+
+            $table->foreign('question_id', 'test_options_question_fk')
+                ->references('id')
+                ->on('training_book_part_module_test_questions')
+                ->cascadeOnDelete();
         });
     }
 
