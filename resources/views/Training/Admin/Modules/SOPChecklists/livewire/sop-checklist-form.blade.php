@@ -153,10 +153,9 @@
                                 <select id="category-{{ $index }}"
                                     wire:model="policies.{{ $index }}.category"
                                     class="w-full rounded-lg border border-gray-600
-               bg-gray-900 px-4 py-3 text-white
-               focus:border-blue-500 focus:outline-none
-               focus:ring-2 focus:ring-blue-500/30">
-
+                                        bg-gray-900 px-4 py-3 text-white
+                                        focus:border-blue-500 focus:outline-none
+                                        focus:ring-2 focus:ring-blue-500/30">
                                     <option value="">
                                         Select a Category
                                     </option>
