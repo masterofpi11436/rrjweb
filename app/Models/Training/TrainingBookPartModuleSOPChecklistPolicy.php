@@ -4,14 +4,16 @@ namespace App\Models\Training;
 
 use Illuminate\Database\Eloquent\Model;
 
-class TrainingBookPartModuleSOPChecklistItem extends Model
+class TrainingBookPartModuleSOPChecklistPolicy extends Model
 {
-    protected $table = 'training_book_part_module_sop_checklist_items';
+
+    protected $table = 'training_book_part_module_sop_checklist_policies';
 
     protected $fillable = [
         'sop_checklist_id',
-        'item',
-        'description',
+        'category',
+        'policy_number',
+        'title',
         'sort_order',
     ];
 

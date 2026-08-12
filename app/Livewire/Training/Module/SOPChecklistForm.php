@@ -14,7 +14,9 @@ class SOPChecklistForm extends Component
 
     public string $description = '';
 
-    public array $items = [];
+    public array $categories = [];
+
+    public array $policies = [];
 
     public function mount(?int $checklistId = null): void
     {
@@ -23,7 +25,8 @@ class SOPChecklistForm extends Component
         if ($this->checklistId) {
             $this->loadChecklist();
         } else {
-            $this->addItem();
+            $this->addCategory();
+            $this->addPolicy();
         }
     }
 
@@ -41,20 +44,40 @@ class SOPChecklistForm extends Component
                 'string',
             ],
 
-            'items' => [
+            'categories' => [
                 'required',
                 'array',
                 'min:1',
             ],
 
-            'items.*.item' => [
+            'categories.*.name' => [
+                'required',
+                'string',
+                'max:255',
+                'distinct',
+            ],
+
+            'policies' => [
+                'required',
+                'array',
+                'min:1',
+            ],
+
+            'policies.*.category' => [
                 'required',
                 'string',
             ],
 
-            'items.*.description' => [
-                'nullable',
+            'policies.*.policy_number' => [
+                'required',
                 'string',
+                'max:255',
+            ],
+
+            'policies.*.title' => [
+                'required',
+                'string',
+                'max:255',
             ],
         ];
     }
@@ -62,111 +85,174 @@ class SOPChecklistForm extends Component
     protected function messages(): array
     {
         return [
-            'title.required' => 'A checklist title is required.',
+            'title.required' =>
+                'A checklist title is required.',
 
-            'items.required' => 'At least one checklist item is required.',
-            'items.min' => 'At least one checklist item is required.',
+            'policies.required' =>
+                'At least one policy is required.',
 
-            'items.*.item.required' =>
-                'Each checklist item must contain instructions.',
+            'policies.min' =>
+                'At least one policy is required.',
+
+            'policies.*.category.required' =>
+                'Each policy must have a category.',
+
+            'policies.*.policy_number.required' =>
+                'Each policy must have a policy number.',
+
+            'policies.*.title.required' =>
+                'Each policy must have a title.',
         ];
     }
 
-    public function loadChecklist(): void
+    public function addCategory(): void
     {
-        $checklist = TrainingBookPartModuleSOPChecklist::with([
-            'items' => fn ($query) => $query->orderBy('sort_order'),
-        ])->findOrFail($this->checklistId);
-
-        $this->title = $checklist->title;
-        $this->description = $checklist->description ?? '';
-
-        $this->items = $checklist->items
-            ->map(function ($item) {
-                return [
-                    'id' => $item->id,
-                    'item' => $item->item,
-                    'description' => $item->description ?? '',
-                ];
-            })
-            ->values()
-            ->toArray();
-
-        if (empty($this->items)) {
-            $this->addItem();
-        }
-    }
-
-    public function addItem(): void
-    {
-        $this->items[] = [
-            'id' => null,
-            'item' => '',
-            'description' => '',
+        $this->categories[] = [
+            'name' => '',
         ];
     }
 
-    public function insertItem(int $index): void
+    public function removeCategory(int $index): void
     {
-        $newItem = [
-            'id' => null,
-            'item' => '',
-            'description' => '',
-        ];
-
-        array_splice(
-            $this->items,
-            $index + 1,
-            0,
-            [$newItem]
-        );
-    }
-
-    public function removeItem(int $index): void
-    {
-        if (!array_key_exists($index, $this->items)) {
+        if (!array_key_exists($index, $this->categories)) {
             return;
         }
 
-        unset($this->items[$index]);
+        $categoryName = $this->categories[$index]['name'] ?? '';
 
-        $this->items = array_values($this->items);
+        unset($this->categories[$index]);
 
-        if (empty($this->items)) {
-            $this->addItem();
+        $this->categories = array_values($this->categories);
+
+        if (empty($this->categories)) {
+            $this->addCategory();
+        }
+
+        if ($categoryName !== '') {
+            foreach ($this->policies as $policyIndex => $policy) {
+                if (($policy['category'] ?? '') === $categoryName) {
+                    $this->policies[$policyIndex]['category'] = '';
+                }
+            }
         }
 
         $this->resetValidation();
     }
 
-    public function moveItemUp(int $index): void
+    public function loadChecklist(): void
+    {
+        $checklist = TrainingBookPartModuleSOPChecklist::with([
+            'policies' => fn ($query) => $query->orderBy('sort_order'),
+        ])->findOrFail($this->checklistId);
+
+        $this->title = $checklist->title;
+        $this->description = $checklist->description ?? '';
+
+        $this->policies = $checklist->policies
+            ->map(function ($policy) {
+                return [
+                    'id' => $policy->id,
+                    'category' => $policy->category,
+                    'policy_number' => $policy->policy_number,
+                    'title' => $policy->title,
+                ];
+            })
+            ->values()
+            ->toArray();
+
+        $this->categories = $checklist->policies
+            ->pluck('category')
+            ->filter()
+            ->unique()
+            ->values()
+            ->map(function ($category) {
+                return [
+                    'name' => $category,
+                ];
+            })
+            ->toArray();
+
+        if (empty($this->categories)) {
+            $this->addCategory();
+        }
+
+        if (empty($this->policies)) {
+            $this->addPolicy();
+        }
+    }
+
+    public function addPolicy(): void
+    {
+        $this->policies[] = [
+            'id' => null,
+            'category' => '',
+            'policy_number' => '',
+            'title' => '',
+        ];
+    }
+
+    public function insertPolicy(int $index): void
+    {
+        $newPolicy = [
+            'id' => null,
+            'category' => '',
+            'policy_number' => '',
+            'title' => '',
+        ];
+
+        array_splice(
+            $this->policies,
+            $index + 1,
+            0,
+            [$newPolicy]
+        );
+    }
+
+    public function removePolicy(int $index): void
+    {
+        if (!array_key_exists($index, $this->policies)) {
+            return;
+        }
+
+        unset($this->policies[$index]);
+
+        $this->policies = array_values($this->policies);
+
+        if (empty($this->policies)) {
+            $this->addPolicy();
+        }
+
+        $this->resetValidation();
+    }
+
+    public function movePolicyUp(int $index): void
     {
         if (
             $index <= 0 ||
-            !array_key_exists($index, $this->items)
+            !array_key_exists($index, $this->policies)
         ) {
             return;
         }
 
-        $temporaryItem = $this->items[$index - 1];
+        $temporaryPolicy = $this->policies[$index - 1];
 
-        $this->items[$index - 1] = $this->items[$index];
-        $this->items[$index] = $temporaryItem;
+        $this->policies[$index - 1] = $this->policies[$index];
+        $this->policies[$index] = $temporaryPolicy;
     }
 
-    public function moveItemDown(int $index): void
+    public function movePolicyDown(int $index): void
     {
         if (
             $index < 0 ||
-            $index >= count($this->items) - 1
+            $index >= count($this->policies) - 1
         ) {
             return;
         }
 
-        $temporaryItem = $this->items[$index + 1];
+        $temporaryPolicy = $this->policies[$index + 1];
 
-        $this->items[$index + 1] = $this->items[$index];
-        $this->items[$index] = $temporaryItem;
+        $this->policies[$index + 1] = $this->policies[$index];
+        $this->policies[$index] = $temporaryPolicy;
     }
 
     public function save()
@@ -187,28 +273,35 @@ class SOPChecklistForm extends Component
                 ]
             );
 
-            $savedItemIds = [];
+            $savedPolicyIds = [];
 
-            foreach ($validated['items'] as $index => $itemData) {
-                $itemId = $this->items[$index]['id'] ?? null;
+            foreach ($validated['policies'] as $index => $policyData) {
+                $policyId = $this->policies[$index]['id'] ?? null;
 
-                $item = $checklist->items()->updateOrCreate(
+                $policy = $checklist->policies()->updateOrCreate(
                     [
-                        'id' => $itemId,
+                        'id' => $policyId,
                     ],
                     [
-                        'item' => $itemData['item'],
-                        'description' =>
-                            $itemData['description'] ?: null,
-                        'sort_order' => $index,
+                        'category' =>
+                            $policyData['category'],
+
+                        'policy_number' =>
+                            $policyData['policy_number'],
+
+                        'title' =>
+                            $policyData['title'],
+
+                        'sort_order' =>
+                            $index,
                     ]
                 );
 
-                $savedItemIds[] = $item->id;
+                $savedPolicyIds[] = $policy->id;
             }
 
-            $checklist->items()
-                ->whereNotIn('id', $savedItemIds)
+            $checklist->policies()
+                ->whereNotIn('id', $savedPolicyIds)
                 ->delete();
 
             $this->checklistId = $checklist->id;

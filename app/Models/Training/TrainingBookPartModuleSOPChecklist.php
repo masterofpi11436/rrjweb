@@ -2,11 +2,11 @@
 
 namespace App\Models\Training;
 
-use App\Models\Training\TrainingBookPartModuleSOPChecklistItem;
 use Illuminate\Database\Eloquent\Model;
 
 class TrainingBookPartModuleSOPChecklist extends Model
 {
+
     protected $table = 'training_book_part_module_sop_checklists';
 
     protected $fillable = [
@@ -14,10 +14,10 @@ class TrainingBookPartModuleSOPChecklist extends Model
         'description',
     ];
 
-    public function items()
+    public function policies()
     {
         return $this->hasMany(
-            TrainingBookPartModuleSOPChecklistItem::class,
+            TrainingBookPartModuleSOPChecklistPolicy::class,
             'sop_checklist_id'
         );
     }
