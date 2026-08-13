@@ -2,49 +2,27 @@
 
 namespace App\Models\Training;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class TrainingBookPartModule extends Model
 {
-    use HasFactory;
-
-    protected $table = 'training_book_part_modules';
-
-    protected $fillable = ['title', 'book_part_id', 'sort_order'];
+    protected $fillable = [
+        'book_part_id',
+        'module_type',
+        'module_id',
+        'sort_order',
+    ];
 
     public function part()
     {
-        return $this->belongsTo(TrainingBookPart::class, 'book_part_id');
+        return $this->belongsTo(
+            TrainingBookPart::class,
+            'book_part_id'
+        );
     }
 
-    public function checklists()
+    public function module()
     {
-        return $this->hasMany(TrainingBookPartModuleChecklist::class, 'module_id')->orderBy('sort_order');
-    }
-
-    public function forms()
-    {
-        return $this->hasMany(TrainingBookPartModuleForm::class, 'module_id')->orderBy('sort_order');
-    }
-
-    public function media()
-    {
-        return $this->hasMany(TrainingBookPartModuleMedia::class, 'module_id')->orderBy('sort_order');
-    }
-
-    public function sopChecklists()
-    {
-        return $this->hasMany(TrainingBookPartModuleSOPChecklist::class, 'module_id')->orderBy('sort_order');
-    }
-
-    public function tests()
-    {
-        return $this->hasMany(TrainingBookPartModuleTest::class, 'module_id')->orderBy('sort_order');
-    }
-
-    public function paragraphs()
-    {
-        return $this->hasMany(TrainingBookPartModuleParagraph::class, 'module_id')->orderBy('sort_order');
+        return $this->morphTo();
     }
 }

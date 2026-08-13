@@ -13,17 +13,18 @@ return new class extends Migration
     {
         Schema::create('training_book_part_modules', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('book_part_id')->constrained('training_book_parts')->cascadeOnDelete();
-            $table->string('module_type');
-            $table->unsignedBigInteger('module_id');
-            $table->string('title');
+
+            $table->foreignId('book_part_id')
+                ->constrained('training_book_parts')
+                ->cascadeOnDelete();
+
+            $table->morphs('module');
+
             $table->unsignedInteger('sort_order')->default(0);
+
             $table->timestamps();
 
-            $table->index([
-                'module_type',
-                'module_id',
-            ]);
+            $table->index(['module_type', 'module_id']);
         });
     }
 
