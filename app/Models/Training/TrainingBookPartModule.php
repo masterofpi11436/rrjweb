@@ -2,10 +2,15 @@
 
 namespace App\Models\Training;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class TrainingBookPartModule extends Model
 {
+    use HasFactory;
+
+    protected $table = 'training_book_part_modules';
+
     protected $fillable = [
         'book_part_id',
         'module_type',

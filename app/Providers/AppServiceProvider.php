@@ -22,6 +22,15 @@ use App\Http\Middleware\Auth\Warehouse\WarehouseSupervisor;
 use App\Http\Middleware\Auth\Warehouse\WarehouseTechnician;
 use App\Http\Middleware\Auth\Training\TrainingAdmin;
 
+// Enforce mapping
+use App\Models\Training\TrainingBookPartModuleParagraph;
+use App\Models\Training\TrainingBookPartModuleMedia;
+use App\Models\Training\TrainingBookPartModuleForm;
+use App\Models\Training\TrainingBookPartModuleChecklist;
+use App\Models\Training\TrainingBookPartModuleSOPChecklist;
+use App\Models\Training\TrainingBookPartModuleTest;
+use Illuminate\Database\Eloquent\Relations\Relation;
+
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -56,5 +65,15 @@ class AppServiceProvider extends ServiceProvider
         $router->aliasMiddleware('trainingAdmin', TrainingAdmin::class);
         $router->aliasMiddleware('cache', ClearCache::class);
         $router->aliasMiddleware('clear-cart', ClearCart::class);
+
+        // Training Application map
+        Relation::enforceMorphMap([
+            'paragraph' => TrainingBookPartModuleParagraph::class,
+            'media' => TrainingBookPartModuleMedia::class,
+            'form' => TrainingBookPartModuleForm::class,
+            'checklist' => TrainingBookPartModuleChecklist::class,
+            'sop_checklist' => TrainingBookPartModuleSOPChecklist::class,
+            'test' => TrainingBookPartModuleTest::class,
+        ]);
     }
 }

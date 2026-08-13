@@ -149,41 +149,130 @@
 
                                 @forelse ($part['modules'] ?? [] as $moduleIndex => $module)
                                     <div wire:key="module-{{ $partIndex }}-{{ $moduleIndex }}"
-                                        class="space-y-3 rounded-xl border border-gray-800 bg-gray-900/60 p-4">
+                                        class="space-y-4 rounded-xl border border-gray-800 bg-gray-900/60 p-4">
 
-                                        <div class="grid grid-cols-1 gap-3 md:grid-cols-[1fr_auto] md:items-end">
+                                        <div class="grid grid-cols-1 gap-4 md:grid-cols-[1fr_2fr_auto] md:items-end">
+
+                                            {{-- Module Type --}}
                                             <div class="space-y-2">
                                                 <label class="{{ $labelClass }}">
-                                                    Module {{ $moduleIndex + 1 }} Title
+                                                    Module Type
                                                 </label>
 
-                                                <input type="text"
-                                                    wire:model="parts.{{ $partIndex }}.modules.{{ $moduleIndex }}.title"
-                                                    placeholder="Module title" class="{{ $inputClass }}">
+                                                <select
+                                                    wire:model.live="parts.{{ $partIndex }}.modules.{{ $moduleIndex }}.module_type"
+                                                    class="{{ $inputClass }}">
+                                                    <option value="">
+                                                        Select module type
+                                                    </option>
 
-                                                @error("parts.$partIndex.modules.$moduleIndex.title")
-                                                    <p class="text-sm text-red-400">{{ $message }}</p>
+                                                    <option value="paragraph">
+                                                        Paragraph
+                                                    </option>
+
+                                                    <option value="media">
+                                                        Media
+                                                    </option>
+
+                                                    <option value="form">
+                                                        Form
+                                                    </option>
+
+                                                    <option value="checklist">
+                                                        Checklist
+                                                    </option>
+
+                                                    <option value="sop_checklist">
+                                                        SOP Checklist
+                                                    </option>
+
+                                                    <option value="test">
+                                                        Test
+                                                    </option>
+                                                </select>
+
+                                                @error("parts.$partIndex.modules.$moduleIndex.module_type")
+                                                    <p class="text-sm text-red-400">
+                                                        {{ $message }}
+                                                    </p>
                                                 @enderror
                                             </div>
 
+
+                                            {{-- Existing Module --}}
+                                            <div class="space-y-2">
+
+                                                <label class="{{ $labelClass }}">
+                                                    Module
+                                                </label>
+
+                                                @php
+                                                    $selectedType = $module['module_type'] ?? '';
+
+                                                    $modulesForType = $availableModules[$selectedType] ?? [];
+                                                @endphp
+
+                                                <select
+                                                    wire:model="parts.{{ $partIndex }}.modules.{{ $moduleIndex }}.module_id"
+                                                    class="{{ $inputClass }}" @disabled(!$selectedType)>
+
+                                                    @if (!$selectedType)
+                                                        <option value="">
+                                                            Select a module type first
+                                                        </option>
+                                                    @elseif (empty($modulesForType))
+                                                        <option value="">
+                                                            No modules available
+                                                        </option>
+                                                    @else
+                                                        <option value="">
+                                                            Select module
+                                                        </option>
+
+                                                        @foreach ($modulesForType as $availableModule)
+                                                            <option value="{{ $availableModule['id'] }}">
+                                                                {{ $availableModule['title'] }}
+                                                            </option>
+                                                        @endforeach
+                                                    @endif
+
+                                                </select>
+
+                                                @error("parts.$partIndex.modules.$moduleIndex.module_id")
+                                                    <p class="text-sm text-red-400">
+                                                        {{ $message }}
+                                                    </p>
+                                                @enderror
+                                            </div>
+
+
+                                            {{-- Remove --}}
                                             <button type="button"
                                                 wire:click="removeModule({{ $partIndex }}, {{ $moduleIndex }})"
                                                 class="{{ $removeButtonClass }}">
                                                 Remove Module
                                             </button>
+
                                         </div>
 
+
+                                        {{-- Insert Between Modules --}}
                                         @unless ($loop->last)
                                             <div class="flex justify-center border-t border-gray-800 pt-3">
+
                                                 <button type="button"
                                                     wire:click="insertModuleAfter({{ $partIndex }}, {{ $moduleIndex }})"
                                                     class="rounded-full border border-dashed border-purple-500 px-4 py-2 text-sm text-purple-300 hover:bg-purple-950/40">
                                                     + Insert Module
                                                 </button>
+
                                             </div>
                                         @endunless
+
                                     </div>
+
                                 @empty
+
                                     <p
                                         class="rounded-xl border border-dashed border-gray-700 p-4 text-sm text-gray-400">
                                         No modules have been added to this part.
