@@ -6,8 +6,8 @@
 
 @section('content')
 
-<a href="{{ route('vfm.vehicle.dashboard') }}">Cancel</a>
+    <a href="{{ route('vfm.vehicle.dashboard') }}">Cancel</a>
 
-@livewire('VFM.VFM-vehicle-form')
+    @livewire('VFM.VFM-vehicle-form')
 
 @endsection

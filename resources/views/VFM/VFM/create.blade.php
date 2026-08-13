@@ -5,9 +5,9 @@
 @section('heading', 'Create an Insepction Ticket')
 
 @section('content')
-<!-- Link to navigate back to the dashboard -->
-<a href="{{ route('vfm.dashboard') }}">Cancel</a>
+    <!-- Link to navigate back to the dashboard -->
+    <a href="{{ route('vfm.dashboard') }}">Cancel</a>
 
-@livewire('VFM.VFM-form')
+    @livewire('VFM.VFM-form')
 
 @endsection
