@@ -70,7 +70,7 @@
     @else
         <div class="rounded-2xl border border-dashed border-gray-700 bg-gray-950 p-10 text-center">
             <h1 class="text-lg font-semibold text-gray-300">
-                No Book Created.
+                No Book Found.
             </h1>
 
             <p class="mt-2 text-sm text-gray-500">

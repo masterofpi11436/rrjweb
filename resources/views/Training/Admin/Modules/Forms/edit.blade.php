@@ -8,7 +8,7 @@
 
     <a href="{{ route('training.admin.modules.dashboard') }}">Back</a>
 
-    @livewire('training.module.form-form', [
+    @livewire('training.module.FormForm', [
         'formId' => $formId,
     ])
 

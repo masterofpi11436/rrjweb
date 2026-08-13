@@ -10,6 +10,6 @@
 
     <a href="{{ route('training.admin.modules.dashboard') }}">Back</a>
 
-    @livewire('Training.Module.paragraphform')
+    @livewire('Training.Module.ParagraphForm')
 
 @endsection
