@@ -6,8 +6,12 @@
 
 @section('content')
 
-    <a href="{{ route('training.admin.modules.dashboard') }}">Back</a>
+    <a href="{{ route('training.admin.modules.dashboard') }}">
+        Back
+    </a>
 
-    @livewire('training.module.MediaForm', ['mediaId' => $mediaId])
+    @include('Training.Admin.Modules.Media.form', [
+        'media' => $media,
+    ])
 
 @endsection

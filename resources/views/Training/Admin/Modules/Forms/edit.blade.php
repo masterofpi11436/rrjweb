@@ -8,8 +8,8 @@
 
     <a href="{{ route('training.admin.modules.dashboard') }}">Back</a>
 
-    @livewire('training.module.FormForm', [
-        'formId' => $formId,
+    @include('Training.Admin.Modules.Forms.form', [
+        'form' => $form,
     ])
 
 @endsection

@@ -589,9 +589,9 @@ Route::prefix('training')->group(function () use ($traingingLoginClass, $trainin
                 // Form Modules
                 Route::get('/forms/create', [TrainingFormModuleController::class, 'create'])->name('forms.create');
                 Route::post('/forms', [TrainingFormModuleController::class, 'store'])->name('forms.store');
-                Route::get('/forms/{form}/edit', [TrainingFormModuleController::class, 'edit'])->name('forms.edit');
-                Route::put('/forms/{form}', [TrainingFormModuleController::class, 'update'])->name('forms.update');
-                Route::delete('/forms/{form}', [TrainingFormModuleController::class, 'destroy'])->name('forms.destroy');
+                Route::get('/forms/{id}/edit', [TrainingFormModuleController::class, 'edit'])->name('forms.edit');
+                Route::patch('/forms/{id}', [TrainingFormModuleController::class, 'update'])->name('forms.update');
+                Route::delete('/forms/{id}', [TrainingFormModuleController::class, 'destroy'])->name('forms.destroy');
 
                 // Media Modules
                 Route::get('/media/create', [TrainingMediaModuleController::class, 'create'])->name('media.create');
