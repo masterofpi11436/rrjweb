@@ -3,6 +3,8 @@
 namespace App\Models\Login;
 
 use App\Enums\TrainingUser;
+use App\Models\Training\TrainingBookAssignment;
+use App\Models\Training\TrainingBookAssignmentSignoff;
 use App\Models\Warehouse\Order;
 use App\Observers\UserObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
@@ -43,5 +45,21 @@ class User extends Authenticatable
     public function approvedOrders()
     {
         return $this->hasMany(Order::class, 'approved_denied_by');
+    }
+
+    public function trainingBookAssignments()
+    {
+        return $this->hasMany(
+            TrainingBookAssignment::class,
+            'user_id'
+        );
+    }
+
+    public function trainingSignoffs()
+    {
+        return $this->hasMany(
+            TrainingBookAssignmentSignoff::class,
+            'signed_by'
+        );
     }
 }

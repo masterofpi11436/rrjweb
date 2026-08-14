@@ -30,4 +30,20 @@ class TrainingBookPartModule extends Model
     {
         return $this->morphTo();
     }
+
+    public function signoffRequirements()
+    {
+        return $this->hasMany(
+            TrainingBookPartModuleSignoffRequirement::class,
+            'book_part_module_id'
+        )->orderBy('sort_order');
+    }
+
+    public function assignmentModules()
+    {
+        return $this->hasMany(
+            TrainingBookAssignmentModule::class,
+            'book_part_module_id'
+        );
+    }
 }

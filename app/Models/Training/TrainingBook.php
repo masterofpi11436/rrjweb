@@ -17,4 +17,12 @@ class TrainingBook extends Model
     {
         return $this->hasMany(TrainingBookPart::class, 'book_id')->orderBy('sort_order');
     }
+
+    public function assignments()
+    {
+        return $this->hasMany(
+            TrainingBookAssignment::class,
+            'book_id'
+        );
+    }
 }
