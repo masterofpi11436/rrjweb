@@ -22,7 +22,7 @@ return new class extends Migration
                 ->cascadeOnDelete();
 
             $table->string('heading')->nullable();
-            $table->longText('content');
+            $table->longText('content')->nullable();
             $table->unsignedInteger('sort_order')->default(0);
             $table->timestamps();
         });

@@ -201,7 +201,7 @@ class ParagraphForm extends Component
             ],
 
             'paragraphs.*.content' => [
-                'required',
+                'nullable',
                 'string',
             ],
 
