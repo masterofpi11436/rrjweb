@@ -9,28 +9,16 @@ Camera Schedule:
 
 Training Tracker:
     1. Modules
-        a. Paragraphs need to have multple paragprapghs to form one module. Same for other modules as well like the forms.
+        a. Need Evaluation module for different HUs
+        b. Paragraph needs alphabetical list. Make paragprapgh section with paragraphs inside and insert/add paragraph buttons
+        c. Checklist need broken down section/grouping with the different line items.
+        d. SOP Checklist needs same breakdown grouping as checklists
 
 Policy builder:
 
     1. Move Create Nested Bullet to the left
     2. Put Remove Paragraph button above the textarea
-
-    Short term:
-    4. Change size of font for cover, toc, body, references, and definitions page to match the current policies and other UI issues
-    5. Reformat the references page and remove the outside reference column and UI entry
-
-    Mid term:
-    1. Create a way to share and allow reviewers to annotate or change policies
-    2. Make the approval and sign off process from compliance staff up to superintendent for policies
-    3. Make a historical section where users can archive policies.
-
-    Long term:
-    1. Advance search searches indexed paragraphs and bullets.
-    2. Include a search feature with predictive searches similar to google (did you mean XYZ)
-    3. Provide a web of policies that show correlations between policies what talk about same material
-    4. Have a way to determine which polices may be outdated and need review (Example: Policy XYZ was last reviewed X amount of years ago
-    5. Auto correct for policies looking for syntax consistency (A semi colon was used instead of a colon)
+    3. Fix ACA table for pdf creation.
 
 *** Future App Ideas ***
 Simple Inventory App:
