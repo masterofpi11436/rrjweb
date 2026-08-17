@@ -76,6 +76,16 @@
         ])
 
         @include('Training.Admin.Modules.partials.module-section', [
+            'title' => 'Evaluation Modules',
+            'description' => 'Evaluation items that users must complete.',
+            'modules' => $evaluationModules,
+            'createRoute' => route('training.admin.modules.evaluations.create'),
+            'editRouteName' => 'training.admin.modules.evaluations.edit',
+            'destroyRouteName' => 'training.admin.modules.evaluations.destroy',
+            'emptyMessage' => 'No evaluation modules have been created.',
+        ])
+
+        @include('Training.Admin.Modules.partials.module-section', [
             'title' => 'SOP Checklist Modules',
             'description' => 'Standard operating procedure review and sign-off items.',
             'modules' => $sopChecklistModules,

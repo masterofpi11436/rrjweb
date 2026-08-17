@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Training\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Training\TrainingBookPartModuleChecklist;
+use App\Models\Training\TrainingBookPartModuleEvaluation;
 use App\Models\Training\TrainingBookPartModuleForm;
 use App\Models\Training\TrainingBookPartModuleMedia;
 use App\Models\Training\TrainingBookPartModuleParagraph;
@@ -21,6 +22,7 @@ class TrainingModuleController extends Controller
             'checklistModules' => TrainingBookPartModuleChecklist::latest()->get(),
             'sopChecklistModules' => TrainingBookPartModuleSOPChecklist::latest()->get(),
             'testModules' => TrainingBookPartModuleTest::latest()->get(),
+            'evaluationModules' => TrainingBookPartModuleEvaluation::latest()->get(),
         ]);
     }
 }

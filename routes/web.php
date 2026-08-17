@@ -59,6 +59,7 @@ use App\Http\Controllers\Training\Admin\TrainingMediaModuleController;
 use App\Http\Controllers\Training\Admin\TrainingChecklistModuleController;
 use App\Http\Controllers\Training\Admin\TrainingSOPChecklistModuleController;
 use App\Http\Controllers\Training\Admin\TrainingTestModuleController;
+use App\Http\Controllers\Training\Admin\TrainingEvaluationModuleController;
 
 // Shorthand login Classes
 $baseLoginClass = BaseLoginController::class;
@@ -606,6 +607,12 @@ Route::prefix('training')->group(function () use ($traingingLoginClass, $trainin
                 Route::get('/checklists/{checklist}/edit', [TrainingChecklistModuleController::class, 'edit'])->name('checklists.edit');
                 Route::put('/checklists/{checklist}', [TrainingChecklistModuleController::class, 'update'])->name('checklists.update');
                 Route::delete('/checklists/{checklist}', [TrainingChecklistModuleController::class, 'destroy'])->name('checklists.destroy');
+
+                Route::get('/evaluations/create', [TrainingEvaluationModuleController::class, 'create'])->name('evaluations.create');
+                Route::post('/evaluations', [TrainingEvaluationModuleController::class, 'store'])->name('evaluations.store');
+                Route::get('/evaluations/{checklist}/edit', [TrainingEvaluationModuleController::class, 'edit'])->name('evaluations.edit');
+                Route::put('/evaluations/{checklist}', [TrainingEvaluationModuleController::class, 'update'])->name('evaluations.update');
+                Route::delete('/evaluations/{checklist}', [TrainingEvaluationModuleController::class, 'destroy'])->name('evaluations.destroy');
 
                 // SOP Checklist Modules
                 Route::get('/sop-checklists/create', [TrainingSOPChecklistModuleController::class, 'create'])->name('sop-checklists.create');
