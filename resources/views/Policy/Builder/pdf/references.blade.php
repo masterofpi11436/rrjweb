@@ -41,9 +41,24 @@
         line-height: 1.2;
     }
 
-    .bullet {
-        margin-left: 20px;
+    .bullet-symbol {
+        width: 5%;
+        vertical-align: top;
+        text-align: right;
+        padding-right: 6px;
         line-height: 1.2;
+    }
+
+    .bullet-text {
+        width: 95%;
+        vertical-align: top;
+        text-align: left;
+        line-height: 1.2;
+    }
+
+    .bullet-spacing {
+        font-size: 2pt;
+        line-height: 2pt;
     }
 
     .paragraph-spacing {
@@ -65,12 +80,10 @@
 
         {{-- Reference Title --}}
         <tr>
-            <td colspan="2" class="reference-title">
-                {{ $reference->reference_title }}
-            </td>
+            <td colspan="2" class="reference-title">{{ $reference->reference_title }}</td>
         </tr>
 
-        {{-- Space between title and first paragraph --}}
+        {{-- Space between reference title and first content --}}
         <tr>
             <td colspan="2" class="reference-title-spacing">
                 &nbsp;
@@ -82,20 +95,23 @@
             {{-- ACA Reference --}}
             @if ($paragraph->aca_reference)
                 <tr>
-                    <td class="aca-left">
-                        {{ $paragraph->aca_reference }}
-                    </td>
+                    <td class="aca-left">{{ $paragraph->aca_reference }}</td>
 
-                    <td class="aca-right">
-                        {{ $paragraph->paragraph }}
-                    </td>
+                    <td class="aca-right">{{ $paragraph->paragraph }}</td>
                 </tr>
 
             {{-- Normal Paragraph --}}
             @elseif ($paragraph->paragraph)
                 <tr>
-                    <td colspan="2" class="paragraph">
-                        {{ $paragraph->paragraph }}
+                    <td colspan="2" class="paragraph">{{ $paragraph->paragraph }}</td>
+                </tr>
+            @endif
+
+            {{-- Space between paragraph and first bullet --}}
+            @if ($paragraph->bullets->count())
+                <tr>
+                    <td colspan="2" class="bullet-spacing">
+                        &nbsp;
                     </td>
                 </tr>
             @endif
@@ -103,10 +119,23 @@
             {{-- Bullets --}}
             @foreach ($paragraph->bullets as $bullet)
                 <tr>
-                    <td colspan="2" class="bullet">
-                        • {{ $bullet->list['text'] ?? '' }}
+                    <td class="bullet-symbol">
+                        •
+                    </td>
+
+                    <td class="bullet-text">
+                        {{ $bullet->list['text'] ?? '' }}
                     </td>
                 </tr>
+
+                {{-- Space between bullets --}}
+                @if (!$loop->last)
+                    <tr>
+                        <td colspan="2" class="bullet-spacing">
+                            &nbsp;
+                        </td>
+                    </tr>
+                @endif
             @endforeach
 
             {{-- Space between paragraphs --}}
