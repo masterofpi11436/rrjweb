@@ -2,8 +2,13 @@
     .page-title {
         font-size: 18pt;
         font-weight: bold;
-        text-align: left;
+        text-align: center;
         margin-bottom: 20px;
+    }
+
+    .reference-table {
+        width: 100%;
+        border-collapse: collapse;
     }
 
     .reference-title {
@@ -11,14 +16,9 @@
         font-weight: bold;
     }
 
-    .aca-table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-bottom: 4px;
-    }
-
-    .aca-first {
-        padding-top: 15px;
+    .reference-title-spacing {
+        font-size: 5pt;
+        line-height: 5pt;
     }
 
     .aca-left {
@@ -39,7 +39,6 @@
     .paragraph {
         text-align: justify;
         line-height: 1.2;
-        margin-bottom: 6px;
     }
 
     .bullet {
@@ -47,29 +46,85 @@
         line-height: 1.2;
     }
 
-    .reference-spacing {
-        height: 8px;
+    .paragraph-spacing {
+        font-size: 4pt;
+        line-height: 4pt;
     }
 
-    .first {
-        margin-top: 10005px;
+    .reference-spacing {
+        font-size: 15pt;
+        line-height: 15pt;
     }
 </style>
 
 <div class="page-title">REFERENCES</div>
-@foreach ($policy->references as $reference)
-    <div class="reference-title">{{ $reference->reference_title }}</div>
-    @foreach ($reference->paragraphs as $paragraph)
-        @if ($paragraph->aca_reference)
-            <table class="aca-table"><tr><td class="aca-left">{{ $paragraph->aca_reference }}</td><td class="aca-right">{{ $paragraph->paragraph }}</td></tr></table>
-        @elseif ($paragraph->paragraph)<div class="paragraph">{{ $paragraph->paragraph }}</div>
-        @endif
 
-        @foreach ($paragraph->bullets as $bullet)
-            <div class="bullet">
-                • {{ $bullet->list['text'] ?? '' }}
-            </div>
+@foreach ($policy->references as $reference)
+
+    <table class="reference-table">
+
+        {{-- Reference Title --}}
+        <tr>
+            <td colspan="2" class="reference-title">
+                {{ $reference->reference_title }}
+            </td>
+        </tr>
+
+        {{-- Space between title and first paragraph --}}
+        <tr>
+            <td colspan="2" class="reference-title-spacing">
+                &nbsp;
+            </td>
+        </tr>
+
+        @foreach ($reference->paragraphs as $paragraph)
+
+            {{-- ACA Reference --}}
+            @if ($paragraph->aca_reference)
+                <tr>
+                    <td class="aca-left">
+                        {{ $paragraph->aca_reference }}
+                    </td>
+
+                    <td class="aca-right">
+                        {{ $paragraph->paragraph }}
+                    </td>
+                </tr>
+
+            {{-- Normal Paragraph --}}
+            @elseif ($paragraph->paragraph)
+                <tr>
+                    <td colspan="2" class="paragraph">
+                        {{ $paragraph->paragraph }}
+                    </td>
+                </tr>
+            @endif
+
+            {{-- Bullets --}}
+            @foreach ($paragraph->bullets as $bullet)
+                <tr>
+                    <td colspan="2" class="bullet">
+                        • {{ $bullet->list['text'] ?? '' }}
+                    </td>
+                </tr>
+            @endforeach
+
+            {{-- Space between paragraphs --}}
+            @if (!$loop->last)
+                <tr>
+                    <td colspan="2" class="paragraph-spacing">
+                        &nbsp;
+                    </td>
+                </tr>
+            @endif
+
         @endforeach
-        <div class="reference-spacing"></div>
-    @endforeach
+
+    </table>
+
+    {{-- Space between references --}}
+    @if (!$loop->last)
+        <div class="reference-spacing">&nbsp;</div>
+    @endif
+
 @endforeach
