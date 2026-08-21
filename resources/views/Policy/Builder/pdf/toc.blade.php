@@ -59,25 +59,12 @@
 <table>
     @foreach ($policy->chapters as $chapterIndex => $chapter)
         <br>
-        <tr>
-            <td class="chapter-number">
-                Chapter {{ $chapterIndex + 1 }} -
-            </td>
-
-            <td class="chapter-title">
-                {{ $chapter->chapter_title }}
-            </td>
-        </tr>
+        <tr><td class="chapter-number">Chapter {{ $chapterIndex + 1 }} - </td><td class="chapter-title">{{ $chapter->chapter_title }}</td></tr>
 
         @foreach ($chapter->sections as $sectionIndex => $section)
             <tr>
                 <td></td>
-
-                <td class="section-title">
-                    {{ $chapterIndex + 1 }}.{{ $sectionIndex + 1 }}
-                    &nbsp;&nbsp;&nbsp;
-                    {{ $section->section_title }}
-                </td>
+                <td class="section-title">{{ $chapterIndex + 1 }}.{{ $sectionIndex + 1 }}&nbsp;&nbsp;&nbsp;{{ $section->section_title }}</td>
             </tr>
         @endforeach
     @endforeach
