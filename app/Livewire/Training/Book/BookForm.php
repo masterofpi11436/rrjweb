@@ -10,6 +10,7 @@ use App\Models\Training\TrainingBookPartModuleMedia;
 use App\Models\Training\TrainingBookPartModuleForm;
 use App\Models\Training\TrainingBookPartModuleChecklist;
 use App\Models\Training\TrainingBookPartModuleEvaluation;
+use App\Models\Training\TrainingBookPartModuleEvaluationList;
 use App\Models\Training\TrainingBookPartModuleSOPChecklist;
 use App\Models\Training\TrainingBookPartModuleTest;
 use Illuminate\Support\Facades\DB;
@@ -168,19 +169,6 @@ class BookForm extends Component
         );
     }
 
-    /*
-     * Reset module_id whenever the module type changes.
-     *
-     * Otherwise, changing:
-     *
-     * Paragraph #3
-     *
-     * to:
-     *
-     * Media
-     *
-     * could accidentally leave module_id = 3 selected.
-     */
     public function updatedParts(
         mixed $value,
         string $key
@@ -273,16 +261,6 @@ class BookForm extends Component
 
             $this->trainingBookId = $book->id;
 
-            /*
-             * For now, completely rebuild the book structure
-             * whenever the book is saved.
-             *
-             * Deleting a part will cascade-delete its
-             * training_book_part_modules placement records.
-             *
-             * It WILL NOT delete the actual Paragraph,
-             * Media, Test, Checklist, etc. module.
-             */
             $book->parts()->delete();
 
             foreach (

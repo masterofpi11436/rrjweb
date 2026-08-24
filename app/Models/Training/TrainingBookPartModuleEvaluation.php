@@ -19,7 +19,7 @@ class TrainingBookPartModuleEvaluation extends Model
     {
         return $this->hasMany(
             TrainingBookPartModuleEvaluationItem::class,
-            'checklist_id'
+            'evaluation_id'
         );
     }
 }

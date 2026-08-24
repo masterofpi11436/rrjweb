@@ -8,10 +8,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class TrainingBookPartModuleEvaluationItem extends Model
 {
     protected $table =
-        'training_book_part_module_checklist_items';
+        'training_book_part_module_evaluation_items';
 
     protected $fillable = [
-        'checklist_id',
+        'evaluation_id',
         'item',
         'description',
         'sort_order',
@@ -21,11 +21,11 @@ class TrainingBookPartModuleEvaluationItem extends Model
         'sort_order' => 'integer',
     ];
 
-    public function checklist(): BelongsTo
+    public function evaluation(): BelongsTo
     {
         return $this->belongsTo(
             TrainingBookPartModuleEvaluation::class,
-            'checklist_id'
+            'evaluation_id'
         );
     }
 }

@@ -2,34 +2,33 @@
 
 namespace App\Providers;
 
-use Illuminate\Routing\Router;
-use App\Http\Middleware\Auth\VFM;
-use App\Http\Middleware\ClearCart;
 use App\Http\Middleware\Auth\Admin;
-use App\Http\Middleware\Auth\Phone;
-use App\Http\Middleware\ClearCache;
-use App\Http\Middleware\Auth\Policy;
 use App\Http\Middleware\Auth\Camera;
-use App\Http\Middleware\Auth\Tablet;
-use App\Http\Middleware\Auth\VFMTech;
-use App\Http\Middleware\Auth\Mailroom;
-use Illuminate\Support\ServiceProvider;
 use App\Http\Middleware\Auth\Jurisdiction;
+use App\Http\Middleware\Auth\Mailroom;
+use App\Http\Middleware\Auth\Phone;
+use App\Http\Middleware\Auth\Policy;
+use App\Http\Middleware\Auth\Tablet;
+use App\Http\Middleware\Auth\Training\TrainingAdmin;
+use App\Http\Middleware\Auth\VFM;
+use App\Http\Middleware\Auth\VFMTech;
 use App\Http\Middleware\Auth\Warehouse\Property;
 use App\Http\Middleware\Auth\Warehouse\Requestor;
 use App\Http\Middleware\Auth\Warehouse\Supervisor;
 use App\Http\Middleware\Auth\Warehouse\WarehouseSupervisor;
 use App\Http\Middleware\Auth\Warehouse\WarehouseTechnician;
-use App\Http\Middleware\Auth\Training\TrainingAdmin;
-
-// Enforce mapping
-use App\Models\Training\TrainingBookPartModuleParagraph;
-use App\Models\Training\TrainingBookPartModuleMedia;
-use App\Models\Training\TrainingBookPartModuleForm;
+use App\Http\Middleware\ClearCache;
+use App\Http\Middleware\ClearCart;
 use App\Models\Training\TrainingBookPartModuleChecklist;
+use App\Models\Training\TrainingBookPartModuleEvaluation;
+use App\Models\Training\TrainingBookPartModuleForm;
+use App\Models\Training\TrainingBookPartModuleMedia;
+use App\Models\Training\TrainingBookPartModuleParagraph;
 use App\Models\Training\TrainingBookPartModuleSOPChecklist;
 use App\Models\Training\TrainingBookPartModuleTest;
 use Illuminate\Database\Eloquent\Relations\Relation;
+use Illuminate\Routing\Router;
+use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -74,6 +73,7 @@ class AppServiceProvider extends ServiceProvider
             'checklist' => TrainingBookPartModuleChecklist::class,
             'sop_checklist' => TrainingBookPartModuleSOPChecklist::class,
             'test' => TrainingBookPartModuleTest::class,
+            'evaluation' => TrainingBookPartModuleEvaluation::class,
         ]);
     }
 }
