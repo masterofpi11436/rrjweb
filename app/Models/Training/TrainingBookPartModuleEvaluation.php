@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class TrainingBookPartModuleEvaluation extends Model
 {
     protected $table =
-        'training_book_part_module_checklists';
+        'training_book_part_module_evaluations';
 
     protected $fillable = [
         'title',
