@@ -16,10 +16,21 @@
         </div>
     @endif
 
-    <a href="{{ route('training.admin.dashboard') }}"
-        class="px-4 py-2 mb-4 ml-4.5 bg-blue-600 text-white rounded-md border border-white hover:bg-blue-700 transition inline-block text-center">
-        Back To Dasboard
-    </a>
+
+    <div class="flex flex-row justify-between items-center">
+        <div>
+            <a href="{{ route('training.admin.dashboard') }}"
+                class="px-4 py-2 mb-4 bg-blue-600 text-white rounded-md border border-white hover:bg-blue-700 transition inline-block text-center">
+                Back To Dasboard
+            </a>
+        </div>
+        <div>
+            <a href="{{ route('training.admin.modules.dashboard') }}"
+                class="px-4 py-2 mb-4 bg-blue-600 text-white rounded-md border border-white hover:bg-blue-700 transition inline-block text-center">
+                Manage Training Modules
+            </a>
+        </div>
+    </div>
 
     @livewire('Training.Book.BookSearch')
 

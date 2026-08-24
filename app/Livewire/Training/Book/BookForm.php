@@ -10,7 +10,6 @@ use App\Models\Training\TrainingBookPartModuleMedia;
 use App\Models\Training\TrainingBookPartModuleForm;
 use App\Models\Training\TrainingBookPartModuleChecklist;
 use App\Models\Training\TrainingBookPartModuleEvaluation;
-use App\Models\Training\TrainingBookPartModuleEvaluationList;
 use App\Models\Training\TrainingBookPartModuleSOPChecklist;
 use App\Models\Training\TrainingBookPartModuleTest;
 use Illuminate\Support\Facades\DB;
