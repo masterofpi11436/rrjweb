@@ -189,6 +189,10 @@
                                                     <option value="test">
                                                         Test
                                                     </option>
+
+                                                    <option value="evaluation">
+                                                        Evaluation
+                                                    </option>
                                                 </select>
 
                                                 @error("parts.$partIndex.modules.$moduleIndex.module_type")
