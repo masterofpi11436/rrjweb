@@ -38,28 +38,6 @@ class DatabaseSeeder extends Seeder
 
         DB::table('users')->insert([
             [
-                'last_name' => 'Abrams',
-                'first_name' => 'Jarrett',
-                'email' => 'abramsj@rrjva.org',
-                'password' => Hash::make('asd'),
-                'admin' => false,
-                'phone' => false,
-                'vfm' => false,
-                'vfm30' => false,
-                'vfm_tech' => false,
-                'ics' => false,
-                'policy' => true,
-                'warehouse_role' => 'Requestor',
-                'jurisdiction' => false,
-                'camera' => false,
-                'training_role' => 'admin',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-        ]);
-
-        DB::table('users')->insert([
-            [
                 'last_name' => 'Hartsell',
                 'first_name' => 'Dana',
                 'email' => 'hartsell.dana@rrjva.org',
