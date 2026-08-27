@@ -27,6 +27,36 @@ class BookForm extends Component
     public array $signerRoles = [];
     public array $availableModules = [];
 
+    // Module signoff requirements
+    private const DEFAULT_SIGNOFFS = [
+        'paragraph' => [
+            'trainee',
+        ],
+
+        'checklist' => [
+            'trainee',
+            'fto',
+        ],
+
+        'evaluation' => [
+            'trainee',
+            'fto',
+            'supervisor',
+        ],
+
+        'form' => [
+            'trainee',
+        ],
+
+        'test' => [],
+
+        'sop_checklist' => [
+            'trainee',
+        ],
+
+        'media' => [],
+    ];
+
     /*
      * These keys should match the morph map.
      */
@@ -172,10 +202,7 @@ class BookForm extends Component
         );
     }
 
-    public function updatedParts(
-        mixed $value,
-        string $key
-    ): void {
+    public function updatedParts(mixed $value, string $key): void {
         if (
             preg_match(
                 '/^(\d+)\.modules\.(\d+)\.module_type$/',
@@ -188,6 +215,9 @@ class BookForm extends Component
 
             $this->parts[$partIndex]['modules'][$moduleIndex]['module_id']
                 = null;
+
+            $this->parts[$partIndex]['modules'][$moduleIndex]['signoff_requirements']
+                = self::DEFAULT_SIGNOFFS[$value] ?? [];
         }
     }
 
