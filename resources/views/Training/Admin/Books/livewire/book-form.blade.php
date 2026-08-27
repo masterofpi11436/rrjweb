@@ -259,6 +259,33 @@
 
                                         </div>
 
+                                        {{-- Required Signatures --}}
+                                        <div class="mt-4 border-t border-gray-700 pt-4">
+
+                                            <div class="mb-3 font-semibold text-gray-200">
+                                                Required Signatures
+                                            </div>
+
+                                            <div class="grid grid-cols-2 gap-3 md:grid-cols-3">
+
+                                                @foreach ($signerRoles as $role => $label)
+                                                    <label class="flex items-center gap-2 text-gray-300">
+
+                                                        <input type="checkbox" value="{{ $role }}"
+                                                            wire:model="parts.{{ $partIndex }}.modules.{{ $moduleIndex }}.signoff_requirements"
+                                                            class="rounded border-gray-600">
+
+                                                        <span>
+                                                            {{ $label }}
+                                                        </span>
+
+                                                    </label>
+                                                @endforeach
+
+                                            </div>
+
+                                        </div>
+
 
                                         {{-- Insert Between Modules --}}
                                         @unless ($loop->last)
@@ -267,7 +294,9 @@
                                                 <button type="button"
                                                     wire:click="insertModuleAfter({{ $partIndex }}, {{ $moduleIndex }})"
                                                     class="rounded-full border border-dashed border-purple-500 px-4 py-2 text-sm text-purple-300 hover:bg-purple-950/40">
+
                                                     + Insert Module
+
                                                 </button>
 
                                             </div>
@@ -282,6 +311,7 @@
                                         No modules have been added to this part.
                                     </p>
                                 @endforelse
+
                             </div>
                         </div>
                     </details>

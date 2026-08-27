@@ -12,6 +12,8 @@ use App\Models\Training\TrainingBookPartModuleChecklist;
 use App\Models\Training\TrainingBookPartModuleEvaluation;
 use App\Models\Training\TrainingBookPartModuleSOPChecklist;
 use App\Models\Training\TrainingBookPartModuleTest;
+use App\Enums\TrainingUser;
+use App\Models\Training\TrainingBookPartModuleSignoffRequirement;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
@@ -20,24 +22,9 @@ use Livewire\Component;
 class BookForm extends Component
 {
     public string $title = '';
-
     public array $parts = [];
-
     public ?int $trainingBookId = null;
-
-    /*
-     * All modules available for selection.
-     *
-     * Example:
-     *
-     * [
-     *     'paragraph' => [
-     *         ['id' => 1, 'title' => 'Introduction'],
-     *         ['id' => 2, 'title' => 'Emergency Procedures'],
-     *     ],
-     *     'media' => [...],
-     * ]
-     */
+    public array $signerRoles = [];
     public array $availableModules = [];
 
     /*
@@ -57,6 +44,15 @@ class BookForm extends Component
     {
         $this->trainingBookId = $trainingBookId;
 
+        $this->signerRoles = [
+            TrainingUser::TRAINEE->value => TrainingUser::TRAINEE->label(),
+            TrainingUser::FTO->value => TrainingUser::FTO->label(),
+            TrainingUser::SERGEANT->value => TrainingUser::SERGEANT->label(),
+            TrainingUser::SUPERVISOR->value => TrainingUser::SUPERVISOR->label(),
+            TrainingUser::UNIT->value => TrainingUser::UNIT->label(),
+            TrainingUser::DIRECTOR->value => TrainingUser::DIRECTOR->label(),
+        ];
+
         $this->loadAvailableModules();
 
         if (! $trainingBookId) {
@@ -68,7 +64,10 @@ class BookForm extends Component
 
             'parts.modules' => fn ($query) => $query
                 ->orderBy('sort_order')
-                ->with('module'),
+                ->with([
+                    'module',
+                    'signoffRequirements',
+                ]),
         ])->findOrFail($trainingBookId);
 
         $this->title = $book->title ?? '';
@@ -81,6 +80,12 @@ class BookForm extends Component
                     ->map(fn (TrainingBookPartModule $module) => [
                         'module_type' => $module->getRawOriginal('module_type'),
                         'module_id' => $module->module_id,
+
+                        'signoff_requirements' => $module
+                            ->signoffRequirements
+                            ->pluck('signer_role')
+                            ->values()
+                            ->toArray(),
                     ])
                     ->toArray(),
             ])
@@ -137,13 +142,11 @@ class BookForm extends Component
         $this->parts[$partIndex]['modules'][] = [
             'module_type' => '',
             'module_id' => null,
+            'signoff_requirements' => [],
         ];
     }
 
-    public function insertModuleAfter(
-        int $partIndex,
-        int $moduleIndex
-    ): void {
+    public function insertModuleAfter(int $partIndex, int $moduleIndex): void {
         array_splice(
             $this->parts[$partIndex]['modules'],
             $moduleIndex + 1,
@@ -151,6 +154,7 @@ class BookForm extends Component
             [[
                 'module_type' => '',
                 'module_id' => null,
+                'signoff_requirements' => [],
             ]]
         );
     }
@@ -206,8 +210,13 @@ class BookForm extends Component
                 'max:255',
             ],
 
-            'parts.*.modules' => [
+            'parts.*.modules.*.signoff_requirements' => [
                 'array',
+            ],
+
+            'parts.*.modules.*.signoff_requirements.*' => [
+                'string',
+                Rule::in(array_keys($this->signerRoles)),
             ],
 
             'parts.*.modules.*.module_type' => [
@@ -274,12 +283,24 @@ class BookForm extends Component
                 foreach (
                     $partData['modules'] as $moduleIndex => $moduleData
                 ) {
-                    TrainingBookPartModule::create([
+                    $bookPartModule = TrainingBookPartModule::create([
                         'book_part_id' => $part->id,
                         'module_type' => $moduleData['module_type'],
                         'module_id' => $moduleData['module_id'],
                         'sort_order' => $moduleIndex,
                     ]);
+
+                    foreach (
+                        $moduleData['signoff_requirements'] ?? []
+                        as $signoffIndex => $signerRole
+                    ) {
+                        TrainingBookPartModuleSignoffRequirement::create([
+                            'book_part_module_id' => $bookPartModule->id,
+                            'signer_role' => $signerRole,
+                            'scope' => 'module',
+                            'sort_order' => $signoffIndex,
+                        ]);
+                    }
                 }
             }
         });
