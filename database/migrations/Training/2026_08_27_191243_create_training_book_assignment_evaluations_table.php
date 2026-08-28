@@ -11,9 +11,14 @@ return new class extends Migration
         Schema::create('training_book_assignment_evaluations', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignId('assignment_module_id')
-                ->unique()
-                ->constrained('training_book_assignment_modules')
+            $table->foreignId('assignment_module_id');
+
+            $table->foreign(
+                'assignment_module_id',
+                'assignment_evaluation_module_fk'
+            )
+                ->references('id')
+                ->on('training_book_assignment_modules')
                 ->cascadeOnDelete();
 
             $table->text('strengths')->nullable();
