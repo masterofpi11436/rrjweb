@@ -238,6 +238,10 @@ class ChecklistForm extends Component
 
     public function addItem(int $groupIndex): void
     {
+        if (! isset($this->groups[$groupIndex])) {
+            return;
+        }
+
         $this->groups[$groupIndex]['items'][] = [
             'id' => null,
             'item' => '',
@@ -448,4 +452,15 @@ class ChecklistForm extends Component
                 : 'Checklist created successfully.'
         );
 
-       
+        return redirect()->route(
+            'training.admin.modules.dashboard'
+        );
+    }
+
+    public function render()
+    {
+        return view(
+            'Training.Admin.Modules.Checklists.livewire.checklist-form'
+        );
+    }
+}

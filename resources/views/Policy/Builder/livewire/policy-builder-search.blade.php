@@ -27,14 +27,6 @@
                         </th>
 
                         <th class="px-5 py-4 text-left text-xs font-semibold uppercase tracking-wider text-gray-400">
-                            Status
-                        </th>
-
-                        <th class="px-5 py-4 text-left text-xs font-semibold uppercase tracking-wider text-gray-400">
-                            Publish
-                        </th>
-
-                        <th class="px-5 py-4 text-left text-xs font-semibold uppercase tracking-wider text-gray-400">
                             Action
                         </th>
                     </tr>
@@ -48,28 +40,6 @@
                                     class="font-medium text-blue-400 transition hover:text-blue-300 hover:underline">
                                     {{ $policy->title }}
                                 </a>
-                            </td>
-
-                            <td class="px-5 py-4 text-sm">
-                                @if ($policy->approved)
-                                    <span
-                                        class="inline-flex rounded-full border border-green-800 bg-green-950 px-3 py-1 text-xs font-semibold text-green-300">
-                                        Published
-                                    </span>
-                                @else
-                                    <span
-                                        class="inline-flex rounded-full border border-yellow-800 bg-yellow-950 px-3 py-1 text-xs font-semibold text-yellow-300">
-                                        Not Published
-                                    </span>
-                                @endif
-                            </td>
-
-                            <td class="px-5 py-4 text-sm">
-                                <button type="button" wire:click="togglePublished({{ $policy->id }})"
-                                    class="relative inline-flex h-6 w-11 items-center rounded-full transition {{ $policy->approved ? 'bg-green-600' : 'bg-gray-700' }}">
-                                    <span
-                                        class="inline-block h-5 w-5 transform rounded-full bg-white transition {{ $policy->approved ? 'translate-x-5' : 'translate-x-1' }}"></span>
-                                </button>
                             </td>
 
                             <td class="px-5 py-4 text-sm">
@@ -93,11 +63,6 @@
                                 <a href="{{ route('policy.builder.create-pdf', $policy->id) }}" target="_blank"
                                     class="inline-flex items-center rounded-lg border border-purple-900/50 bg-purple-950/50 px-3 py-2 text-sm font-medium text-purple-300 transition hover:bg-purple-900/70 hover:text-white">
                                     Create PDF
-                                </a>
-
-                                <a href="{{ route('policy.builder.web', $policy->id) }}" target="_blank"
-                                    class="inline-flex items-center rounded-lg border border-blue-900/50 bg-blue-950/50 px-3 py-2 text-sm font-medium text-blue-300 transition hover:bg-blue-900/70 hover:text-white">
-                                    Web View
                                 </a>
                             </td>
                         </tr>
