@@ -28,6 +28,6 @@ class TrainingEvaluationModuleController extends Controller
 
         return redirect()
             ->route('training.admin.modules.dashboard')
-            ->with('success', 'Form deleted successfully.');
+            ->with('success', 'Evaluation deleted successfully.');
     }
 }

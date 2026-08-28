@@ -15,11 +15,11 @@ class TrainingBookPartModuleChecklist extends Model
         'description',
     ];
 
-    public function items(): HasMany
+    public function groups(): HasMany
     {
         return $this->hasMany(
-            TrainingBookPartModuleChecklistItem::class,
+            TrainingBookPartModuleChecklistGroup::class,
             'checklist_id'
-        );
+        )->orderBy('sort_order');
     }
 }

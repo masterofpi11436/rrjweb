@@ -11,7 +11,7 @@ class TrainingBookPartModuleChecklistItem extends Model
         'training_book_part_module_checklist_items';
 
     protected $fillable = [
-        'checklist_id',
+        'group_id',
         'item',
         'description',
         'sort_order',
@@ -21,11 +21,11 @@ class TrainingBookPartModuleChecklistItem extends Model
         'sort_order' => 'integer',
     ];
 
-    public function checklist(): BelongsTo
+    public function group(): BelongsTo
     {
         return $this->belongsTo(
-            TrainingBookPartModuleChecklist::class,
-            'checklist_id'
+            TrainingBookPartModuleChecklistGroup::class,
+            'group_id'
         );
     }
 }

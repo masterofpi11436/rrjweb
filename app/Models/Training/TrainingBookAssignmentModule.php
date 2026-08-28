@@ -25,6 +25,14 @@ class TrainingBookAssignmentModule extends Model
         'completed_at' => 'datetime',
     ];
 
+    public function evaluation()
+    {
+        return $this->hasOne(
+            TrainingBookAssignmentEvaluation::class,
+            'assignment_module_id'
+        );
+    }
+
     public function assignment()
     {
         return $this->belongsTo(

@@ -6,19 +6,16 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
-        Schema::create('training_book_part_module_evaluation_items', function (Blueprint $table) {
+        Schema::create('training_book_part_module_checklist_items', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignId('evaluation_id')
-                ->constrained('training_book_part_module_evaluations')
+            $table->foreignId('group_id')
+                ->constrained('training_book_part_module_checklist_groups')
                 ->cascadeOnDelete();
 
-            $table->string('item');
+            $table->text('item');
 
             $table->text('description')->nullable();
 
@@ -28,11 +25,8 @@ return new class extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
-        Schema::dropIfExists('training_book_part_module_evaluation_items');
+        Schema::dropIfExists('training_book_part_module_checklist_items');
     }
 };
