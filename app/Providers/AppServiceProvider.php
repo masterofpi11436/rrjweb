@@ -66,14 +66,14 @@ class AppServiceProvider extends ServiceProvider
         $router->aliasMiddleware('clear-cart', ClearCart::class);
 
         // Training Application map
-        // Relation::enforceMorphMap([
-        //     'paragraph' => TrainingBookPartModuleParagraph::class,
-        //     'media' => TrainingBookPartModuleMedia::class,
-        //     'form' => TrainingBookPartModuleForm::class,
-        //     'checklist' => TrainingBookPartModuleChecklist::class,
-        //     'sop_checklist' => TrainingBookPartModuleSOPChecklist::class,
-        //     'test' => TrainingBookPartModuleTest::class,
-        //     'evaluation' => TrainingBookPartModuleEvaluation::class,
-        // ]);
+        Relation::morphMap([
+            'paragraph' => TrainingBookPartModuleParagraph::class,
+            'media' => TrainingBookPartModuleMedia::class,
+            'form' => TrainingBookPartModuleForm::class,
+            'checklist' => TrainingBookPartModuleChecklist::class,
+            'sop_checklist' => TrainingBookPartModuleSOPChecklist::class,
+            'test' => TrainingBookPartModuleTest::class,
+            'evaluation' => TrainingBookPartModuleEvaluation::class,
+        ]);
     }
 }
