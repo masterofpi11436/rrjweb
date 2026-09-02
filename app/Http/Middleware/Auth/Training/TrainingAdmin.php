@@ -2,14 +2,14 @@
 
 namespace App\Http\Middleware\Auth\Training;
 
+use App\Enums\TrainingUser;
 use App\Http\Middleware\Auth\BaseAuth;
 
 class TrainingAdmin extends BaseAuth
 {
     protected function hasAccess($user): bool
     {
-        // Check if the user is authenticated and is an admin
-        return $user && ($user->training_role === 'admin' || $user->admin === 1);
+        return $user && ($user->admin === 1 || $user->training_role === TrainingUser::ADMIN);
     }
 
     protected function getRedirectRoute(): string

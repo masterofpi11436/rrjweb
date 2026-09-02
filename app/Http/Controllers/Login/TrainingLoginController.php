@@ -47,10 +47,12 @@ class TrainingLoginController extends BaseLoginController
 
     public function redirectTrainingUser(User $user)
     {
-        return match ($user->training_role) {
-            TrainingUser::ADMIN =>
-                redirect()->route('training.admin.dashboard'),
+        // Global system admin OR training admin
+        if ($user->admin == 1 || $user->training_role === TrainingUser::ADMIN) {
+            return redirect()->route('training.admin.dashboard');
+        }
 
+        return match ($user->training_role) {
             TrainingUser::DIRECTOR =>
                 redirect()->route('training.director.dashboard'),
 
