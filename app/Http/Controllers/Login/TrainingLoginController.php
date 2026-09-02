@@ -78,7 +78,7 @@ class TrainingLoginController extends BaseLoginController
         };
     }
 
-    public function warehouseForgotPasswordForm()
+    public function trainingForgotPasswordForm()
     {
         return parent::showForgotPasswordForm('Login.Forgots.warehouse-store-forgot-password');
     }

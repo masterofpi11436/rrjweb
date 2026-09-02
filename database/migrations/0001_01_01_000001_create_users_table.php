@@ -27,10 +27,10 @@ return new class extends Migration
             $table->boolean('vfm_tech')->default(false);
             $table->boolean('ics')->default(false);
             $table->boolean('policy')->default(false);
-            $table->enum('warehouse_role', ['Warehouse Supervisor', 'Warehouse Technician', 'Property', 'Supervisor', 'Requestor'])->default('Requestor')->nullable();
+            $table->enum('warehouse_role', ['Warehouse Supervisor', 'Warehouse Technician', 'Property', 'Supervisor', 'Requestor'])->default(NULL)->nullable();
             $table->boolean('jurisdiction')->default(false);
             $table->boolean('camera')->default(false);
-            $table->enum('training_role', TrainingUser::values())->default('trainee');
+            $table->enum('training_role', TrainingUser::values())->default(NULL)->nullable();
             $table->timestamps();
         });
 

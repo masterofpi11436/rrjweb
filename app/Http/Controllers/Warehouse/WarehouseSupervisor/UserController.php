@@ -41,11 +41,13 @@ class UserController extends Controller
         return view('Warehouse.WarehouseSupervisor.User.user.edit', ['user' => $user]);
     }
 
-        // Delete an existing user
+    // Delete an existing user
     public function destroy($id)
     {
         $user = User::findOrFail($id);
-        $user->delete();
+        $user->warehouse_role = NULL;
+
+        $user->save();
 
         session()->flash('create-edit-delete-message', 'User deleted successfully!');
         return redirect()->back();

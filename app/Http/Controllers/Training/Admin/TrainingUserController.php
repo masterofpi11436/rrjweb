@@ -24,11 +24,13 @@ class TrainingUserController extends Controller
         return view('Training.Admin.User.edit', ['user' => $user]);
     }
 
-        // Delete an existing user
+    // Delete an existing user
     public function destroy($id)
     {
         $user = User::findOrFail($id);
-        $user->delete();
+        $user->training_role = NULL;
+
+        $user->save();
 
         session()->flash('create-edit-delete-message', 'User deleted successfully!');
         return redirect()->back();
