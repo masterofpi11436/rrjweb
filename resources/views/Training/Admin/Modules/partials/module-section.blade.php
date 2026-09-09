@@ -11,7 +11,11 @@
         </div>
 
         <a href="{{ $createRoute }}"
-            class="inline-flex items-center justify-center rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-500">
+            class="px-4 py-2 mb-4
+                bg-slate-700 text-gray-100
+               rounded-md border border-slate-500
+               hover:bg-slate-600 hover:border-slate-400
+               transition inline-block text-center">
             Add Module
         </a>
     </div>
@@ -65,7 +69,11 @@
                             <td class="whitespace-nowrap px-6 py-4 text-right">
                                 <div class="flex justify-end gap-2">
                                     <a href="{{ route($editRouteName, $module->id) }}"
-                                        class="rounded-md border border-gray-600 px-3 py-2 text-sm font-medium text-gray-200 transition hover:border-blue-500 hover:text-blue-400">
+                                        class="px-4 py-2 mb-4
+                                            bg-slate-700 text-gray-100
+                                            rounded-md border border-slate-500
+                                            hover:bg-slate-600 hover:border-slate-400
+                                            transition inline-block text-center">
                                         Edit
                                     </a>
 
@@ -75,7 +83,10 @@
                                         @method('DELETE')
 
                                         <button type="submit"
-                                            class="rounded-md border border-red-800 px-3 py-2 text-sm font-medium text-red-400 transition hover:bg-red-950">
+                                            class="!bg-red-700 !text-white !border-red-500
+                                                cursor-pointer rounded-md border
+                                                px-4 py-2 text-center text-sm font-medium
+                                                transition hover:!bg-red-600 hover:!border-red-400">
                                             Delete
                                         </button>
                                     </form>

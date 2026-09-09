@@ -1,6 +1,10 @@
 <div>
     <a href="{{ route('training.admin.books.create') }}"
-        class="px-4 py-2 bg-blue-700 text-white border border-white rounded-md hover:bg-blue-800 hover:border-blue-700">
+        class="px-4 py-2 mb-4
+                   bg-slate-700 text-gray-100
+                   rounded-md border border-slate-500
+                   hover:bg-slate-600 hover:border-slate-400
+                   transition inline-block text-center">
         + Create Book
     </a>
 
@@ -46,7 +50,11 @@
 
                             <td class="px-5 py-4 text-sm">
                                 <a href="{{ route('training.admin.books.edit', $book->id) }}"
-                                    class="inline-flex items-center rounded-lg border border-gray-700 bg-gray-800 px-3 py-2 text-sm font-medium text-gray-200 transition hover:border-gray-600 hover:bg-gray-700 hover:text-white">
+                                    class="px-4 py-2 mb-4
+                                    bg-slate-700 text-gray-100
+                                    rounded-md border border-slate-500
+                                    hover:bg-slate-600 hover:border-slate-400
+                                    transition inline-block text-center">
                                     Edit
                                 </a>
 
@@ -57,7 +65,10 @@
                                     @method('DELETE')
 
                                     <button type="submit"
-                                        class="inline-flex items-center rounded-lg border border-red-900/50 bg-red-950/50 px-3 py-2 text-sm font-medium text-red-300 transition hover:bg-red-900/70 hover:text-white">
+                                        class="!bg-red-700 !text-white !border-red-500
+                                            cursor-pointer rounded-md border
+                                            px-4 py-2 text-center text-sm font-medium
+                                            transition hover:!bg-red-600 hover:!border-red-400">
                                         Delete
                                     </button>
                                 </form>

@@ -20,13 +20,22 @@
     <div class="flex flex-row justify-between items-center">
         <div>
             <a href="{{ route('training.admin.dashboard') }}"
-                class="px-4 py-2 mb-4 bg-blue-600 text-white rounded-md border border-white hover:bg-blue-700 transition inline-block text-center">
-                Back To Dasboard
+                class="px-4 py-2 mb-4
+                   bg-slate-700 text-gray-100
+                   rounded-md border border-slate-500
+                   hover:bg-slate-600 hover:border-slate-400
+                   transition inline-block text-center">
+
+                Back To Dashboard
             </a>
         </div>
         <div>
             <a href="{{ route('training.admin.modules.dashboard') }}"
-                class="px-4 py-2 mb-4 bg-blue-600 text-white rounded-md border border-white hover:bg-blue-700 transition inline-block text-center">
+                class="px-4 py-2 mb-4
+                   bg-slate-700 text-gray-100
+                   rounded-md border border-slate-500
+                   hover:bg-slate-600 hover:border-slate-400
+                   transition inline-block text-center">
                 Manage Training Modules
             </a>
         </div>

@@ -15,25 +15,14 @@
     @endif
 
     <a href="{{ route('training.admin.books.dashboard') }}"
-        class="px-4 py-2 mb-4 ml-4.5 bg-blue-600 text-white rounded-md border border-white hover:bg-blue-700 transition inline-block text-center">
-        Back To Dasboard
-    </a>
+        class="px-4 py-2 mb-4
+                   bg-slate-700 text-gray-100
+                   rounded-md border border-slate-500
+                   hover:bg-slate-600 hover:border-slate-400
+                   transition inline-block text-center">
+        Back To Dasboard </a>
 
     <div class="space-y-8">
-
-        <div class="rounded-xl border border-gray-700 bg-gray-900 p-6">
-            <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-                <div>
-                    <h2 class="text-xl font-semibold text-white">
-                        Module Dashboard
-                    </h2>
-
-                    <p class="mt-1 text-sm text-gray-400">
-                        Create, review, and edit reusable training modules.
-                    </p>
-                </div>
-            </div>
-        </div>
 
         @include('Training.Admin.Modules.partials.module-section', [
             'title' => 'Paragraph Modules',

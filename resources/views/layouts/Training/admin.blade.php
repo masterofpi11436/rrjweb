@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ asset('css/water-dark.css') }}" id="theme-link">
+    <link rel="stylesheet" href="/css/water-dark.css" id="theme-link">
     <link rel="stylesheet" href="/css/common-styles-light.css" id="common-styles-link">
     <title>@yield('title')</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -22,14 +22,6 @@
                 @csrf
                 <button>Logout</button>
             </form>
-
-            <div class="theme-toggle">
-                <label class="switch">
-                    <input type="checkbox" id="theme-toggle">
-                    <span class="slider round"></span>
-                </label>
-                <span class="theme-label">Light/Dark Theme</span>
-            </div>
 
             @if (Auth::user()->admin === 1)
                 <form action="{{ route('admin.dashboard') }}">
