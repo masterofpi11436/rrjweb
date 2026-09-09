@@ -14,18 +14,24 @@ return new class extends Migration
         Schema::create('training_book_part_module_paragraph_lists', function (Blueprint $table) {
             $table->id();
 
-            $table->unsignedBigInteger('paragraph_content_id');
+            $table->unsignedBigInteger('paragraph_id');
+
+            $table->enum('type', [
+                'bullet',
+                'ordered',
+            ]);
+
+            $table->unsignedInteger('sort_order')->default(0);
+
+            $table->timestamps();
 
             $table->foreign(
-                'paragraph_content_id',
-                'tbpmp_lists_content_fk'
-            )->references('id')
-            ->on('training_book_part_module_paragraph_contents')
-            ->cascadeOnDelete();
-
-            $table->string('type')->default('bullet');
-            $table->unsignedInteger('sort_order')->default(0);
-            $table->timestamps();
+                'paragraph_id',
+                'paragraph_list_paragraph_fk'
+            )
+                ->references('id')
+                ->on('training_book_part_module_paragraph_contents')
+                ->cascadeOnDelete();
         });
     }
 

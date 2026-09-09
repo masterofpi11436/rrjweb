@@ -14,9 +14,8 @@ class SOPChecklistForm extends Component
 
     public string $description = '';
 
-    public array $categories = [];
+    public array $groups = [];
 
-    public array $policies = [];
 
     public function mount(?int $checklistId = null): void
     {
@@ -25,10 +24,10 @@ class SOPChecklistForm extends Component
         if ($this->checklistId) {
             $this->loadChecklist();
         } else {
-            $this->addCategory();
-            $this->addPolicy();
+            $this->addGroup();
         }
     }
+
 
     protected function rules(): array
     {
@@ -44,43 +43,49 @@ class SOPChecklistForm extends Component
                 'string',
             ],
 
-            'categories' => [
+            'groups' => [
                 'required',
                 'array',
                 'min:1',
             ],
 
-            'categories.*.name' => [
+            'groups.*.title' => [
                 'required',
                 'string',
                 'max:255',
-                'distinct',
             ],
 
-            'policies' => [
+            'groups.*.section_number' => [
+                'nullable',
+                'string',
+                'max:255',
+            ],
+
+            'groups.*.description' => [
+                'nullable',
+                'string',
+            ],
+
+            'groups.*.policies' => [
                 'required',
                 'array',
                 'min:1',
             ],
 
-            'policies.*.category' => [
-                'required',
-                'string',
-            ],
-
-            'policies.*.policy_number' => [
+            'groups.*.policies.*.policy_number' => [
                 'required',
                 'string',
                 'max:255',
             ],
 
-            'policies.*.title' => [
+            'groups.*.policies.*.title' => [
                 'required',
                 'string',
                 'max:255',
             ],
         ];
     }
+
 
     protected function messages(): array
     {
@@ -88,224 +93,477 @@ class SOPChecklistForm extends Component
             'title.required' =>
                 'A checklist title is required.',
 
-            'policies.required' =>
-                'At least one policy is required.',
+            'groups.required' =>
+                'At least one group is required.',
 
-            'policies.min' =>
-                'At least one policy is required.',
+            'groups.min' =>
+                'At least one group is required.',
 
-            'policies.*.category.required' =>
-                'Each policy must have a category.',
+            'groups.*.title.required' =>
+                'Each group must have a title.',
 
-            'policies.*.policy_number.required' =>
+            'groups.*.policies.required' =>
+                'Each group must contain at least one policy.',
+
+            'groups.*.policies.min' =>
+                'Each group must contain at least one policy.',
+
+            'groups.*.policies.*.policy_number.required' =>
                 'Each policy must have a policy number.',
 
-            'policies.*.title.required' =>
+            'groups.*.policies.*.title.required' =>
                 'Each policy must have a title.',
         ];
     }
 
-    public function addCategory(): void
+
+    public function loadChecklist(): void
     {
-        $this->categories[] = [
-            'name' => '',
+        $checklist = TrainingBookPartModuleSOPChecklist::with([
+            'groups' => fn ($query) =>
+                $query->orderBy('sort_order'),
+
+            'groups.policies' => fn ($query) =>
+                $query->orderBy('sort_order'),
+        ])->findOrFail($this->checklistId);
+
+
+        $this->title = $checklist->title;
+
+        $this->description =
+            $checklist->description ?? '';
+
+
+        $this->groups = $checklist->groups
+            ->map(function ($group) {
+                return [
+                    'id' => $group->id,
+
+                    'title' => $group->title,
+
+                    'section_number' =>
+                        $group->section_number ?? '',
+
+                    'description' =>
+                        $group->description ?? '',
+
+                    'policies' => $group->policies
+                        ->map(function ($policy) {
+                            return [
+                                'id' => $policy->id,
+
+                                'policy_number' =>
+                                    $policy->policy_number,
+
+                                'title' =>
+                                    $policy->title,
+                            ];
+                        })
+                        ->values()
+                        ->toArray(),
+                ];
+            })
+            ->values()
+            ->toArray();
+
+
+        if (empty($this->groups)) {
+            $this->addGroup();
+        }
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Groups
+    |--------------------------------------------------------------------------
+    */
+
+    public function addGroup(): void
+    {
+        $this->groups[] = [
+            'id' => null,
+            'title' => '',
+            'section_number' => '',
+            'description' => '',
+            'policies' => [
+                [
+                    'id' => null,
+                    'policy_number' => '',
+                    'title' => '',
+                ],
+            ],
         ];
     }
 
-    public function removeCategory(int $index): void
+
+    public function insertGroup(int $index): void
     {
-        if (!array_key_exists($index, $this->categories)) {
+        $newGroup = [
+            'id' => null,
+            'title' => '',
+            'section_number' => '',
+            'description' => '',
+            'policies' => [
+                [
+                    'id' => null,
+                    'policy_number' => '',
+                    'title' => '',
+                ],
+            ],
+        ];
+
+        array_splice(
+            $this->groups,
+            $index + 1,
+            0,
+            [$newGroup]
+        );
+
+        $this->resetValidation();
+    }
+
+
+    public function removeGroup(int $index): void
+    {
+        if (!array_key_exists($index, $this->groups)) {
             return;
         }
 
-        $categoryName = $this->categories[$index]['name'] ?? '';
+        unset($this->groups[$index]);
 
-        unset($this->categories[$index]);
+        $this->groups = array_values($this->groups);
 
-        $this->categories = array_values($this->categories);
-
-        if (empty($this->categories)) {
-            $this->addCategory();
-        }
-
-        if ($categoryName !== '') {
-            foreach ($this->policies as $policyIndex => $policy) {
-                if (($policy['category'] ?? '') === $categoryName) {
-                    $this->policies[$policyIndex]['category'] = '';
-                }
-            }
+        if (empty($this->groups)) {
+            $this->addGroup();
         }
 
         $this->resetValidation();
     }
 
-    public function loadChecklist(): void
+
+    public function moveGroupUp(int $index): void
     {
-        $checklist = TrainingBookPartModuleSOPChecklist::with([
-            'policies' => fn ($query) => $query->orderBy('sort_order'),
-        ])->findOrFail($this->checklistId);
-
-        $this->title = $checklist->title;
-        $this->description = $checklist->description ?? '';
-
-        $this->policies = $checklist->policies
-            ->map(function ($policy) {
-                return [
-                    'id' => $policy->id,
-                    'category' => $policy->category,
-                    'policy_number' => $policy->policy_number,
-                    'title' => $policy->title,
-                ];
-            })
-            ->values()
-            ->toArray();
-
-        $this->categories = $checklist->policies
-            ->pluck('category')
-            ->filter()
-            ->unique()
-            ->values()
-            ->map(function ($category) {
-                return [
-                    'name' => $category,
-                ];
-            })
-            ->toArray();
-
-        if (empty($this->categories)) {
-            $this->addCategory();
+        if (
+            $index <= 0 ||
+            !array_key_exists($index, $this->groups)
+        ) {
+            return;
         }
 
-        if (empty($this->policies)) {
-            $this->addPolicy();
-        }
+        $temporaryGroup = $this->groups[$index - 1];
+
+        $this->groups[$index - 1] =
+            $this->groups[$index];
+
+        $this->groups[$index] =
+            $temporaryGroup;
     }
 
-    public function addPolicy(): void
+
+    public function moveGroupDown(int $index): void
     {
-        $this->policies[] = [
+        if (
+            $index < 0 ||
+            $index >= count($this->groups) - 1
+        ) {
+            return;
+        }
+
+        $temporaryGroup = $this->groups[$index + 1];
+
+        $this->groups[$index + 1] =
+            $this->groups[$index];
+
+        $this->groups[$index] =
+            $temporaryGroup;
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Policies
+    |--------------------------------------------------------------------------
+    */
+
+    public function addPolicy(int $groupIndex): void
+    {
+        if (!isset($this->groups[$groupIndex])) {
+            return;
+        }
+
+        $this->groups[$groupIndex]['policies'][] = [
             'id' => null,
-            'category' => '',
             'policy_number' => '',
             'title' => '',
         ];
     }
 
-    public function insertPolicy(int $index): void
-    {
+
+    public function insertPolicy(
+        int $groupIndex,
+        int $policyIndex
+    ): void {
+        if (!isset($this->groups[$groupIndex])) {
+            return;
+        }
+
         $newPolicy = [
             'id' => null,
-            'category' => '',
             'policy_number' => '',
             'title' => '',
         ];
 
         array_splice(
-            $this->policies,
-            $index + 1,
+            $this->groups[$groupIndex]['policies'],
+            $policyIndex + 1,
             0,
             [$newPolicy]
         );
+
+        $this->resetValidation();
     }
 
-    public function removePolicy(int $index): void
-    {
-        if (!array_key_exists($index, $this->policies)) {
+
+    public function removePolicy(
+        int $groupIndex,
+        int $policyIndex
+    ): void {
+        if (
+            !isset(
+                $this->groups[$groupIndex]
+                    ['policies'][$policyIndex]
+            )
+        ) {
             return;
         }
 
-        unset($this->policies[$index]);
+        unset(
+            $this->groups[$groupIndex]
+                ['policies'][$policyIndex]
+        );
 
-        $this->policies = array_values($this->policies);
+        $this->groups[$groupIndex]['policies'] =
+            array_values(
+                $this->groups[$groupIndex]['policies']
+            );
 
-        if (empty($this->policies)) {
-            $this->addPolicy();
+
+        if (
+            empty(
+                $this->groups[$groupIndex]['policies']
+            )
+        ) {
+            $this->addPolicy($groupIndex);
         }
 
         $this->resetValidation();
     }
 
-    public function movePolicyUp(int $index): void
-    {
+
+    public function movePolicyUp(
+        int $groupIndex,
+        int $policyIndex
+    ): void {
         if (
-            $index <= 0 ||
-            !array_key_exists($index, $this->policies)
+            $policyIndex <= 0 ||
+            !isset(
+                $this->groups[$groupIndex]
+                    ['policies'][$policyIndex]
+            )
         ) {
             return;
         }
 
-        $temporaryPolicy = $this->policies[$index - 1];
+        $temporaryPolicy =
+            $this->groups[$groupIndex]
+                ['policies'][$policyIndex - 1];
 
-        $this->policies[$index - 1] = $this->policies[$index];
-        $this->policies[$index] = $temporaryPolicy;
+        $this->groups[$groupIndex]
+            ['policies'][$policyIndex - 1] =
+                $this->groups[$groupIndex]
+                    ['policies'][$policyIndex];
+
+        $this->groups[$groupIndex]
+            ['policies'][$policyIndex] =
+                $temporaryPolicy;
     }
 
-    public function movePolicyDown(int $index): void
-    {
+
+    public function movePolicyDown(
+        int $groupIndex,
+        int $policyIndex
+    ): void {
         if (
-            $index < 0 ||
-            $index >= count($this->policies) - 1
+            !isset($this->groups[$groupIndex]) ||
+            $policyIndex < 0 ||
+            $policyIndex >=
+                count(
+                    $this->groups[$groupIndex]['policies']
+                ) - 1
         ) {
             return;
         }
 
-        $temporaryPolicy = $this->policies[$index + 1];
+        $temporaryPolicy =
+            $this->groups[$groupIndex]
+                ['policies'][$policyIndex + 1];
 
-        $this->policies[$index + 1] = $this->policies[$index];
-        $this->policies[$index] = $temporaryPolicy;
+        $this->groups[$groupIndex]
+            ['policies'][$policyIndex + 1] =
+                $this->groups[$groupIndex]
+                    ['policies'][$policyIndex];
+
+        $this->groups[$groupIndex]
+            ['policies'][$policyIndex] =
+                $temporaryPolicy;
     }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Save
+    |--------------------------------------------------------------------------
+    */
 
     public function save()
     {
         $validated = $this->validate();
 
-        $isEditing = $this->checklistId !== null;
+        $isEditing =
+            $this->checklistId !== null;
+
 
         DB::transaction(function () use ($validated) {
-            $checklist = TrainingBookPartModuleSOPChecklist::updateOrCreate(
-                [
-                    'id' => $this->checklistId,
-                ],
-                [
-                    'title' => $validated['title'],
-                    'description' =>
-                        $validated['description'] ?: null,
-                ]
-            );
 
-            $savedPolicyIds = [];
-
-            foreach ($validated['policies'] as $index => $policyData) {
-                $policyId = $this->policies[$index]['id'] ?? null;
-
-                $policy = $checklist->policies()->updateOrCreate(
+            $checklist =
+                TrainingBookPartModuleSOPChecklist::updateOrCreate(
                     [
-                        'id' => $policyId,
+                        'id' => $this->checklistId,
                     ],
                     [
-                        'category' =>
-                            $policyData['category'],
-
-                        'policy_number' =>
-                            $policyData['policy_number'],
-
                         'title' =>
-                            $policyData['title'],
+                            $validated['title'],
 
-                        'sort_order' =>
-                            $index,
+                        'description' =>
+                            $validated['description']
+                                ?: null,
                     ]
                 );
 
-                $savedPolicyIds[] = $policy->id;
+
+            $savedGroupIds = [];
+
+
+            foreach (
+                $validated['groups'] as
+                $groupIndex => $groupData
+            ) {
+
+                $groupId =
+                    $this->groups[$groupIndex]['id']
+                    ?? null;
+
+
+                $group =
+                    $checklist->groups()->updateOrCreate(
+                        [
+                            'id' => $groupId,
+                        ],
+                        [
+                            'title' =>
+                                $groupData['title'],
+
+                            'section_number' =>
+                                $groupData['section_number']
+                                    ?: null,
+
+                            'description' =>
+                                $groupData['description']
+                                    ?: null,
+
+                            'sort_order' =>
+                                $groupIndex,
+                        ]
+                    );
+
+
+                $savedGroupIds[] = $group->id;
+
+
+                /*
+                |--------------------------------------------------------------------------
+                | Policies
+                |--------------------------------------------------------------------------
+                */
+
+                $savedPolicyIds = [];
+
+
+                foreach (
+                    $groupData['policies'] as
+                    $policyIndex => $policyData
+                ) {
+
+                    $policyId =
+                        $this->groups[$groupIndex]
+                            ['policies'][$policyIndex]
+                            ['id']
+                        ?? null;
+
+
+                    $policy =
+                        $group->policies()->updateOrCreate(
+                            [
+                                'id' => $policyId,
+                            ],
+                            [
+                                'policy_number' =>
+                                    $policyData[
+                                        'policy_number'
+                                    ],
+
+                                'title' =>
+                                    $policyData['title'],
+
+                                'sort_order' =>
+                                    $policyIndex,
+                            ]
+                        );
+
+
+                    $savedPolicyIds[] =
+                        $policy->id;
+                }
+
+
+                $group->policies()
+                    ->whereNotIn(
+                        'id',
+                        $savedPolicyIds
+                    )
+                    ->delete();
             }
 
-            $checklist->policies()
-                ->whereNotIn('id', $savedPolicyIds)
+
+            /*
+            |--------------------------------------------------------------------------
+            | Delete Removed Groups
+            |--------------------------------------------------------------------------
+            */
+
+            $checklist->groups()
+                ->whereNotIn(
+                    'id',
+                    $savedGroupIds
+                )
                 ->delete();
 
-            $this->checklistId = $checklist->id;
+
+            $this->checklistId =
+                $checklist->id;
         });
+
 
         session()->flash(
             'success',
@@ -314,10 +572,12 @@ class SOPChecklistForm extends Component
                 : 'SOP Checklist created successfully.'
         );
 
+
         return redirect()->route(
             'training.admin.modules.dashboard'
         );
     }
+
 
     public function render()
     {

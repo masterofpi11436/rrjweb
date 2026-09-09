@@ -14,10 +14,10 @@ class TrainingBookPartModuleParagraph extends Model
         'description',
     ];
 
-    public function paragraphs(): HasMany
+    public function sections(): HasMany
     {
         return $this->hasMany(
-            TrainingBookPartModuleParagraphContent::class,
+            TrainingBookPartModuleParagraphSection::class,
             'paragraph_module_id'
         )->orderBy('sort_order');
     }

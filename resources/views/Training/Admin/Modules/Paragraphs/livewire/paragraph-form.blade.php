@@ -1,206 +1,441 @@
-<div class="space-y-6">
-    <form wire:submit="save" class="space-y-6">
+<div class="relative w-full px-4 sm:px-6 lg:px-8 xl:pl-80 xl:pr-8">
 
-        {{-- Title --}}
-        <div>
-            <label for="title" class="mb-2 block text-sm font-medium text-gray-200">
-                Paragraph Module Title
-            </label>
+    {{-- Fixed Sidebar Navigation --}}
+    <aside class="fixed left-6 top-1/2 z-40 hidden w-64 -translate-y-1/2 xl:block 2xl:left-20">
 
-            <input id="title" type="text" wire:model="title" placeholder="Enter a title for this paragraph module"
-                class="w-full rounded-lg border border-gray-600 bg-gray-800 px-4 py-3 text-white placeholder:text-gray-500 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/30">
+        <div class="max-h-[80vh] overflow-y-auto rounded-2xl border border-gray-800 bg-gray-950 p-4 shadow-2xl">
 
-            @error('title')
-                <p class="mt-2 text-sm text-red-400">
-                    {{ $message }}
-                </p>
-            @enderror
+            <h3 class="mb-4 text-sm font-semibold uppercase tracking-wide text-gray-400">
+                Module Navigation
+            </h3>
+
+            <nav class="space-y-2 text-sm">
+
+                {{-- Module Information --}}
+                <a href="#module-info" class="block rounded-lg px-3 py-2 text-gray-300 hover:bg-gray-800">
+                    Module Information
+                </a>
+
+                {{-- Sections --}}
+                <div class="border-t border-gray-800 pt-3">
+
+                    <div class="px-3 text-xs font-semibold uppercase tracking-wide text-gray-500">
+                        Sections ({{ count($sections) }})
+                    </div>
+
+                    <div class="ml-3 mt-2 space-y-1">
+
+                        @foreach ($sections as $sectionIndex => $section)
+                            <a href="#section-{{ $sectionIndex }}"
+                                class="block truncate rounded-lg px-3 py-1 text-xs text-gray-400 hover:bg-gray-800 hover:text-gray-200">
+                                {{ $section['heading'] ?: 'Section ' . ($sectionIndex + 1) }}
+                            </a>
+                        @endforeach
+
+                    </div>
+
+                </div>
+
+                {{-- Navigation Actions --}}
+                <div class="space-y-2 border-t border-gray-800 pt-4">
+
+                    <a href="{{ route('training.admin.modules.dashboard') }}"
+                        class="block rounded-lg border border-gray-700 px-3 py-2 text-center text-sm text-gray-300 hover:bg-gray-800">
+                        Back
+                    </a>
+
+                    <button type="submit" form="paragraph-form"
+                        class="w-full rounded-lg bg-green-600 px-3 py-2 text-sm font-semibold text-white hover:bg-green-500">
+                        {{ $paragraphId ? 'Save Changes' : 'Save Module' }}
+                    </button>
+
+                </div>
+
+            </nav>
+
         </div>
 
-        <div>
-            <label for="description" class="mb-2 block text-sm font-medium text-gray-200">
-                Module Description
-            </label>
+    </aside>
 
-            <textarea id="description" wire:model="description" rows="3" placeholder="Enter an optional description"
-                class="w-full rounded-lg border border-gray-600 bg-gray-800 px-4 py-3 text-white placeholder:text-gray-500 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/30"></textarea>
+    {{-- Main Form --}}
+    <form id="paragraph-form" wire:submit.prevent="save"
+        class="w-full space-y-6 rounded-3xl border border-gray-800 bg-gray-950 p-4 shadow-2xl shadow-black/40 sm:p-6 lg:p-8 xl:max-w-[70vw]">
 
-            @error('description')
-                <p class="mt-2 text-sm text-red-400">
-                    {{ $message }}
-                </p>
-            @enderror
+        {{-- Module Information --}}
+        <div id="module-info"
+            class="scroll-mt-24 space-y-5 rounded-2xl border border-gray-800 bg-gray-900/80 p-6 shadow-xl shadow-black/20">
+
+            <h2 class="text-xl font-semibold text-white">
+                Module Information
+            </h2>
+
+            {{-- Title --}}
+            <div>
+                <label for="title" class="mb-2 block text-sm font-medium text-gray-300">
+                    Paragraph Module Title
+                </label>
+
+                <input id="title" type="text" wire:model="title"
+                    placeholder="Enter a title for this paragraph module"
+                    class="w-full rounded-xl border border-gray-700 bg-gray-900 px-4 py-3 text-sm text-white shadow-sm placeholder:text-gray-500 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/40">
+
+                @error('title')
+                    <p class="mt-2 text-sm text-red-400">
+                        {{ $message }}
+                    </p>
+                @enderror
+            </div>
+
+            {{-- Description --}}
+            <div>
+                <label for="description" class="mb-2 block text-sm font-medium text-gray-300">
+                    Module Description
+                </label>
+
+                <textarea id="description" wire:model="description" rows="3" placeholder="Enter an optional description"
+                    class="w-full rounded-xl border border-gray-700 bg-gray-900 px-4 py-3 text-sm text-white shadow-sm placeholder:text-gray-500 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/40"></textarea>
+
+                @error('description')
+                    <p class="mt-2 text-sm text-red-400">
+                        {{ $message }}
+                    </p>
+                @enderror
+            </div>
+
         </div>
 
-        <section class="overflow-hidden rounded-xl border border-gray-700 bg-gray-900">
-            <div
-                class="flex flex-col gap-4 border-b border-gray-700 px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
+        {{-- Sections Header --}}
+        <div class="rounded-2xl border border-gray-800 bg-gray-900/80 p-6 shadow-xl shadow-black/20">
+
+            <div class="flex items-center justify-between gap-4">
+
                 <div>
-                    <h2 class="font-semibold text-white">
-                        Module Paragraphs
+                    <h2 class="text-xl font-semibold text-white">
+                        Module Sections
                     </h2>
 
                     <p class="mt-1 text-sm text-gray-400">
-                        Add paragraphs in the order the trainee should read them.
+                        Create sections containing one or more paragraphs.
                     </p>
                 </div>
 
-                <button type="button" wire:click="addParagraph"
-                    class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-500">
-                    Add Paragraph
+                <button type="button" wire:click="addSection"
+                    class="inline-flex items-center rounded-lg bg-blue-800 px-4 py-2 text-sm font-medium text-white transition hover:bg-blue-900">
+                    Add Section
                 </button>
+
             </div>
 
-            @if (empty($paragraphs))
-                <div class="px-5 py-8 text-center text-sm text-gray-400">
-                    No paragraphs have been added.
+        </div>
+
+        {{-- Individual Sections --}}
+        @foreach ($sections as $sectionIndex => $section)
+            <div id="section-{{ $sectionIndex }}" wire:key="section-{{ $section['id'] ?? 'new' }}-{{ $sectionIndex }}"
+                class="scroll-mt-24 space-y-5 rounded-2xl border border-gray-800 bg-gray-900/80 p-6 shadow-xl shadow-black/20">
+
+                <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+
+                    <div>
+
+                        <h3 class="text-lg font-semibold text-white">
+                            {{ $section['heading'] ?: 'Section ' . ($sectionIndex + 1) }}
+                        </h3>
+
+                        <p class="text-sm text-gray-400">
+                            {{ count($section['paragraphs'] ?? []) }}
+                            paragraph(s)
+                        </p>
+
+                    </div>
+
+                    <button type="button" wire:click="removeSection({{ $sectionIndex }})"
+                        wire:confirm="Remove this section and all of its paragraphs?"
+                        class="inline-flex items-center rounded-lg border border-red-900/50 bg-red-950/50 px-3 py-2 text-sm font-medium text-red-300 transition hover:bg-red-900/70 hover:text-white">
+                        Remove Section
+                    </button>
+
                 </div>
-            @else
-                <div class="space-y-6 p-5">
-                    @foreach ($paragraphs as $paragraphIndex => $paragraph)
-                        <div wire:key="paragraph-{{ $paragraph['id'] ?? 'new' }}-{{ $paragraphIndex }}"
-                            class="rounded-xl border border-gray-700 bg-gray-800/60 p-5">
 
-                            <div class="mb-5 flex items-center justify-between">
-                                <h3 class="font-semibold text-white">
+                {{-- Section Heading --}}
+                <div>
+
+                    <label class="mb-2 block text-sm font-medium text-gray-300">
+                        Section Heading
+                        <span class="font-normal text-gray-500">
+                            (Optional)
+                        </span>
+                    </label>
+
+                    <input type="text" wire:model="sections.{{ $sectionIndex }}.heading"
+                        placeholder="Enter an optional section heading"
+                        class="w-full rounded-xl border border-gray-700 bg-gray-900 px-4 py-3 text-sm text-white shadow-sm placeholder:text-gray-500 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/40">
+
+                </div>
+
+                {{-- Paragraphs --}}
+                <div class="space-y-4 border-l-2 border-gray-800 pl-4">
+
+                    <div class="flex items-center justify-between gap-4">
+
+                        <h4 class="font-semibold text-gray-200">
+                            Paragraphs
+                        </h4>
+
+                        <button type="button" wire:click="addParagraph({{ $sectionIndex }})"
+                            class="inline-flex items-center rounded-lg bg-blue-800 px-4 py-2 text-sm font-medium text-white transition hover:bg-blue-900">
+                            Add Paragraph
+                        </button>
+
+                    </div>
+
+                    @foreach ($section['paragraphs'] ?? [] as $paragraphIndex => $paragraph)
+                        <div wire:key="paragraph-{{ $sectionIndex }}-{{ $paragraphIndex }}"
+                            class="space-y-4 rounded-xl border border-gray-800 bg-gray-900/60 p-4">
+
+                            <div class="flex items-center justify-between gap-4">
+
+                                <h5 class="font-semibold text-gray-200">
                                     Paragraph {{ $paragraphIndex + 1 }}
-                                </h3>
+                                </h5>
 
-                                <button type="button" wire:click="removeParagraph({{ $paragraphIndex }})"
-                                    wire:confirm="Remove this paragraph?"
-                                    class="rounded-lg border border-red-800 px-3 py-2 text-sm text-red-400 hover:bg-red-950/50">
+                                <button type="button"
+                                    wire:click="removeParagraph(
+                                        {{ $sectionIndex }},
+                                        {{ $paragraphIndex }}
+                                    )"
+                                    class="inline-flex items-center rounded-lg border border-red-900/50 bg-red-950/50 px-3 py-2 text-sm font-medium text-red-300 transition hover:bg-red-900/70 hover:text-white">
                                     Remove Paragraph
                                 </button>
+
                             </div>
 
-                            <div class="space-y-5">
-                                <div>
-                                    <label class="mb-2 block text-sm font-medium text-gray-200">
-                                        Heading
-                                    </label>
 
-                                    <input type="text" wire:model="paragraphs.{{ $paragraphIndex }}.heading"
-                                        placeholder="Optional paragraph heading"
-                                        class="w-full rounded-lg border border-gray-600 bg-gray-800 px-4 py-3 text-white">
+                            <textarea wire:model="sections.{{ $sectionIndex }}.paragraphs.{{ $paragraphIndex }}.content" rows="5"
+                                placeholder="Enter paragraph content"
+                                class="w-full rounded-xl border border-gray-700 bg-gray-900 px-4 py-3 text-sm text-white shadow-sm placeholder:text-gray-500 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/40"></textarea>
+
+                            @error("sections.$sectionIndex.paragraphs.$paragraphIndex.content")
+                                <p class="mt-2 text-sm text-red-400">
+                                    {{ $message }}
+                                </p>
+                            @enderror
+
+                            {{-- Lists --}}
+                            <div class="space-y-4 border-l-2 border-gray-800 pl-4">
+
+                                <div class="flex items-center justify-between gap-4">
+
+                                    <div>
+
+                                        <h6 class="font-semibold text-gray-200">
+                                            Lists
+                                        </h6>
+
+                                        <p class="text-xs text-gray-500">
+                                            Lists belong to this paragraph.
+                                        </p>
+
+                                    </div>
+
+                                    <button type="button"
+                                        wire:click="addList(
+                                            {{ $sectionIndex }},
+                                            {{ $paragraphIndex }}
+                                        )"
+                                        class="inline-flex items-center rounded-lg bg-blue-800 px-4 py-2 text-sm font-medium text-white transition hover:bg-blue-900">
+                                        Add List
+                                    </button>
+
                                 </div>
 
-                                <div>
-                                    <label class="mb-2 block text-sm font-medium text-gray-200">
-                                        Content
-                                    </label>
 
-                                    <textarea wire:model="paragraphs.{{ $paragraphIndex }}.content" rows="6" placeholder="Enter the paragraph content"
-                                        class="w-full rounded-lg border border-gray-600 bg-gray-800 px-4 py-3 text-white"></textarea>
-                                </div>
+                                @foreach ($paragraph['lists'] ?? [] as $listIndex => $list)
+                                    <div wire:key="list-{{ $sectionIndex }}-{{ $paragraphIndex }}-{{ $listIndex }}"
+                                        class="space-y-4 rounded-xl border border-gray-800 bg-gray-950 p-4">
 
-                                <section class="rounded-lg border border-gray-700">
-                                    <div class="flex items-center justify-between border-b border-gray-700 px-4 py-3">
-                                        <div>
-                                            <h4 class="font-medium text-white">
-                                                Lists
-                                            </h4>
+                                        {{-- List Header --}}
+                                        <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
 
-                                            <p class="text-sm text-gray-400">
-                                                Add optional bullet or numbered lists.
-                                            </p>
+                                            {{-- List Type --}}
+                                            <div class="flex-1">
+
+                                                <label class="mb-2 block text-sm font-medium text-gray-300">
+                                                    List Type
+                                                </label>
+
+                                                <select
+                                                    wire:model="sections.{{ $sectionIndex }}.paragraphs.{{ $paragraphIndex }}.lists.{{ $listIndex }}.type"
+                                                    class="w-full rounded-xl border border-gray-700 bg-gray-900 px-4 py-3 text-sm text-white shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/40">
+                                                    <option value="bullet">
+                                                        Bullet List
+                                                    </option>
+
+                                                    <option value="ordered">
+                                                        Numbered List
+                                                    </option>
+                                                </select>
+
+                                                @error("sections.$sectionIndex.paragraphs.$paragraphIndex.lists.$listIndex.type")
+                                                    <p class="mt-2 text-sm text-red-400">
+                                                        {{ $message }}
+                                                    </p>
+                                                @enderror
+
+                                            </div>
+
+
+                                            {{-- Remove List --}}
+                                            <button type="button"
+                                                wire:click="removeList(
+                    {{ $sectionIndex }},
+                    {{ $paragraphIndex }},
+                    {{ $listIndex }}
+                )"
+                                                class="inline-flex items-center rounded-lg border border-red-900/50 bg-red-950/50 px-3 py-2 text-sm font-medium text-red-300 transition hover:bg-red-900/70 hover:text-white">
+                                                Remove List
+                                            </button>
+
                                         </div>
 
-                                        <button type="button" wire:click="addList({{ $paragraphIndex }})"
-                                            class="rounded-lg bg-gray-700 px-3 py-2 text-sm text-white hover:bg-gray-600">
-                                            Add List
-                                        </button>
-                                    </div>
 
-                                    <div class="space-y-4 p-4">
-                                        @foreach ($paragraph['lists'] ?? [] as $listIndex => $list)
-                                            <div wire:key="paragraph-{{ $paragraphIndex }}-list-{{ $list['id'] ?? 'new' }}-{{ $listIndex }}"
-                                                class="rounded-lg border border-gray-600 bg-gray-900/50 p-4">
+                                        {{-- List Items --}}
+                                        <div class="space-y-3 border-l-2 border-gray-800 pl-4">
 
-                                                <div class="mb-4 flex items-end gap-4">
-                                                    <div class="flex-1">
-                                                        <label class="mb-2 block text-sm font-medium text-gray-200">
-                                                            List Type
-                                                        </label>
+                                            <div class="flex items-center justify-between gap-4">
 
-                                                        <select
-                                                            wire:model="paragraphs.{{ $paragraphIndex }}.lists.{{ $listIndex }}.type"
-                                                            class="w-full rounded-lg border border-gray-600 bg-gray-800 px-3 py-2 text-white">
-                                                            <option value="bullet">
-                                                                Bullet List
-                                                            </option>
+                                                <h6 class="text-sm font-semibold text-gray-300">
+                                                    List Items
+                                                </h6>
 
-                                                            <option value="ordered">
-                                                                Ordered List
-                                                            </option>
-                                                        </select>
+                                                <button type="button"
+                                                    wire:click="addListItem(
+                        {{ $sectionIndex }},
+                        {{ $paragraphIndex }},
+                        {{ $listIndex }}
+                    )"
+                                                    class="inline-flex items-center rounded-lg bg-blue-800 px-3 py-2 text-sm font-medium text-white transition hover:bg-blue-900">
+                                                    + Add List Item
+                                                </button>
+
+                                            </div>
+
+
+                                            @error("sections.$sectionIndex.paragraphs.$paragraphIndex.lists.$listIndex.items")
+                                                <p class="text-sm text-red-400">
+                                                    {{ $message }}
+                                                </p>
+                                            @enderror
+
+
+                                            @foreach ($list['items'] ?? [] as $itemIndex => $item)
+                                                <div wire:key="list-item-{{ $sectionIndex }}-{{ $paragraphIndex }}-{{ $listIndex }}-{{ $itemIndex }}"
+                                                    class="flex items-start gap-3">
+
+                                                    {{-- Bullet / Number --}}
+                                                    <div class="w-8 pt-3 text-center text-sm text-gray-400">
+
+                                                        @if (($list['type'] ?? 'bullet') === 'ordered')
+                                                            {{ $itemIndex + 1 }}.
+                                                        @else
+                                                            &bull;
+                                                        @endif
+
                                                     </div>
 
+
+                                                    {{-- Item Content --}}
+                                                    <div class="flex-1">
+
+                                                        <textarea
+                                                            wire:model="sections.{{ $sectionIndex }}.paragraphs.{{ $paragraphIndex }}.lists.{{ $listIndex }}.items.{{ $itemIndex }}.content"
+                                                            rows="2" placeholder="Enter list item"
+                                                            class="w-full rounded-xl border border-gray-700 bg-gray-900 px-4 py-3 text-sm text-white shadow-sm placeholder:text-gray-500 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/40"></textarea>
+
+                                                        @error("sections.$sectionIndex.paragraphs.$paragraphIndex.lists.$listIndex.items.$itemIndex.content")
+                                                            <p class="mt-2 text-sm text-red-400">
+                                                                {{ $message }}
+                                                            </p>
+                                                        @enderror
+
+                                                    </div>
+
+
+                                                    {{-- Remove Item --}}
                                                     <button type="button"
-                                                        wire:click="removeList({{ $paragraphIndex }}, {{ $listIndex }})"
-                                                        wire:confirm="Remove this list?"
-                                                        class="rounded-lg border border-red-800 px-3 py-2 text-sm text-red-400">
-                                                        Remove List
+                                                        wire:click="removeListItem(
+                                                        {{ $sectionIndex }},
+                                                        {{ $paragraphIndex }},
+                                                        {{ $listIndex }},
+                                                        {{ $itemIndex }}
+                                                    )"
+                                                        class="mt-1 inline-flex items-center rounded-lg border border-red-900/50 bg-red-950/50 px-3 py-2 text-sm font-medium text-red-300 transition hover:bg-red-900/70 hover:text-white">
+                                                        Remove
                                                     </button>
+
                                                 </div>
+                                            @endforeach
 
-                                                <div class="space-y-3">
-                                                    @foreach ($list['items'] ?? [] as $itemIndex => $item)
-                                                        <div wire:key="paragraph-{{ $paragraphIndex }}-list-{{ $listIndex }}-item-{{ $item['id'] ?? 'new' }}-{{ $itemIndex }}"
-                                                            class="flex items-start gap-3">
+                                        </div>
 
-                                                            <div class="pt-3 text-sm text-gray-400">
-                                                                {{ ($list['type'] ?? 'bullet') === 'ordered' ? $itemIndex + 1 . '.' : '•' }}
-                                                            </div>
-
-                                                            <textarea wire:model="paragraphs.{{ $paragraphIndex }}.lists.{{ $listIndex }}.items.{{ $itemIndex }}.content"
-                                                                rows="2" class="flex-1 rounded-lg border border-gray-600 bg-gray-800 px-3 py-2 text-white"></textarea>
-
-                                                            <button type="button"
-                                                                wire:click="removeListItem(
-                                                            {{ $paragraphIndex }},
-                                                            {{ $listIndex }},
-                                                            {{ $itemIndex }}
-                                                        )"
-                                                                class="mt-1 rounded-lg px-3 py-2 text-sm text-red-400 hover:bg-red-950/50">
-                                                                Remove
-                                                            </button>
-                                                        </div>
-                                                    @endforeach
-
-                                                    <button type="button"
-                                                        wire:click="addListItem({{ $paragraphIndex }}, {{ $listIndex }})"
-                                                        class="text-sm font-medium text-blue-400 hover:text-blue-300">
-                                                        Add List Item
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        @endforeach
                                     </div>
-                                </section>
+                                @endforeach
+
                             </div>
+
                         </div>
+
+                        {{-- Insert Paragraph Between Existing Paragraphs --}}
+                        @unless ($loop->last)
+                            <div class="relative py-2">
+
+                                <div class="absolute inset-0 flex items-center">
+                                    <div class="w-full border-t border-gray-800"></div>
+                                </div>
+
+                                <div class="relative flex justify-center">
+
+                                    <button type="button"
+                                        wire:click="insertParagraphAfter(
+                                            {{ $sectionIndex }},
+                                            {{ $paragraphIndex }}
+                                        )"
+                                        class="rounded-full border border-dashed border-purple-500 bg-gray-950 px-4 py-2 text-sm text-purple-300 hover:bg-purple-950/40">
+                                        + Insert Paragraph
+                                    </button>
+
+                                </div>
+
+                            </div>
+                        @endunless
                     @endforeach
+
+                    <button type="button" wire:click="addParagraph({{ $sectionIndex }})"
+                        class="inline-flex items-center rounded-lg bg-blue-800 px-4 py-2 text-sm font-medium text-white transition hover:bg-blue-900">
+                        Add Paragraph
+                    </button>
+
                 </div>
-            @endif
-        </section>
 
-        {{-- Actions --}}
-        <div class="flex flex-col-reverse gap-3 border-t border-gray-700 pt-6 sm:flex-row sm:justify-end">
-            <a href="{{ route('training.admin.modules.dashboard') }}"
-                class="inline-flex items-center justify-center rounded-lg border border-gray-600 px-5 py-2.5 text-sm font-medium text-gray-200 hover:bg-gray-800">
-                Cancel
-            </a>
+            </div>
 
-            <button type="submit" wire:loading.attr="disabled" wire:target="save"
-                class="inline-flex items-center justify-center rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-blue-500 disabled:opacity-50">
-                <span wire:loading.remove wire:target="save">
-                    {{ $paragraphId ? 'Save Changes' : 'Create Paragraph Module' }}
-                </span>
 
-                <span wire:loading wire:target="save">
-                    Saving...
-                </span>
+            <button type="button" wire:click="addSection"
+                class="inline-flex items-center rounded-lg bg-blue-800 px-4 py-2 text-sm font-medium text-white transition hover:bg-blue-900">
+                Add Section
             </button>
+        @endforeach
+
+
+        {{-- Bottom Save --}}
+        <div class="flex justify-end">
+
+            <button type="submit"
+                class="rounded-xl bg-green-600 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-green-950/40 transition hover:bg-green-500">
+                {{ $paragraphId ? 'Save Changes' : 'Save Module' }}
+            </button>
+
         </div>
+
     </form>
+
 </div>

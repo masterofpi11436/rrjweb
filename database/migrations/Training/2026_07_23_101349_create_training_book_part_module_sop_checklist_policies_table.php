@@ -14,20 +14,22 @@ return new class extends Migration
         Schema::create('training_book_part_module_sop_checklist_policies', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignId('sop_checklist_id')
-                ->constrained(
-                    'training_book_part_module_sop_checklists',
-                    indexName: 'sop_checklist_policy_checklist_fk'
-                )
-                ->cascadeOnDelete();
+            $table->unsignedBigInteger('group_id');
 
-            $table->string('category');
             $table->string('policy_number');
             $table->string('title');
 
             $table->unsignedInteger('sort_order')->default(0);
 
             $table->timestamps();
+
+            $table->foreign(
+                'group_id',
+                'sop_policy_group_fk'
+            )
+                ->references('id')
+                ->on('training_book_part_module_sop_checklist_groups')
+                ->cascadeOnDelete();
         });
     }
 

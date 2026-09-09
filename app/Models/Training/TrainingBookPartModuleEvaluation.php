@@ -15,4 +15,12 @@ class TrainingBookPartModuleEvaluation extends Model
         'title',
         'description',
     ];
+
+    public function fields()
+    {
+        return $this->hasMany(
+            TrainingBookPartModuleEvaluationField::class,
+            'evaluation_id'
+        )->orderBy('sort_order');
+    }
 }

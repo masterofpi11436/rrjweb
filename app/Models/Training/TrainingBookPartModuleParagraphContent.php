@@ -11,17 +11,16 @@ class TrainingBookPartModuleParagraphContent extends Model
     protected $table = 'training_book_part_module_paragraph_contents';
 
     protected $fillable = [
-        'paragraph_module_id',
-        'heading',
+        'section_id',
         'content',
         'sort_order',
     ];
 
-    public function module(): BelongsTo
+    public function section(): BelongsTo
     {
         return $this->belongsTo(
-            TrainingBookPartModuleParagraph::class,
-            'paragraph_module_id'
+            TrainingBookPartModuleParagraphSection::class,
+            'section_id'
         );
     }
 
@@ -29,7 +28,7 @@ class TrainingBookPartModuleParagraphContent extends Model
     {
         return $this->hasMany(
             TrainingBookPartModuleParagraphList::class,
-            'paragraph_content_id'
+            'paragraph_id'
         )->orderBy('sort_order');
     }
 }

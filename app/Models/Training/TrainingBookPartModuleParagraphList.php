@@ -11,7 +11,7 @@ class TrainingBookPartModuleParagraphList extends Model
     protected $table = 'training_book_part_module_paragraph_lists';
 
     protected $fillable = [
-        'paragraph_content_id',
+        'paragraph_id',
         'type',
         'sort_order',
     ];
@@ -20,7 +20,7 @@ class TrainingBookPartModuleParagraphList extends Model
     {
         return $this->belongsTo(
             TrainingBookPartModuleParagraphContent::class,
-            'paragraph_content_id'
+            'paragraph_id'
         );
     }
 
@@ -28,7 +28,7 @@ class TrainingBookPartModuleParagraphList extends Model
     {
         return $this->hasMany(
             TrainingBookPartModuleParagraphListItem::class,
-            'paragraph_list_id'
+            'list_id'
         )->orderBy('sort_order');
     }
 }

@@ -14,17 +14,21 @@ return new class extends Migration
         Schema::create('training_book_part_module_paragraph_contents', function (Blueprint $table) {
             $table->id();
 
-            $table->unsignedBigInteger('paragraph_module_id');
+            $table->unsignedBigInteger('section_id');
 
-            $table->foreign('paragraph_module_id', 'paragraph_content_module_fk')
-                ->references('id')
-                ->on('training_book_part_module_paragraphs')
-                ->cascadeOnDelete();
+            $table->text('content');
 
-            $table->string('heading')->nullable();
-            $table->longText('content')->nullable();
             $table->unsignedInteger('sort_order')->default(0);
+
             $table->timestamps();
+
+            $table->foreign(
+                'section_id',
+                'paragraph_content_section_fk'
+            )
+                ->references('id')
+                ->on('training_book_part_module_paragraph_sections')
+                ->cascadeOnDelete();
         });
     }
 

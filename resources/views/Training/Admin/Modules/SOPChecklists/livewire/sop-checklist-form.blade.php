@@ -1,422 +1,1054 @@
-<div class="space-y-6">
+<div>
 
-    <form wire:submit="save" class="space-y-6">
+    <form wire:submit="save">
 
-        {{-- Checklist Title --}}
-        <div>
-            <label for="title" class="mb-2 block text-sm font-medium text-gray-200">
-                Checklist Title
-            </label>
-
-            <input id="title" type="text" wire:model="title"
-                placeholder="Example: Standard Operating Procedure Acceptance and Acknowledgement"
-                class="w-full rounded-lg border border-gray-600 bg-gray-800 px-4 py-3 text-white
-                       placeholder:text-gray-500 focus:border-blue-500 focus:outline-none
-                       focus:ring-2 focus:ring-blue-500/30">
-
-            @error('title')
-                <p class="mt-2 text-sm text-red-400">
-                    {{ $message }}
-                </p>
-            @enderror
-        </div>
+        <div class="grid grid-cols-1 gap-6 xl:grid-cols-[280px_minmax(0,1fr)]">
 
 
-        {{-- Description --}}
-        <div>
-            <label for="description" class="mb-2 block text-sm font-medium text-gray-200">
-                Description
-            </label>
+            {{-- ========================================================= --}}
+            {{-- LEFT SIDEBAR --}}
+            {{-- ========================================================= --}}
 
-            <textarea id="description" wire:model="description" rows="4" placeholder="Enter an optional description"
-                class="w-full rounded-lg border border-gray-600 bg-gray-800 px-4 py-3 text-white
-                       placeholder:text-gray-500 focus:border-blue-500 focus:outline-none
-                       focus:ring-2 focus:ring-blue-500/30"></textarea>
+            <aside>
 
-            @error('description')
-                <p class="mt-2 text-sm text-red-400">
-                    {{ $message }}
-                </p>
-            @enderror
-        </div>
+                <div class="sticky top-4 space-y-4">
 
 
-        {{-- Policies --}}
-        <section class="overflow-hidden rounded-xl border border-gray-700 bg-gray-900">
+                    {{-- Navigation --}}
+                    <section
+                        class="overflow-hidden rounded-lg
+                               border border-gray-700
+                               bg-gray-900">
 
-            <div
-                class="flex flex-col gap-3 border-b border-gray-700 px-5 py-4
-                       sm:flex-row sm:items-center sm:justify-between">
+                        <div class="border-b border-gray-700
+                                   bg-gray-800 px-4 py-3">
 
-                <div>
-                    <h2 class="font-semibold text-white">
-                        SOP Policies
-                    </h2>
+                            <h2 class="text-sm font-semibold
+                                       text-white">
+                                SOP Checklist
+                            </h2>
 
-                    <p class="mt-1 text-sm text-gray-400">
-                        Add the policies included in this SOP acknowledgement module.
-                    </p>
-                </div>
+                            <p class="mt-1 text-xs
+                                       text-gray-400">
+                                Module Navigation
+                            </p>
 
-                <button type="button" wire:click="addPolicy"
-                    class="inline-flex items-center justify-center rounded-lg
-                           bg-blue-600 px-4 py-2 text-sm font-semibold
-                           text-white hover:bg-blue-500">
-                    Add Policy
-                </button>
-
-            </div>
+                        </div>
 
 
-            <div class="space-y-5 p-5">
+                        <nav class="space-y-1 p-2">
 
-                @error('policies')
-                    <div
-                        class="rounded-lg border border-red-700 bg-red-950/40
-                               px-4 py-3 text-sm text-red-300">
-                        {{ $message }}
-                    </div>
-                @enderror
+                            <a href="#checklist-details"
+                                class="block rounded-md
+                                       px-3 py-2 text-sm
+                                       text-gray-300
+                                       hover:bg-gray-800
+                                       hover:text-white">
+
+                                Checklist Details
+
+                            </a>
+
+                            <a href="#groups"
+                                class="flex items-center
+                                       justify-between
+                                       rounded-md px-3 py-2
+                                       text-sm text-gray-300
+                                       hover:bg-gray-800
+                                       hover:text-white">
+
+                                <span>
+                                    Groups
+                                </span>
+
+                                <span
+                                    class="rounded-full
+                                           bg-gray-700
+                                           px-2 py-0.5
+                                           text-xs text-gray-300">
+
+                                    {{ count($groups) }}
+
+                                </span>
+
+                            </a>
+
+                        </nav>
+
+                    </section>
 
 
-                @foreach ($policies as $index => $policy)
-                    <div wire:key="sop-policy-{{ $policy['id'] ?? 'new-' . $index }}"
-                        class="overflow-hidden rounded-xl border
-                               border-gray-700 bg-gray-800">
 
-                        {{-- Header --}}
+                    {{-- Group List --}}
+                    <section
+                        class="overflow-hidden rounded-lg
+                               border border-gray-700
+                               bg-gray-900">
+
                         <div
-                            class="flex flex-col gap-3 border-b border-gray-700
-                                   px-4 py-3 sm:flex-row sm:items-center
-                                   sm:justify-between">
+                            class="flex items-center
+                                   justify-between
+                                   border-b border-gray-700
+                                   bg-gray-800
+                                   px-4 py-3">
 
-                            <h3 class="font-medium text-white">
-                                Policy {{ $index + 1 }}
-                            </h3>
-
-                            <div class="flex flex-wrap gap-2">
-
-                                <button type="button" wire:click="movePolicyUp({{ $index }})"
-                                    @disabled($index === 0)
-                                    class="inline-flex items-center justify-center
-                                           rounded-lg border border-gray-600
-                                           px-3 py-2 text-xs font-medium
-                                           text-gray-300 hover:bg-gray-700
-                                           disabled:cursor-not-allowed
-                                           disabled:opacity-40">
-                                    Move Up
-                                </button>
-
-                                <button type="button" wire:click="movePolicyDown({{ $index }})"
-                                    @disabled($index === count($policies) - 1)
-                                    class="inline-flex items-center justify-center
-                                           rounded-lg border border-gray-600
-                                           px-3 py-2 text-xs font-medium
-                                           text-gray-300 hover:bg-gray-700
-                                           disabled:cursor-not-allowed
-                                           disabled:opacity-40">
-                                    Move Down
-                                </button>
-
-                                <button type="button" wire:click="insertPolicy({{ $index }})"
-                                    class="inline-flex items-center justify-center
-                                           rounded-lg border border-blue-700
-                                           px-3 py-2 text-xs font-medium
-                                           text-blue-300 hover:bg-blue-950/50">
-                                    Insert Below
-                                </button>
-
-                                <button type="button" wire:click="removePolicy({{ $index }})"
-                                    wire:confirm="Are you sure you want to remove this policy?"
-                                    class="inline-flex items-center justify-center
-                                           rounded-lg border border-red-700
-                                           px-3 py-2 text-xs font-medium
-                                           text-red-400 hover:bg-red-950/50">
-                                    Remove
-                                </button>
-
-                            </div>
-
-                        </div>
-
-
-                        {{-- Fields --}}
-                        <div class="space-y-5 p-4">
-
-                            {{-- Category --}}
                             <div>
-                                <label for="category-{{ $index }}"
-                                    class="mb-2 block text-sm font-medium text-gray-200">
-                                    Category
-                                </label>
 
-                                <select id="category-{{ $index }}"
-                                    wire:model="policies.{{ $index }}.category"
-                                    class="w-full rounded-lg border border-gray-600
-                                        bg-gray-900 px-4 py-3 text-white
-                                        focus:border-blue-500 focus:outline-none
-                                        focus:ring-2 focus:ring-blue-500/30">
-                                    <option value="">
-                                        Select a Category
-                                    </option>
+                                <h2 class="text-sm font-semibold
+                                           text-white">
+                                    Groups
+                                </h2>
 
-                                    @foreach ($categories as $category)
-                                        @if (!empty(trim($category['name'] ?? '')))
-                                            <option value="{{ $category['name'] }}">
-                                                {{ $category['name'] }}
-                                            </option>
-                                        @endif
-                                    @endforeach
-
-                                </select>
-
-                                @error("policies.$index.category")
-                                    <p class="mt-2 text-sm text-red-400">
-                                        {{ $message }}
-                                    </p>
-                                @enderror
-                            </div>
-
-                            <div class="grid grid-cols-1 gap-5 md:grid-cols-4">
-
-                                {{-- Policy Number --}}
-                                <div>
-                                    <label for="policy-number-{{ $index }}"
-                                        class="mb-2 block text-sm font-medium text-gray-200">
-                                        Policy Number
-                                    </label>
-
-                                    <input id="policy-number-{{ $index }}" type="text"
-                                        wire:model="policies.{{ $index }}.policy_number"
-                                        placeholder="Example: 1.5"
-                                        class="w-full rounded-lg border border-gray-600
-                                               bg-gray-900 px-4 py-3 text-white
-                                               placeholder:text-gray-500
-                                               focus:border-blue-500 focus:outline-none
-                                               focus:ring-2 focus:ring-blue-500/30">
-
-                                    @error("policies.$index.policy_number")
-                                        <p class="mt-2 text-sm text-red-400">
-                                            {{ $message }}
-                                        </p>
-                                    @enderror
-                                </div>
-
-
-                                {{-- Policy Title --}}
-                                <div class="md:col-span-3">
-                                    <label for="policy-title-{{ $index }}"
-                                        class="mb-2 block text-sm font-medium text-gray-200">
-                                        Policy Title
-                                    </label>
-
-                                    <input id="policy-title-{{ $index }}" type="text"
-                                        wire:model="policies.{{ $index }}.title"
-                                        placeholder="Example: Office of Professional Review"
-                                        class="w-full rounded-lg border border-gray-600
-                                               bg-gray-900 px-4 py-3 text-white
-                                               placeholder:text-gray-500
-                                               focus:border-blue-500 focus:outline-none
-                                               focus:ring-2 focus:ring-blue-500/30">
-
-                                    @error("policies.$index.title")
-                                        <p class="mt-2 text-sm text-red-400">
-                                            {{ $message }}
-                                        </p>
-                                    @enderror
-                                </div>
+                                <p class="mt-0.5 text-xs
+                                           text-gray-400">
+                                    SOP Sections
+                                </p>
 
                             </div>
+
+
+                            <button type="button" wire:click="addGroup" title="Add Group"
+                                class="flex h-7 w-7
+                                       items-center
+                                       justify-center
+                                       rounded-md bg-blue-600
+                                       text-lg font-semibold
+                                       text-white
+                                       hover:bg-blue-500">
+
+                                +
+
+                            </button>
 
                         </div>
 
-                    </div>
-                @endforeach
 
-            </div>
+                        <div class="space-y-1 p-2">
 
-        </section>
+                            @foreach ($groups as $groupIndex => $group)
+                                <a href="#group-{{ $groupIndex }}"
+                                    wire:key="sidebar-group-{{ $group['id'] ?? 'new-' . $groupIndex }}"
+                                    class="flex items-center
+                                           justify-between gap-2
+                                           rounded-md px-3 py-2
+                                           text-sm text-gray-300
+                                           hover:bg-gray-800
+                                           hover:text-white">
 
-        {{-- Categories --}}
-        <section class="overflow-hidden rounded-xl border border-gray-700 bg-gray-900">
+                                    <div class="min-w-0">
 
-            <div
-                class="flex flex-col gap-3 border-b border-gray-700 px-5 py-4
-               sm:flex-row sm:items-center sm:justify-between">
-                <div>
-                    <h2 class="font-semibold text-white">
-                        Categories
-                    </h2>
+                                        <div class="truncate font-medium">
 
-                    <p class="mt-1 text-sm text-gray-400">
-                        Create the categories that can be assigned to policies.
-                    </p>
+                                            {{ !empty($group['title']) ? $group['title'] : 'Untitled Group' }}
+
+                                        </div>
+
+                                        @if (!empty($group['section_number']))
+                                            <div
+                                                class="text-xs
+                                                       text-gray-500">
+
+                                                Section
+                                                {{ $group['section_number'] }}
+
+                                            </div>
+                                        @endif
+
+                                    </div>
+
+
+                                    <span
+                                        class="shrink-0 rounded-full
+                                               bg-gray-700
+                                               px-2 py-0.5
+                                               text-xs text-gray-400">
+
+                                        {{ count($group['policies']) }}
+
+                                    </span>
+
+                                </a>
+                            @endforeach
+
+                        </div>
+
+                    </section>
+
+
+
+                    {{-- Add Group --}}
+                    <button type="button" wire:click="addGroup"
+                        class="flex w-full items-center
+                               justify-center rounded-lg
+                               bg-blue-600 px-4 py-2.5
+                               text-sm font-semibold
+                               text-white
+                               hover:bg-blue-500">
+
+                        + Add Group
+
+                    </button>
+
                 </div>
 
-                <button type="button" wire:click="addCategory"
-                    class="inline-flex items-center justify-center rounded-lg
-                   bg-blue-600 px-4 py-2 text-sm font-semibold
-                   text-white hover:bg-blue-500">
-                    Add Category
-                </button>
-            </div>
+            </aside>
 
-            <div class="space-y-4 p-5">
 
-                @foreach ($categories as $index => $category)
-                    <div wire:key="category-{{ $index }}" class="flex flex-col gap-3 sm:flex-row">
 
-                        <div class="flex-1">
+            {{-- ========================================================= --}}
+            {{-- MAIN CONTENT --}}
+            {{-- ========================================================= --}}
 
-                            <input type="text" wire:model.blur="categories.{{ $index }}.name"
-                                placeholder="Example: Administration/Management"
-                                class="w-full rounded-lg border border-gray-600
-                               bg-gray-800 px-4 py-3 text-white
-                               placeholder:text-gray-500
-                               focus:border-blue-500 focus:outline-none
-                               focus:ring-2 focus:ring-blue-500/30">
+            <main class="min-w-0 space-y-5">
 
-                            @error("categories.$index.name")
-                                <p class="mt-2 text-sm text-red-400">
+
+                {{-- Checklist Details --}}
+                <section id="checklist-details"
+                    class="overflow-hidden rounded-lg
+                           border border-gray-700
+                           bg-gray-900">
+
+                    <div class="border-b border-gray-700
+                               bg-gray-800 px-4 py-3">
+
+                        <h2 class="font-semibold text-white">
+                            Checklist Details
+                        </h2>
+
+                        <p class="mt-1 text-sm
+                                   text-gray-400">
+
+                            Basic information for this
+                            SOP checklist.
+
+                        </p>
+
+                    </div>
+
+
+                    <div class="space-y-4 p-4">
+
+
+                        {{-- Title --}}
+                        <div>
+
+                            <label for="title"
+                                class="mb-1.5 block
+                                       text-sm font-medium
+                                       text-gray-200">
+
+                                Checklist Title
+
+                            </label>
+
+
+                            <input id="title" type="text" wire:model="title"
+                                placeholder="Example: Standard Operating Procedure Acceptance and Acknowledgement"
+                                class="w-full rounded-lg
+                                       border border-gray-600
+                                       bg-gray-800
+                                       px-3 py-2.5
+                                       text-white
+                                       placeholder:text-gray-500
+                                       focus:border-blue-500
+                                       focus:outline-none
+                                       focus:ring-2
+                                       focus:ring-blue-500/30">
+
+
+                            @error('title')
+                                <p class="mt-1 text-sm
+                                           text-red-400">
+
                                     {{ $message }}
+
                                 </p>
                             @enderror
 
                         </div>
 
-                        <button type="button" wire:click="removeCategory({{ $index }})"
-                            class="inline-flex items-center justify-center rounded-lg
-                           border border-red-700 px-4 py-3 text-sm
-                           font-medium text-red-400 hover:bg-red-950/50">
-                            Remove
-                        </button>
+
+
+                        {{-- Description --}}
+                        <div>
+
+                            <label for="description"
+                                class="mb-1.5 block
+                                       text-sm font-medium
+                                       text-gray-200">
+
+                                Description
+
+                            </label>
+
+
+                            <textarea id="description" wire:model="description" rows="2" placeholder="Optional description"
+                                class="w-full rounded-lg
+                                       border border-gray-600
+                                       bg-gray-800
+                                       px-3 py-2.5
+                                       text-white
+                                       placeholder:text-gray-500
+                                       focus:border-blue-500
+                                       focus:outline-none
+                                       focus:ring-2
+                                       focus:ring-blue-500/30"></textarea>
+
+
+                            @error('description')
+                                <p class="mt-1 text-sm
+                                           text-red-400">
+
+                                    {{ $message }}
+
+                                </p>
+                            @enderror
+
+                        </div>
 
                     </div>
-                @endforeach
 
-            </div>
-
-        </section>
-
-        {{-- Preview --}}
-        <section class="overflow-hidden rounded-xl border border-gray-700 bg-gray-900">
-
-            <div class="border-b border-gray-700 px-5 py-4">
-
-                <h2 class="font-semibold text-white">
-                    Checklist Preview
-                </h2>
-
-                <p class="mt-1 text-sm text-gray-400">
-                    Policies will appear in this order.
-                </p>
-
-            </div>
-
-            <div class="overflow-x-auto p-5">
-
-                @php
-                    $currentCategory = null;
-                @endphp
-
-                <table class="w-full text-left text-sm">
-
-                    <tbody>
-
-                        @foreach ($policies as $policy)
-                            @if ($currentCategory !== $policy['category'])
-                                @php
-                                    $currentCategory = $policy['category'];
-                                @endphp
-
-                                <tr class="bg-gray-800">
-                                    <td colspan="4"
-                                        class="px-3 py-3 text-center font-semibold
-                                               uppercase text-white">
-                                        {{ $policy['category'] ?: 'Category' }}
-                                    </td>
-                                </tr>
-
-                                <tr
-                                    class="border-b border-gray-600 text-xs
-                                           font-semibold uppercase text-gray-400">
-                                    <th class="px-3 py-3">
-                                        Policy No.
-                                    </th>
-
-                                    <th class="px-3 py-3">
-                                        Title
-                                    </th>
-
-                                    <th class="px-3 py-3">
-                                        Name
-                                    </th>
-
-                                    <th class="px-3 py-3">
-                                        Date Completed
-                                    </th>
-                                </tr>
-                            @endif
+                </section>
 
 
-                            <tr class="border-b border-gray-700 text-gray-200">
 
-                                <td class="px-3 py-3">
-                                    {{ $policy['policy_number'] ?: '—' }}
-                                </td>
-
-                                <td class="px-3 py-3">
-                                    {{ $policy['title'] ?: '—' }}
-                                </td>
-
-                                <td class="px-3 py-3 text-gray-500">
-                                    —
-                                </td>
-
-                                <td class="px-3 py-3 text-gray-500">
-                                    —
-                                </td>
-
-                            </tr>
-                        @endforeach
-
-                    </tbody>
-
-                </table>
-
-            </div>
-
-        </section>
+                {{-- Groups --}}
+                <div id="groups" class="space-y-4">
 
 
-        {{-- Actions --}}
-        <div
-            class="flex flex-col-reverse gap-3 border-t border-gray-700
-                   pt-6 sm:flex-row sm:justify-end">
+                    @error('groups')
+                        <div
+                            class="rounded-lg border
+                                   border-red-700
+                                   bg-red-950/40
+                                   px-4 py-3
+                                   text-sm text-red-300">
 
-            <a href="{{ route('training.admin.modules.dashboard') }}"
-                class="inline-flex items-center justify-center rounded-lg
-                       border border-gray-600 px-5 py-2.5 text-sm
-                       font-medium text-gray-200 hover:bg-gray-800">
-                Cancel
-            </a>
+                            {{ $message }}
 
-            <button type="submit" wire:loading.attr="disabled" wire:target="save"
-                class="inline-flex items-center justify-center rounded-lg
-                       bg-blue-600 px-5 py-2.5 text-sm font-semibold
-                       text-white hover:bg-blue-500
-                       disabled:cursor-not-allowed
-                       disabled:opacity-50">
+                        </div>
+                    @enderror
 
-                <span wire:loading.remove wire:target="save">
-                    {{ $checklistId ? 'Save Changes' : 'Create SOP Checklist' }}
-                </span>
 
-                <span wire:loading wire:target="save">
-                    Saving...
-                </span>
 
-            </button>
+                    @foreach ($groups as $groupIndex => $group)
+                        <section id="group-{{ $groupIndex }}"
+                            wire:key="sop-group-{{ $group['id'] ?? 'new-' . $groupIndex }}"
+                            class="scroll-mt-4
+                                   overflow-hidden
+                                   rounded-lg
+                                   border border-gray-700
+                                   bg-gray-900">
+
+
+                            {{-- Group Header --}}
+                            <div
+                                class="flex flex-wrap
+                                       items-center
+                                       justify-between
+                                       gap-3
+                                       border-b
+                                       border-gray-700
+                                       bg-gray-800
+                                       px-4 py-3">
+
+
+                                <div class="flex items-center
+                                           gap-3">
+
+                                    <span
+                                        class="flex h-8 w-8
+                                               items-center
+                                               justify-center
+                                               rounded-md
+                                               bg-gray-700
+                                               text-xs
+                                               font-bold
+                                               text-gray-300">
+
+                                        {{ $groupIndex + 1 }}
+
+                                    </span>
+
+
+                                    <div>
+
+                                        <h3
+                                            class="font-semibold
+                                                   text-white">
+
+                                            {{ !empty($group['title']) ? $group['title'] : 'Untitled Group' }}
+
+                                        </h3>
+
+
+                                        <p
+                                            class="text-xs
+                                                   text-gray-400">
+
+                                            @if (!empty($group['section_number']))
+                                                Section
+                                                {{ $group['section_number'] }}
+                                                •
+                                            @endif
+
+                                            {{ count($group['policies']) }}
+
+                                            {{ count($group['policies']) === 1 ? 'policy' : 'policies' }}
+
+                                        </p>
+
+                                    </div>
+
+                                </div>
+
+
+
+                                {{-- Group Controls --}}
+                                <div class="flex items-center
+                                           gap-1">
+
+
+                                    {{-- Move Up --}}
+                                    <button type="button" wire:click="moveGroupUp({{ $groupIndex }})"
+                                        @disabled($groupIndex === 0) title="Move Group Up"
+                                        class="flex h-8 w-8
+                                               items-center
+                                               justify-center
+                                               rounded-md
+                                               border border-gray-600
+                                               text-gray-300
+                                               hover:bg-gray-700
+                                               disabled:cursor-not-allowed
+                                               disabled:opacity-25">
+
+                                        ↑
+
+                                    </button>
+
+
+
+                                    {{-- Move Down --}}
+                                    <button type="button" wire:click="moveGroupDown({{ $groupIndex }})"
+                                        @disabled($groupIndex === count($groups) - 1) title="Move Group Down"
+                                        class="flex h-8 w-8
+                                               items-center
+                                               justify-center
+                                               rounded-md
+                                               border border-gray-600
+                                               text-gray-300
+                                               hover:bg-gray-700
+                                               disabled:cursor-not-allowed
+                                               disabled:opacity-25">
+
+                                        ↓
+
+                                    </button>
+
+
+
+                                    {{-- Insert --}}
+                                    <button type="button" wire:click="insertGroup({{ $groupIndex }})"
+                                        title="Insert Group Below"
+                                        class="flex h-8 w-8
+                                               items-center
+                                               justify-center
+                                               rounded-md
+                                               border border-blue-800
+                                               text-blue-400
+                                               hover:bg-blue-950/50">
+
+                                        +
+
+                                    </button>
+
+
+
+                                    {{-- Remove --}}
+                                    <button type="button" wire:click="removeGroup({{ $groupIndex }})"
+                                        wire:confirm="Are you sure you want to remove this group and all of its policies?"
+                                        title="Remove Group"
+                                        class="flex h-8 w-8
+                                               items-center
+                                               justify-center
+                                               rounded-md
+                                               border border-red-900
+                                               text-lg text-red-400
+                                               hover:bg-red-950/50">
+
+                                        ×
+
+                                    </button>
+
+                                </div>
+
+                            </div>
+
+
+
+                            {{-- Group Information --}}
+                            <div
+                                class="grid grid-cols-1
+                                       gap-3 border-b
+                                       border-gray-700
+                                       px-4 py-3
+                                       lg:grid-cols-[minmax(250px,1fr)_160px]">
+
+
+                                {{-- Group Title --}}
+                                <div>
+
+                                    <label for="group-title-{{ $groupIndex }}"
+                                        class="mb-1 block
+                                               text-xs font-medium
+                                               uppercase
+                                               tracking-wide
+                                               text-gray-400">
+
+                                        Group Title
+
+                                    </label>
+
+
+                                    <input id="group-title-{{ $groupIndex }}" type="text"
+                                        wire:model="groups.{{ $groupIndex }}.title"
+                                        placeholder="Example: Administration / Management"
+                                        class="w-full rounded-md
+                                               border border-gray-600
+                                               bg-gray-950
+                                               px-3 py-2
+                                               text-sm text-white
+                                               placeholder:text-gray-600
+                                               focus:border-blue-500
+                                               focus:outline-none">
+
+
+                                    @error("groups.$groupIndex.title")
+                                        <p
+                                            class="mt-1 text-xs
+                                                   text-red-400">
+
+                                            {{ $message }}
+
+                                        </p>
+                                    @enderror
+
+                                </div>
+
+
+
+                                {{-- Section Number --}}
+                                <div>
+
+                                    <label for="section-number-{{ $groupIndex }}"
+                                        class="mb-1 block
+                                               text-xs font-medium
+                                               uppercase
+                                               tracking-wide
+                                               text-gray-400">
+
+                                        Section
+
+                                    </label>
+
+
+                                    <input id="section-number-{{ $groupIndex }}" type="text"
+                                        wire:model="groups.{{ $groupIndex }}.section_number"
+                                        placeholder="Example: 1.0"
+                                        class="w-full rounded-md
+                                               border border-gray-600
+                                               bg-gray-950
+                                               px-3 py-2
+                                               text-sm text-white
+                                               placeholder:text-gray-600
+                                               focus:border-blue-500
+                                               focus:outline-none">
+
+
+                                    @error("groups.$groupIndex.section_number")
+                                        <p
+                                            class="mt-1 text-xs
+                                                   text-red-400">
+
+                                            {{ $message }}
+
+                                        </p>
+                                    @enderror
+
+                                </div>
+
+                            </div>
+
+
+
+                            {{-- Optional Group Description --}}
+                            <div
+                                class="border-b
+                                       border-gray-700
+                                       px-4 py-3">
+
+                                <label for="group-description-{{ $groupIndex }}"
+                                    class="mb-1 block
+                                           text-xs font-medium
+                                           uppercase
+                                           tracking-wide
+                                           text-gray-400">
+
+                                    Group Description
+
+                                    <span
+                                        class="normal-case
+                                               text-gray-600">
+                                        (optional)
+                                    </span>
+
+                                </label>
+
+
+                                <input id="group-description-{{ $groupIndex }}" type="text"
+                                    wire:model="groups.{{ $groupIndex }}.description"
+                                    placeholder="Optional instructions or description"
+                                    class="w-full rounded-md
+                                           border border-gray-700
+                                           bg-gray-950
+                                           px-3 py-2
+                                           text-sm text-white
+                                           placeholder:text-gray-600
+                                           focus:border-blue-500
+                                           focus:outline-none">
+
+
+                                @error("groups.$groupIndex.description")
+                                    <p class="mt-1 text-xs
+                                               text-red-400">
+
+                                        {{ $message }}
+
+                                    </p>
+                                @enderror
+
+                            </div>
+
+
+
+                            {{-- Policy Header --}}
+                            <div
+                                class="flex items-center
+                                       justify-between
+                                       border-b
+                                       border-gray-700
+                                       bg-gray-950/40
+                                       px-4 py-2.5">
+
+                                <div>
+
+                                    <span
+                                        class="text-xs
+                                               font-semibold
+                                               uppercase
+                                               tracking-wide
+                                               text-gray-400">
+
+                                        Policies
+
+                                    </span>
+
+                                </div>
+
+
+                                <button type="button" wire:click="addPolicy({{ $groupIndex }})"
+                                    class="rounded-md
+                                           bg-blue-700
+                                           px-3 py-1.5
+                                           text-xs
+                                           font-semibold
+                                           text-white
+                                           hover:bg-blue-600">
+
+                                    + Add Policy
+
+                                </button>
+
+                            </div>
+
+
+
+                            @error("groups.$groupIndex.policies")
+                                <div
+                                    class="m-3 rounded-md
+                                           border border-red-700
+                                           bg-red-950/40
+                                           px-3 py-2
+                                           text-sm text-red-300">
+
+                                    {{ $message }}
+
+                                </div>
+                            @enderror
+
+
+
+                            {{-- Desktop Column Headers --}}
+                            <div
+                                class="hidden
+                                       grid-cols-[40px_110px_minmax(180px,1fr)_140px]
+                                       gap-3
+                                       border-b
+                                       border-gray-800
+                                       bg-gray-950/30
+                                       px-3 py-2
+                                       text-xs
+                                       font-semibold
+                                       uppercase
+                                       tracking-wide
+                                       text-gray-500
+                                       lg:grid">
+
+                                <div class="text-center">
+                                    #
+                                </div>
+
+                                <div>
+                                    Policy No.
+                                </div>
+
+                                <div>
+                                    Policy Title
+                                </div>
+
+                                <div class="text-center">
+                                    Actions
+                                </div>
+
+                            </div>
+
+
+
+                            {{-- Policies --}}
+                            <div class="divide-y
+                                       divide-gray-800">
+
+                                @foreach ($group['policies'] as $policyIndex => $policy)
+                                    <div wire:key="sop-policy-{{ $groupIndex }}-{{ $policy['id'] ?? 'new-' . $policyIndex }}"
+                                        class="px-3 py-2.5
+                                               hover:bg-gray-800/30">
+
+
+                                        <div
+                                            class="grid grid-cols-1
+                                                    gap-2
+                                                    lg:grid-cols-[40px_110px_minmax(180px,1fr)_140px]
+                                                    lg:items-start">
+
+
+                                            {{-- Number --}}
+                                            <div
+                                                class="flex items-center
+                                                       lg:justify-center">
+
+                                                <span
+                                                    class="flex h-8 w-8
+                                                           items-center
+                                                           justify-center
+                                                           rounded-md
+                                                           bg-gray-800
+                                                           text-xs
+                                                           font-semibold
+                                                           text-gray-400">
+
+                                                    {{ $policyIndex + 1 }}
+
+                                                </span>
+
+                                            </div>
+
+
+
+                                            {{-- Policy Number --}}
+                                            <div>
+
+                                                <label for="policy-number-{{ $groupIndex }}-{{ $policyIndex }}"
+                                                    class="mb-1 block
+                                                           text-xs
+                                                           font-medium
+                                                           uppercase
+                                                           text-gray-500
+                                                           lg:hidden">
+
+                                                    Policy Number
+
+                                                </label>
+
+
+                                                <input id="policy-number-{{ $groupIndex }}-{{ $policyIndex }}"
+                                                    type="text"
+                                                    wire:model="groups.{{ $groupIndex }}.policies.{{ $policyIndex }}.policy_number"
+                                                    placeholder="Example: 1.5"
+                                                    class="w-full
+                                                           rounded-md
+                                                           border
+                                                           border-gray-700
+                                                           bg-gray-950
+                                                           px-2.5 py-2
+                                                           text-sm
+                                                           text-white
+                                                           placeholder:text-gray-600
+                                                           focus:border-blue-500
+                                                           focus:outline-none">
+
+
+                                                @error("groups.$groupIndex.policies.$policyIndex.policy_number")
+                                                    <p
+                                                        class="mt-1
+                                                               text-xs
+                                                               text-red-400">
+
+                                                        {{ $message }}
+
+                                                    </p>
+                                                @enderror
+
+                                            </div>
+
+
+
+                                            {{-- Policy Title --}}
+                                            <div>
+
+                                                <label for="policy-title-{{ $groupIndex }}-{{ $policyIndex }}"
+                                                    class="mb-1 block
+                                                           text-xs
+                                                           font-medium
+                                                           uppercase
+                                                           text-gray-500
+                                                           lg:hidden">
+
+                                                    Policy Title
+
+                                                </label>
+
+
+                                                <input id="policy-title-{{ $groupIndex }}-{{ $policyIndex }}"
+                                                    type="text"
+                                                    wire:model="groups.{{ $groupIndex }}.policies.{{ $policyIndex }}.title"
+                                                    placeholder="Policy title"
+                                                    class="w-full
+                                                           rounded-md
+                                                           border
+                                                           border-gray-700
+                                                           bg-gray-950
+                                                           px-2.5 py-2
+                                                           text-sm
+                                                           text-white
+                                                           placeholder:text-gray-600
+                                                           focus:border-blue-500
+                                                           focus:outline-none">
+
+
+                                                @error("groups.$groupIndex.policies.$policyIndex.title")
+                                                    <p
+                                                        class="mt-1
+                                                               text-xs
+                                                               text-red-400">
+
+                                                        {{ $message }}
+
+                                                    </p>
+                                                @enderror
+
+                                            </div>
+
+
+
+                                            {{-- Policy Controls --}}
+                                            <div class="flex min-w-0 flex-nowrap gap-1 lg:justify-end">
+
+                                                <button type="button"
+                                                    wire:click="movePolicyUp({{ $groupIndex }}, {{ $policyIndex }})"
+                                                    @disabled($policyIndex === 0) title="Move Policy Up"
+                                                    class="flex h-8 w-8
+                                                           items-center
+                                                           justify-center
+                                                           rounded-md
+                                                           border border-gray-700
+                                                           text-gray-400
+                                                           hover:bg-gray-700
+                                                           disabled:cursor-not-allowed
+                                                           disabled:opacity-25">
+
+                                                    ↑
+
+                                                </button>
+
+                                                <button type="button"
+                                                    wire:click="movePolicyDown({{ $groupIndex }}, {{ $policyIndex }})"
+                                                    @disabled($policyIndex === count($group['policies']) - 1) title="Move Policy Down"
+                                                    class="flex h-8 w-8
+                                                           items-center
+                                                           justify-center
+                                                           rounded-md
+                                                           border border-gray-700
+                                                           text-gray-400
+                                                           hover:bg-gray-700
+                                                           disabled:cursor-not-allowed
+                                                           disabled:opacity-25">
+
+                                                    ↓
+
+                                                </button>
+
+                                                <button type="button"
+                                                    wire:click="insertPolicy({{ $groupIndex }}, {{ $policyIndex }})"
+                                                    title="Insert Policy Below"
+                                                    class="flex h-8 w-8
+                                                           items-center
+                                                           justify-center
+                                                           rounded-md
+                                                           border border-blue-900
+                                                           text-blue-400
+                                                           hover:bg-blue-950/50">
+
+                                                    +
+
+                                                </button>
+
+                                                <button type="button"
+                                                    wire:click="removePolicy({{ $groupIndex }}, {{ $policyIndex }})"
+                                                    wire:confirm="Are you sure you want to remove this policy?"
+                                                    title="Remove Policy"
+                                                    class="flex h-8 w-8
+                                                           items-center
+                                                           justify-center
+                                                           rounded-md
+                                                           border border-red-900
+                                                           text-lg
+                                                           text-red-400
+                                                           hover:bg-red-950/50">
+
+                                                    ×
+
+                                                </button>
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                @endforeach
+
+                            </div>
+
+
+                            {{-- Bottom Add Policy --}}
+                            <div
+                                class="border-t
+                                       border-gray-800
+                                       bg-gray-800/20
+                                       px-4 py-2.5">
+
+                                <button type="button" wire:click="addPolicy({{ $groupIndex }})"
+                                    class="text-sm
+                                           font-medium
+                                           text-blue-400
+                                           hover:text-blue-300">
+
+                                    + Add another policy
+
+                                </button>
+
+                            </div>
+
+                        </section>
+                    @endforeach
+
+
+
+                    {{-- Bottom Add Group --}}
+                    <button type="button" wire:click="addGroup"
+                        class="flex w-full
+                               items-center
+                               justify-center
+                               rounded-lg
+                               border border-dashed
+                               border-gray-600
+                               px-4 py-3
+                               text-sm
+                               font-medium
+                               text-gray-400
+                               hover:border-blue-700
+                               hover:bg-blue-950/20
+                               hover:text-blue-400">
+
+                        + Add Another Group
+
+                    </button>
+
+                </div>
+
+
+
+                {{-- ===================================================== --}}
+                {{-- FORM ACTIONS --}}
+                {{-- ===================================================== --}}
+
+                <div
+                    class="flex items-center
+                           justify-between
+                           border-t
+                           border-gray-700
+                           pt-5">
+
+
+                    <a href="{{ route('training.admin.modules.dashboard') }}"
+                        class="inline-flex
+                               items-center
+                               justify-center
+                               rounded-lg
+                               border border-gray-600
+                               px-5 py-2.5
+                               text-sm font-medium
+                               text-gray-200
+                               hover:bg-gray-800">
+
+                        Cancel
+
+                    </a>
+
+
+
+                    <button type="submit" wire:loading.attr="disabled" wire:target="save"
+                        class="inline-flex
+                               items-center
+                               justify-center
+                               rounded-lg
+                               bg-blue-600
+                               px-6 py-2.5
+                               text-sm
+                               font-semibold
+                               text-white
+                               hover:bg-blue-500
+                               disabled:cursor-not-allowed
+                               disabled:opacity-50">
+
+
+                        <span wire:loading.remove wire:target="save">
+
+                            {{ $checklistId ? 'Save Changes' : 'Create SOP Checklist' }}
+
+                        </span>
+
+
+                        <span wire:loading wire:target="save">
+
+                            Saving...
+
+                        </span>
+
+                    </button>
+
+                </div>
+
+            </main>
 
         </div>
 

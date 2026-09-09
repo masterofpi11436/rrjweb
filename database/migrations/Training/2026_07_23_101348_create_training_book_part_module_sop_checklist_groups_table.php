@@ -11,23 +11,25 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('training_book_part_module_paragraph_list_items', function (Blueprint $table) {
+        Schema::create('training_book_part_module_sop_checklist_groups', function (Blueprint $table) {
             $table->id();
 
-            $table->unsignedBigInteger('list_id');
+            $table->unsignedBigInteger('sop_checklist_id');
 
-            $table->text('content');
+            $table->string('title');
+            $table->string('section_number')->nullable();
+            $table->text('description')->nullable();
 
             $table->unsignedInteger('sort_order')->default(0);
 
             $table->timestamps();
 
             $table->foreign(
-                'list_id',
-                'paragraph_list_item_list_fk'
+                'sop_checklist_id',
+                'sop_group_checklist_fk'
             )
                 ->references('id')
-                ->on('training_book_part_module_paragraph_lists')
+                ->on('training_book_part_module_sop_checklists')
                 ->cascadeOnDelete();
         });
     }
@@ -37,6 +39,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('training_book_part_module_paragraph_list_items');
+        Schema::dropIfExists('training_book_part_module_sop_checklist_groups');
     }
 };

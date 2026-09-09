@@ -14,7 +14,7 @@ class ParagraphForm extends Component
 
     public string $description = '';
 
-    public array $paragraphs = [];
+    public array $sections = [];
 
     public function mount(?int $paragraphId = null): void
     {
@@ -22,34 +22,52 @@ class ParagraphForm extends Component
 
         if ($this->paragraphId !== null) {
             $this->loadParagraph();
+        } else {
+            $this->addSection();
         }
     }
 
     public function loadParagraph(): void
     {
         $paragraphModule = TrainingBookPartModuleParagraph::with([
-            'paragraphs.lists.items',
+            'sections.paragraphs.lists.items',
         ])->findOrFail($this->paragraphId);
 
         $this->title = $paragraphModule->title;
+
         $this->description = $paragraphModule->description ?? '';
 
-        $this->paragraphs = $paragraphModule->paragraphs
-            ->map(function ($paragraph) {
+        $this->sections = $paragraphModule->sections
+            ->sortBy('sort_order')
+            ->map(function ($section) {
                 return [
-                    'id' => $paragraph->id,
-                    'heading' => $paragraph->heading ?? '',
-                    'content' => $paragraph->content,
-                    'lists' => $paragraph->lists
-                        ->map(function ($list) {
+                    'id' => $section->id,
+                    'heading' => $section->heading ?? '',
+
+                    'paragraphs' => $section->paragraphs
+                        ->sortBy('sort_order')
+                        ->map(function ($paragraph) {
                             return [
-                                'id' => $list->id,
-                                'type' => $list->type,
-                                'items' => $list->items
-                                    ->map(function ($item) {
+                                'id' => $paragraph->id,
+                                'content' => $paragraph->content,
+
+                                'lists' => $paragraph->lists
+                                    ->sortBy('sort_order')
+                                    ->map(function ($list) {
                                         return [
-                                            'id' => $item->id,
-                                            'content' => $item->content,
+                                            'id' => $list->id,
+                                            'type' => $list->type,
+
+                                            'items' => $list->items
+                                                ->sortBy('sort_order')
+                                                ->map(function ($item) {
+                                                    return [
+                                                        'id' => $item->id,
+                                                        'content' => $item->content,
+                                                    ];
+                                                })
+                                                ->values()
+                                                ->toArray(),
                                         ];
                                     })
                                     ->values()
@@ -64,88 +82,183 @@ class ParagraphForm extends Component
             ->toArray();
     }
 
-    public function addParagraph(): void
+    public function addSection(): void
     {
-        $this->paragraphs[] = [
+        $this->sections[] = [
             'id' => null,
             'heading' => '',
-            'content' => '',
-            'lists' => [],
-        ];
-    }
 
-    public function removeParagraph(int $paragraphIndex): void
-    {
-        if (!isset($this->paragraphs[$paragraphIndex])) {
-            return;
-        }
-
-        unset($this->paragraphs[$paragraphIndex]);
-
-        $this->paragraphs = array_values($this->paragraphs);
-    }
-
-    public function addList(int $paragraphIndex): void
-    {
-        if (!isset($this->paragraphs[$paragraphIndex])) {
-            return;
-        }
-
-        $this->paragraphs[$paragraphIndex]['lists'][] = [
-            'id' => null,
-            'type' => 'bullet',
-            'items' => [
+            'paragraphs' => [
                 [
                     'id' => null,
                     'content' => '',
+                    'lists' => [],
                 ],
             ],
         ];
     }
 
-    public function removeList(int $paragraphIndex, int $listIndex): void
+    public function removeSection(int $sectionIndex): void
     {
+        if (!isset($this->sections[$sectionIndex])) {
+            return;
+        }
+
+        unset($this->sections[$sectionIndex]);
+
+        $this->sections = array_values($this->sections);
+    }
+
+    public function addParagraph(int $sectionIndex): void
+    {
+        if (!isset($this->sections[$sectionIndex])) {
+            return;
+        }
+
+        $this->sections[$sectionIndex]['paragraphs'][] = [
+            'id' => null,
+            'content' => '',
+            'lists' => [],
+        ];
+    }
+
+    public function insertParagraphAfter(
+        int $sectionIndex,
+        int $paragraphIndex
+    ): void {
+        if (!isset($this->sections[$sectionIndex]['paragraphs'][$paragraphIndex])) {
+            return;
+        }
+
+        $newParagraph = [
+            'id' => null,
+            'content' => '',
+            'lists' => [],
+        ];
+
+        array_splice(
+            $this->sections[$sectionIndex]['paragraphs'],
+            $paragraphIndex + 1,
+            0,
+            [$newParagraph]
+        );
+    }
+
+    public function removeParagraph(
+        int $sectionIndex,
+        int $paragraphIndex
+    ): void {
         if (
             !isset(
-                $this->paragraphs[$paragraphIndex]['lists'][$listIndex]
+                $this->sections[$sectionIndex]
+                    ['paragraphs'][$paragraphIndex]
             )
         ) {
             return;
         }
 
-        unset($this->paragraphs[$paragraphIndex]['lists'][$listIndex]);
+        unset(
+            $this->sections[$sectionIndex]
+                ['paragraphs'][$paragraphIndex]
+        );
 
-        $this->paragraphs[$paragraphIndex]['lists'] = array_values(
-            $this->paragraphs[$paragraphIndex]['lists']
+        $this->sections[$sectionIndex]['paragraphs'] = array_values(
+            $this->sections[$sectionIndex]['paragraphs']
         );
     }
 
-    public function addListItem(
+    public function addList(
+        int $sectionIndex,
+        int $paragraphIndex
+    ): void {
+        if (
+            !isset(
+                $this->sections[$sectionIndex]
+                    ['paragraphs'][$paragraphIndex]
+            )
+        ) {
+            return;
+        }
+
+        $this->sections[$sectionIndex]
+            ['paragraphs'][$paragraphIndex]
+            ['lists'][] = [
+                'id' => null,
+                'type' => 'bullet',
+
+                'items' => [
+                    [
+                        'id' => null,
+                        'content' => '',
+                    ],
+                ],
+            ];
+    }
+
+    public function removeList(
+        int $sectionIndex,
         int $paragraphIndex,
         int $listIndex
     ): void {
         if (
             !isset(
-                $this->paragraphs[$paragraphIndex]['lists'][$listIndex]
+                $this->sections[$sectionIndex]
+                    ['paragraphs'][$paragraphIndex]
+                    ['lists'][$listIndex]
             )
         ) {
             return;
         }
 
-        $this->paragraphs[$paragraphIndex]['lists'][$listIndex]['items'][] = [
-            'id' => null,
-            'content' => '',
-        ];
+        unset(
+            $this->sections[$sectionIndex]
+                ['paragraphs'][$paragraphIndex]
+                ['lists'][$listIndex]
+        );
+
+        $this->sections[$sectionIndex]
+            ['paragraphs'][$paragraphIndex]
+            ['lists'] = array_values(
+                $this->sections[$sectionIndex]
+                    ['paragraphs'][$paragraphIndex]
+                    ['lists']
+            );
+    }
+
+    public function addListItem(
+        int $sectionIndex,
+        int $paragraphIndex,
+        int $listIndex
+    ): void {
+        if (
+            !isset(
+                $this->sections[$sectionIndex]
+                    ['paragraphs'][$paragraphIndex]
+                    ['lists'][$listIndex]
+            )
+        ) {
+            return;
+        }
+
+        $this->sections[$sectionIndex]
+            ['paragraphs'][$paragraphIndex]
+            ['lists'][$listIndex]
+            ['items'][] = [
+                'id' => null,
+                'content' => '',
+            ];
     }
 
     public function removeListItem(
+        int $sectionIndex,
         int $paragraphIndex,
         int $listIndex,
         int $itemIndex
     ): void {
         if (
             !isset(
-                $this->paragraphs[$paragraphIndex]
+                $this->sections[$sectionIndex]
+                    ['paragraphs'][$paragraphIndex]
                     ['lists'][$listIndex]
                     ['items'][$itemIndex]
             )
@@ -154,15 +267,18 @@ class ParagraphForm extends Component
         }
 
         unset(
-            $this->paragraphs[$paragraphIndex]
+            $this->sections[$sectionIndex]
+                ['paragraphs'][$paragraphIndex]
                 ['lists'][$listIndex]
                 ['items'][$itemIndex]
         );
 
-        $this->paragraphs[$paragraphIndex]
+        $this->sections[$sectionIndex]
+            ['paragraphs'][$paragraphIndex]
             ['lists'][$listIndex]
             ['items'] = array_values(
-                $this->paragraphs[$paragraphIndex]
+                $this->sections[$sectionIndex]
+                    ['paragraphs'][$paragraphIndex]
                     ['lists'][$listIndex]
                     ['items']
             );
@@ -183,54 +299,65 @@ class ParagraphForm extends Component
                 'max:1000',
             ],
 
-            'paragraphs' => [
+            'sections' => [
                 'required',
                 'array',
                 'min:1',
             ],
 
-            'paragraphs.*.id' => [
+            'sections.*.id' => [
                 'nullable',
                 'integer',
             ],
 
-            'paragraphs.*.heading' => [
+            'sections.*.heading' => [
                 'nullable',
                 'string',
                 'max:255',
             ],
 
-            'paragraphs.*.content' => [
-                'nullable',
-                'string',
-            ],
-
-            'paragraphs.*.lists' => [
-                'array',
-            ],
-
-            'paragraphs.*.lists.*.id' => [
-                'nullable',
-                'integer',
-            ],
-
-            'paragraphs.*.lists.*.type' => [
-                'required',
-                'in:bullet,ordered',
-            ],
-
-            'paragraphs.*.lists.*.items' => [
+            'sections.*.paragraphs' => [
                 'required',
                 'array',
                 'min:1',
             ],
 
-            'paragraphs.*.lists.*.items.*.id' => [
+            'sections.*.paragraphs.*.id' => [
                 'nullable',
                 'integer',
             ],
 
-            'paragraphs.*.lists.*.items.*.content' => [
+            'sections.*.paragraphs.*.content' => [
+                'required',
+                'string',
+            ],
+
+            'sections.*.paragraphs.*.lists' => [
+                'array',
+            ],
+
+            'sections.*.paragraphs.*.lists.*.id' => [
+                'nullable',
+                'integer',
+            ],
+
+            'sections.*.paragraphs.*.lists.*.type' => [
+                'required',
+                'in:bullet,ordered',
+            ],
+
+            'sections.*.paragraphs.*.lists.*.items' => [
+                'required',
+                'array',
+                'min:1',
+            ],
+
+            'sections.*.paragraphs.*.lists.*.items.*.id' => [
+                'nullable',
+                'integer',
+            ],
+
+            'sections.*.paragraphs.*.lists.*.items.*.content' => [
                 'required',
                 'string',
             ],
@@ -244,85 +371,160 @@ class ParagraphForm extends Component
         $wasEditing = $this->paragraphId !== null;
 
         DB::transaction(function () use ($validated): void {
+
             $paragraphModule = TrainingBookPartModuleParagraph::updateOrCreate(
                 [
                     'id' => $this->paragraphId,
                 ],
                 [
                     'title' => $validated['title'],
-                    'description' => $validated['description'] ?: null,
+
+                    'description' =>
+                        $validated['description'] ?: null,
                 ]
             );
 
-            $savedParagraphIds = [];
+            $savedSectionIds = [];
 
             foreach (
-                $validated['paragraphs'] as
-                $paragraphIndex => $paragraphData
+                $validated['sections'] as
+                $sectionIndex => $sectionData
             ) {
-                $paragraph = $paragraphModule->paragraphs()
+
+                /*
+                 * Save Section
+                 */
+                $section = $paragraphModule->sections()
                     ->updateOrCreate(
                         [
-                            'id' => $paragraphData['id'] ?? null,
+                            'id' => $sectionData['id'] ?? null,
                         ],
                         [
-                            'heading' => $paragraphData['heading'] ?: null,
-                            'content' => $paragraphData['content'],
-                            'sort_order' => $paragraphIndex,
+                            'heading' =>
+                                $sectionData['heading'] ?: null,
+
+                            'sort_order' => $sectionIndex,
                         ]
                     );
 
-                $savedParagraphIds[] = $paragraph->id;
+                $savedSectionIds[] = $section->id;
 
-                $savedListIds = [];
+                $savedParagraphIds = [];
 
                 foreach (
-                    $paragraphData['lists'] as
-                    $listIndex => $listData
+                    $sectionData['paragraphs'] as
+                    $paragraphIndex => $paragraphData
                 ) {
-                    $list = $paragraph->lists()->updateOrCreate(
-                        [
-                            'id' => $listData['id'] ?? null,
-                        ],
-                        [
-                            'type' => $listData['type'],
-                            'sort_order' => $listIndex,
-                        ]
-                    );
 
-                    $savedListIds[] = $list->id;
-
-                    $savedItemIds = [];
-
-                    foreach (
-                        $listData['items'] as
-                        $itemIndex => $itemData
-                    ) {
-                        $item = $list->items()->updateOrCreate(
+                    /*
+                     * Save Paragraph
+                     */
+                    $paragraph = $section->paragraphs()
+                        ->updateOrCreate(
                             [
-                                'id' => $itemData['id'] ?? null,
+                                'id' => $paragraphData['id'] ?? null,
                             ],
                             [
-                                'content' => $itemData['content'],
-                                'sort_order' => $itemIndex,
+                                'content' => $paragraphData['content'],
+
+                                'sort_order' => $paragraphIndex,
                             ]
                         );
 
-                        $savedItemIds[] = $item->id;
+                    $savedParagraphIds[] = $paragraph->id;
+
+                    $savedListIds = [];
+
+                    foreach (
+                        $paragraphData['lists'] as
+                        $listIndex => $listData
+                    ) {
+
+                        /*
+                         * Save List
+                         */
+                        $list = $paragraph->lists()
+                            ->updateOrCreate(
+                                [
+                                    'id' => $listData['id'] ?? null,
+                                ],
+                                [
+                                    'type' => $listData['type'],
+
+                                    'sort_order' => $listIndex,
+                                ]
+                            );
+
+                        $savedListIds[] = $list->id;
+
+                        $savedItemIds = [];
+
+                        foreach (
+                            $listData['items'] as
+                            $itemIndex => $itemData
+                        ) {
+
+                            /*
+                             * Save List Item
+                             */
+                            $item = $list->items()
+                                ->updateOrCreate(
+                                    [
+                                        'id' => $itemData['id'] ?? null,
+                                    ],
+                                    [
+                                        'content' =>
+                                            $itemData['content'],
+
+                                        'sort_order' =>
+                                            $itemIndex,
+                                    ]
+                                );
+
+                            $savedItemIds[] = $item->id;
+                        }
+
+                        /*
+                         * Remove deleted list items
+                         */
+                        $list->items()
+                            ->whereNotIn(
+                                'id',
+                                $savedItemIds
+                            )
+                            ->delete();
                     }
 
-                    $list->items()
-                        ->whereNotIn('id', $savedItemIds)
+                    /*
+                     * Remove deleted lists
+                     */
+                    $paragraph->lists()
+                        ->whereNotIn(
+                            'id',
+                            $savedListIds
+                        )
                         ->delete();
                 }
 
-                $paragraph->lists()
-                    ->whereNotIn('id', $savedListIds)
+                /*
+                 * Remove deleted paragraphs
+                 */
+                $section->paragraphs()
+                    ->whereNotIn(
+                        'id',
+                        $savedParagraphIds
+                    )
                     ->delete();
             }
 
-            $paragraphModule->paragraphs()
-                ->whereNotIn('id', $savedParagraphIds)
+            /*
+             * Remove deleted sections
+             */
+            $paragraphModule->sections()
+                ->whereNotIn(
+                    'id',
+                    $savedSectionIds
+                )
                 ->delete();
 
             $this->paragraphId = $paragraphModule->id;

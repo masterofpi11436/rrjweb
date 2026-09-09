@@ -3,10 +3,10 @@
 namespace App\Models\Training;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class TrainingBookPartModuleSOPChecklist extends Model
 {
-
     protected $table = 'training_book_part_module_sop_checklists';
 
     protected $fillable = [
@@ -14,11 +14,11 @@ class TrainingBookPartModuleSOPChecklist extends Model
         'description',
     ];
 
-    public function policies()
+    public function groups(): HasMany
     {
         return $this->hasMany(
-            TrainingBookPartModuleSOPChecklistPolicy::class,
+            TrainingBookPartModuleSOPChecklistGroup::class,
             'sop_checklist_id'
-        );
+        )->orderBy('sort_order');
     }
 }

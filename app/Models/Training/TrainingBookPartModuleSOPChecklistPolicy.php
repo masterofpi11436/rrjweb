@@ -3,25 +3,24 @@
 namespace App\Models\Training;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class TrainingBookPartModuleSOPChecklistPolicy extends Model
 {
-
     protected $table = 'training_book_part_module_sop_checklist_policies';
 
     protected $fillable = [
-        'sop_checklist_id',
-        'category',
+        'group_id',
         'policy_number',
         'title',
         'sort_order',
     ];
 
-    public function checklist()
+    public function group(): BelongsTo
     {
         return $this->belongsTo(
-            TrainingBookPartModuleSOPChecklist::class,
-            'sop_checklist_id'
+            TrainingBookPartModuleSOPChecklistGroup::class,
+            'group_id'
         );
     }
 }
