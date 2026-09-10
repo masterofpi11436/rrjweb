@@ -15,19 +15,6 @@
         shadow-xl shadow-black/20
         scroll-mt-24
     ';
-
-    $addButtonClass = '
-        inline-flex items-center rounded-lg
-        bg-blue-800 px-4 py-2 text-sm font-medium
-        text-white transition hover:bg-blue-900
-    ';
-
-    $removeButtonClass = '
-        inline-flex items-center rounded-lg
-        border border-red-900/50 bg-red-950/50
-        px-3 py-2 text-sm font-medium text-red-300
-        transition hover:bg-red-900/70 hover:text-white
-    ';
 @endphp
 
 <div class="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 xl:pl-80">
@@ -61,20 +48,29 @@
 
                 <div class="space-y-2 border-t border-gray-800 pt-4">
                     <a href="{{ route('training.admin.books.dashboard') }}"
-                        class="block rounded-lg border border-gray-700 px-3 py-2 text-center text-sm text-gray-300 hover:bg-gray-800">
+                        class="block px-4 py-2 mb-4
+                            bg-slate-700 text-gray-100
+                            rounded-md border border-blue-500
+                            hover:bg-slate-600 hover:border-blue-400
+                            transition text-center">
+
                         Back
                     </a>
 
-                    <button type="submit" form="book-form"
-                        class="w-full rounded-lg bg-green-600 px-3 py-2 text-sm font-semibold text-white hover:bg-green-500">
+                    <a wire:click="save"
+                        class="block px-4 py-2 mb-4
+                            bg-slate-700 text-gray-100
+                            rounded-md border border-green-500
+                            hover:bg-slate-600 hover:border-green-400
+                            transition text-center">
                         Save Book
-                    </button>
+                    </a>
                 </div>
             </nav>
         </div>
     </aside>
 
-    <form id="book-form" wire:submit.prevent="save"
+    <form
         class="mx-auto max-w-5xl space-y-6 rounded-3xl border border-gray-800 bg-gray-950 p-4 shadow-2xl shadow-black/40 sm:p-6 lg:p-8">
 
         <div id="book-info" class="{{ $sectionClass }}">
@@ -96,9 +92,14 @@
             <div class="flex items-center justify-between gap-4">
                 <h3 class="text-xl font-semibold text-white">Book Parts</h3>
 
-                <button type="button" wire:click="addPart" class="{{ $addButtonClass }}">
+                <a wire:click="addPart"
+                    class="px-4 py-2 mb-4
+                            bg-slate-700 text-gray-100
+                            rounded-md border border-blue-500
+                            hover:bg-slate-600 hover:border-blue-400 cursor-pointer
+                            transition inline-block text-center">
                     Add Part
-                </button>
+                </a>
             </div>
 
             <div class="space-y-6">
@@ -118,10 +119,14 @@
                                     </p>
                                 </div>
 
-                                <button type="button" wire:click.stop="removePart({{ $partIndex }})"
-                                    class="{{ $removeButtonClass }}">
+                                <a wire:click.stop="removePart({{ $partIndex }})"
+                                    class="px-4 py-2 mb-4
+                                        bg-slate-700 text-gray-100
+                                        rounded-md border border-blue-500
+                                        hover:bg-slate-600 hover:border-blue-400 cursor-pointer
+                                        transition inline-block text-center">
                                     Remove Part
-                                </button>
+                                </a>
                             </div>
                         </summary>
 
@@ -141,11 +146,21 @@
                                 <div class="flex items-center justify-between gap-4">
                                     <h5 class="font-semibold text-gray-200">Modules</h5>
 
-                                    <button type="button" wire:click="addModule({{ $partIndex }})"
-                                        class="{{ $addButtonClass }}">
+                                    <a wire:click="addModule({{ $partIndex }})"
+                                        class="px-4 py-2 mb-4
+                                            bg-slate-700 text-gray-100
+                                            rounded-md border border-blue-500
+                                            hover:bg-slate-600 hover:border-blue-400 cursor-pointer
+                                            transition inline-block text-center">
                                         Add Module
-                                    </button>
+                                    </a>
                                 </div>
+
+                                @error("parts.$partIndex.modules")
+                                    <p class="text-sm text-red-400">
+                                        {{ $message }}
+                                    </p>
+                                @enderror
 
                                 @forelse ($part['modules'] ?? [] as $moduleIndex => $module)
                                     <div wire:key="module-{{ $partIndex }}-{{ $moduleIndex }}"
@@ -251,11 +266,14 @@
 
 
                                             {{-- Remove --}}
-                                            <button type="button"
-                                                wire:click="removeModule({{ $partIndex }}, {{ $moduleIndex }})"
-                                                class="{{ $removeButtonClass }}">
+                                            <a wire:click="removeModule({{ $partIndex }}, {{ $moduleIndex }})"
+                                                class="px-4 py-2 mb-4
+                                                    bg-slate-700 text-gray-100
+                                                    rounded-md border border-blue-500
+                                                    hover:bg-slate-600 hover:border-blue-400 cursor-pointer
+                                                    transition inline-block text-center">
                                                 Remove Module
-                                            </button>
+                                            </a>
 
                                         </div>
 
@@ -291,13 +309,14 @@
                                         @unless ($loop->last)
                                             <div class="flex justify-center border-t border-gray-800 pt-3">
 
-                                                <button type="button"
-                                                    wire:click="insertModuleAfter({{ $partIndex }}, {{ $moduleIndex }})"
-                                                    class="rounded-full border border-dashed border-purple-500 px-4 py-2 text-sm text-purple-300 hover:bg-purple-950/40">
-
+                                                <a wire:click="insertModuleAfter({{ $partIndex }}, {{ $moduleIndex }})"
+                                                    class="px-4 py-2
+                                                        bg-slate-700 text-gray-100
+                                                        rounded-md border border-purple-500
+                                                        hover:bg-slate-600 hover:border-purple-400 cursor-pointer
+                                                        transition inline-block text-center">
                                                     + Insert Module
-
-                                                </button>
+                                                </a>
 
                                             </div>
                                         @endunless
@@ -311,7 +330,14 @@
                                         No modules have been added to this part.
                                     </p>
                                 @endforelse
-
+                                <a wire:click="addModule({{ $partIndex }})"
+                                    class="px-4 py-2 mb-4
+                                            bg-slate-700 text-gray-100
+                                            rounded-md border border-blue-500
+                                            hover:bg-slate-600 hover:border-blue-400 cursor-pointer
+                                            transition inline-block text-center">
+                                    Add Module
+                                </a>
                             </div>
                         </div>
                     </details>
@@ -323,10 +349,10 @@
                             </div>
 
                             <div class="relative flex justify-center">
-                                <button type="button" wire:click="insertPartAfter({{ $partIndex }})"
-                                    class="rounded-full border border-dashed border-purple-500 bg-gray-950 px-4 py-2 text-sm text-purple-300 hover:bg-purple-950/40">
+                                <a wire:click="insertPartAfter({{ $partIndex }})"
+                                    class="cursor-pointer rounded-full border border-dashed border-purple-500 bg-gray-950 px-4 py-2 text-sm text-purple-300 hover:bg-purple-950/40">
                                     + Insert Part
-                                </button>
+                                </a>
                             </div>
                         </div>
                     @endunless
@@ -335,14 +361,26 @@
                         No parts have been added to this book.
                     </p>
                 @endforelse
+                <a wire:click="addPart"
+                    class="px-4 py-2 mb-4
+                            bg-slate-700 text-gray-100
+                            rounded-md border border-blue-500
+                            hover:bg-slate-600 hover:border-blue-400 cursor-pointer
+                            transition inline-block text-center">
+                    Add Part
+                </a>
             </div>
         </div>
 
         <div class="flex justify-end">
-            <button type="submit"
-                class="rounded-xl bg-green-600 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-green-950/40 transition hover:bg-green-500">
+            <a wire:click="save"
+                class="px-4 py-2
+                   bg-slate-700 text-gray-100
+                   rounded-md border border-green-500
+                   hover:bg-slate-600 hover:border-green-400 cursor-pointer
+                   transition inline-block text-center">
                 Save Book
-            </button>
+            </a>
         </div>
     </form>
 </div>

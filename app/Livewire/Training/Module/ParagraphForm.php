@@ -364,6 +364,50 @@ class ParagraphForm extends Component
         ];
     }
 
+    protected function messages(): array
+    {
+        return [
+            'title.required' =>
+                'Please enter a title for the paragraph module.',
+
+            'title.max' =>
+                'The module title cannot be longer than 255 characters.',
+
+            'description.max' =>
+                'The module description cannot be longer than 1,000 characters.',
+
+            'sections.required' =>
+                'At least one section is required.',
+
+            'sections.min' =>
+                'At least one section is required.',
+
+            'sections.*.paragraphs.required' =>
+                'At least one paragraph is required in each section.',
+
+            'sections.*.paragraphs.min' =>
+                'At least one paragraph is required in each section.',
+
+            'sections.*.paragraphs.*.content.required' =>
+                'Paragraph content is required.',
+
+            'sections.*.paragraphs.*.lists.*.type.required' =>
+                'Please select a list type.',
+
+            'sections.*.paragraphs.*.lists.*.type.in' =>
+                'Please select a valid list type.',
+
+            'sections.*.paragraphs.*.lists.*.items.required' =>
+                'At least one item is required for each list.',
+
+            'sections.*.paragraphs.*.lists.*.items.min' =>
+                'At least one item is required for each list.',
+
+            'sections.*.paragraphs.*.lists.*.items.*.content.required' =>
+                'List item content is required.',
+        ];
+    }
+
     public function save()
     {
         $validated = $this->validate();
@@ -436,7 +480,7 @@ class ParagraphForm extends Component
                     $savedListIds = [];
 
                     foreach (
-                        $paragraphData['lists'] as
+                        $paragraphData['lists'] ?? [] as
                         $listIndex => $listData
                     ) {
 

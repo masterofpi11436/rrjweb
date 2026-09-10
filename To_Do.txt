@@ -37,26 +37,35 @@ Down or Out App:
 
 Green button:
 
-class="px-4 py-2 mb-4
+class="px-4 py-2
                    bg-slate-700 text-gray-100
                    rounded-md border border-green-500
-                   hover:bg-slate-600 hover:border-green-400
+                   hover:bg-slate-600 hover:border-green-400 cursor-pointer
                    transition inline-block text-center"
 
 
 Red Button:
 
-class="px-4 py-2 mb-4
+class="px-4 py-2
                    bg-slate-700 text-gray-100
                    rounded-md border border-red-500
-                   hover:bg-slate-600 hover:border-red-400
+                   hover:bg-slate-600 hover:border-red-400 cursor-pointer
                    transition inline-block text-center"
 
 
 Blue Button:
 
-class="px-4 py-2 mb-4
+class="px-4 py-2
                    bg-slate-700 text-gray-100
                    rounded-md border border-blue-500
-                   hover:bg-slate-600 hover:border-blue-400
+                   hover:bg-slate-600 hover:border-blue-400 cursor-pointer
                    transition inline-block text-center"
+
+Purple Button:
+
+class="px-4 py-2
+                   bg-slate-700 text-gray-100
+                   rounded-md border border-purple-500
+                   hover:bg-slate-600 hover:border-purple-400 cursor-pointer
+                   transition inline-block text-center"
+

@@ -223,7 +223,8 @@ class BookForm extends Component
 
     public function save()
     {
-        $validated = $this->validate([
+        $validated = $this->validate(
+        [
             'title' => [
                 'required',
                 'string',
@@ -231,13 +232,21 @@ class BookForm extends Component
             ],
 
             'parts' => [
+                'required',
                 'array',
+                'min:1',
             ],
 
             'parts.*.title' => [
                 'required',
                 'string',
                 'max:255',
+            ],
+
+            'parts.*.modules' => [
+                'required',
+                'array',
+                'min:1',
             ],
 
             'parts.*.modules.*.signoff_requirements' => [
@@ -259,16 +268,55 @@ class BookForm extends Component
                 'required',
                 'integer',
             ],
-        ]);
+        ],
+        [
+            'title.required' =>
+                'Please enter a title for the training book.',
 
-        /*
-         * Verify that each selected module actually exists
-         * in the table belonging to its selected type.
-         */
+            'title.max' =>
+                'The training book title cannot be longer than 255 characters.',
+
+            'parts.required' =>
+                'Please add at least one part to the training book.',
+
+            'parts.min' =>
+                'Please add at least one part to the training book.',
+
+            'parts.*.title.required' =>
+                'Please enter a title for each book part.',
+
+            'parts.*.title.max' =>
+                'A book part title cannot be longer than 255 characters.',
+
+            'parts.*.modules.required' =>
+                'Each book part must have at least one module.',
+
+            'parts.*.modules.min' =>
+                'Each book part must have at least one module.',
+
+            'parts.*.modules.*.module_type.required' =>
+                'Please select a module type.',
+
+            'parts.*.modules.*.module_type.in' =>
+                'Please select a valid module type.',
+
+            'parts.*.modules.*.module_id.required' =>
+                'Please select a module.',
+
+            'parts.*.modules.*.module_id.integer' =>
+                'Please select a valid module.',
+
+            'parts.*.modules.*.signoff_requirements.array' =>
+                'The selected signature requirements are invalid.',
+
+            'parts.*.modules.*.signoff_requirements.*.in' =>
+                'One of the selected signature requirements is invalid.',
+        ]
+    );
+
         foreach ($validated['parts'] as $partIndex => $partData) {
-            foreach (
-                $partData['modules'] as $moduleIndex => $moduleData
-            ) {
+            foreach ($partData['modules'] ?? [] as $moduleIndex => $moduleData) {
+
                 $type = $moduleData['module_type'];
                 $moduleId = $moduleData['module_id'];
 
@@ -281,7 +329,7 @@ class BookForm extends Component
                 if (! $exists) {
                     throw ValidationException::withMessages([
                         "parts.$partIndex.modules.$moduleIndex.module_id"
-                            => 'The selected module does not exist.',
+                            => 'The selected module is no longer available. Please select another module.',
                     ]);
                 }
             }

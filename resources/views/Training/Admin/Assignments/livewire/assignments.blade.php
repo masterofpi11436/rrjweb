@@ -114,12 +114,16 @@
             </div>
 
 
-            <button type="button" wire:click="clearFilters"
-                class="rounded-lg border border-gray-600 bg-gray-700 px-5 py-2.5 text-white transition hover:bg-gray-600">
+            <a type="button" wire:click="clearFilters"
+                class="px-4 py-2 mb-1.5
+                   bg-slate-700 text-gray-100
+                   rounded-md border border-purple-500
+                   hover:bg-slate-600 hover:border-purple-400 cursor-pointer
+                   transition inline-block text-center">
 
                 Clear Filters
 
-            </button>
+            </a>
 
         </div>
 
@@ -288,21 +292,27 @@
                                         <div class="flex justify-end gap-2">
 
                                             <a href=""
-                                                class="rounded-md bg-blue-600 px-3 py-2 text-sm text-white transition hover:bg-blue-700">
+                                                class="px-4 py-2
+                                                    bg-slate-700 text-gray-100
+                                                    rounded-md border border-blue-500
+                                                    hover:bg-slate-600 hover:border-blue-400
+                                                    transition inline-block text-center">
 
                                                 View
 
                                             </a>
 
                                             @if ($assignment->status !== 'completed')
-                                                <button type="button"
-                                                    wire:click="deleteAssignment({{ $assignment->id }})"
-                                                    wire:confirm="Are you sure you want to remove this training book assignment?"
-                                                    class="rounded-md bg-red-600 px-3 py-2 text-sm text-white transition hover:bg-red-700">
+                                                <a wire:click="deleteAssignment({{ $assignment->id }})"
+                                                    class="px-4 py-2
+                                                    bg-slate-700 text-gray-100
+                                                    rounded-md border border-red-500
+                                                    hover:bg-slate-600 hover:border-red-400 cursor-pointer
+                                                    transition inline-block text-center">
 
                                                     Remove
 
-                                                </button>
+                                                </a>
                                             @endif
 
                                         </div>
@@ -344,11 +354,11 @@
                                 <td class="px-6 py-4 text-right">
 
                                     <a href="{{ route('training.admin.assignments.create', ['user' => $user->id]) }}"
-                                        class="px-4 py-2 mb-4
-                   bg-slate-700 text-gray-100
-                   rounded-md border border-green-500
-                   hover:bg-slate-600 hover:border-slate-400
-                   transition inline-block text-center">
+                                        class="px-4 py-2
+                                            bg-slate-700 text-gray-100
+                                            rounded-md border border-green-500
+                                            hover:bg-slate-600 hover:border-slate-400
+                                            transition inline-block text-center">
                                         Assign Book
                                     </a>
 

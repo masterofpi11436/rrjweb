@@ -44,10 +44,14 @@
                         Back
                     </a>
 
-                    <button type="submit" form="paragraph-form"
-                        class="w-full rounded-lg bg-green-600 px-3 py-2 text-sm font-semibold text-white hover:bg-green-500">
+                    <a wire:click="save"
+                        class="px-4 py-2
+                            bg-slate-700 text-gray-100
+                            rounded-md border border-green-500
+                            hover:bg-slate-600 hover:border-green-400 cursor-pointer
+                            transition block text-center">
                         {{ $paragraphId ? 'Save Changes' : 'Save Module' }}
-                    </button>
+                    </a>
 
                 </div>
 
@@ -119,12 +123,22 @@
                     </p>
                 </div>
 
-                <button type="button" wire:click="addSection"
-                    class="inline-flex items-center rounded-lg bg-blue-800 px-4 py-2 text-sm font-medium text-white transition hover:bg-blue-900">
+                <a wire:click="addSection"
+                    class="px-4 py-2
+                        bg-slate-700 text-gray-100
+                        rounded-md border border-blue-500
+                        hover:bg-slate-600 hover:border-blue-400 cursor-pointer
+                        transition inline-block text-center">
                     Add Section
-                </button>
+                </a>
 
             </div>
+
+            @error('sections')
+                <p class="mt-2 text-sm text-red-400">
+                    {{ $message }}
+                </p>
+            @enderror
 
         </div>
 
@@ -148,11 +162,15 @@
 
                     </div>
 
-                    <button type="button" wire:click="removeSection({{ $sectionIndex }})"
+                    <a wire:click="removeSection({{ $sectionIndex }})"
                         wire:confirm="Remove this section and all of its paragraphs?"
-                        class="inline-flex items-center rounded-lg border border-red-900/50 bg-red-950/50 px-3 py-2 text-sm font-medium text-red-300 transition hover:bg-red-900/70 hover:text-white">
+                        class="px-4 py-2
+                            bg-slate-700 text-gray-100
+                            rounded-md border border-blue-500
+                            hover:bg-slate-600 hover:border-blue-400 cursor-pointer
+                            transition inline-block text-center">
                         Remove Section
-                    </button>
+                    </a>
 
                 </div>
 
@@ -181,12 +199,22 @@
                             Paragraphs
                         </h4>
 
-                        <button type="button" wire:click="addParagraph({{ $sectionIndex }})"
-                            class="inline-flex items-center rounded-lg bg-blue-800 px-4 py-2 text-sm font-medium text-white transition hover:bg-blue-900">
+                        <a wire:click="addParagraph({{ $sectionIndex }})"
+                            class="px-4 py-2
+                                bg-slate-700 text-gray-100
+                                rounded-md border border-blue-500
+                                hover:bg-slate-600 hover:border-blue-400 cursor-pointer
+                                transition inline-block text-center">
                             Add Paragraph
-                        </button>
+                        </a>
 
                     </div>
+
+                    @error("sections.$sectionIndex.paragraphs")
+                        <p class="mt-2 text-sm text-red-400">
+                            {{ $message }}
+                        </p>
+                    @enderror
 
                     @foreach ($section['paragraphs'] ?? [] as $paragraphIndex => $paragraph)
                         <div wire:key="paragraph-{{ $sectionIndex }}-{{ $paragraphIndex }}"
@@ -198,14 +226,17 @@
                                     Paragraph {{ $paragraphIndex + 1 }}
                                 </h5>
 
-                                <button type="button"
-                                    wire:click="removeParagraph(
+                                <a wire:click="removeParagraph(
                                         {{ $sectionIndex }},
                                         {{ $paragraphIndex }}
                                     )"
-                                    class="inline-flex items-center rounded-lg border border-red-900/50 bg-red-950/50 px-3 py-2 text-sm font-medium text-red-300 transition hover:bg-red-900/70 hover:text-white">
+                                    class="px-4 py-2
+                                        bg-slate-700 text-gray-100
+                                        rounded-md border border-red-500
+                                        hover:bg-slate-600 hover:border-red-400 cursor-pointer
+                                        transition inline-block text-center">
                                     Remove Paragraph
-                                </button>
+                                </a>
 
                             </div>
 
@@ -237,14 +268,17 @@
 
                                     </div>
 
-                                    <button type="button"
-                                        wire:click="addList(
+                                    <a wire:click="addList(
                                             {{ $sectionIndex }},
                                             {{ $paragraphIndex }}
                                         )"
-                                        class="inline-flex items-center rounded-lg bg-blue-800 px-4 py-2 text-sm font-medium text-white transition hover:bg-blue-900">
+                                        class="px-4 py-2
+                                            bg-slate-700 text-gray-100
+                                            rounded-md border border-blue-500
+                                            hover:bg-slate-600 hover:border-blue-400 cursor-pointer
+                                            transition inline-block text-center">
                                         Add List
-                                    </button>
+                                    </a>
 
                                 </div>
 
@@ -285,15 +319,18 @@
 
 
                                             {{-- Remove List --}}
-                                            <button type="button"
-                                                wire:click="removeList(
-                    {{ $sectionIndex }},
-                    {{ $paragraphIndex }},
-                    {{ $listIndex }}
-                )"
-                                                class="inline-flex items-center rounded-lg border border-red-900/50 bg-red-950/50 px-3 py-2 text-sm font-medium text-red-300 transition hover:bg-red-900/70 hover:text-white">
+                                            <a wire:click="removeList(
+                                                    {{ $sectionIndex }},
+                                                    {{ $paragraphIndex }},
+                                                    {{ $listIndex }}
+                                                )"
+                                                class="px-4 py-2 mb-2
+                                                    bg-slate-700 text-gray-100
+                                                    rounded-md border border-red-500
+                                                    hover:bg-slate-600 hover:border-red-400 cursor-pointer
+                                                    transition inline-block text-center">
                                                 Remove List
-                                            </button>
+                                            </a>
 
                                         </div>
 
@@ -307,15 +344,18 @@
                                                     List Items
                                                 </h6>
 
-                                                <button type="button"
-                                                    wire:click="addListItem(
-                        {{ $sectionIndex }},
-                        {{ $paragraphIndex }},
-                        {{ $listIndex }}
-                    )"
-                                                    class="inline-flex items-center rounded-lg bg-blue-800 px-3 py-2 text-sm font-medium text-white transition hover:bg-blue-900">
-                                                    + Add List Item
-                                                </button>
+                                                <a wire:click="addListItem(
+                                                        {{ $sectionIndex }},
+                                                        {{ $paragraphIndex }},
+                                                        {{ $listIndex }}
+                                                    )"
+                                                    class="px-4 py-2
+                                                        bg-slate-700 text-gray-100
+                                                        rounded-md border border-blue-500
+                                                        hover:bg-slate-600 hover:border-blue-400 cursor-pointer
+                                                        transition inline-block text-center">
+                                                    + Add Item
+                                                </a>
 
                                             </div>
 
@@ -361,16 +401,19 @@
 
 
                                                     {{-- Remove Item --}}
-                                                    <button type="button"
-                                                        wire:click="removeListItem(
+                                                    <a wire:click="removeListItem(
                                                         {{ $sectionIndex }},
                                                         {{ $paragraphIndex }},
                                                         {{ $listIndex }},
                                                         {{ $itemIndex }}
                                                     )"
-                                                        class="mt-1 inline-flex items-center rounded-lg border border-red-900/50 bg-red-950/50 px-3 py-2 text-sm font-medium text-red-300 transition hover:bg-red-900/70 hover:text-white">
+                                                        class="px-4 py-2
+                                                            bg-slate-700 text-gray-100
+                                                            rounded-md border border-red-500
+                                                            hover:bg-slate-600 hover:border-red-400 cursor-pointer
+                                                            transition inline-block text-center">
                                                         Remove
-                                                    </button>
+                                                    </a>
 
                                                 </div>
                                             @endforeach
@@ -394,14 +437,13 @@
 
                                 <div class="relative flex justify-center">
 
-                                    <button type="button"
-                                        wire:click="insertParagraphAfter(
+                                    <a wire:click="insertParagraphAfter(
                                             {{ $sectionIndex }},
                                             {{ $paragraphIndex }}
                                         )"
-                                        class="rounded-full border border-dashed border-purple-500 bg-gray-950 px-4 py-2 text-sm text-purple-300 hover:bg-purple-950/40">
+                                        class="cursor-pointer rounded-full border border-dashed border-purple-500 bg-gray-950 px-4 py-2 text-sm text-purple-300 hover:bg-purple-950/40">
                                         + Insert Paragraph
-                                    </button>
+                                    </a>
 
                                 </div>
 
@@ -409,30 +451,42 @@
                         @endunless
                     @endforeach
 
-                    <button type="button" wire:click="addParagraph({{ $sectionIndex }})"
-                        class="inline-flex items-center rounded-lg bg-blue-800 px-4 py-2 text-sm font-medium text-white transition hover:bg-blue-900">
+                    <a wire:click="addParagraph({{ $sectionIndex }})"
+                        class="px-4 py-2
+                            bg-slate-700 text-gray-100
+                            rounded-md border border-blue-500
+                            hover:bg-slate-600 hover:border-blue-400 cursor-pointer
+                            transition inline-block text-center">
                         Add Paragraph
-                    </button>
+                    </a>
 
                 </div>
 
             </div>
 
 
-            <button type="button" wire:click="addSection"
-                class="inline-flex items-center rounded-lg bg-blue-800 px-4 py-2 text-sm font-medium text-white transition hover:bg-blue-900">
+            <a wire:click="addSection"
+                class="px-4 py-2
+                   bg-slate-700 text-gray-100
+                   rounded-md border border-blue-500
+                   hover:bg-slate-600 hover:border-blue-400 cursor-pointer
+                   transition inline-block text-center">
                 Add Section
-            </button>
+            </a>
         @endforeach
 
 
         {{-- Bottom Save --}}
         <div class="flex justify-end">
 
-            <button type="submit"
-                class="rounded-xl bg-green-600 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-green-950/40 transition hover:bg-green-500">
+            <a wire:click="save"
+                class="px-4 py-2
+                   bg-slate-700 text-gray-100
+                   rounded-md border border-green-500
+                   hover:bg-slate-600 hover:border-green-400 cursor-pointer
+                   transition inline-block text-center">
                 {{ $paragraphId ? 'Save Changes' : 'Save Module' }}
-            </button>
+            </a>
 
         </div>
 
