@@ -28,7 +28,11 @@
 
 
     <a href="{{ route('training.admin.dashboard') }}"
-        class="px-4 py-2 mb-4 ml-4.5 bg-blue-600 text-white rounded-md border border-white hover:bg-blue-700 transition inline-block text-center">
+        class="px-4 py-2 mb-4
+                   bg-slate-700 text-gray-100
+                   rounded-md border border-blue-500
+                   hover:bg-slate-600 hover:border-blue-400
+                   transition inline-block text-center">
         Back To Dasboard
     </a>
 

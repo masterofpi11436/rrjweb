@@ -5,7 +5,11 @@
             class="w-full md:w-2/3 p-2 bg-gray-800 text-white broder border-amber-400 rounded-md focus:outline-none focus:border-blue-500 placeholder-gray-400">
 
         <a href="{{ route('training.admin.user.create') }}"
-            class="px-4 py-2 bg-blue-700 text-white border border-white rounded-md hover:bg-blue-800 hover:border-blue-700">
+            class="px-4 py-2 mb-4
+                   bg-slate-700 text-gray-100
+                   rounded-md border border-blue-500
+                   hover:bg-slate-600 hover:border-blue-400
+                   transition inline-block text-center">
             + Create User
         </a>
     </div>

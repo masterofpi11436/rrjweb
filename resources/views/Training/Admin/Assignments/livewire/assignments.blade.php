@@ -7,19 +7,6 @@
             <h2 class="text-2xl font-bold text-white">
                 Training Book Assignments
             </h2>
-
-            <p class="mt-1 text-sm text-gray-400">
-                Manage assigned training books and monitor user progress.
-            </p>
-        </div>
-
-        <div>
-            <a href="{{ route('training.admin.assignments.create') }}"
-                class="inline-flex items-center rounded-md border border-white bg-green-600 px-4 py-2 text-white transition hover:bg-green-700">
-
-                Assign Book
-
-            </a>
         </div>
     </div>
 
@@ -357,7 +344,11 @@
                                 <td class="px-6 py-4 text-right">
 
                                     <a href="{{ route('training.admin.assignments.create', ['user' => $user->id]) }}"
-                                        class="rounded-md bg-green-600 px-3 py-2 text-sm text-white transition hover:bg-green-700">
+                                        class="px-4 py-2 mb-4
+                   bg-slate-700 text-gray-100
+                   rounded-md border border-green-500
+                   hover:bg-slate-600 hover:border-slate-400
+                   transition inline-block text-center">
                                         Assign Book
                                     </a>
 
