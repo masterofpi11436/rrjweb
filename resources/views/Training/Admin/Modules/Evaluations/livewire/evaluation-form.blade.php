@@ -2,11 +2,6 @@
 
     <form wire:submit="save" class="space-y-6">
 
-
-        {{-- ========================================================= --}}
-        {{-- EVALUATION DETAILS --}}
-        {{-- ========================================================= --}}
-
         <section
             class="overflow-hidden rounded-lg
                    border border-gray-700
@@ -24,7 +19,6 @@
                 </p>
 
             </div>
-
 
             <div class="space-y-4 p-4">
 
@@ -98,15 +92,6 @@
 
         </section>
 
-
-        {{-- ========================================================= --}}
-        {{-- EVALUATION FIELDS --}}
-        {{-- ========================================================= --}}
-
-        {{-- ========================================================= --}}
-        {{-- EVALUATION FIELDS --}}
-        {{-- ========================================================= --}}
-
         <section class="overflow-hidden rounded-lg
            border border-gray-700
            bg-gray-900">
@@ -131,17 +116,16 @@
                     </p>
                 </div>
 
-                <button type="button" wire:click="addField"
-                    class="rounded-md
-                   bg-blue-600
-                   px-3 py-2
-                   text-sm font-semibold
-                   text-white
-                   hover:bg-blue-500">
+                <a wire:click="addField"
+                    class="px-4 py-2
+                        bg-slate-700 text-gray-100
+                        rounded-md border border-blue-500
+                        hover:bg-slate-600 hover:border-blue-400 cursor-pointer
+                        transition inline-block text-center">
 
                     + Add Field
 
-                </button>
+                </a>
 
             </div>
 
@@ -162,15 +146,15 @@
             {{-- Desktop Headings --}}
             <div
                 class="hidden
-           grid-cols-[40px_240px_170px_170px]
-           gap-4
-           border-b border-gray-800
-           bg-gray-950/30
-           px-4 py-2
-           text-xs font-semibold
-           uppercase tracking-wide
-           text-gray-500
-           md:grid">
+                    grid-cols-[40px_240px_170px_170px]
+                    gap-4
+                    border-b border-gray-800
+                    bg-gray-950/30
+                    px-4 py-2
+                    text-xs font-semibold
+                    uppercase tracking-wide
+                    text-gray-500
+                    md:grid">
 
                 <div class="text-center">
                     #
@@ -222,7 +206,6 @@
 
                             </div>
 
-
                             {{-- Field Label --}}
                             <div>
 
@@ -255,7 +238,6 @@
                                 @enderror
 
                             </div>
-
 
                             {{-- Field Type --}}
                             <div>
@@ -299,67 +281,66 @@
 
                             </div>
 
-
                             {{-- Actions --}}
                             <div class="flex flex-nowrap gap-2">
 
                                 {{-- Move Up --}}
-                                <button type="button" wire:click="moveFieldUp({{ $fieldIndex }})"
-                                    @disabled($fieldIndex === 0) title="Move Field Up"
+                                <a wire:click="moveFieldUp({{ $fieldIndex }})" @disabled($fieldIndex === 0)
+                                    title="Move Field Up"
                                     class="flex h-8 w-8
                                    shrink-0
                                    items-center
                                    justify-center
                                    rounded-md
-                                   border border-gray-700
+                                   border border-blue-500
                                    text-gray-400
-                                   hover:bg-gray-700
+                                   hover:bg-blue-400 cursor-pointer
                                    disabled:cursor-not-allowed
                                    disabled:opacity-25">
 
                                     ↑
 
-                                </button>
+                                </a>
 
 
                                 {{-- Move Down --}}
-                                <button type="button" wire:click="moveFieldDown({{ $fieldIndex }})"
-                                    @disabled($fieldIndex === count($fields) - 1) title="Move Field Down"
+                                <a wire:click="moveFieldDown({{ $fieldIndex }})" @disabled($fieldIndex === count($fields) - 1)
+                                    title="Move Field Down"
                                     class="flex h-8 w-8
                                    shrink-0
                                    items-center
                                    justify-center
                                    rounded-md
-                                   border border-gray-700
+                                   border border-blue-500
                                    text-gray-400
-                                   hover:bg-gray-700
+                                   hover:bg-blue-400 cursor-pointer
                                    disabled:cursor-not-allowed
                                    disabled:opacity-25">
 
                                     ↓
 
-                                </button>
+                                </a>
 
 
                                 {{-- Insert --}}
-                                <button type="button" wire:click="insertField({{ $fieldIndex }})"
+                                <a type="button" wire:click="insertField({{ $fieldIndex }})"
                                     title="Insert Field Below"
                                     class="flex h-8 w-8
                                    shrink-0
                                    items-center
                                    justify-center
                                    rounded-md
-                                   border border-blue-900
-                                   text-blue-400
-                                   hover:bg-blue-950/50">
+                                   border border-green-500 cursor-pointer
+                                   text-blue-500
+                                   hover:bg-green-400">
 
                                     +
 
-                                </button>
+                                </a>
 
 
                                 {{-- Remove --}}
-                                <button type="button" wire:click="removeField({{ $fieldIndex }})"
+                                <a wire:click="removeField({{ $fieldIndex }})"
                                     wire:confirm="Are you sure you want to remove this evaluation field?"
                                     title="Remove Field"
                                     class="flex h-8 w-8
@@ -367,13 +348,12 @@
                                    items-center
                                    justify-center
                                    rounded-md
-                                   border border-red-900
-                                   text-lg text-red-400
-                                   hover:bg-red-950/50">
+                                   border border-red-500 text-red-400 cursor-pointer
+                                   hover:bg-red-400">
 
                                     ×
 
-                                </button>
+                                </a>
 
                             </div>
 
@@ -390,72 +370,54 @@
                bg-gray-800/20
                px-4 py-3">
 
-                <button type="button" wire:click="addField"
-                    class="text-sm font-medium
-                   text-blue-400
-                   hover:text-blue-300">
+                <a wire:click="addField"
+                    class="px-4 py-2
+                        bg-slate-700 text-gray-100
+                        rounded-md border border-green-500
+                        hover:bg-slate-600 hover:border-green-400 cursor-pointer
+                        transition inline-block text-center">
 
                     + Add another evaluation field
 
-                </button>
+                </a>
 
             </div>
 
         </section>
 
-
-        {{-- ========================================================= --}}
-        {{-- ACTIONS --}}
-        {{-- ========================================================= --}}
-
-        <div
-            class="flex items-center
-                   justify-between
-                   border-t border-gray-700
-                   pt-5">
+        <div class="flex items-center
+           justify-between
+           border-t border-gray-700
+           pt-5">
 
             <a href="{{ route('training.admin.modules.dashboard') }}"
-                class="inline-flex
-                       items-center
-                       justify-center
-                       rounded-lg
-                       border border-gray-600
-                       px-5 py-2.5
-                       text-sm font-medium
-                       text-gray-200
-                       hover:bg-gray-800">
+                class="px-4 py-2
+               bg-slate-700 text-gray-100
+               rounded-md border border-blue-500
+               hover:bg-slate-600 hover:border-blue-400
+               cursor-pointer transition inline-block text-center">
 
                 Cancel
 
             </a>
 
-
-            <button type="submit" wire:loading.attr="disabled" wire:target="save"
-                class="inline-flex
-                       items-center
-                       justify-center
-                       rounded-lg
-                       bg-blue-600
-                       px-6 py-2.5
-                       text-sm font-semibold
-                       text-white
-                       hover:bg-blue-500
-                       disabled:cursor-not-allowed
-                       disabled:opacity-50">
+            <a wire:click="save" wire:loading.attr="disabled" wire:target="save"
+                class="px-4 py-2
+               bg-slate-700 text-gray-100
+               rounded-md border border-green-500
+               hover:bg-slate-600 hover:border-green-400
+               cursor-pointer transition inline-flex items-center justify-center
+               disabled:cursor-not-allowed disabled:opacity-50">
 
                 <span wire:loading.remove wire:target="save">
-
                     {{ $evaluationId ? 'Save Changes' : 'Create Evaluation' }}
-
                 </span>
 
                 <span wire:loading wire:target="save">
-
                     Saving...
-
                 </span>
 
-            </button>
+            </a>
 
         </div>
 

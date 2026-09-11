@@ -16,6 +16,8 @@ class ParagraphForm extends Component
 
     public array $sections = [];
 
+    public ?string $flashMessage = null;
+
     public function mount(?int $paragraphId = null): void
     {
         $this->paragraphId = $paragraphId;
@@ -574,16 +576,13 @@ class ParagraphForm extends Component
             $this->paragraphId = $paragraphModule->id;
         });
 
-        session()->flash(
-            'success',
-            $wasEditing
-                ? 'Paragraph module updated successfully.'
-                : 'Paragraph module created successfully.'
-        );
+        $this->flashMessage = $wasEditing
+            ? 'Paragraph module updated successfully.'
+            : 'Paragraph module created successfully.';
 
-        return redirect()->route(
-            'training.admin.modules.dashboard'
-        );
+        // return redirect()->route(
+        //     'training.admin.modules.dashboard'
+        // );
     }
 
     public function render()

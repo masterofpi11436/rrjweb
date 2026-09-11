@@ -127,12 +127,20 @@
         <div class="flex flex-col-reverse gap-3 border-t border-gray-700 pt-6 sm:flex-row sm:justify-end">
 
             <a href="{{ route('training.admin.modules.dashboard') }}"
-                class="inline-flex items-center justify-center rounded-lg border border-gray-600 px-5 py-2.5 text-sm font-medium text-gray-200 hover:bg-gray-800">
+                class="px-4 py-2 mb-3
+                   bg-slate-700 text-gray-100
+                   rounded-md border border-blue-500
+                   hover:bg-slate-600 hover:border-blue-400 cursor-pointer
+                   transition inline-block text-center">
                 Cancel
             </a>
 
-            <button type="submit"
-                class="inline-flex items-center justify-center rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-blue-500">
+            <button type="submit" style="color: #62a4ff !important;"
+                class="!px-4 !py-2 !mb-3
+           !bg-slate-700
+           !rounded-md !border !border-green-400
+           hover:!bg-slate-600 hover:!border-green-300
+           !cursor-pointer !transition !inline-block !text-center">
                 {{ isset($form) ? 'Save Changes' : 'Upload Form' }}
             </button>
 

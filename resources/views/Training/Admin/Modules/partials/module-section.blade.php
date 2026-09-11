@@ -69,7 +69,7 @@
                             <td class="whitespace-nowrap px-6 py-4 text-right">
                                 <div class="flex justify-end gap-2">
                                     <a href="{{ route($editRouteName, $module->id) }}"
-                                        class="px-4 py-2 mb-4
+                                        class="px-4 py-2 mb-4 mt-4
                                             bg-slate-700 text-gray-100
                                             rounded-md border border-slate-500
                                             hover:bg-slate-600 hover:border-slate-400
@@ -85,7 +85,7 @@
                                         <button type="submit"
                                             class="!bg-red-700 !text-white !border-red-500
                                                 cursor-pointer rounded-md border
-                                                px-4 py-2 text-center text-sm font-medium
+                                                px-4 py-2 mt-4 text-center text-sm font-medium
                                                 transition hover:!bg-red-600 hover:!border-red-400">
                                             Delete
                                         </button>

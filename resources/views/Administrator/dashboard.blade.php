@@ -21,11 +21,6 @@
         <button>Vehicle Fleet Maintenance (VFM) Tracker</button>
     </form>
 
-    <!-- Link to navigate to the Tablet App -->
-    <form action="{{ route('tablet.dashboard') }}">
-        <button>Tablet Restricted Tablets</button>
-    </form>
-
     <!-- Link to navigate to the Mailroom App -->
     <form action="{{ route('mailroom.dashboard') }}">
         <button>Mailroom Names</button>
@@ -51,7 +46,7 @@
         <button>Camera Schedule</button>
     </form>
 
-    <!-- Camera Schedule -->
+    <!-- Training Tracker -->
     <form action="{{ route('training.admin.dashboard') }}">
         <button>Training Tracker</button>
     </form>

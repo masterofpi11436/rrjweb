@@ -10,9 +10,7 @@ use App\Http\Controllers\Login\AdminLoginController;
 use App\Http\Controllers\Login\PhoneLoginController;
 use App\Http\Controllers\Login\CameraLoginController;
 use App\Http\Controllers\Login\VFMTechLoginController;
-use App\Http\Controllers\Login\TabletLoginController;
 use App\Http\Controllers\Login\PolicyLoginController;
-use App\Http\Controllers\Login\MailroomLoginController;
 use App\Http\Controllers\Login\WarehouseLoginController;
 use App\Http\Controllers\Login\JurisdictionLoginController;
 use App\Http\Controllers\Login\TrainingLoginController;
@@ -27,8 +25,6 @@ use App\Http\Controllers\VFM\VFMVehicleController;
 use App\Http\Controllers\Policy\PolicyController;
 use App\Http\Controllers\Camera\CameraController;
 use App\Http\Controllers\Policy\BuilderController;
-use App\Http\Controllers\Tablet\TabletController;
-use App\Http\Controllers\Mailroom\MailroomController;
 use App\Http\Controllers\Directory\PhoneDirectoryController;
 use App\Http\Controllers\Jurisdiction\JurisdictionController;
 use App\Http\Controllers\Administrator\AdministratorController;
@@ -68,8 +64,6 @@ $adminLoginClass = AdminLoginController::class;
 $phoneLoginClass = PhoneLoginController::class;
 $vfmLoginClass = VFMLoginController::class;
 $vfmTechLoginClass = VFMTechLoginController::class;
-$tabletLoginClass = TabletLoginController::class;
-$mailroomLoginClass = MailroomLoginController::class;
 $policyLoginClass = PolicyLoginController::class;
 $cameraLoginClass = CameraLoginController::class;
 $warehouseLoginClass = WarehouseLoginController::class;
@@ -84,8 +78,6 @@ $vfmClass = VFMController::class;
 $vfmVehicleClass = VFMVehicleController::class;
 $vfmTechVehicleClass = VFMTechVehicleController::class;
 $vfmTechClass = VFMTechController::class;
-$tabletClass = TabletController::class;
-$mailroomClass = MailroomController::class;
 $policyClass = PolicyController::class;
 $cameraClass = CameraController::class;
 $buildClass = BuilderController::class;
@@ -129,7 +121,6 @@ Route::get('/', function () {
 // Public Routes
 Route::get('/phone-directory', [$phoneClass, 'phoneDirectory']);
 Route::get('/policy-search', [$policyClass, 'policySearch']);
-Route::get('/mailroom-names', [$mailroomClass, 'index']);
 
 // Admin Routes
 Route::prefix('admin')->group(function () use ($adminClass, $adminLoginClass) {
@@ -248,44 +239,6 @@ Route::prefix('vfm-tech')->group(function () use ($vfmTechClass, $vfmTechVehicle
     });
 });
 
-// Tablet Application
-Route::prefix('tablet')->group(function () use ($tabletClass, $tabletLoginClass){
-
-    // Routes without middleware
-    Route::get('/login', [$tabletLoginClass, 'tabletLoginForm'])->name('tablet.login');
-    Route::post('/login', [$tabletLoginClass, 'login']);
-    Route::get('/forgot', [$tabletLoginClass, 'tabletForgotPasswordForm'])->name('tablet.forgot.form');
-    Route::post('/forgot', [$tabletLoginClass, 'forgotPassword'])->name('tablet.forgot.form.submit');
-    Route::post('/logout', [$tabletLoginClass, 'logout'])->name('tablet.logout');
-
-    // Routes with 'tablet' middleware
-    Route::middleware('tablet')->group(function () use ($tabletClass) {
-        Route::get('/dashboard', [$tabletClass, 'dashboard'])->name('tablet.dashboard');
-        Route::get('/create', [$tabletClass, 'create'])->name('tablet.create');
-        Route::get('/{id}/edit', [$tabletClass, 'edit'])->name('tablet.edit');
-        Route::delete('/{id}', [$tabletClass, 'destroy'])->name('tablet.destroy');
-    });
-});
-
-// Mailroom Application
-Route::prefix('mailroom')->group(function () use ($mailroomClass, $mailroomLoginClass){
-
-    // Routes without middleware
-    Route::get('/login', [$mailroomLoginClass, 'mailroomLoginForm'])->name('mailroom.login');
-    Route::post('/login', [$mailroomLoginClass, 'login']);
-    Route::get('/forgot', [$mailroomLoginClass, 'mailroomForgotPasswordForm'])->name('mailroom.forgot.form');
-    Route::post('/forgot', [$mailroomLoginClass, 'forgotPassword'])->name('mailroom.forgot.form.submit');
-    Route::post('/logout', [$mailroomLoginClass, 'logout'])->name('mailroom.logout');
-
-    // Routes with 'tablet' middleware
-    Route::middleware('mailroom')->group(function () use ($mailroomClass) {
-        Route::get('/dashboard', [$mailroomClass, 'dashboard'])->name('mailroom.dashboard');
-        Route::get('/create', [$mailroomClass, 'create'])->name('mailroom.create');
-        Route::get('/{id}/edit', [$mailroomClass, 'edit'])->name('mailroom.edit');
-        Route::delete('/{id}', [$mailroomClass, 'destroy'])->name('mailroom.destroy');
-    });
-});
-
 // Policy Application
 Route::prefix('policy')->group(function () use ($policyClass, $buildClass, $policyLoginClass){
 
@@ -310,8 +263,6 @@ Route::prefix('policy')->group(function () use ($policyClass, $buildClass, $poli
             Route::get('/edit/{id}', [$buildClass, 'edit'])->name('policy.builder.edit');
             Route::delete('/{id}', [$buildClass, 'destroy'])->name('policy.builder.destroy');
             Route::get('/create-pdf/{id}', [$buildClass, 'createPDF'])->name('policy.builder.create-pdf');
-
-            Route::get('/policy/builder/{id}/web', [BuilderController::class, 'webView'])->name('policy.builder.web');
         });
     });
 });

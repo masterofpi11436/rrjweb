@@ -6,14 +6,6 @@
 
 @section('content')
 
-    <!-- Flash Message -->
-    @if (session()->has('create-edit-delete-message'))
-        <div id="flash-message" class="flash-message">
-            <button class="close-btn" onclick="this.parentElement.style.display='none';">&times;</button>
-            {{ session('create-edit-delete-message') }}
-        </div>
-    @endif
-
     <a href="{{ route('training.admin.books.dashboard') }}"
         class="px-4 py-2 mb-4
                    bg-slate-700 text-gray-100

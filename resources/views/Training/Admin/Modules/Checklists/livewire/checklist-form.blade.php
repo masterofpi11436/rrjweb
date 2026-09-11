@@ -6,7 +6,7 @@
         <div class="grid grid-cols-1 gap-4 lg:grid-cols-3">
 
             {{-- Title --}}
-            <div class="lg:col-span-2">
+            <div class="lg:col-span-4">
                 <label for="title" class="mb-1.5 block text-sm font-medium text-gray-200">
                     Checklist Title
                 </label>
@@ -22,18 +22,6 @@
                         {{ $message }}
                     </p>
                 @enderror
-            </div>
-
-            {{-- Add Group --}}
-            <div class="flex items-end">
-                <button type="button" wire:click="addGroup"
-                    class="inline-flex w-full items-center justify-center
-                           rounded-lg bg-blue-600 px-4 py-2
-                           text-sm font-semibold text-white
-                           hover:bg-blue-500">
-
-                    + Add Group
-                </button>
             </div>
         </div>
 
@@ -98,45 +86,48 @@
                             </div>
                         </div>
 
-                        {{-- Compact Group Controls --}}
+                        {{-- Group Controls --}}
                         <div class="flex items-center gap-1">
 
-                            <button type="button" wire:click="moveGroupUp({{ $groupIndex }})"
-                                @disabled($groupIndex === 0) title="Move group up"
-                                class="rounded-md border border-gray-600
-                                       px-2.5 py-1.5 text-sm text-gray-300
-                                       hover:bg-gray-700
-                                       disabled:cursor-not-allowed
-                                       disabled:opacity-30">
+                            <a wire:click="moveGroupUp({{ $groupIndex }})" @disabled($groupIndex === 0)
+                                title="Move group up"
+                                class="px-4 py-2
+                                    bg-slate-700 text-gray-100
+                                    rounded-md border border-blue-500
+                                    hover:bg-slate-600 hover:border-blue-400 cursor-pointer
+                                    transition inline-block text-center">
                                 ↑
-                            </button>
+                            </a>
 
-                            <button type="button" wire:click="moveGroupDown({{ $groupIndex }})"
-                                @disabled($groupIndex === count($groups) - 1) title="Move group down"
-                                class="rounded-md border border-gray-600
-                                       px-2.5 py-1.5 text-sm text-gray-300
-                                       hover:bg-gray-700
-                                       disabled:cursor-not-allowed
-                                       disabled:opacity-30">
+                            <a wire:click="moveGroupDown({{ $groupIndex }})" @disabled($groupIndex === count($groups) - 1)
+                                title="Move group down"
+                                class="px-4 py-2
+                                    bg-slate-700 text-gray-100
+                                    rounded-md border border-blue-500
+                                    hover:bg-slate-600 hover:border-blue-400 cursor-pointer
+                                    transition inline-block text-center">
                                 ↓
-                            </button>
+                            </a>
 
-                            <button type="button" wire:click="insertGroup({{ $groupIndex }})"
-                                title="Insert group below"
-                                class="rounded-md border border-blue-700
-                                       px-2.5 py-1.5 text-xs font-medium
-                                       text-blue-300 hover:bg-blue-950/50">
-                                + Below
-                            </button>
+                            <a wire:click="insertGroup({{ $groupIndex }})" title="Insert group below"
+                                class="px-4 py-2
+                                    bg-slate-700 text-gray-100
+                                    rounded-md border border-green-500
+                                    hover:bg-slate-600 hover:border-green-400 cursor-pointer
+                                    transition inline-block text-center">
+                                + Group
+                            </a>
 
-                            <button type="button" wire:click="removeGroup({{ $groupIndex }})"
+                            <a wire:click="removeGroup({{ $groupIndex }})"
                                 wire:confirm="Are you sure you want to remove this checklist group and all of its items?"
                                 title="Remove group"
-                                class="rounded-md border border-red-800
-                                       px-2.5 py-1.5 text-sm text-red-400
-                                       hover:bg-red-950/50">
+                                class="px-4 py-2
+                                    bg-slate-700 text-gray-100
+                                    rounded-md border border-red-500
+                                    hover:bg-slate-600 hover:border-red-400 cursor-pointer
+                                    transition inline-block text-center">
                                 ×
-                            </button>
+                            </a>
                         </div>
                     </div>
 
@@ -203,12 +194,14 @@
                             Checklist Items
                         </span>
 
-                        <button type="button" wire:click="addItem({{ $groupIndex }})"
-                            class="rounded-md bg-blue-700 px-3 py-1.5
-                                   text-xs font-semibold text-white
-                                   hover:bg-blue-600">
+                        <a wire:click="addItem({{ $groupIndex }})"
+                            class="px-4 py-2
+                                bg-slate-700 text-gray-100
+                                rounded-md border border-green-500
+                                hover:bg-slate-600 hover:border-green-400 cursor-pointer
+                                transition inline-block text-center">
                             + Add Item
-                        </button>
+                        </a>
                     </div>
 
                     @error("groups.$groupIndex.items")
@@ -280,50 +273,55 @@
 
                                         <div class="flex gap-1">
 
-                                            <button type="button"
-                                                wire:click="moveItemUp({{ $groupIndex }}, {{ $itemIndex }})"
+                                            <a wire:click="moveItemUp({{ $groupIndex }}, {{ $itemIndex }})"
                                                 @disabled($itemIndex === 0) title="Move item up"
-                                                class="rounded border border-gray-700
-                                                       px-2 py-1 text-xs text-gray-400
-                                                       hover:bg-gray-700
-                                                       disabled:cursor-not-allowed
-                                                       disabled:opacity-25">
+                                                class="px-4 py-2
+                                                    bg-slate-700 text-gray-100
+                                                    rounded-md border border-blue-500
+                                                    hover:bg-slate-600 hover:border-blue-400
+                                                    cursor-pointer transition inline-block text-center
+                                                    disabled:cursor-not-allowed disabled:opacity-25">
                                                 ↑
-                                            </button>
+                                            </a>
 
-                                            <button type="button"
-                                                wire:click="moveItemDown({{ $groupIndex }}, {{ $itemIndex }})"
+                                            <a wire:click="moveItemDown({{ $groupIndex }}, {{ $itemIndex }})"
                                                 @disabled($itemIndex === count($group['items']) - 1) title="Move item down"
-                                                class="rounded border border-gray-700
-                                                       px-2 py-1 text-xs text-gray-400
-                                                       hover:bg-gray-700
-                                                       disabled:cursor-not-allowed
-                                                       disabled:opacity-25">
+                                                class="px-4 py-2
+                                                    bg-slate-700 text-gray-100
+                                                    rounded-md border border-blue-500
+                                                    hover:bg-slate-600 hover:border-blue-400
+                                                    cursor-pointer transition inline-block text-center
+                                                    disabled:cursor-not-allowed disabled:opacity-25">
                                                 ↓
-                                            </button>
+                                            </a>
+
                                         </div>
 
                                         <div class="flex gap-1">
 
-                                            <button type="button"
-                                                wire:click="insertItem({{ $groupIndex }}, {{ $itemIndex }})"
+                                            <a wire:click="insertItem({{ $groupIndex }}, {{ $itemIndex }})"
                                                 title="Insert item below"
-                                                class="rounded border border-blue-900
-                                                       px-2 py-1 text-xs text-blue-400
-                                                       hover:bg-blue-950/50">
+                                                class="px-4 py-2
+                                                    bg-slate-700 text-gray-100
+                                                    rounded-md border border-blue-500
+                                                    hover:bg-slate-600 hover:border-blue-400
+                                                    cursor-pointer transition inline-block text-center">
                                                 +
-                                            </button>
+                                            </a>
 
-                                            <button type="button"
-                                                wire:click="removeItem({{ $groupIndex }}, {{ $itemIndex }})"
+                                            <a wire:click="removeItem({{ $groupIndex }}, {{ $itemIndex }})"
                                                 wire:confirm="Are you sure you want to remove this checklist item?"
                                                 title="Remove item"
-                                                class="rounded border border-red-900
-                                                       px-2 py-1 text-xs text-red-400
-                                                       hover:bg-red-950/50">
+                                                class="px-4 py-2
+                                                    bg-slate-700 text-gray-100
+                                                    rounded-md border border-red-500
+                                                    hover:bg-slate-600 hover:border-red-400
+                                                    cursor-pointer transition inline-block text-center">
                                                 ×
-                                            </button>
+                                            </a>
+
                                         </div>
+
                                     </div>
                                 </div>
                             </div>
@@ -338,20 +336,21 @@
                     border-t border-gray-700 pt-5">
 
             <a href="{{ route('training.admin.modules.dashboard') }}"
-                class="inline-flex items-center justify-center
-                       rounded-lg border border-gray-600
-                       px-5 py-2 text-sm font-medium text-gray-200
-                       hover:bg-gray-800">
+                class="px-4 py-2
+                   bg-slate-700 text-gray-100
+                   rounded-md border border-blue-500
+                   hover:bg-slate-600 hover:border-blue-400 cursor-pointer
+                   transition inline-block text-center">
                 Cancel
             </a>
 
-            <button type="submit" wire:loading.attr="disabled" wire:target="save"
-                class="inline-flex items-center justify-center
-                       rounded-lg bg-blue-600 px-6 py-2
-                       text-sm font-semibold text-white
-                       hover:bg-blue-500
-                       disabled:cursor-not-allowed
-                       disabled:opacity-50">
+            <a wire:loading.attr="disabled" wire:target="save"
+                class="px-4 py-2
+                    bg-slate-700 text-gray-100
+                    rounded-md border border-green-500
+                    hover:bg-slate-600 hover:border-green-400
+                    cursor-pointer transition inline-flex items-center justify-center
+                    disabled:cursor-not-allowed disabled:opacity-50">
 
                 <span wire:loading.remove wire:target="save">
                     {{ $checklistId ? 'Save Changes' : 'Create Checklist' }}
@@ -360,7 +359,7 @@
                 <span wire:loading wire:target="save">
                     Saving...
                 </span>
-            </button>
+            </a>
         </div>
     </form>
 </div>

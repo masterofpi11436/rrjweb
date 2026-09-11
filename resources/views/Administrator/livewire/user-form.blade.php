@@ -4,19 +4,25 @@
         <div>
             <label for="first_name">First Name</label>
             <input type="text" id="first_name" wire:model.live="first_name" required>
-            @error('first_name') <span class="error">{{ $message }}</span> @enderror
+            @error('first_name')
+                <span class="error">{{ $message }}</span>
+            @enderror
         </div>
 
         <div>
             <label for="last_name">Last Name</label>
             <input type="text" id="last_name" wire:model.live="last_name" required>
-            @error('last_name') <span class="error">{{ $message }}</span> @enderror
+            @error('last_name')
+                <span class="error">{{ $message }}</span>
+            @enderror
         </div>
 
         <div>
             <label for="email">Email</label>
             <input type="email" id="email" wire:model.live="email" required>
-            @error('email') <span class="error">{{ $message }}</span> @enderror
+            @error('email')
+                <span class="error">{{ $message }}</span>
+            @enderror
         </div>
 
         <div>
@@ -40,11 +46,6 @@
         </div>
 
         <div>
-            <label for="ics">ICS</label>
-            <input type="checkbox" id="ics" wire:model.defer="ics" {{ $ics ? 'checked' : '' }}>
-        </div>
-
-        <div>
             <label for="policy">Policy</label>
             <input type="checkbox" id="policy" wire:model.defer="policy" {{ $policy ? 'checked' : '' }}>
         </div>
@@ -59,12 +60,15 @@
                 <option value="Warehouse Technician">Warehouse Technician</option>
                 <option value="Warehouse Supervisor">Warehouse Supervisor</option>
             </select>
-            @error('warehouse_role') <span class="text-danger">{{ $message }}</span> @enderror
+            @error('warehouse_role')
+                <span class="text-danger">{{ $message }}</span>
+            @enderror
         </div>
 
         <div>
             <label for="jurisdiction">Jurisdiction</label>
-            <input type="checkbox" id="jurisdiction" wire:model.defer="jurisdiction" {{ $jurisdiction ? 'checked' : '' }}>
+            <input type="checkbox" id="jurisdiction" wire:model.defer="jurisdiction"
+                {{ $jurisdiction ? 'checked' : '' }}>
         </div>
 
         <div>

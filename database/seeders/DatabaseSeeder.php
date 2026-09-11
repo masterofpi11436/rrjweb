@@ -25,7 +25,6 @@ class DatabaseSeeder extends Seeder
                 'vfm' => false,
                 'vfm30' => false,
                 'vfm_tech' => false,
-                'ics' => false,
                 'policy' => false,
                 'warehouse_role' => 'Warehouse Supervisor',
                 'jurisdiction' => false,
@@ -47,7 +46,6 @@ class DatabaseSeeder extends Seeder
                 'vfm' => false,
                 'vfm30' => false,
                 'vfm_tech' => false,
-                'ics' => false,
                 'policy' => false,
                 'warehouse_role' => 'Requestor',
                 'jurisdiction' => false,
@@ -69,7 +67,6 @@ class DatabaseSeeder extends Seeder
                 'vfm' => false,
                 'vfm30' => false,
                 'vfm_tech' => false,
-                'ics' => false,
                 'policy' => false,
                 'warehouse_role' => 'Requestor',
                 'jurisdiction' => false,
@@ -121,6 +118,5 @@ class DatabaseSeeder extends Seeder
         // PhoneDirectory::factory()->count(250)->create();
         // VFM::factory()->count(100)->create();
         // VFM30::factory()->count(100)->create();
-        // ICS::factory()->count(100)->create();
     }
 }
