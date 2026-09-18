@@ -21,9 +21,9 @@
                 {{-- User --}}
                 <div>
 
-                    <label for="user_id" class="mb-2 block text-sm font-medium text-gray-200">User</label>
+                    <label for="userId" class="mb-2 block text-sm font-medium text-gray-200">User</label>
 
-                    <select id="user_id" wire:model="user_id"
+                    <select id="userId" wire:model="userId"
                         class="w-full rounded-lg border border-gray-600 bg-gray-900 px-4 py-3 text-white focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/30">
 
                         <option value="">
@@ -42,7 +42,7 @@
 
                     </select>
 
-                    @error('user_id')
+                    @error('userId')
                         <p class="mt-2 text-sm text-red-400">
                             {{ $message }}
                         </p>
@@ -50,17 +50,16 @@
 
                 </div>
 
-
                 {{-- Book --}}
                 <div>
 
-                    <label for="book_id" class="mb-2 block text-sm font-medium text-gray-200">
+                    <label for="bookId" class="mb-2 block text-sm font-medium text-gray-200">
 
                         Training Book
 
                     </label>
 
-                    <select id="book_id" wire:model="book_id"
+                    <select id="bookId" wire:model="bookId"
                         class="w-full rounded-lg border border-gray-600 bg-gray-900 px-4 py-3 text-white focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/30">
 
                         <option value="">
@@ -75,14 +74,13 @@
 
                     </select>
 
-                    @error('book_id')
+                    @error('bookId')
                         <p class="mt-2 text-sm text-red-400">
                             {{ $message }}
                         </p>
                     @enderror
 
                 </div>
-
 
                 {{-- Assigned Date --}}
                 <div>

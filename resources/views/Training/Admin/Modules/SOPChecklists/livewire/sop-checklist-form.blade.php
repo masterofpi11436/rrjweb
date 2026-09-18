@@ -910,15 +910,16 @@
                                        bg-gray-800/20
                                        px-4 py-2.5">
 
-                                <button type="button" wire:click="addPolicy({{ $groupIndex }})"
-                                    class="text-sm
-                                           font-medium
-                                           text-blue-400
-                                           hover:text-blue-300">
+                                <a wire:click="addPolicy({{ $groupIndex }})"
+                                    class="px-4 py-2
+                                        bg-slate-700 text-gray-100
+                                        rounded-md border border-green-500
+                                        hover:bg-slate-600 hover:border-green-400 cursor-pointer
+                                        transition inline-block text-center">
 
                                     + Add another policy
 
-                                </button>
+                                </a>
 
                             </div>
 

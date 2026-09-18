@@ -102,8 +102,8 @@
                 <a wire:click="addPart"
                     class="px-4 py-2 mb-4
                         bg-slate-700 text-gray-100
-                        rounded-md border border-blue-500
-                        hover:bg-slate-600 hover:border-blue-400 cursor-pointer
+                        rounded-md border border-green-500
+                        hover:bg-slate-600 hover:border-green-400 cursor-pointer
                         transition inline-block text-center">
 
                     Add Part
@@ -132,8 +132,8 @@
                                 <a wire:click.stop="removePart({{ $partIndex }})"
                                     class="px-4 py-2 mb-4
                                         bg-slate-700 text-gray-100
-                                        rounded-md border border-blue-500
-                                        hover:bg-slate-600 hover:border-blue-400 cursor-pointer
+                                        rounded-md border border-red-500
+                                        hover:bg-slate-600 hover:border-red-400 cursor-pointer
                                         transition inline-block text-center">
                                     Remove Part
                                 </a>
@@ -159,8 +159,8 @@
                                     <a wire:click="addModule({{ $partIndex }})"
                                         class="px-4 py-2 mb-4
                                             bg-slate-700 text-gray-100
-                                            rounded-md border border-blue-500
-                                            hover:bg-slate-600 hover:border-blue-400 cursor-pointer
+                                            rounded-md border border-green-500
+                                            hover:bg-slate-600 hover:border-green-400 cursor-pointer
                                             transition inline-block text-center">
                                         Add Module
                                     </a>
@@ -279,8 +279,8 @@
                                             <a wire:click="removeModule({{ $partIndex }}, {{ $moduleIndex }})"
                                                 class="px-4 py-2 mb-4
                                                     bg-slate-700 text-gray-100
-                                                    rounded-md border border-blue-500
-                                                    hover:bg-slate-600 hover:border-blue-400 cursor-pointer
+                                                    rounded-md border border-red-500
+                                                    hover:bg-slate-600 hover:border-red-400 cursor-pointer
                                                     transition inline-block text-center">
                                                 Remove Module
                                             </a>
@@ -343,8 +343,8 @@
                                 <a wire:click="addModule({{ $partIndex }})"
                                     class="px-4 py-2 mb-4
                                             bg-slate-700 text-gray-100
-                                            rounded-md border border-blue-500
-                                            hover:bg-slate-600 hover:border-blue-400 cursor-pointer
+                                            rounded-md border border-green-500
+                                            hover:bg-slate-600 hover:border-green-400 cursor-pointer
                                             transition inline-block text-center">
                                     Add Module
                                 </a>
@@ -374,8 +374,8 @@
                 <a wire:click="addPart"
                     class="px-4 py-2 mb-4
                             bg-slate-700 text-gray-100
-                            rounded-md border border-blue-500
-                            hover:bg-slate-600 hover:border-blue-400 cursor-pointer
+                            rounded-md border border-green-500
+                            hover:bg-slate-600 hover:border-green-400 cursor-pointer
                             transition inline-block text-center">
                     Add Part
                 </a>

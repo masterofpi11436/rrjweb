@@ -45,7 +45,7 @@
                     @foreach ($suggestions as $book)
                         <tr class="transition hover:bg-gray-900/70">
                             <td class="font-medium text-blue-400 transition hover:text-blue-300 hover:underline">
-                                {{ $book->title }}
+                                <a href="{{ route('training.admin.books.edit', $book->id) }}">{{ $book->title }}</a>
                             </td>
 
                             <td class="px-5 py-4 text-sm">

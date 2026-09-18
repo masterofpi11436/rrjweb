@@ -11,8 +11,8 @@ use Livewire\Component;
 
 class AssignmentForm extends Component
 {
-    public $user_id = '';
-    public $book_id = '';
+    public $userId = '';
+    public $bookId = '';
     public $assigned_at;
 
     public function mount()
@@ -24,7 +24,7 @@ class AssignmentForm extends Component
                 ->find(request()->query('user'));
 
             if ($user) {
-                $this->user_id = $user->id;
+                $this->userId = $user->id;
             }
         }
     }
@@ -32,12 +32,12 @@ class AssignmentForm extends Component
     protected function rules()
     {
         return [
-            'user_id' => [
+            'userId' => [
                 'required',
                 'exists:users,id',
             ],
 
-            'book_id' => [
+            'bookId' => [
                 'required',
                 'exists:training_books,id',
             ],
@@ -53,16 +53,13 @@ class AssignmentForm extends Component
     {
         $this->validate();
 
-        $user = User::whereNotNull('training_role')
-            ->findOrFail($this->user_id);
-
         $alreadyAssigned = TrainingBookAssignment::where(
             'user_id',
-            $this->user_id
+            $this->userId
         )
             ->where(
                 'book_id',
-                $this->book_id
+                $this->bookId
             )
             ->whereNot(
                 'status',
@@ -71,9 +68,8 @@ class AssignmentForm extends Component
             ->exists();
 
         if ($alreadyAssigned) {
-
             $this->addError(
-                'book_id',
+                'bookId',
                 'This user already has this training book assigned.'
             );
 
@@ -83,8 +79,8 @@ class AssignmentForm extends Component
         DB::transaction(function () {
 
             $assignment = TrainingBookAssignment::create([
-                'user_id' => $this->user_id,
-                'book_id' => $this->book_id,
+                'user_id' => $this->userId,
+                'book_id' => $this->bookId,
                 'status' => 'assigned',
                 'assigned_at' => $this->assigned_at,
             ]);
@@ -92,7 +88,7 @@ class AssignmentForm extends Component
             $book = TrainingBook::with([
                 'parts.modules',
             ])->findOrFail(
-                $this->book_id
+                $this->bookId
             );
 
             foreach ($book->parts as $part) {
@@ -106,18 +102,19 @@ class AssignmentForm extends Component
                         'started_at' => null,
                         'completed_at' => null,
                     ]);
+
                 }
+
             }
+
         });
 
-        session()->flash(
-            'create-edit-delete-message',
-            'Training book assigned successfully!'
-        );
-
-        return redirect()->route(
-            'training.admin.assignments.dashboard'
-        );
+        return redirect()
+            ->route('training.admin.assignments.dashboard')
+            ->with(
+                'flashMessage',
+                'Training book successfully assigned.'
+            );
     }
 
 
