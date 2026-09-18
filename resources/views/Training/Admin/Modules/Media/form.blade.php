@@ -159,10 +159,10 @@
 
             <button type="submit" style="color: #62a4ff !important;"
                 class="!px-4 !py-2 !mb-3
-           !bg-slate-700
-           !rounded-md !border !border-green-400
-           hover:!bg-slate-600 hover:!border-green-300
-           !cursor-pointer !transition !inline-block !text-center">
+                    !bg-slate-700
+                    !rounded-md !border !border-green-400
+                    hover:!bg-slate-600 hover:!border-green-300
+                    !cursor-pointer !transition !inline-block !text-center">
                 {{ isset($media) ? 'Save Changes' : 'Upload Media' }}
             </button>
 

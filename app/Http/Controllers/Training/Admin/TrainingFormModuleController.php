@@ -17,30 +17,51 @@ class TrainingFormModuleController extends Controller
 
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'title' => [
-                'required',
-                'string',
-                'max:255',
-            ],
+        $validated = $request->validate(
+            [
+                'title' => [
+                    'required',
+                    'string',
+                    'max:255',
+                ],
 
-            'description' => [
-                'nullable',
-                'string',
-                'max:2000',
-            ],
+                'description' => [
+                    'nullable',
+                    'string',
+                    'max:2000',
+                ],
 
-            'newDocuments' => [
-                'required',
-                'array',
-            ],
+                'newDocuments' => [
+                    'required',
+                    'array',
+                    'min:1',
+                ],
 
-            'newDocuments.*' => [
-                'file',
-                'mimes:pdf',
-                'max:20480',
+                'newDocuments.*' => [
+                    'required',
+                    'file',
+                    'mimes:pdf',
+                    'max:20480',
+                ],
             ],
-        ]);
+            [
+                'title.required' => 'A form title is required.',
+                'title.string' => 'The form title must be valid text.',
+                'title.max' => 'The form title may not be greater than 255 characters.',
+
+                'description.string' => 'The description must be valid text.',
+                'description.max' => 'The description may not be greater than 2,000 characters.',
+
+                'newDocuments.required' => 'At least one PDF form is required.',
+                'newDocuments.array' => 'Please select a valid PDF form to upload.',
+                'newDocuments.min' => 'At least one PDF form is required.',
+
+                'newDocuments.*.required' => 'Each uploaded form is required.',
+                'newDocuments.*.file' => 'Each uploaded form must be a valid file.',
+                'newDocuments.*.mimes' => 'Only PDF files may be uploaded.',
+                'newDocuments.*.max' => 'Each PDF file may not be larger than 20 MB.',
+            ]
+        );
 
         DB::transaction(function () use ($request, $validated) {
             $form = TrainingBookPartModuleForm::create([
@@ -93,40 +114,59 @@ class TrainingFormModuleController extends Controller
         $form = TrainingBookPartModuleForm::with('documents')
             ->findOrFail($id);
 
-        $validated = $request->validate([
-            'title' => [
-                'required',
-                'string',
-                'max:255',
-            ],
+        $validated = $request->validate(
+            [
+                'title' => [
+                    'required',
+                    'string',
+                    'max:255',
+                ],
 
-            'description' => [
-                'nullable',
-                'string',
-                'max:2000',
-            ],
+                'description' => [
+                    'nullable',
+                    'string',
+                    'max:2000',
+                ],
 
-            'newDocuments' => [
-                'nullable',
-                'array',
-            ],
+                'newDocuments' => [
+                    'nullable',
+                    'array',
+                ],
 
-            'newDocuments.*' => [
-                'file',
-                'mimes:pdf',
-                'max:20480',
-            ],
+                'newDocuments.*' => [
+                    'file',
+                    'mimes:pdf',
+                    'max:20480',
+                ],
 
-            'remove_documents' => [
-                'nullable',
-                'array',
-            ],
+                'remove_documents' => [
+                    'nullable',
+                    'array',
+                ],
 
-            'remove_documents.*' => [
-                'integer',
-                'exists:training_book_part_module_form_documents,id',
+                'remove_documents.*' => [
+                    'integer',
+                    'exists:training_book_part_module_form_documents,id',
+                ],
             ],
-        ]);
+            [
+                'title.required' => 'A form title is required.',
+                'title.string' => 'The form title must be valid text.',
+                'title.max' => 'The form title may not be greater than 255 characters.',
+
+                'description.string' => 'The description must be valid text.',
+                'description.max' => 'The description may not be greater than 2,000 characters.',
+
+                'newDocuments.array' => 'Please select a valid PDF form to upload.',
+                'newDocuments.*.file' => 'Each uploaded form must be a valid file.',
+                'newDocuments.*.mimes' => 'Only PDF files may be uploaded.',
+                'newDocuments.*.max' => 'Each PDF file may not be larger than 20 MB.',
+
+                'remove_documents.array' => 'The selected documents could not be removed.',
+                'remove_documents.*.integer' => 'The selected document is invalid.',
+                'remove_documents.*.exists' => 'One of the selected documents no longer exists.',
+            ]
+        );
 
         DB::transaction(function () use ($request, $validated, $form) {
             $form->update([

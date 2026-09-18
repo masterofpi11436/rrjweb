@@ -85,11 +85,15 @@
                         </h3>
 
                         @if (count($questions) > 1)
-                            <button type="button" wire:click="removeQuestion({{ $questionIndex }})"
+                            <a type="button" wire:click="removeQuestion({{ $questionIndex }})"
                                 wire:confirm="Are you sure you want to remove this question?"
-                                class="rounded-md bg-red-600 px-3 py-2 text-sm font-medium text-white hover:bg-red-700">
+                                class="px-4 py-2
+                                    bg-slate-700 text-gray-100
+                                    rounded-md border border-red-500
+                                    hover:bg-slate-600 hover:border-red-400 cursor-pointer
+                                    transition inline-block text-center">
                                 Remove Question
-                            </button>
+                            </a>
                         @endif
 
                     </div>
@@ -195,14 +199,17 @@
 
                                             {{-- Remove --}}
                                             @if (count($question['options']) > 2)
-                                                <button type="button"
-                                                    wire:click="removeOption(
+                                                <a wire:click="removeOption(
                                                         {{ $questionIndex }},
                                                         {{ $optionIndex }}
                                                     )"
-                                                    class="rounded-md bg-red-600 px-3 py-2 text-sm text-white hover:bg-red-700">
+                                                    class="px-4 py-2
+                                                        bg-slate-700 text-gray-100
+                                                        rounded-md border border-red-500
+                                                        hover:bg-slate-600 hover:border-red-400 cursor-pointer
+                                                        transition inline-block text-center">
                                                     Remove
-                                                </button>
+                                                </a>
                                             @endif
 
                                         </div>

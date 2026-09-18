@@ -110,13 +110,13 @@
                 class="block w-full rounded-lg border border-gray-600 bg-gray-800 text-sm text-gray-300 file:mr-4 file:border-0 file:bg-blue-600 file:px-4 file:py-3 file:font-semibold file:text-white hover:file:bg-blue-500">
 
             @error('newDocuments')
-                <p class="text-sm text-red-400">
+                <p class="mt-2 text-sm text-red-400">
                     {{ $message }}
                 </p>
             @enderror
 
             @error('newDocuments.*')
-                <p class="text-sm text-red-400">
+                <p class="mt-2 text-sm text-red-400">
                     {{ $message }}
                 </p>
             @enderror
@@ -137,14 +137,15 @@
 
             <button type="submit" style="color: #62a4ff !important;"
                 class="!px-4 !py-2 !mb-3
-           !bg-slate-700
-           !rounded-md !border !border-green-400
-           hover:!bg-slate-600 hover:!border-green-300
-           !cursor-pointer !transition !inline-block !text-center">
-                {{ isset($form) ? 'Save Changes' : 'Upload Form' }}
+                    !bg-slate-700
+                    !rounded-md !border !border-green-400
+                    hover:!bg-slate-600 hover:!border-green-300
+                    !cursor-pointer !transition !inline-block !text-center">
+                {{ isset($media) ? 'Save Changes' : 'Upload Form(s)' }}
             </button>
 
         </div>
 
     </form>
+
 </div>
