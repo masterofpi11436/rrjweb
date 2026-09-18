@@ -33,7 +33,7 @@ class TrainingBookController extends Controller
         $book = TrainingBook::findOrFail($id);
         $book->delete();
 
-        session()->flash('create-edit-delete-message', 'Book deleted successfully!');
+        session()->flash('flashMessage', 'Book deleted successfully!');
         return redirect()->back();
     }
 }

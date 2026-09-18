@@ -30,6 +30,6 @@ class TrainingParagraphModuleController extends Controller
 
         return redirect()
             ->route('training.admin.modules.dashboard')
-            ->with('success', 'Paragraph deleted successfully.');
+            ->with('flashMessage', 'Paragraph deleted successfully.');
     }
 }

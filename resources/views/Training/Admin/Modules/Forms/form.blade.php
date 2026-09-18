@@ -141,7 +141,7 @@
                     !rounded-md !border !border-green-400
                     hover:!bg-slate-600 hover:!border-green-300
                     !cursor-pointer !transition !inline-block !text-center">
-                {{ isset($media) ? 'Save Changes' : 'Upload Form(s)' }}
+                {{ isset($form) ? 'Save Changes' : 'Upload Form(s)' }}
             </button>
 
         </div>

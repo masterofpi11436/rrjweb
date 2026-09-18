@@ -61,7 +61,7 @@
                         class="block px-4 py-2 mb-4
                             bg-slate-700 text-gray-100
                             rounded-md border border-green-500
-                            hover:bg-slate-600 hover:border-green-400
+                            hover:bg-slate-600 hover:border-green-400 cursor-pointer
                             transition text-center">
                         Save Book
                     </a>
@@ -70,7 +70,7 @@
         </div>
     </aside>
 
-    <form
+    <form wire:submit="save"
         class="mx-auto max-w-5xl space-y-6 rounded-3xl border border-gray-800 bg-gray-950 p-4 shadow-2xl shadow-black/40 sm:p-6 lg:p-8">
 
         <div id="book-info" class="{{ $sectionClass }}">
@@ -89,17 +89,27 @@
         </div>
 
         <div id="parts" class="{{ $sectionClass }}">
+
             <div class="flex items-center justify-between gap-4">
-                <h3 class="text-xl font-semibold text-white">Book Parts</h3>
+
+                <h3 class="text-xl font-semibold text-white">
+                    Book Parts
+                    @error('parts')
+                        <p class="text-sm font-light text-red-400"> {{ $message }}</p>
+                    @enderror
+                </h3>
 
                 <a wire:click="addPart"
                     class="px-4 py-2 mb-4
-                            bg-slate-700 text-gray-100
-                            rounded-md border border-blue-500
-                            hover:bg-slate-600 hover:border-blue-400 cursor-pointer
-                            transition inline-block text-center">
+                        bg-slate-700 text-gray-100
+                        rounded-md border border-blue-500
+                        hover:bg-slate-600 hover:border-blue-400 cursor-pointer
+                        transition inline-block text-center">
+
                     Add Part
+
                 </a>
+
             </div>
 
             <div class="space-y-6">
@@ -373,14 +383,24 @@
         </div>
 
         <div class="flex justify-end">
-            <a wire:click="save"
-                class="px-4 py-2
-                   bg-slate-700 text-gray-100
-                   rounded-md border border-green-500
-                   hover:bg-slate-600 hover:border-green-400 cursor-pointer
-                   transition inline-block text-center">
-                Save Book
-            </a>
+            <button type="submit" wire:loading.attr="disabled" wire:target="save"
+                class="!px-4 !py-2 !mb-3
+                    !bg-slate-700 !text-blue-400
+                    !rounded-md !border !border-green-500
+                    hover:!bg-slate-600 hover:!border-green-400 hover:underline
+                    !cursor-pointer !transition
+                    !inline-flex !items-center !justify-center
+                    disabled:!cursor-not-allowed disabled:!opacity-50">
+
+                <span wire:loading.remove wire:target="save">
+                    {{ $trainingBookId ? 'Save Changes' : 'Create Book' }}
+                </span>
+
+                <span wire:loading wire:target="save">
+                    Saving...
+                </span>
+
+            </button>
         </div>
     </form>
 </div>

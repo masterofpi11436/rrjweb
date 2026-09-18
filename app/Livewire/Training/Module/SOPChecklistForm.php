@@ -172,13 +172,6 @@ class SOPChecklistForm extends Component
         }
     }
 
-
-    /*
-    |--------------------------------------------------------------------------
-    | Groups
-    |--------------------------------------------------------------------------
-    */
-
     public function addGroup(): void
     {
         $this->groups[] = [
@@ -278,13 +271,6 @@ class SOPChecklistForm extends Component
         $this->groups[$index] =
             $temporaryGroup;
     }
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | Policies
-    |--------------------------------------------------------------------------
-    */
 
     public function addPolicy(int $groupIndex): void
     {
@@ -419,13 +405,6 @@ class SOPChecklistForm extends Component
                 $temporaryPolicy;
     }
 
-
-    /*
-    |--------------------------------------------------------------------------
-    | Save
-    |--------------------------------------------------------------------------
-    */
-
     public function save()
     {
         $validated = $this->validate();
@@ -490,15 +469,7 @@ class SOPChecklistForm extends Component
 
                 $savedGroupIds[] = $group->id;
 
-
-                /*
-                |--------------------------------------------------------------------------
-                | Policies
-                |--------------------------------------------------------------------------
-                */
-
                 $savedPolicyIds = [];
-
 
                 foreach (
                     $groupData['policies'] as
@@ -545,13 +516,6 @@ class SOPChecklistForm extends Component
                     ->delete();
             }
 
-
-            /*
-            |--------------------------------------------------------------------------
-            | Delete Removed Groups
-            |--------------------------------------------------------------------------
-            */
-
             $checklist->groups()
                 ->whereNotIn(
                     'id',
@@ -564,9 +528,8 @@ class SOPChecklistForm extends Component
                 $checklist->id;
         });
 
-
         session()->flash(
-            'success',
+            'flashMessage',
             $isEditing
                 ? 'SOP Checklist updated successfully.'
                 : 'SOP Checklist created successfully.'

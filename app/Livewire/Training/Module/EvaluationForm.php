@@ -320,7 +320,7 @@ class EvaluationForm extends Component
 
 
         session()->flash(
-            'success',
+            'flashMessage',
             $isEditing
                 ? 'Evaluation updated successfully.'
                 : 'Evaluation created successfully.'

@@ -30,6 +30,6 @@ class TrainingTestModuleController extends Controller
 
         return redirect()
             ->route('training.admin.modules.dashboard')
-            ->with('success', 'Paragraph deleted successfully.');
+            ->with('flashMessage', 'Test deleted successfully.');
     }
 }

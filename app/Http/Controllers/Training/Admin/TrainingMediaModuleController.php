@@ -87,7 +87,7 @@ class TrainingMediaModuleController extends Controller
         return redirect()
             ->route('training.admin.modules.dashboard')
             ->with(
-                'success',
+                'flashMessage',
                 'Media module created successfully.'
             );
     }
@@ -225,7 +225,7 @@ class TrainingMediaModuleController extends Controller
         return redirect()
             ->route('training.admin.modules.dashboard')
             ->with(
-                'success',
+                'flashMessage',
                 'Media module updated successfully.'
             );
     }
@@ -250,7 +250,7 @@ class TrainingMediaModuleController extends Controller
         return redirect()
             ->route('training.admin.modules.dashboard')
             ->with(
-                'success',
+                'flashMessage',
                 'Media module deleted successfully.'
             );
     }

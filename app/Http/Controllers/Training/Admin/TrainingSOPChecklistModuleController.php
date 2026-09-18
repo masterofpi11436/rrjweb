@@ -30,6 +30,6 @@ class TrainingSOPChecklistModuleController extends Controller
 
         return redirect()
             ->route('training.admin.modules.dashboard')
-            ->with('success', 'Form deleted successfully.');
+            ->with('flashMessage', 'SOP Checklist deleted successfully.');
     }
 }

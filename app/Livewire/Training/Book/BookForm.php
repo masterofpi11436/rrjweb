@@ -26,6 +26,7 @@ class BookForm extends Component
     public ?int $trainingBookId = null;
     public array $signerRoles = [];
     public array $availableModules = [];
+    public ?string $flashMessage = null;
 
     // Module signoff requirements
     private const DEFAULT_SIGNOFFS = [
@@ -223,6 +224,8 @@ class BookForm extends Component
 
     public function save()
     {
+        $wasEditing = $this->trainingBookId !== null;
+
         $validated = $this->validate(
         [
             'title' => [
@@ -383,13 +386,9 @@ class BookForm extends Component
             }
         });
 
-        session()->flash(
-            'success',
-            'Training book saved successfully.'
-        );
-
         return redirect()
-            ->route('training.admin.books.dashboard');
+            ->route('training.admin.books.dashboard')
+            ->with('flashMessage', $wasEditing ? "Book updated successfully" : "Book created successfully");
     }
 
     public function render()

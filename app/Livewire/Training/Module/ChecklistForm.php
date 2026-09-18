@@ -16,6 +16,8 @@ class ChecklistForm extends Component
 
     public array $groups = [];
 
+    public ?string $flashMessage = null;
+
     public function mount(?int $checklistId = null): void
     {
         $this->checklistId = $checklistId;
@@ -445,16 +447,9 @@ class ChecklistForm extends Component
                 $checklist->id;
         });
 
-        session()->flash(
-            'success',
-            $isEditing
-                ? 'Checklist updated successfully.'
-                : 'Checklist created successfully.'
-        );
-
-        return redirect()->route(
-            'training.admin.modules.dashboard'
-        );
+        $this->flashMessage = $isEditing
+                    ? 'Checklist module updated successfully.'
+                    : 'Checklist module created successfully.';
     }
 
     public function render()

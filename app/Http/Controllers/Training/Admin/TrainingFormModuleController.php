@@ -96,7 +96,7 @@ class TrainingFormModuleController extends Controller
 
         return redirect()
             ->route('training.admin.modules.dashboard')
-            ->with('success', 'Form module created successfully.');
+            ->with('flashMessage', 'Form module created successfully.');
     }
 
     public function edit(int $id)
@@ -231,7 +231,7 @@ class TrainingFormModuleController extends Controller
 
         return redirect()
             ->route('training.admin.modules.dashboard')
-            ->with('success', 'Form module updated successfully.');
+            ->with('flashMessage', 'Form module updated successfully.');
     }
 
     public function destroy(int $id)
@@ -252,6 +252,6 @@ class TrainingFormModuleController extends Controller
 
         return redirect()
             ->route('training.admin.modules.dashboard')
-            ->with('success', 'Form deleted successfully.');
+            ->with('flashMessage', 'Form deleted successfully.');
     }
 }

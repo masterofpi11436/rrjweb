@@ -2,8 +2,8 @@
     <a href="{{ route('training.admin.books.create') }}"
         class="px-4 py-2 mb-4
                    bg-slate-700 text-gray-100
-                   rounded-md border border-slate-500
-                   hover:bg-slate-600 hover:border-slate-400
+                   rounded-md border border-green-500
+                   hover:bg-slate-600 hover:border-green-400
                    transition inline-block text-center">
         + Create Book
     </a>

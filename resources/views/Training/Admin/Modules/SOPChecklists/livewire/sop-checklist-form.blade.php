@@ -966,30 +966,22 @@
 
                     </a>
 
-
-
-                    <a type="submit" wire:loading.attr="disabled" wire:target="save"
-                        class="px-4 py-2
-                            bg-slate-700 text-gray-100
-                            rounded-md border border-green-500
-                            hover:bg-slate-600 hover:border-green-400 cursor-pointer
-                            transition inline-block text-center">
-
+                    <button type="submit" wire:loading.attr="disabled" wire:target="save"
+                        class="!px-4 !py-2 !mb-3
+                            !bg-slate-700
+                            !rounded-md !border !border-green-400
+                            hover:!bg-slate-600 hover:!border-green-300
+                            !cursor-pointer !transition !inline-block !text-center">
 
                         <span wire:loading.remove wire:target="save">
-
                             {{ $checklistId ? 'Save Changes' : 'Create SOP Checklist' }}
-
                         </span>
-
 
                         <span wire:loading wire:target="save">
-
                             Saving...
-
                         </span>
 
-                    </a>
+                    </button>
 
                 </div>
 

@@ -28,6 +28,6 @@ class TrainingChecklistModuleController extends Controller
 
         return redirect()
             ->route('training.admin.modules.dashboard')
-            ->with('success', 'Form deleted successfully.');
+            ->with('flashMessage', 'Checklist deleted successfully.');
     }
 }

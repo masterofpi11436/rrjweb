@@ -127,16 +127,8 @@ class TestForm extends Component
         );
     }
 
-    public function updatedQuestions($value, $key): void
+    public function updatedQuestions($key): void
     {
-        /*
-         * $key will look like:
-         *
-         * 0.type
-         * 1.type
-         * etc.
-         */
-
         if (!str_ends_with($key, '.type')) {
             return;
         }
@@ -290,8 +282,8 @@ class TestForm extends Component
         $this->loadTest();
 
         session()->flash(
-            'create-edit-delete-message',
-            'Test saved successfully.'
+            'flashMessage',
+            'Test created successfully.'
         );
 
         return redirect()->route(
