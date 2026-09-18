@@ -11,7 +11,7 @@
 
             <aside>
 
-                <div class="sticky top-4 space-y-4">
+                <div class="sticky top-50 space-y-4">
 
 
                     {{-- Navigation --}}
@@ -177,17 +177,16 @@
 
 
                     {{-- Add Group --}}
-                    <button type="button" wire:click="addGroup"
-                        class="flex w-full items-center
-                               justify-center rounded-lg
-                               bg-blue-600 px-4 py-2.5
-                               text-sm font-semibold
-                               text-white
-                               hover:bg-blue-500">
+                    <a wire:click="addGroup"
+                        class="px-4 py-2
+                                    bg-slate-700 text-gray-100
+                                    rounded-md border border-green-500
+                                    hover:bg-slate-600 hover:border-green-400 cursor-pointer
+                                    transition block text-center">
 
                         + Add Group
 
-                    </button>
+                    </a>
 
                 </div>
 
@@ -410,75 +409,60 @@
 
 
                                     {{-- Move Up --}}
-                                    <button type="button" wire:click="moveGroupUp({{ $groupIndex }})"
-                                        @disabled($groupIndex === 0) title="Move Group Up"
-                                        class="flex h-8 w-8
-                                               items-center
-                                               justify-center
-                                               rounded-md
-                                               border border-gray-600
-                                               text-gray-300
-                                               hover:bg-gray-700
-                                               disabled:cursor-not-allowed
-                                               disabled:opacity-25">
+                                    <a wire:click="moveGroupUp({{ $groupIndex }})" @disabled($groupIndex === 0)
+                                        title="Move Group Up"
+                                        class="px-4 py-2
+                                            bg-slate-700 text-gray-100
+                                            rounded-md border border-blue-500
+                                            hover:bg-slate-600 hover:border-blue-400 cursor-pointer
+                                            transition inline-block text-center
+                                            disabled:cursor-not-allowed disabled:opacity-25">
 
                                         ↑
 
-                                    </button>
-
-
+                                    </a>
 
                                     {{-- Move Down --}}
-                                    <button type="button" wire:click="moveGroupDown({{ $groupIndex }})"
-                                        @disabled($groupIndex === count($groups) - 1) title="Move Group Down"
-                                        class="flex h-8 w-8
-                                               items-center
-                                               justify-center
-                                               rounded-md
-                                               border border-gray-600
-                                               text-gray-300
-                                               hover:bg-gray-700
-                                               disabled:cursor-not-allowed
-                                               disabled:opacity-25">
+                                    <a wire:click="moveGroupDown({{ $groupIndex }})" @disabled($groupIndex === count($groups) - 1)
+                                        title="Move Group Down"
+                                        class="px-4 py-2
+                                            bg-slate-700 text-gray-100
+                                            rounded-md border border-blue-500
+                                            hover:bg-slate-600 hover:border-blue-400 cursor-pointer
+                                            transition inline-block text-center
+                                            disabled:cursor-not-allowed disabled:opacity-25">
 
                                         ↓
 
-                                    </button>
-
-
+                                    </a>
 
                                     {{-- Insert --}}
-                                    <button type="button" wire:click="insertGroup({{ $groupIndex }})"
+                                    <a type="button" wire:click="insertGroup({{ $groupIndex }})"
                                         title="Insert Group Below"
-                                        class="flex h-8 w-8
-                                               items-center
-                                               justify-center
-                                               rounded-md
-                                               border border-blue-800
-                                               text-blue-400
-                                               hover:bg-blue-950/50">
+                                        class="px-4 py-2
+                                            bg-slate-700 text-gray-100
+                                            rounded-md border border-green-500
+                                            hover:bg-slate-600 hover:border-green-400 cursor-pointer
+                                            transition inline-block text-center
+                                            disabled:cursor-not-allowed disabled:opacity-25">
 
                                         +
 
-                                    </button>
-
-
+                                    </a>
 
                                     {{-- Remove --}}
-                                    <button type="button" wire:click="removeGroup({{ $groupIndex }})"
+                                    <a wire:click="removeGroup({{ $groupIndex }})"
                                         wire:confirm="Are you sure you want to remove this group and all of its policies?"
                                         title="Remove Group"
-                                        class="flex h-8 w-8
-                                               items-center
-                                               justify-center
-                                               rounded-md
-                                               border border-red-900
-                                               text-lg text-red-400
-                                               hover:bg-red-950/50">
+                                        class="px-4 py-2
+                                            bg-slate-700 text-gray-100
+                                            rounded-md border border-red-500
+                                            hover:bg-slate-600 hover:border-red-400 cursor-pointer
+                                            transition inline-block text-center">
 
                                         ×
 
-                                    </button>
+                                    </a>
 
                                 </div>
 
@@ -656,18 +640,16 @@
                                 </div>
 
 
-                                <button type="button" wire:click="addPolicy({{ $groupIndex }})"
-                                    class="rounded-md
-                                           bg-blue-700
-                                           px-3 py-1.5
-                                           text-xs
-                                           font-semibold
-                                           text-white
-                                           hover:bg-blue-600">
+                                <a wire:click="addPolicy({{ $groupIndex }})"
+                                    class="px-4 py-2
+                                        bg-slate-700 text-gray-100
+                                        rounded-md border border-green-500
+                                        hover:bg-slate-600 hover:border-green-400 cursor-pointer
+                                        transition inline-block text-center">
 
                                     + Add Policy
 
-                                </button>
+                                </a>
 
                             </div>
 
@@ -863,71 +845,53 @@
                                             {{-- Policy Controls --}}
                                             <div class="flex min-w-0 flex-nowrap gap-1 lg:justify-end">
 
-                                                <button type="button"
-                                                    wire:click="movePolicyUp({{ $groupIndex }}, {{ $policyIndex }})"
+                                                <a wire:click="movePolicyUp({{ $groupIndex }}, {{ $policyIndex }})"
                                                     @disabled($policyIndex === 0) title="Move Policy Up"
-                                                    class="flex h-8 w-8
-                                                           items-center
-                                                           justify-center
-                                                           rounded-md
-                                                           border border-gray-700
-                                                           text-gray-400
-                                                           hover:bg-gray-700
+                                                    class="px-4 py-2
+                                                        bg-slate-700 text-gray-100
+                                                        rounded-md border border-green-500
+                                                        hover:bg-slate-600 hover:border-green-400 cursor-pointer
+                                                        transition inline-block text-center
                                                            disabled:cursor-not-allowed
                                                            disabled:opacity-25">
 
                                                     ↑
 
-                                                </button>
+                                                </a>
 
-                                                <button type="button"
-                                                    wire:click="movePolicyDown({{ $groupIndex }}, {{ $policyIndex }})"
+                                                <a wire:click="movePolicyDown({{ $groupIndex }}, {{ $policyIndex }})"
                                                     @disabled($policyIndex === count($group['policies']) - 1) title="Move Policy Down"
-                                                    class="flex h-8 w-8
-                                                           items-center
-                                                           justify-center
-                                                           rounded-md
-                                                           border border-gray-700
-                                                           text-gray-400
-                                                           hover:bg-gray-700
+                                                    class="px-4 py-2
+                                                        bg-slate-700 text-gray-100
+                                                        rounded-md border border-green-500
+                                                        hover:bg-slate-600 hover:border-green-400 cursor-pointer
+                                                        transition inline-block text-center
                                                            disabled:cursor-not-allowed
                                                            disabled:opacity-25">
 
                                                     ↓
 
-                                                </button>
+                                                </a>
 
-                                                <button type="button"
-                                                    wire:click="insertPolicy({{ $groupIndex }}, {{ $policyIndex }})"
+                                                <a wire:click="insertPolicy({{ $groupIndex }}, {{ $policyIndex }})"
                                                     title="Insert Policy Below"
-                                                    class="flex h-8 w-8
-                                                           items-center
-                                                           justify-center
-                                                           rounded-md
-                                                           border border-blue-900
-                                                           text-blue-400
-                                                           hover:bg-blue-950/50">
-
+                                                    class="px-4 py-2
+                                                        bg-slate-700 text-gray-100
+                                                        rounded-md border border-green-500
+                                                        hover:bg-slate-600 hover:border-green-400 cursor-pointer
+                                                        transition inline-block text-center">
                                                     +
+                                                </a>
 
-                                                </button>
-
-                                                <button type="button"
-                                                    wire:click="removePolicy({{ $groupIndex }}, {{ $policyIndex }})"
+                                                <a wire:click="removePolicy({{ $groupIndex }}, {{ $policyIndex }})"
                                                     wire:confirm="Are you sure you want to remove this policy?"
                                                     title="Remove Policy"
-                                                    class="flex h-8 w-8
-                                                           items-center
-                                                           justify-center
-                                                           rounded-md
-                                                           border border-red-900
-                                                           text-lg
-                                                           text-red-400
-                                                           hover:bg-red-950/50">
-
-                                                    ×
-
-                                                </button>
+                                                    class="px-4 py-2
+                                                        bg-slate-700 text-gray-100
+                                                        rounded-md border border-red-500
+                                                        hover:bg-slate-600 hover:border-red-400 cursor-pointer
+                                                        transition inline-block text-center">
+                                                    × </a>
 
                                             </div>
 
@@ -964,24 +928,16 @@
 
 
                     {{-- Bottom Add Group --}}
-                    <button type="button" wire:click="addGroup"
-                        class="flex w-full
-                               items-center
-                               justify-center
-                               rounded-lg
-                               border border-dashed
-                               border-gray-600
-                               px-4 py-3
-                               text-sm
-                               font-medium
-                               text-gray-400
-                               hover:border-blue-700
-                               hover:bg-blue-950/20
-                               hover:text-blue-400">
+                    <a wire:click="addGroup"
+                        class="px-4 py-2
+                            bg-slate-700 text-gray-100
+                            rounded-md border border-green-500
+                            hover:bg-slate-600 hover:border-green-400 cursor-pointer
+                            transition block text-center">
 
                         + Add Another Group
 
-                    </button>
+                    </a>
 
                 </div>
 
@@ -1000,15 +956,11 @@
 
 
                     <a href="{{ route('training.admin.modules.dashboard') }}"
-                        class="inline-flex
-                               items-center
-                               justify-center
-                               rounded-lg
-                               border border-gray-600
-                               px-5 py-2.5
-                               text-sm font-medium
-                               text-gray-200
-                               hover:bg-gray-800">
+                        class="px-4 py-2
+                            bg-slate-700 text-gray-100
+                            rounded-md border border-blue-500
+                            hover:bg-slate-600 hover:border-blue-400 cursor-pointer
+                            transition inline-block text-center">
 
                         Cancel
 
@@ -1016,19 +968,12 @@
 
 
 
-                    <button type="submit" wire:loading.attr="disabled" wire:target="save"
-                        class="inline-flex
-                               items-center
-                               justify-center
-                               rounded-lg
-                               bg-blue-600
-                               px-6 py-2.5
-                               text-sm
-                               font-semibold
-                               text-white
-                               hover:bg-blue-500
-                               disabled:cursor-not-allowed
-                               disabled:opacity-50">
+                    <a type="submit" wire:loading.attr="disabled" wire:target="save"
+                        class="px-4 py-2
+                            bg-slate-700 text-gray-100
+                            rounded-md border border-green-500
+                            hover:bg-slate-600 hover:border-green-400 cursor-pointer
+                            transition inline-block text-center">
 
 
                         <span wire:loading.remove wire:target="save">
@@ -1044,7 +989,7 @@
 
                         </span>
 
-                    </button>
+                    </a>
 
                 </div>
 

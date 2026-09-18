@@ -159,10 +159,14 @@
                                         </p>
                                     </div>
 
-                                    <button type="button" wire:click="addOption({{ $questionIndex }})"
-                                        class="rounded-md bg-gray-700 px-3 py-2 text-sm text-white hover:bg-gray-600">
+                                    <a type="button" wire:click="addOption({{ $questionIndex }})"
+                                        class="px-4 py-2
+                                            bg-slate-700 text-gray-100
+                                            rounded-md border border-green-500
+                                            hover:bg-slate-600 hover:border-green-400 cursor-pointer
+                                            transition inline-block text-center">
                                         Add Answer
-                                    </button>
+                                    </a>
 
                                 </div>
 
@@ -288,18 +292,27 @@
 
         {{-- Add Question --}}
         <div>
-            <button type="button" wire:click="addQuestion"
-                class="rounded-lg bg-gray-700 px-5 py-2.5 font-medium text-white hover:bg-gray-600">
+            <a type="button" wire:click="addQuestion"
+                class="px-4 py-2
+                   bg-slate-700 text-gray-100
+                   rounded-md border border-green-500
+                   hover:bg-slate-600 hover:border-green-400 cursor-pointer
+                   transition inline-block text-center">
                 Add Question
-            </button>
+            </a>
         </div>
 
 
         {{-- Save --}}
         <div class="flex justify-end border-t border-gray-700 pt-6">
 
-            <button type="submit" wire:loading.attr="disabled" wire:target="save"
-                class="rounded-lg bg-blue-600 px-6 py-3 font-semibold text-white hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50">
+            <a wire:click="save" wire:loading.attr="disabled" wire:target="save"
+                class="px-4 py-2
+                    bg-slate-700 text-gray-100
+                    rounded-md border border-blue-500
+                    hover:bg-slate-600 hover:border-blue-400 cursor-pointer
+                    transition inline-block text-center">
+
                 <span wire:loading.remove wire:target="save">
                     {{ $testId ? 'Update Test' : 'Save Test' }}
                 </span>
@@ -307,7 +320,7 @@
                 <span wire:loading wire:target="save">
                     Saving...
                 </span>
-            </button>
+            </a>
 
         </div>
 

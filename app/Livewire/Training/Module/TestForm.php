@@ -299,9 +299,60 @@ class TestForm extends Component
         );
     }
 
+    protected function messages(): array
+    {
+        return [
+            'title.required' =>
+                'The test title is required.',
+
+            'title.max' =>
+                'The test title may not be greater than 255 characters.',
+
+            'description.string' =>
+                'The description must be valid text.',
+
+            'passing_score.integer' =>
+                'The passing score must be a whole number.',
+
+            'passing_score.min' =>
+                'The passing score must be at least 0%.',
+
+            'passing_score.max' =>
+                'The passing score may not be greater than 100%.',
+
+            'questions.required' =>
+                'At least one question is required.',
+
+            'questions.array' =>
+                'At least one question is required.',
+
+            'questions.min' =>
+                'At least one question is required.',
+
+            'questions.*.type.required' =>
+                'A question type is required.',
+
+            'questions.*.type.in' =>
+                'Please select a valid question type.',
+
+            'questions.*.question.required' =>
+                'The question is required.',
+
+            'questions.*.question.string' =>
+                'The question must be valid text.',
+
+            'questions.*.options.array' =>
+                'The answer options are invalid.',
+
+            'questions.*.options.*.option.string' =>
+                'The answer option must be valid text.',
+        ];
+    }
+
     protected function validateQuestionOptions(): void
     {
         foreach ($this->questions as $questionIndex => $question) {
+
             if ($question['type'] === 'free_form') {
                 continue;
             }
@@ -312,13 +363,11 @@ class TestForm extends Component
                     'This question must have at least two answer options.'
                 );
 
-                return;
+                continue;
             }
 
-            foreach (
-                $question['options']
-                as $optionIndex => $option
-            ) {
+            foreach ($question['options'] as $optionIndex => $option) {
+
                 if (
                     !isset($option['option']) ||
                     trim($option['option']) === ''
@@ -327,26 +376,27 @@ class TestForm extends Component
                         "questions.{$questionIndex}.options.{$optionIndex}.option",
                         'The answer option is required.'
                     );
-
-                    return;
                 }
             }
 
-            $hasCorrectAnswer = collect(
-                $question['options']
-            )->contains(
-                fn ($option) =>
-                    ($option['is_correct'] ?? false) === true
-            );
+            $hasCorrectAnswer = collect($question['options'])
+                ->contains(
+                    fn ($option) =>
+                        ($option['is_correct'] ?? false) === true
+                );
 
             if (!$hasCorrectAnswer) {
                 $this->addError(
                     "questions.{$questionIndex}.options",
                     'Select the correct answer.'
                 );
-
-                return;
             }
+        }
+
+        if ($this->getErrorBag()->isNotEmpty()) {
+            throw \Illuminate\Validation\ValidationException::withMessages(
+                $this->getErrorBag()->toArray()
+            );
         }
     }
 
