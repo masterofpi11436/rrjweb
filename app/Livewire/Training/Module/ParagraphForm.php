@@ -376,7 +376,7 @@ class ParagraphForm extends Component
                 'The module title cannot be longer than 255 characters.',
 
             'description.max' =>
-                'The module description cannot be longer than 1,000 characters.',
+                'The module description cannot be longer than 1000 characters.',
 
             'sections.required' =>
                 'At least one section is required.',

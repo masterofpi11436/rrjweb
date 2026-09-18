@@ -7,8 +7,6 @@
 @section('content')
 
     <!-- Flash Message -->
-
-
     @if (session()->has('flashMessage'))
         <div x-data="{ show: false }" x-init="setTimeout(() => show = true, 50);
         
