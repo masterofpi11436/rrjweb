@@ -31,8 +31,7 @@ class TrainingUserController extends Controller
         $user->training_role = NULL;
 
         $user->save();
-
-        session()->flash('create-edit-delete-message', 'User deleted successfully!');
+        session()->flash('flashMessage', 'User deleted successfully!');
         return redirect()->back();
     }
 }

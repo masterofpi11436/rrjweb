@@ -29,7 +29,7 @@ class UserSearch extends Component
     public function render()
     {
         // Define columns for query
-        $columns = ['id', 'first_name', 'last_name', 'training_role'];
+        $columns = ['id', 'first_name', 'last_name', 'email', 'training_role'];
 
         // Query to search and sort users
         $users = User::query()

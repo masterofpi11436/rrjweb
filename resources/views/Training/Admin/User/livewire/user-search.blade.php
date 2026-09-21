@@ -73,34 +73,65 @@
                                 Edit
                             </a>
 
+                            <!-- Delete Button -->
                             <a href="#"
-                                class="text-red-400 border border-red-500 px-2 py-1 rounded hover:bg-gray-800 hover:border-red-600"
-                                onclick="event.preventDefault(); confirmDelete({{ $user->id }});">
+                                class="text-red-400 border border-red-500 px-2 py-1 rounded
+                                    hover:bg-gray-800 hover:border-red-600 cursor-pointer"
+                                onclick="event.preventDefault();
+                                    document.getElementById('custom-confirmation-modal-{{ $user->id }}').style.display = 'flex';">
                                 Delete
                             </a>
 
-                            <form id="delete-form-{{ $user->id }}"
-                                action="{{ route('training.admin.user.destroy', $user->id) }}" method="POST"
-                                style="display: none;">
-                                @csrf
-                                @method('DELETE')
-                            </form>
-
                             <!-- Delete Confirmation Modal -->
-                            <div id="custom-confirmation-modal-{{ $user->id }}" class="confirmation-modal"
+                            <div id="custom-confirmation-modal-{{ $user->id }}"
+                                class="fixed inset-0 z-50 items-center justify-center bg-black/60"
                                 style="display: none;">
-                                <div class="modal-content bg-gray-800 text-white p-4 rounded border border-red-500">
-                                    <p class="mb-4">Are you sure you want to delete this user?</p>
-                                    <button
-                                        class="px-3 py-1 bg-red-600 text-white rounded border border-red-700 hover:bg-red-700"
-                                        onclick="deleteRecord({{ $user->id }});">
-                                        Yes, Delete
-                                    </button>
-                                    <button
-                                        class="ml-2 px-3 py-1 bg-gray-700 text-white rounded border border-gray-600 hover:bg-gray-600"
-                                        onclick="hideModal({{ $user->id }});">
-                                        Cancel
-                                    </button>
+
+                                <div
+                                    class="w-full max-w-md rounded-lg border border-red-500 bg-gray-800 p-6 text-white shadow-xl">
+
+                                    <h3 class="mb-2 text-lg font-semibold">
+                                        Remove User
+                                    </h3>
+
+                                    <p class="mb-6 text-gray-300">
+                                        Are you sure you want to remove
+                                        {{ $user->first_name }} {{ $user->last_name }}
+                                        from the Training application?
+                                    </p>
+
+                                    <div class="flex items-center justify-between gap-3">
+
+                                        <!-- Actual DELETE request -->
+                                        <form action="{{ route('training.admin.user.destroy', $user->id) }}"
+                                            method="POST">
+                                            @csrf
+                                            @method('DELETE')
+
+                                            <button type="submit"
+                                                class="!px-4 !py-2 !mb-3
+                                                    !bg-red-700
+                                                    !rounded-md !border !border-red-400
+                                                    hover:!bg-red-600 hover:!border-red-300
+                                                    !cursor-pointer !transition !inline-block !text-center">
+                                                Yes, Remove
+                                            </button>
+                                        </form>
+
+                                        <!-- Cancel -->
+                                        <a href="#"
+                                            class="!px-4 !py-2 !mb-3
+                                                !bg-slate-700 !text-gray-100
+                                                !rounded-md !border !border-blue-500
+                                                hover:!bg-slate-600 hover:!border-blue-400
+                                                !cursor-pointer !transition !inline-block !text-center"
+                                            onclick="event.preventDefault();
+                                                    document.getElementById('custom-confirmation-modal-{{ $user->id }}').style.display = 'none';">
+                                            Cancel
+                                        </a>
+
+                                    </div>
+
                                 </div>
                             </div>
                         </td>

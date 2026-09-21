@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/water-dark.css" id="theme-link">
+    <link rel="stylesheet" href="/css/common-styles-light.css" id="common-styles-link">
+    <title>@yield('title')</title>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @livewireStyles
+</head>
+
+<body>
+
+    <!-- Header Section with Theme Toggle -->
+    <header class="header">
+        <h1>@yield('heading')</h1>
+
+        <p>Welcome: {{ Auth::user()->first_name }}, {{ Auth::user()->last_name }}</p>
+
+        <div class="header-right">
+            <form action="{{ route('training.logout') }}" method="POST">
+                @csrf
+                <button>Logout</button>
+            </form>
+
+            @if (Auth::user()->admin === 1)
+                <form action="{{ route('admin.dashboard') }}">
+                    <button>Admin Dashboard</button>
+                </form>
+            @endif
+        </div>
+    </header>
+
+    <a href="#" id="back-to-top" class="back-to-top">⬆️ Back to Top</a>
+
+    @yield('content')
+
+    @livewireScripts
+
+    <script src="{{ asset('javascript/back-to-top.js') }}"></script>
+</body>
+
+</html>

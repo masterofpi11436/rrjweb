@@ -8,6 +8,7 @@ use App\Http\Middleware\Auth\Jurisdiction;
 use App\Http\Middleware\Auth\Phone;
 use App\Http\Middleware\Auth\Policy;
 use App\Http\Middleware\Auth\Training\TrainingAdmin;
+use App\Http\Middleware\Auth\Training\TrainingTrainee;
 use App\Http\Middleware\Auth\VFM;
 use App\Http\Middleware\Auth\VFMTech;
 use App\Http\Middleware\Auth\Warehouse\Property;
@@ -58,6 +59,7 @@ class AppServiceProvider extends ServiceProvider
         $router->aliasMiddleware('requestor', Requestor::class);
 
         $router->aliasMiddleware('trainingAdmin', TrainingAdmin::class);
+        $router->aliasMiddleware('trainingTrainee', TrainingTrainee::class);
         $router->aliasMiddleware('cache', ClearCache::class);
         $router->aliasMiddleware('clear-cart', ClearCart::class);
 

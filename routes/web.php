@@ -44,7 +44,7 @@ use App\Http\Controllers\Warehouse\WarehouseSupervisor\CreateExchangeOrderContro
 use App\Http\Controllers\Warehouse\WarehouseSupervisor\WarehouseSupervisorController;
 use App\Http\Controllers\Warehouse\WarehouseSupervisor\PendingExchangeOrderController;
 
-// Training Application
+// Training Application Admin
 use App\Http\Controllers\Training\Admin\TrainingAdminController;
 use App\Http\Controllers\Training\Admin\TrainingUserController;
 use App\Http\Controllers\Training\Admin\TrainingAssignmentsController;
@@ -57,6 +57,9 @@ use App\Http\Controllers\Training\Admin\TrainingChecklistModuleController;
 use App\Http\Controllers\Training\Admin\TrainingSOPChecklistModuleController;
 use App\Http\Controllers\Training\Admin\TrainingTestModuleController;
 use App\Http\Controllers\Training\Admin\TrainingEvaluationModuleController;
+
+// Training Application Trainee
+use App\Http\Controllers\Training\Trainee\TrainingTraineeController;
 
 // Shorthand login Classes
 $baseLoginClass = BaseLoginController::class;
@@ -100,6 +103,7 @@ $propertyClass = PropertyController::class;
 
 // Training Application
 $trainingAdminClass = TrainingAdminController::class;
+$trainingTraineeClass = TrainingTraineeController::class;
 $trainingUserClass = TrainingUserController::class;
 $trainingBookClass = TrainingBookController::class;
 $trainingAssignmentsClass = TrainingAssignmentsController::class;
@@ -498,7 +502,8 @@ Route::prefix('navix')->group(function () use ($navixClass) {
 });
 
 // Training Application
-Route::prefix('training')->group(function () use ($traingingLoginClass, $trainingAdminClass, $trainingUserClass, $trainingAssignmentsClass, $trainingBookClass, $trainingModuleClass){
+Route::prefix('training')->group(function () use ($traingingLoginClass, $trainingAdminClass, $trainingUserClass, $trainingAssignmentsClass, $trainingBookClass, $trainingModuleClass,
+                                                  $trainingTraineeClass){
 
     // Routes without middleware
     Route::get('/login', [$traingingLoginClass, 'trainingLoginForm'])->name('training.login');
@@ -591,4 +596,14 @@ Route::prefix('training')->group(function () use ($traingingLoginClass, $trainin
                 Route::delete('/tests/{test}', [TrainingTestModuleController::class, 'destroy'])->name('tests.destroy');
             });
         });
+
+        // Trainee
+        Route::prefix('trainee')->middleware(['trainingTrainee', 'cache'])->group(function () use ($trainingTraineeClass, $trainingUserClass, $trainingAssignmentsClass, $trainingBookClass, $trainingModuleClass) {
+        Route::get('/dashboard', [$trainingTraineeClass, 'dashboard'])->name('training.trainee.dashboard');
+        });
+        // FTO
+        // Sergeant
+        // Supervisor
+        // Unit Manager
+        // Director of Operations
     });

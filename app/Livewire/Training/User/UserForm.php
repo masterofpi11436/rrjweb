@@ -90,7 +90,7 @@ class UserForm extends Component
             $user->save();
 
             session()->flash(
-                'create-edit-delete-message',
+                'flashMessage',
                 'User updated successfully!'
             );
 
@@ -123,7 +123,7 @@ class UserForm extends Component
             $existingUser->save();
 
             session()->flash(
-                'create-edit-delete-message',
+                'flashMessage',
                 'Existing user added to the training application successfully!'
             );
 
@@ -153,14 +153,14 @@ class UserForm extends Component
             );
 
             session()->flash(
-                'create-edit-delete-message',
+                'flashMessage',
                 'User created and added to training. Email sent successfully!'
             );
 
         } catch (\Exception $e) {
 
             session()->flash(
-                'create-edit-delete-message',
+                'flashMessage',
                 'User created and added to training, but the email could not be sent.'
             );
         }
