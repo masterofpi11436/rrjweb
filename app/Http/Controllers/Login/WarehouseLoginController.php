@@ -68,7 +68,7 @@ class WarehouseLoginController extends BaseLoginController
                 return redirect()->route('warehouse.requestor.dashboard');
             default:
                 return redirect()->route('warehouse.login')->withErrors(
-                    ['email' => 'Something is wrong with you account. Please contact MIU']);
+                    ['email' => 'It Looks like you do not have an account. Please contact the warehouse manager to get an account.']);
         }
     }
 
