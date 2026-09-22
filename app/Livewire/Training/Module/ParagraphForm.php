@@ -100,6 +100,32 @@ class ParagraphForm extends Component
         ];
     }
 
+    public function insertSectionAfter(int $sectionIndex): void
+    {
+        if (!isset($this->sections[$sectionIndex])) {
+            return;
+        }
+
+        $newSection = [
+            'id' => null,
+            'heading' => '',
+            'paragraphs' => [
+                [
+                    'id' => null,
+                    'content' => '',
+                    'lists' => [],
+                ],
+            ],
+        ];
+
+        array_splice(
+            $this->sections,
+            $sectionIndex + 1,
+            0,
+            [$newSection]
+        );
+    }
+
     public function removeSection(int $sectionIndex): void
     {
         if (!isset($this->sections[$sectionIndex])) {
@@ -330,7 +356,7 @@ class ParagraphForm extends Component
             ],
 
             'sections.*.paragraphs.*.content' => [
-                'required',
+                'nullable',
                 'string',
             ],
 
@@ -345,7 +371,7 @@ class ParagraphForm extends Component
 
             'sections.*.paragraphs.*.lists.*.type' => [
                 'required',
-                'in:bullet,ordered',
+                'in:bullet,ordered,alphabetical',
             ],
 
             'sections.*.paragraphs.*.lists.*.items' => [
@@ -413,6 +439,30 @@ class ParagraphForm extends Component
     public function save()
     {
         $validated = $this->validate();
+
+            foreach ($validated['sections'] as $sectionIndex => $section) {
+
+                foreach ($section['paragraphs'] as $paragraphIndex => $paragraph) {
+
+                    $hasContent = filled($paragraph['content'] ?? null);
+
+                    $hasLists = !empty($paragraph['lists'] ?? []);
+
+                    if (!$hasContent && !$hasLists) {
+
+                        $this->addError(
+                            "sections.$sectionIndex.paragraphs.$paragraphIndex.content",
+                            'Paragraph content is required unless a list is present.'
+                        );
+
+                    }
+                }
+            }
+
+            if ($this->getErrorBag()->isNotEmpty()) {
+                return;
+            }
+
 
         $wasEditing = $this->paragraphId !== null;
 

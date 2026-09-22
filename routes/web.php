@@ -60,6 +60,7 @@ use App\Http\Controllers\Training\Admin\TrainingEvaluationModuleController;
 
 // Training Application Trainee
 use App\Http\Controllers\Training\Trainee\TrainingTraineeController;
+use App\Http\Controllers\Training\Trainee\TrainingTraineeBookController;
 
 // Shorthand login Classes
 $baseLoginClass = BaseLoginController::class;
@@ -108,6 +109,8 @@ $trainingUserClass = TrainingUserController::class;
 $trainingBookClass = TrainingBookController::class;
 $trainingAssignmentsClass = TrainingAssignmentsController::class;
 $trainingModuleClass = TrainingModuleController::class;
+
+$trainingTraineeBookClass = TrainingTraineeBookController::class;
 
 // Forgot password link for all applications
 Route::get('forgot', [$baseLoginClass, 'showForgotPasswordForm'])->name('login.forgot');
@@ -503,7 +506,7 @@ Route::prefix('navix')->group(function () use ($navixClass) {
 
 // Training Application
 Route::prefix('training')->group(function () use ($traingingLoginClass, $trainingAdminClass, $trainingUserClass, $trainingAssignmentsClass, $trainingBookClass, $trainingModuleClass,
-                                                  $trainingTraineeClass){
+                                                  $trainingTraineeClass, $trainingTraineeBookClass){
 
     // Routes without middleware
     Route::get('/login', [$traingingLoginClass, 'trainingLoginForm'])->name('training.login');
@@ -598,9 +601,33 @@ Route::prefix('training')->group(function () use ($traingingLoginClass, $trainin
         });
 
         // Trainee
-        Route::prefix('trainee')->middleware(['trainingTrainee', 'cache'])->group(function () use ($trainingTraineeClass, $trainingUserClass, $trainingAssignmentsClass, $trainingBookClass, $trainingModuleClass) {
-        Route::get('/dashboard', [$trainingTraineeClass, 'dashboard'])->name('training.trainee.dashboard');
-        });
+        Route::prefix('trainee')
+            ->middleware(['trainingTrainee', 'cache'])
+            ->group(function () use ($trainingTraineeClass, $trainingTraineeBookClass) {
+
+                Route::get('/dashboard', [
+                    $trainingTraineeClass,
+                    'dashboard'
+                ])->name('training.trainee.dashboard');
+
+                Route::get('/books', [
+                    $trainingTraineeBookClass,
+                    'index'
+                ])->name('training.trainee.book.index');
+
+                Route::get('/books/completed', [
+                    $trainingTraineeBookClass,
+                    'completed'
+                ])->name('training.trainee.book.completed');
+
+                Route::get('/book/{assignment}', [
+                    $trainingTraineeBookClass,
+                    'show'
+                ])->name('training.trainee.book.show');
+
+            });
+
+
         // FTO
         // Sergeant
         // Supervisor

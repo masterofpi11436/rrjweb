@@ -19,6 +19,7 @@ return new class extends Migration
             $table->enum('type', [
                 'bullet',
                 'ordered',
+                'alphabetical',
             ]);
 
             $table->unsignedInteger('sort_order')->default(0);

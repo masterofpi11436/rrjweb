@@ -348,6 +348,7 @@
                                                 <select
                                                     wire:model="sections.{{ $sectionIndex }}.paragraphs.{{ $paragraphIndex }}.lists.{{ $listIndex }}.type"
                                                     class="w-full rounded-xl border border-gray-700 bg-gray-900 px-4 py-3 text-sm text-white shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/40">
+
                                                     <option value="bullet">
                                                         Bullet List
                                                     </option>
@@ -355,6 +356,11 @@
                                                     <option value="ordered">
                                                         Numbered List
                                                     </option>
+
+                                                    <option value="alphabetical">
+                                                        Alphabetical List
+                                                    </option>
+
                                                 </select>
 
                                                 @error("sections.$sectionIndex.paragraphs.$paragraphIndex.lists.$listIndex.type")
@@ -424,6 +430,8 @@
 
                                                         @if (($list['type'] ?? 'bullet') === 'ordered')
                                                             {{ $itemIndex + 1 }}.
+                                                        @elseif (($list['type'] ?? 'bullet') === 'alphabetical')
+                                                            {{ chr(65 + $itemIndex) }}.
                                                         @else
                                                             &bull;
                                                         @endif
@@ -513,15 +521,40 @@
             </div>
 
 
-            <a wire:click="addSection"
-                class="px-4 py-2
-                   bg-slate-700 text-gray-100
-                   rounded-md border border-blue-500
-                   hover:bg-slate-600 hover:border-blue-400 cursor-pointer
-                   transition inline-block text-center">
-                Add Section
-            </a>
+            {{-- Insert Section Between Existing Sections --}}
+            @unless ($loop->last)
+                <div class="relative py-4">
+
+                    <div class="absolute inset-0 flex items-center">
+                        <div class="w-full border-t border-gray-800"></div>
+                    </div>
+
+                    <div class="relative flex justify-center">
+
+                        <a wire:click="insertSectionAfter({{ $sectionIndex }})"
+                            class="cursor-pointer rounded-full border border-dashed
+                                border-purple-500 bg-gray-950 px-4 py-2
+                                text-sm text-purple-300
+                                hover:bg-purple-950/40">
+
+                            + Insert Section
+
+                        </a>
+
+                    </div>
+
+                </div>
+            @endunless
         @endforeach
+
+        <a wire:click="addSection"
+            class="px-4 py-2
+                        bg-slate-700 text-gray-100
+                        rounded-md border border-blue-500
+                        hover:bg-slate-600 hover:border-blue-400 cursor-pointer
+                        transition inline-block text-center">
+            Add Section
+        </a>
 
 
         {{-- Bottom Save --}}

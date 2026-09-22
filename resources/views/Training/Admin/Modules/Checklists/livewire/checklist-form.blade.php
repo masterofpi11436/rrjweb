@@ -351,8 +351,8 @@
                                                 title="Insert item below"
                                                 class="px-4 py-2
                                                     bg-slate-700 text-gray-100
-                                                    rounded-md border border-blue-500
-                                                    hover:bg-slate-600 hover:border-blue-400
+                                                    rounded-md border border-green-500
+                                                    hover:bg-slate-600 hover:border-green-400
                                                     cursor-pointer transition inline-block text-center">
                                                 +
                                             </a>

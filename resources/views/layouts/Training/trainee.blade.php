@@ -1,45 +1,67 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="h-full bg-gray-950">
 
 <head>
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/water-dark.css" id="theme-link">
-    <link rel="stylesheet" href="/css/common-styles-light.css" id="common-styles-link">
-    <title>@yield('title')</title>
+
+    <title>@yield('title') | Training</title>
+
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+
     @livewireStyles
 </head>
 
-<body>
+<body class="min-h-full bg-gray-950 text-gray-200">
 
-    <!-- Header Section with Theme Toggle -->
-    <header class="header">
-        <h1>@yield('heading')</h1>
+    {{-- Header --}}
+    <header class="border-b border-gray-800 bg-gray-900 shadow-lg">
 
-        <p>Welcome: {{ Auth::user()->first_name }}, {{ Auth::user()->last_name }}</p>
+        <div class="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
 
-        <div class="header-right">
-            <form action="{{ route('training.logout') }}" method="POST">
-                @csrf
-                <button>Logout</button>
-            </form>
+            {{-- Left side --}}
+            <div>
+                <h1 class="text-xl font-semibold text-white sm:text-2xl">
+                    @yield('heading')
+                </h1>
 
-            @if (Auth::user()->admin === 1)
-                <form action="{{ route('admin.dashboard') }}">
-                    <button>Admin Dashboard</button>
+                <p class="mt-1 text-sm text-gray-400">
+                    Welcome, {{ Auth::user()->first_name }} {{ Auth::user()->last_name }}
+                </p>
+            </div>
+
+            {{-- Right side --}}
+            <div>
+                <form action="{{ route('training.logout') }}" method="POST">
+                    @csrf
+
+                    <button type="submit"
+                        class="rounded-lg border border-gray-700 bg-gray-800
+                               px-4 py-2 text-sm font-medium text-gray-200
+                               transition
+                               hover:border-red-500 hover:bg-red-600 hover:text-white
+                               cursor-pointer">
+
+                        Logout
+
+                    </button>
                 </form>
-            @endif
+            </div>
+
         </div>
+
     </header>
 
-    <a href="#" id="back-to-top" class="back-to-top">⬆️ Back to Top</a>
+    {{-- Main Content --}}
+    <main class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
 
-    @yield('content')
+        @yield('content')
+
+    </main>
 
     @livewireScripts
 
-    <script src="{{ asset('javascript/back-to-top.js') }}"></script>
 </body>
 
 </html>
