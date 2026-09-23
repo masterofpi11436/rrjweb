@@ -4,6 +4,7 @@ namespace App\Models\Training;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
 class TrainingBookPartModuleSOPChecklist extends Model
 {
@@ -20,5 +21,16 @@ class TrainingBookPartModuleSOPChecklist extends Model
             TrainingBookPartModuleSOPChecklistGroup::class,
             'sop_checklist_id'
         )->orderBy('sort_order');
+    }
+
+    public function categories(): MorphToMany
+    {
+        return $this->morphToMany(
+            TrainingModuleCategory::class,
+            'module',
+            'training_module_category_assignments',
+            'module_id',
+            'category_id'
+        );
     }
 }

@@ -92,6 +92,26 @@
 
         </section>
 
+        <div>
+            <label for="days" class="mb-2 block text-sm font-medium text-gray-200">
+                Number of Evaluation Days
+            </label>
+
+            <input id="days" type="number" wire:model="days" min="1" max="365"
+                placeholder="Enter number of days"
+                class="w-full rounded-lg border border-gray-600
+               bg-gray-800 px-4 py-3 text-white
+               placeholder:text-gray-500
+               focus:border-blue-500 focus:outline-none
+               focus:ring-2 focus:ring-blue-500/30">
+
+            @error('days')
+                <p class="mt-2 text-sm text-red-400">
+                    {{ $message }}
+                </p>
+            @enderror
+        </div>
+
         <section class="overflow-hidden rounded-lg
            border border-gray-700
            bg-gray-900">

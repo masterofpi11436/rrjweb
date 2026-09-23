@@ -3,6 +3,7 @@
 namespace App\Livewire\Training\Module;
 
 use App\Models\Training\TrainingBookPartModuleEvaluation;
+use App\Models\Training\TrainingModuleCategory;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
@@ -14,11 +15,22 @@ class EvaluationForm extends Component
 
     public string $description = '';
 
+    public int $days = 1;
+
     public array $fields = [];
+
+    public array $selectedCategories = [];
+
+    public $categories;
 
 
     public function mount(?int $evaluationId = null): void
     {
+        $this->categories = TrainingModuleCategory::query()
+            ->orderBy('sort_order')
+            ->orderBy('name')
+            ->get();
+
         $this->evaluationId = $evaluationId;
 
         if ($this->evaluationId) {
@@ -43,6 +55,13 @@ class EvaluationForm extends Component
                 'string',
             ],
 
+            'days' => [
+                'required',
+                'integer',
+                'min:1',
+                'max:365',
+            ],
+
             'fields' => [
                 'required',
                 'array',
@@ -59,6 +78,16 @@ class EvaluationForm extends Component
                 'required',
                 'in:text,textarea',
             ],
+
+            'selectedCategories' => [
+                'array',
+            ],
+
+            'selectedCategories.*' => [
+                'integer',
+                'distinct',
+                'exists:training_module_categories,id',
+            ],
         ];
     }
 
@@ -68,6 +97,18 @@ class EvaluationForm extends Component
         return [
             'title.required' =>
                 'An evaluation title is required.',
+
+            'days.required' =>
+                'The number of evaluation days is required.',
+
+            'days.integer' =>
+                'The number of evaluation days must be a whole number.',
+
+            'days.min' =>
+                'The evaluation must have at least one day.',
+
+            'days.max' =>
+                'The evaluation cannot have more than 365 days.',
 
             'fields.required' =>
                 'At least one evaluation field is required.',
@@ -99,6 +140,8 @@ class EvaluationForm extends Component
 
         $this->description =
             $evaluation->description ?? '';
+
+        $this->days = $evaluation->days ?? 1;
 
 
         $this->fields = $evaluation->fields
@@ -266,6 +309,9 @@ class EvaluationForm extends Component
                         'description' =>
                             $validated['description']
                                 ?: null,
+
+                        'days' =>
+                            $validated['days'],
                     ]
                 );
 

@@ -47,6 +47,7 @@ use App\Http\Controllers\Warehouse\WarehouseSupervisor\PendingExchangeOrderContr
 // Training Application Admin
 use App\Http\Controllers\Training\Admin\TrainingAdminController;
 use App\Http\Controllers\Training\Admin\TrainingUserController;
+use App\Http\Controllers\Training\Admin\TrainingModuleCategoriesController;
 use App\Http\Controllers\Training\Admin\TrainingAssignmentsController;
 use App\Http\Controllers\Training\Admin\TrainingBookController;
 use App\Http\Controllers\Training\Admin\TrainingModuleController;
@@ -550,6 +551,14 @@ Route::prefix('training')->group(function () use ($traingingLoginClass, $trainin
 
                 // Main module dashboard
                 Route::get('/dashboard', [$trainingModuleClass, 'dashboard'])->name('dashboard');
+
+                // Module Categories
+                Route::prefix('categories')->name('categories.')->group(function () {
+                        Route::get('/', [TrainingModuleCategoriesController::class, 'index'])->name('index');
+                        Route::post('/', [TrainingModuleCategoriesController::class, 'store'])->name('store');
+                        Route::patch('/{category}', [TrainingModuleCategoriesController::class, 'update'])->name('update');
+                        Route::delete('/{category}', [TrainingModuleCategoriesController::class, 'destroy'])->name('destroy');
+                    });
 
                 // Paragraph Modules
                 Route::get('/paragraphs/create', [TrainingParagraphModuleController::class, 'create'])->name('paragraphs.create');

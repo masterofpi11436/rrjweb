@@ -4,6 +4,7 @@ namespace App\Models\Training;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
 class TrainingBookPartModuleTest extends Model
 {
@@ -22,5 +23,16 @@ class TrainingBookPartModuleTest extends Model
             TrainingBookPartModuleTestQuestion::class,
             'test_id'
         )->orderBy('sort_order');
+    }
+
+    public function categories(): MorphToMany
+    {
+        return $this->morphToMany(
+            TrainingModuleCategory::class,
+            'module',
+            'training_module_category_assignments',
+            'module_id',
+            'category_id'
+        );
     }
 }

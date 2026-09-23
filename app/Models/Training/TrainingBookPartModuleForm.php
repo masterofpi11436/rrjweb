@@ -5,6 +5,7 @@ namespace App\Models\Training;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
 class TrainingBookPartModuleForm extends Model
 {
@@ -23,5 +24,16 @@ class TrainingBookPartModuleForm extends Model
             TrainingBookPartModuleFormDocument::class,
             'form_module_id'
         )->orderBy('sort_order');
+    }
+
+    public function categories(): MorphToMany
+    {
+        return $this->morphToMany(
+            TrainingModuleCategory::class,
+            'module',
+            'training_module_category_assignments',
+            'module_id',
+            'category_id'
+        );
     }
 }

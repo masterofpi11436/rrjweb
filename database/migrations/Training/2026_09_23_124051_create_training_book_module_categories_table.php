@@ -6,25 +6,26 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
-        Schema::create('training_book_part_module_evaluations', function (Blueprint $table) {
+        Schema::create('training_module_categories', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
+
+            $table->string('name');
+
             $table->text('description')->nullable();
-            $table->integer('days')->default(1);
+
+            $table->unsignedInteger('sort_order')
+                ->default(0);
+
             $table->timestamps();
+
+            $table->unique('name');
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
-        Schema::dropIfExists('training_book_part_module_evaluations');
+        Schema::dropIfExists('training_module_categories');
     }
 };

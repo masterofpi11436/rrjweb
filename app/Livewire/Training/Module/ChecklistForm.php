@@ -3,6 +3,7 @@
 namespace App\Livewire\Training\Module;
 
 use App\Models\Training\TrainingBookPartModuleChecklist;
+use App\Models\Training\TrainingModuleCategory;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
@@ -18,8 +19,17 @@ class ChecklistForm extends Component
 
     public ?string $flashMessage = null;
 
+    public array $selectedCategories = [];
+
+    public $categories;
+
     public function mount(?int $checklistId = null): void
     {
+        $this->categories = TrainingModuleCategory::query()
+            ->orderBy('sort_order')
+            ->orderBy('name')
+            ->get();
+
         $this->checklistId = $checklistId;
 
         if ($this->checklistId) {
@@ -75,6 +85,16 @@ class ChecklistForm extends Component
                 'nullable',
                 'string',
             ],
+
+            'selectedCategories' => [
+                'array',
+            ],
+
+            'selectedCategories.*' => [
+                'integer',
+                'distinct',
+                'exists:training_module_categories,id',
+            ],
         ];
     }
 
@@ -112,12 +132,22 @@ class ChecklistForm extends Component
 
             'groups.items' => fn ($query) =>
                 $query->orderBy('sort_order'),
+
+            'categories' => fn ($query) =>
+                $query->orderBy('sort_order')
+                    ->orderBy('name'),
         ])->findOrFail($this->checklistId);
 
         $this->title = $checklist->title;
 
         $this->description =
             $checklist->description ?? '';
+
+        $this->selectedCategories = $checklist
+            ->categories
+            ->pluck('id')
+            ->map(fn ($id) => (int) $id)
+            ->toArray();
 
         $this->groups = $checklist->groups
             ->map(function ($group) {
@@ -445,6 +475,10 @@ class ChecklistForm extends Component
 
             $this->checklistId =
                 $checklist->id;
+
+            $checklist->categories()->sync(
+                $validated['selectedCategories'] ?? []
+            );
         });
 
         $this->flashMessage = $isEditing
