@@ -3,6 +3,7 @@
 namespace App\Livewire\Training\Module;
 
 use App\Models\Training\TrainingBookPartModuleTest;
+use App\Models\Training\TrainingModuleCategory;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
@@ -18,8 +19,17 @@ class TestForm extends Component
 
     public array $questions = [];
 
+    public array $selectedCategories = [];
+
+    public $categories;
+
     public function mount(?int $testId = null): void
     {
+        $this->categories = TrainingModuleCategory::query()
+            ->orderBy('sort_order')
+            ->orderBy('name')
+            ->get();
+
         $this->testId = $testId;
 
         if ($this->testId) {
@@ -48,6 +58,16 @@ class TestForm extends Component
                 'integer',
                 'min:0',
                 'max:100',
+            ],
+
+            'selectedCategories' => [
+                'array',
+            ],
+
+            'selectedCategories.*' => [
+                'integer',
+                'distinct',
+                'exists:training_module_categories,id',
             ],
 
             'questions' => [
@@ -196,6 +216,8 @@ class TestForm extends Component
 
         $this->validateQuestionOptions();
 
+        $isEditing = $this->testId !== null;
+
         DB::transaction(function () {
             $test = TrainingBookPartModuleTest::updateOrCreate(
                 [
@@ -208,10 +230,10 @@ class TestForm extends Component
                 ]
             );
 
-            /*
-             * Store IDs that still exist so deleted questions
-             * can be removed from the database.
-             */
+            $test->categories()->sync(
+                $this->selectedCategories
+            );
+
             $savedQuestionIds = [];
 
             foreach (
@@ -283,7 +305,9 @@ class TestForm extends Component
 
         session()->flash(
             'flashMessage',
-            'Test created successfully.'
+            $isEditing
+                ? 'Test updated successfully.'
+                : 'Test created successfully.'
         );
 
         return redirect()->route(
@@ -403,6 +427,11 @@ class TestForm extends Component
         $this->description = $test->description ?? '';
 
         $this->passing_score = $test->passing_score;
+
+        $this->selectedCategories = $test->categories()
+            ->pluck('training_module_categories.id')
+            ->map(fn ($id) => (int) $id)
+            ->toArray();
 
         $this->questions = $test->questions
             ->map(function ($question) {

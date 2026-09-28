@@ -24,6 +24,70 @@
         Manage Categories
     </a>
 
+    {{-- Module Filters --}}
+    <div class="mb-6 rounded-xl border border-gray-700 bg-gray-900 p-4">
+
+        <form method="GET" action="{{ route('training.admin.modules.dashboard') }}"
+            class="flex flex-col gap-4 sm:flex-row sm:items-end">
+
+            <div class="flex-1">
+
+                <label for="category" class="mb-2 block text-sm font-medium text-gray-200">
+
+                    Filter by Category
+
+                </label>
+
+                <select id="category" name="category"
+                    class="w-full rounded-lg border border-gray-600
+                       bg-gray-800 px-4 py-2.5 text-white
+                       focus:border-blue-500 focus:outline-none
+                       focus:ring-2 focus:ring-blue-500/30">
+
+                    <option value="">
+                        All Categories
+                    </option>
+
+                    @foreach ($categories as $category)
+                        <option value="{{ $category->id }}" @selected($selectedCategory == $category->id)>
+
+                            {{ $category->name }}
+
+                        </option>
+                    @endforeach
+
+                </select>
+
+            </div>
+
+            <button type="submit"
+                class="px-4 py-2.5
+                   bg-slate-700 text-gray-100
+                   rounded-md border border-blue-500
+                   hover:bg-slate-600 hover:border-blue-400
+                   cursor-pointer transition">
+
+                Apply Filter
+
+            </button>
+
+            @if ($selectedCategory)
+                <a href="{{ route('training.admin.modules.dashboard') }}"
+                    class="px-4 py-2.5
+                       bg-slate-700 text-gray-100
+                       rounded-md border border-gray-600
+                       hover:bg-slate-600 hover:border-gray-500
+                       cursor-pointer transition inline-block text-center">
+
+                    Clear Filter
+
+                </a>
+            @endif
+
+        </form>
+
+    </div>
+
     <div class="space-y-8">
 
         @include('Training.Admin.Modules.partials.module-section', [

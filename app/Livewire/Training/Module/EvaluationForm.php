@@ -143,6 +143,11 @@ class EvaluationForm extends Component
 
         $this->days = $evaluation->days ?? 1;
 
+        $this->selectedCategories = $evaluation->categories()
+            ->pluck('training_module_categories.id')
+            ->map(fn ($id) => (int) $id)
+            ->toArray();
+
 
         $this->fields = $evaluation->fields
             ->map(function ($field) {
@@ -315,6 +320,9 @@ class EvaluationForm extends Component
                     ]
                 );
 
+            $evaluation->categories()->sync(
+                $validated['selectedCategories'] ?? []
+            );
 
             $savedFieldIds = [];
 

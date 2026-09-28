@@ -19,15 +19,13 @@ class MediaForm extends Component
 
     public string $description = '';
 
-    /**
-     * Previously saved media files.
-     */
     public array $mediaFiles = [];
 
-    /**
-     * Newly selected temporary uploads.
-     */
     public array $newMediaFiles = [];
+
+    public array $selectedCategories = [];
+
+    public $categories;
 
     public function mount(?int $mediaId = null): void
     {

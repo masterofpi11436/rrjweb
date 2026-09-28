@@ -2,7 +2,7 @@
 
     @if (session()->has('flashMessage'))
         <div x-data="{ show: false }" x-init="setTimeout(() => show = true, 50);
-        
+
         setTimeout(() => {
             show = false;
         }, 2000);" x-show="show"
@@ -87,6 +87,10 @@
                         </th>
 
                         <th class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide text-gray-300">
+                            Category
+                        </th>
+
+                        <th class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide text-gray-300">
                             Contents
                         </th>
 
@@ -107,6 +111,28 @@
                                 <div class="font-medium text-white">
                                     {{ $module->title }}
                                 </div>
+                            </td>
+
+                            <td class="px-6 py-4">
+
+                                @if ($module->categories->isNotEmpty())
+                                    <div class="flex flex-wrap gap-1">
+
+                                        @foreach ($module->categories as $category)
+                                            <span>
+
+                                                {{ $category->name }}
+
+                                            </span>
+                                        @endforeach
+
+                                    </div>
+                                @else
+                                    <span class="text-sm text-gray-500">
+                                        Uncategorized
+                                    </span>
+                                @endif
+
                             </td>
 
                             <td class="px-6 py-4 text-sm text-gray-300">

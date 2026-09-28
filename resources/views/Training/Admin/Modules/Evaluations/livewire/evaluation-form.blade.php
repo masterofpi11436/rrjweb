@@ -92,6 +92,75 @@
 
         </section>
 
+        {{-- Module Categories --}}
+        <div>
+            <div class="mb-2 flex items-center justify-between">
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-200">
+                        Categories
+                    </label>
+
+                    <p class="mt-1 text-xs text-gray-500">
+                        Select the categories this module belongs to.
+                    </p>
+                </div>
+
+                <a href="{{ route('training.admin.modules.categories.index') }}"
+                    class="px-3 py-1.5
+                   bg-slate-700 text-gray-100
+                   rounded-md border border-blue-500
+                   hover:bg-slate-600 hover:border-blue-400
+                   cursor-pointer transition inline-block text-center text-xs">
+                    Manage Categories
+                </a>
+
+            </div>
+
+            @if ($categories->isNotEmpty())
+
+                <div class="flex flex-wrap gap-2">
+
+                    @foreach ($categories as $category)
+                        <label wire:key="category-{{ $category->id }}"
+                            class="flex cursor-pointer items-center gap-2
+                           rounded-md border border-gray-700
+                           bg-gray-800 px-3 py-2
+                           text-sm text-gray-300
+                           hover:border-gray-600 hover:bg-gray-700/70">
+
+                            <input type="checkbox" value="{{ $category->id }}" wire:model="selectedCategories"
+                                class="h-4 w-4 cursor-pointer rounded
+                               border-gray-600 bg-gray-900
+                               text-blue-600 focus:ring-blue-500">
+
+                            <span>
+                                {{ $category->name }}
+                            </span>
+
+                        </label>
+                    @endforeach
+
+                </div>
+            @else
+                <div class="rounded-lg border border-yellow-700
+                    bg-yellow-950/30 px-4 py-3">
+
+                    <p class="text-sm text-yellow-300">
+                        No module categories have been created.
+                    </p>
+
+                </div>
+
+            @endif
+
+            @error('selectedCategories.*')
+                <p class="mt-2 text-sm text-red-400">
+                    {{ $message }}
+                </p>
+            @enderror
+        </div>
+
         <div>
             <label for="days" class="mb-2 block text-sm font-medium text-gray-200">
                 Number of Evaluation Days

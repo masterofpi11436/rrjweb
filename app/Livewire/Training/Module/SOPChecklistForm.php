@@ -3,6 +3,7 @@
 namespace App\Livewire\Training\Module;
 
 use App\Models\Training\TrainingBookPartModuleSOPChecklist;
+use App\Models\Training\TrainingModuleCategory;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
@@ -16,9 +17,17 @@ class SOPChecklistForm extends Component
 
     public array $groups = [];
 
+    public array $selectedCategories = [];
+
+    public $categories;
 
     public function mount(?int $checklistId = null): void
     {
+        $this->categories = TrainingModuleCategory::query()
+            ->orderBy('sort_order')
+            ->orderBy('name')
+            ->get();
+
         $this->checklistId = $checklistId;
 
         if ($this->checklistId) {
@@ -27,7 +36,6 @@ class SOPChecklistForm extends Component
             $this->addGroup();
         }
     }
-
 
     protected function rules(): array
     {
@@ -41,6 +49,16 @@ class SOPChecklistForm extends Component
             'description' => [
                 'nullable',
                 'string',
+            ],
+
+            'selectedCategories' => [
+                'array',
+            ],
+
+            'selectedCategories.*' => [
+                'integer',
+                'distinct',
+                'exists:training_module_categories,id',
             ],
 
             'groups' => [
@@ -133,6 +151,10 @@ class SOPChecklistForm extends Component
         $this->description =
             $checklist->description ?? '';
 
+        $this->selectedCategories = $checklist->categories()
+            ->pluck('training_module_categories.id')
+            ->map(fn ($id) => (int) $id)
+            ->toArray();
 
         $this->groups = $checklist->groups
             ->map(function ($group) {
@@ -430,6 +452,9 @@ class SOPChecklistForm extends Component
                     ]
                 );
 
+            $checklist->categories()->sync(
+                $validated['selectedCategories'] ?? []
+            );
 
             $savedGroupIds = [];
 

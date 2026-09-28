@@ -15,6 +15,7 @@ class TrainingBookPartModuleEvaluation extends Model
     protected $fillable = [
         'title',
         'description',
+        'days',
     ];
 
     public function fields()

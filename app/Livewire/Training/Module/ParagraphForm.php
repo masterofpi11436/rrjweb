@@ -3,6 +3,7 @@
 namespace App\Livewire\Training\Module;
 
 use App\Models\Training\TrainingBookPartModuleParagraph;
+use App\Models\Training\TrainingModuleCategory;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
@@ -18,8 +19,17 @@ class ParagraphForm extends Component
 
     public ?string $flashMessage = null;
 
+    public array $selectedCategories = [];
+
+    public $categories;
+
     public function mount(?int $paragraphId = null): void
     {
+        $this->categories = TrainingModuleCategory::query()
+            ->orderBy('sort_order')
+            ->orderBy('name')
+            ->get();
+
         $this->paragraphId = $paragraphId;
 
         if ($this->paragraphId !== null) {
@@ -38,6 +48,11 @@ class ParagraphForm extends Component
         $this->title = $paragraphModule->title;
 
         $this->description = $paragraphModule->description ?? '';
+
+        $this->selectedCategories = $paragraphModule->categories()
+            ->pluck('training_module_categories.id')
+            ->map(fn ($id) => (int) $id)
+            ->toArray();
 
         $this->sections = $paragraphModule->sections
             ->sortBy('sort_order')
@@ -327,6 +342,16 @@ class ParagraphForm extends Component
                 'max:1000',
             ],
 
+            'selectedCategories' => [
+                'array',
+            ],
+
+            'selectedCategories.*' => [
+                'integer',
+                'distinct',
+                'exists:training_module_categories,id',
+            ],
+
             'sections' => [
                 'required',
                 'array',
@@ -468,19 +493,23 @@ class ParagraphForm extends Component
 
         DB::transaction(function () use ($validated): void {
 
-            $paragraphModule = TrainingBookPartModuleParagraph::updateOrCreate(
-                [
-                    'id' => $this->paragraphId,
-                ],
-                [
-                    'title' => $validated['title'],
+        $paragraphModule = TrainingBookPartModuleParagraph::updateOrCreate(
+            [
+                'id' => $this->paragraphId,
+            ],
+            [
+                'title' => $validated['title'],
 
-                    'description' =>
-                        $validated['description'] ?: null,
-                ]
-            );
+                'description' =>
+                    $validated['description'] ?: null,
+            ]
+        );
 
-            $savedSectionIds = [];
+        $paragraphModule->categories()->sync(
+            $validated['selectedCategories'] ?? []
+        );
+
+        $savedSectionIds = [];
 
             foreach (
                 $validated['sections'] as

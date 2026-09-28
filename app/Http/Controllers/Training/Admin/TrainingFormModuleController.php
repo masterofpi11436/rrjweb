@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Training\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Training\TrainingBookPartModuleForm;
+use App\Models\Training\TrainingModuleCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -12,7 +13,14 @@ class TrainingFormModuleController extends Controller
 {
     public function create()
     {
-        return view('Training.Admin.Modules.Forms.create');
+        $categories = TrainingModuleCategory::query()
+            ->orderBy('sort_order')
+            ->orderBy('name')
+            ->get();
+
+        return view('Training.Admin.Modules.Forms.create', [
+            'categories' => $categories,
+        ]);
     }
 
     public function store(Request $request)
@@ -29,6 +37,17 @@ class TrainingFormModuleController extends Controller
                     'nullable',
                     'string',
                     'max:2000',
+                ],
+
+                'selectedCategories' => [
+                    'nullable',
+                    'array',
+                ],
+
+                'selectedCategories.*' => [
+                    'integer',
+                    'distinct',
+                    'exists:training_module_categories,id',
                 ],
 
                 'newDocuments' => [
@@ -69,6 +88,10 @@ class TrainingFormModuleController extends Controller
                 'description' => $validated['description'] ?? null,
             ]);
 
+            $form->categories()->sync(
+                $validated['selectedCategories'] ?? []
+            );
+
             foreach ($request->file('newDocuments', []) as $index => $uploadedFile) {
                 $path = $uploadedFile->store(
                     'training/forms',
@@ -101,11 +124,19 @@ class TrainingFormModuleController extends Controller
 
     public function edit(int $id)
     {
-        $form = TrainingBookPartModuleForm::with('documents')
-            ->findOrFail($id);
+        $form = TrainingBookPartModuleForm::with([
+            'documents',
+            'categories',
+        ])->findOrFail($id);
+
+        $categories = TrainingModuleCategory::query()
+            ->orderBy('sort_order')
+            ->orderBy('name')
+            ->get();
 
         return view('Training.Admin.Modules.Forms.edit', [
             'form' => $form,
+            'categories' => $categories,
         ]);
     }
 
@@ -126,6 +157,17 @@ class TrainingFormModuleController extends Controller
                     'nullable',
                     'string',
                     'max:2000',
+                ],
+
+                'selectedCategories' => [
+                    'nullable',
+                    'array',
+                ],
+
+                'selectedCategories.*' => [
+                    'integer',
+                    'distinct',
+                    'exists:training_module_categories,id',
                 ],
 
                 'newDocuments' => [
@@ -174,9 +216,10 @@ class TrainingFormModuleController extends Controller
                 'description' => $validated['description'] ?? null,
             ]);
 
-            /*
-             * Remove selected existing documents.
-             */
+            $form->categories()->sync(
+                $validated['selectedCategories'] ?? []
+            );
+
             if (!empty($validated['remove_documents'])) {
                 $documentsToRemove = $form->documents()
                     ->whereIn(

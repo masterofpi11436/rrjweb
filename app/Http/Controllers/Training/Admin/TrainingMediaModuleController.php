@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Training\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Training\TrainingBookPartModuleMedia;
+use App\Models\Training\TrainingModuleCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -12,7 +13,14 @@ class TrainingMediaModuleController extends Controller
 {
     public function create()
     {
-        return view('Training.Admin.Modules.Media.create');
+        $categories = TrainingModuleCategory::query()
+            ->orderBy('sort_order')
+            ->orderBy('name')
+            ->get();
+
+        return view('Training.Admin.Modules.Media.create', [
+            'categories' => $categories,
+        ]);
     }
 
     public function store(Request $request)
@@ -30,6 +38,17 @@ class TrainingMediaModuleController extends Controller
                 'max:2000',
             ],
 
+            'selectedCategories' => [
+                'nullable',
+                'array',
+            ],
+
+            'selectedCategories.*' => [
+                'integer',
+                'distinct',
+                'exists:training_module_categories,id',
+            ],
+
             'newFiles' => [
                 'required',
                 'array',
@@ -43,10 +62,15 @@ class TrainingMediaModuleController extends Controller
         ]);
 
         DB::transaction(function () use ($request, $validated) {
+
             $media = TrainingBookPartModuleMedia::create([
                 'title' => $validated['title'],
                 'description' => $validated['description'] ?? null,
             ]);
+
+            $media->categories()->sync(
+                $validated['selectedCategories'] ?? []
+            );
 
             foreach ($request->file('newFiles', []) as $index => $uploadedFile) {
 
@@ -94,11 +118,19 @@ class TrainingMediaModuleController extends Controller
 
     public function edit(int $id)
     {
-        $media = TrainingBookPartModuleMedia::with('files')
-            ->findOrFail($id);
+        $media = TrainingBookPartModuleMedia::with([
+            'files',
+            'categories',
+        ])->findOrFail($id);
+
+        $categories = TrainingModuleCategory::query()
+            ->orderBy('sort_order')
+            ->orderBy('name')
+            ->get();
 
         return view('Training.Admin.Modules.Media.edit', [
             'media' => $media,
+            'categories' => $categories,
         ]);
     }
 
@@ -120,6 +152,16 @@ class TrainingMediaModuleController extends Controller
                 'max:2000',
             ],
 
+            'selectedCategories' => [
+                'nullable',
+                'array',
+            ],
+
+            'selectedCategories.*' => [
+                'integer',
+                'distinct',
+                'exists:training_module_categories,id',
+            ],
             'newFiles' => [
                 'nullable',
                 'array',
@@ -148,6 +190,10 @@ class TrainingMediaModuleController extends Controller
                 'title' => $validated['title'],
                 'description' => $validated['description'] ?? null,
             ]);
+
+            $media->categories()->sync(
+                $validated['selectedCategories'] ?? []
+            );
 
             /*
              * Remove existing media files selected by the user.
