@@ -106,11 +106,12 @@
         </div>
     </div>
 
-    {{-- Search --}}
+    {{-- Search / Filters --}}
     <div class="rounded-lg border border-gray-700 bg-gray-800 p-4">
 
         <div class="flex flex-col gap-4 md:flex-row md:items-end">
 
+            {{-- Search --}}
             <div class="flex-1">
 
                 <label for="search" class="mb-2 block text-sm font-medium text-gray-300">
@@ -121,11 +122,19 @@
 
                 <input id="search" type="text" wire:model.live.debounce.300ms="search"
                     placeholder="Search user, email, or book..."
-                    class="w-full rounded-lg border border-gray-600 bg-gray-900 px-4 py-2.5 text-white placeholder:text-gray-500 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/30">
+                    class="h-11 w-full rounded-lg
+                       border border-gray-600
+                       bg-gray-900 px-4
+                       text-sm text-white
+                       placeholder:text-gray-500
+                       focus:border-blue-500
+                       focus:outline-none
+                       focus:ring-2 focus:ring-blue-500/30">
 
             </div>
 
 
+            {{-- Status --}}
             <div class="w-full md:w-56">
 
                 <label for="status" class="mb-2 block text-sm font-medium text-gray-300">
@@ -135,7 +144,13 @@
                 </label>
 
                 <select id="status" wire:model.live="status"
-                    class="w-full rounded-lg border border-gray-600 bg-gray-900 px-4 py-2.5 text-white focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/30">
+                    class="h-11 w-full rounded-lg
+                       border border-gray-600
+                       bg-gray-900 px-4
+                       text-sm text-white
+                       focus:border-blue-500
+                       focus:outline-none
+                       focus:ring-2 focus:ring-blue-500/30">
 
                     <option value="">
                         All Statuses
@@ -158,12 +173,16 @@
             </div>
 
 
-            <a type="button" wire:click="clearFilters"
-                class="px-4 py-2 mb-1.5
-                   bg-slate-700 text-gray-100
-                   rounded-md border border-purple-500
-                   hover:bg-slate-600 hover:border-purple-400 cursor-pointer
-                   transition inline-block text-center">
+            {{-- Clear Filters --}}
+            <a wire:click="clearFilters"
+                class="inline-flex h-11 cursor-pointer
+                   items-center justify-center
+                   rounded-lg border border-purple-500
+                   bg-slate-700 px-4
+                   text-sm font-medium text-gray-100
+                   transition
+                   hover:border-purple-400
+                   hover:bg-slate-600">
 
                 Clear Filters
 
