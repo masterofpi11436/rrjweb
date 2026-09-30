@@ -471,61 +471,60 @@
 
 
                                 {{-- Group Controls --}}
-                                <div class="flex items-center
-                                           gap-1">
-
+                                <div class="flex items-center gap-1">
 
                                     {{-- Move Up --}}
                                     <a wire:click="moveGroupUp({{ $groupIndex }})" @disabled($groupIndex === 0)
                                         title="Move Group Up"
-                                        class="px-4 py-2
-                                            bg-slate-700 text-gray-100
-                                            rounded-md border border-blue-500
-                                            hover:bg-slate-600 hover:border-blue-400 cursor-pointer
-                                            transition inline-block text-center
-                                            disabled:cursor-not-allowed disabled:opacity-25">
+                                        class="flex h-9 w-9 cursor-pointer items-center justify-center
+                                                rounded-md border border-blue-500
+                                                bg-slate-700 text-gray-100
+                                                transition
+                                                hover:border-blue-400 hover:bg-slate-600
+                                                disabled:cursor-not-allowed disabled:opacity-25">
 
                                         ↑
 
                                     </a>
 
+
                                     {{-- Move Down --}}
                                     <a wire:click="moveGroupDown({{ $groupIndex }})" @disabled($groupIndex === count($groups) - 1)
                                         title="Move Group Down"
-                                        class="px-4 py-2
-                                            bg-slate-700 text-gray-100
-                                            rounded-md border border-blue-500
-                                            hover:bg-slate-600 hover:border-blue-400 cursor-pointer
-                                            transition inline-block text-center
-                                            disabled:cursor-not-allowed disabled:opacity-25">
+                                        class="flex h-9 w-9 cursor-pointer items-center justify-center
+                                                rounded-md border border-blue-500
+                                                bg-slate-700 text-gray-100
+                                                transition
+                                                hover:border-blue-400 hover:bg-slate-600
+                                                disabled:cursor-not-allowed disabled:opacity-25">
 
                                         ↓
 
                                     </a>
 
-                                    {{-- Insert --}}
-                                    <a type="button" wire:click="insertGroup({{ $groupIndex }})"
-                                        title="Insert Group Below"
-                                        class="px-4 py-2
-                                            bg-slate-700 text-gray-100
-                                            rounded-md border border-green-500
-                                            hover:bg-slate-600 hover:border-green-400 cursor-pointer
-                                            transition inline-block text-center
-                                            disabled:cursor-not-allowed disabled:opacity-25">
+
+                                    {{-- Insert Group --}}
+                                    <a wire:click="insertGroup({{ $groupIndex }})" title="Insert Group Below"
+                                        class="flex h-9 w-9 cursor-pointer items-center justify-center
+                                                rounded-md border border-green-500
+                                                bg-slate-700 text-gray-100
+                                                transition
+                                                hover:border-green-400 hover:bg-slate-600">
 
                                         +
 
                                     </a>
 
-                                    {{-- Remove --}}
+
+                                    {{-- Remove Group --}}
                                     <a wire:click="removeGroup({{ $groupIndex }})"
                                         wire:confirm="Are you sure you want to remove this group and all of its policies?"
                                         title="Remove Group"
-                                        class="px-4 py-2
-                                            bg-slate-700 text-gray-100
-                                            rounded-md border border-red-500
-                                            hover:bg-slate-600 hover:border-red-400 cursor-pointer
-                                            transition inline-block text-center">
+                                        class="flex h-9 w-9 cursor-pointer items-center justify-center
+                                                rounded-md border border-red-500
+                                                bg-slate-700 text-gray-100
+                                                transition
+                                                hover:border-red-400 hover:bg-slate-600">
 
                                         ×
 
@@ -910,55 +909,65 @@
 
 
                                             {{-- Policy Controls --}}
-                                            <div class="flex min-w-0 flex-nowrap gap-1 lg:justify-end">
+                                            <div class="flex min-w-0 flex-nowrap justify-end gap-1">
 
+                                                {{-- Move Up --}}
                                                 <a wire:click="movePolicyUp({{ $groupIndex }}, {{ $policyIndex }})"
                                                     @disabled($policyIndex === 0) title="Move Policy Up"
-                                                    class="px-4 py-2
-                                                        bg-slate-700 text-gray-100
-                                                        rounded-md border border-green-500
-                                                        hover:bg-slate-600 hover:border-green-400 cursor-pointer
-                                                        transition inline-block text-center
-                                                           disabled:cursor-not-allowed
-                                                           disabled:opacity-25">
+                                                    class="flex h-8 w-8 shrink-0 cursor-pointer items-center justify-center
+                                                            rounded-md border border-blue-500
+                                                            bg-slate-700 text-sm text-gray-100
+                                                            transition
+                                                            hover:border-blue-400 hover:bg-slate-600
+                                                            disabled:cursor-not-allowed disabled:opacity-25">
 
                                                     ↑
 
                                                 </a>
 
+
+                                                {{-- Move Down --}}
                                                 <a wire:click="movePolicyDown({{ $groupIndex }}, {{ $policyIndex }})"
                                                     @disabled($policyIndex === count($group['policies']) - 1) title="Move Policy Down"
-                                                    class="px-4 py-2
-                                                        bg-slate-700 text-gray-100
-                                                        rounded-md border border-green-500
-                                                        hover:bg-slate-600 hover:border-green-400 cursor-pointer
-                                                        transition inline-block text-center
-                                                           disabled:cursor-not-allowed
-                                                           disabled:opacity-25">
+                                                    class="flex h-8 w-8 shrink-0 cursor-pointer items-center justify-center
+                                                            rounded-md border border-blue-500
+                                                            bg-slate-700 text-sm text-gray-100
+                                                            transition
+                                                            hover:border-blue-400 hover:bg-slate-600
+                                                            disabled:cursor-not-allowed disabled:opacity-25">
 
                                                     ↓
 
                                                 </a>
 
+
+                                                {{-- Insert --}}
                                                 <a wire:click="insertPolicy({{ $groupIndex }}, {{ $policyIndex }})"
                                                     title="Insert Policy Below"
-                                                    class="px-4 py-2
-                                                        bg-slate-700 text-gray-100
-                                                        rounded-md border border-green-500
-                                                        hover:bg-slate-600 hover:border-green-400 cursor-pointer
-                                                        transition inline-block text-center">
+                                                    class="flex h-8 w-8 shrink-0 cursor-pointer items-center justify-center
+                                                            rounded-md border border-green-500
+                                                            bg-slate-700 text-sm text-gray-100
+                                                            transition
+                                                            hover:border-green-400 hover:bg-slate-600">
+
                                                     +
+
                                                 </a>
 
+
+                                                {{-- Remove --}}
                                                 <a wire:click="removePolicy({{ $groupIndex }}, {{ $policyIndex }})"
                                                     wire:confirm="Are you sure you want to remove this policy?"
                                                     title="Remove Policy"
-                                                    class="px-4 py-2
-                                                        bg-slate-700 text-gray-100
-                                                        rounded-md border border-red-500
-                                                        hover:bg-slate-600 hover:border-red-400 cursor-pointer
-                                                        transition inline-block text-center">
-                                                    × </a>
+                                                    class="flex h-8 w-8 shrink-0 cursor-pointer items-center justify-center
+                                                            rounded-md border border-red-500
+                                                            bg-slate-700 text-sm text-gray-100
+                                                            transition
+                                                            hover:border-red-400 hover:bg-slate-600">
+
+                                                    ×
+
+                                                </a>
 
                                             </div>
 
@@ -997,11 +1006,14 @@
 
                     {{-- Bottom Add Group --}}
                     <a wire:click="addGroup"
-                        class="px-4 py-2
-                            bg-slate-700 text-gray-100
-                            rounded-md border border-green-500
-                            hover:bg-slate-600 hover:border-green-400 cursor-pointer
-                            transition block text-center">
+                        class="block cursor-pointer rounded-md
+                                border border-dashed border-gray-700
+                                bg-transparent px-4 py-2
+                                text-center text-sm text-gray-500
+                                transition
+                                hover:border-gray-600
+                                hover:bg-gray-800/40
+                                hover:text-gray-300">
 
                         + Add Another Group
 

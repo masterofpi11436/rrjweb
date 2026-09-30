@@ -2,7 +2,7 @@
 
     @if (session()->has('flashMessage'))
         <div x-data="{ show: false }" x-init="setTimeout(() => show = true, 50);
-
+        
         setTimeout(() => {
             show = false;
         }, 2000);" x-show="show"
@@ -146,26 +146,35 @@
                             <td class="whitespace-nowrap px-6 py-4 text-right">
                                 <div class="flex justify-end gap-2">
                                     <a href="{{ route($editRouteName, $module->id) }}"
-                                        class="px-4 py-2 mb-4 mt-4
-                                            bg-slate-700 text-gray-100
-                                            rounded-md border border-slate-500
-                                            hover:bg-slate-600 hover:border-slate-400
-                                            transition inline-block text-center">
+                                        class="inline-flex h-10 items-center justify-center
+                                                rounded-md border border-blue-500
+                                                bg-slate-700 px-4
+                                                text-sm font-medium text-gray-100
+                                                transition
+                                                hover:border-blue-400 hover:bg-slate-600">
+
                                         Edit
+
                                     </a>
 
                                     <form method="POST" action="{{ route($destroyRouteName, $module->id) }}"
-                                        onsubmit="return confirm('Delete this module?');">
+                                        class="inline-flex">
+
                                         @csrf
                                         @method('DELETE')
 
                                         <button type="submit"
-                                            class="!bg-red-700 !text-white !border-red-500
-                                                cursor-pointer rounded-md border
-                                                px-4 py-2 mt-4 text-center text-sm font-medium
-                                                transition hover:!bg-red-600 hover:!border-red-400">
+                                            class="inline-flex h-10 items-center justify-center
+                                                    rounded-md border border-red-500
+                                                    bg-slate-700 px-4
+                                                    text-sm font-medium text-gray-100
+                                                    transition
+                                                    hover:border-red-400 hover:bg-slate-600">
+
                                             Delete
+
                                         </button>
+
                                     </form>
                                 </div>
                             </td>

@@ -2,10 +2,10 @@
 
     @if ($flashMessage)
         <div x-data="{ show: false }" x-init="setTimeout(() => show = true, 50);
-
+        
         setTimeout(() => {
             show = false;
-
+        
             setTimeout(() => {
                 $wire.set('flashMessage', null);
             }, 300);
@@ -388,58 +388,65 @@
 
 
                                     {{-- Item Controls --}}
-                                    <div class="flex shrink-0 flex-col gap-1">
+                                    <div class="grid shrink-0 grid-cols-2 gap-1">
 
-                                        <div class="flex gap-1">
+                                        {{-- Move Up --}}
+                                        <a wire:click="moveItemUp({{ $groupIndex }}, {{ $itemIndex }})"
+                                            @disabled($itemIndex === 0) title="Move item up"
+                                            class="flex h-10 w-10 cursor-pointer items-center justify-center
+                                                rounded-md border border-blue-500
+                                                bg-slate-700 text-gray-100
+                                                transition
+                                                hover:border-blue-400 hover:bg-slate-600
+                                                disabled:cursor-not-allowed disabled:opacity-25">
 
-                                            <a wire:click="moveItemUp({{ $groupIndex }}, {{ $itemIndex }})"
-                                                @disabled($itemIndex === 0) title="Move item up"
-                                                class="px-4 py-2
-                                                    bg-slate-700 text-gray-100
+                                            ↑
+
+                                        </a>
+
+
+                                        {{-- Move Down --}}
+                                        <a wire:click="moveItemDown({{ $groupIndex }}, {{ $itemIndex }})"
+                                            @disabled($itemIndex === count($group['items']) - 1) title="Move item down"
+                                            class="flex h-10 w-10 cursor-pointer items-center justify-center
                                                     rounded-md border border-blue-500
-                                                    hover:bg-slate-600 hover:border-blue-400
-                                                    cursor-pointer transition inline-block text-center
-                                                    disabled:cursor-not-allowed disabled:opacity-25">
-                                                ↑
-                                            </a>
-
-                                            <a wire:click="moveItemDown({{ $groupIndex }}, {{ $itemIndex }})"
-                                                @disabled($itemIndex === count($group['items']) - 1) title="Move item down"
-                                                class="px-4 py-2
                                                     bg-slate-700 text-gray-100
-                                                    rounded-md border border-blue-500
-                                                    hover:bg-slate-600 hover:border-blue-400
-                                                    cursor-pointer transition inline-block text-center
+                                                    transition
+                                                    hover:border-blue-400 hover:bg-slate-600
                                                     disabled:cursor-not-allowed disabled:opacity-25">
-                                                ↓
-                                            </a>
 
-                                        </div>
+                                            ↓
 
-                                        <div class="flex gap-1">
+                                        </a>
 
-                                            <a wire:click="insertItem({{ $groupIndex }}, {{ $itemIndex }})"
-                                                title="Insert item below"
-                                                class="px-4 py-2
-                                                    bg-slate-700 text-gray-100
+
+                                        {{-- Insert Item --}}
+                                        <a wire:click="insertItem({{ $groupIndex }}, {{ $itemIndex }})"
+                                            title="Insert item below"
+                                            class="flex h-10 w-10 cursor-pointer items-center justify-center
                                                     rounded-md border border-green-500
-                                                    hover:bg-slate-600 hover:border-green-400
-                                                    cursor-pointer transition inline-block text-center">
-                                                +
-                                            </a>
-
-                                            <a wire:click="removeItem({{ $groupIndex }}, {{ $itemIndex }})"
-                                                wire:confirm="Are you sure you want to remove this checklist item?"
-                                                title="Remove item"
-                                                class="px-4 py-2
                                                     bg-slate-700 text-gray-100
-                                                    rounded-md border border-red-500
-                                                    hover:bg-slate-600 hover:border-red-400
-                                                    cursor-pointer transition inline-block text-center">
-                                                ×
-                                            </a>
+                                                    transition
+                                                    hover:border-green-400 hover:bg-slate-600">
 
-                                        </div>
+                                            +
+
+                                        </a>
+
+
+                                        {{-- Remove Item --}}
+                                        <a wire:click="removeItem({{ $groupIndex }}, {{ $itemIndex }})"
+                                            wire:confirm="Are you sure you want to remove this checklist item?"
+                                            title="Remove item"
+                                            class="flex h-10 w-10 cursor-pointer items-center justify-center
+                                                rounded-md border border-red-500
+                                                bg-slate-700 text-gray-100
+                                                transition
+                                                hover:border-red-400 hover:bg-slate-600">
+
+                                            ×
+
+                                        </a>
 
                                     </div>
                                 </div>

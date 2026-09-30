@@ -10,9 +10,8 @@
     ';
 
     $sectionClass = '
-        rounded-2xl border border-gray-800
-        bg-gray-900/80 p-6 space-y-4
-        shadow-xl shadow-black/20
+        rounded-xl border border-gray-800
+        bg-gray-900/80 p-4 space-y-4
         scroll-mt-24
     ';
 @endphp
@@ -39,8 +38,24 @@
                         @foreach ($parts as $partIndex => $part)
                             <a href="#part-{{ $partIndex }}"
                                 x-on:click="document.getElementById('part-{{ $partIndex }}')?.setAttribute('open', true)"
-                                class="block truncate rounded-lg px-3 py-1 text-xs text-gray-400 hover:bg-gray-800 hover:text-gray-200">
-                                {{ $part['title'] ?: 'Untitled Part ' . ($partIndex + 1) }}
+                                class="flex items-center gap-2 rounded-md px-2 py-2
+                                        text-sm text-gray-400
+                                        transition
+                                        hover:bg-gray-800 hover:text-white">
+
+                                <span
+                                    class="flex h-6 w-6 shrink-0 items-center justify-center
+                                            rounded bg-gray-800
+                                            text-xs font-semibold text-gray-400">
+
+                                    {{ $partIndex + 1 }}
+
+                                </span>
+
+                                <span class="truncate">
+                                    {{ $part['title'] ?: 'Untitled Part' }}
+                                </span>
+
                             </a>
                         @endforeach
                     </div>
@@ -70,8 +85,7 @@
         </div>
     </aside>
 
-    <form wire:submit="save"
-        class="mx-auto max-w-5xl space-y-6 rounded-3xl border border-gray-800 bg-gray-950 p-4 shadow-2xl shadow-black/40 sm:p-6 lg:p-8">
+    <form wire:submit="save" class="space-y-5 rounded-xl border border-gray-800 bg-gray-950 p-5">
 
         <div id="book-info" class="{{ $sectionClass }}">
             <h2 class="text-xl font-semibold text-white">Book Information</h2>
@@ -116,55 +130,133 @@
                 @forelse ($parts as $partIndex => $part)
                     <details id="part-{{ $partIndex }}" wire:key="part-{{ $partIndex }}" x-data="{ open: true }"
                         x-bind:open="open" x-on:toggle="open = $el.open"
-                        class="rounded-2xl border border-gray-800 bg-gray-950 p-6">
+                        class="overflow-hidden rounded-xl border border-gray-700 bg-gray-950">
 
-                        <summary class="cursor-pointer list-none">
-                            <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-                                <div>
-                                    <h4 class="text-lg font-semibold text-white">
-                                        {{ $part['title'] ?: 'Untitled Part ' . ($partIndex + 1) }}
-                                    </h4>
-                                    <p class="text-sm text-gray-400">
-                                        {{ count($part['modules'] ?? []) }} module(s)
-                                    </p>
+                        <summary class="cursor-pointer list-none border-b border-gray-700 bg-gray-800/80">
+
+                            <div class="flex items-center justify-between gap-4 px-4 py-3">
+
+                                <div class="flex items-center gap-4">
+
+                                    {{-- Part Number --}}
+                                    <div
+                                        class="flex h-10 w-10 shrink-0 items-center justify-center
+                           rounded-lg bg-blue-600/15
+                           text-sm font-bold text-blue-400">
+
+                                        {{ $partIndex + 1 }}
+
+                                    </div>
+
+                                    {{-- Part Information --}}
+                                    <div>
+
+                                        <div
+                                            class="text-xs font-semibold uppercase
+                               tracking-wider text-blue-400">
+
+                                            Part {{ $partIndex + 1 }}
+
+                                        </div>
+
+                                        <h4 class="text-base font-semibold text-white">
+
+                                            {{ $part['title'] ?: 'Untitled Part' }}
+
+                                        </h4>
+
+                                    </div>
+
                                 </div>
 
-                                <a wire:click.stop="removePart({{ $partIndex }})"
-                                    class="px-4 py-2 mb-4
-                                        bg-slate-700 text-gray-100
-                                        rounded-md border border-red-500
-                                        hover:bg-slate-600 hover:border-red-400 cursor-pointer
-                                        transition inline-block text-center">
-                                    Remove Part
-                                </a>
+
+                                <div class="flex items-center gap-4">
+
+                                    {{-- Module Count --}}
+                                    <span
+                                        class="rounded-full bg-gray-700
+                           px-3 py-1 text-xs text-gray-300">
+
+                                        {{ count($part['modules'] ?? []) }}
+                                        {{ count($part['modules'] ?? []) === 1 ? 'Module' : 'Modules' }}
+
+                                    </span>
+
+                                    {{-- Remove --}}
+                                    <a wire:click.stop="removePart({{ $partIndex }})"
+                                        class="inline-flex h-9 items-center justify-center
+                           rounded-md border border-red-500
+                           bg-gray-800 px-3
+                           text-sm text-gray-300
+                           transition
+                           hover:bg-red-950/40 hover:text-white">
+
+                                        Remove
+
+                                    </a>
+
+                                    {{-- Expand Indicator --}}
+                                    <span class="text-gray-500">
+                                        ▼
+                                    </span>
+
+                                </div>
+
                             </div>
+
                         </summary>
 
-                        <div class="mt-5 space-y-6">
+                        <div class="space-y-5 p-4">
+
+                            {{-- Part Title --}}
                             <div class="space-y-2">
-                                <label class="{{ $labelClass }}">Part Title</label>
+
+                                <label class="{{ $labelClass }}">
+                                    Part Title
+                                </label>
 
                                 <input type="text" wire:model="parts.{{ $partIndex }}.title"
                                     placeholder="Part title" class="{{ $inputClass }}">
 
                                 @error("parts.$partIndex.title")
-                                    <p class="text-sm text-red-400">{{ $message }}</p>
+                                    <p class="text-sm text-red-400">
+                                        {{ $message }}
+                                    </p>
                                 @enderror
+
                             </div>
 
-                            <div class="space-y-4 border-l-2 border-gray-800 pl-4">
-                                <div class="flex items-center justify-between gap-4">
-                                    <h5 class="font-semibold text-gray-200">Modules</h5>
+
+                            {{-- Modules --}}
+                            <div class="space-y-3">
+
+                                {{-- Module Header --}}
+                                <div class="flex items-center justify-between border-t border-gray-800 pt-4">
+
+                                    <div>
+                                        <h5 class="text-sm font-semibold uppercase tracking-wide text-gray-400">
+                                            Modules
+                                        </h5>
+
+                                        <p class="mt-1 text-xs text-gray-500">
+                                            Training modules included in this part.
+                                        </p>
+                                    </div>
 
                                     <a wire:click="addModule({{ $partIndex }})"
-                                        class="px-4 py-2 mb-4
-                                            bg-slate-700 text-gray-100
-                                            rounded-md border border-green-500
-                                            hover:bg-slate-600 hover:border-green-400 cursor-pointer
-                                            transition inline-block text-center">
-                                        Add Module
+                                        class="inline-flex cursor-pointer items-center justify-center
+                       rounded-md border border-green-500
+                       bg-slate-700 px-3 py-2
+                       text-sm text-gray-100
+                       transition
+                       hover:border-green-400 hover:bg-slate-600">
+
+                                        + Add Module
+
                                     </a>
+
                                 </div>
+
 
                                 @error("parts.$partIndex.modules")
                                     <p class="text-sm text-red-400">
@@ -172,184 +264,276 @@
                                     </p>
                                 @enderror
 
-                                @forelse ($part['modules'] ?? [] as $moduleIndex => $module)
-                                    <div wire:key="module-{{ $partIndex }}-{{ $moduleIndex }}"
-                                        class="space-y-4 rounded-xl border border-gray-800 bg-gray-900/60 p-4">
 
-                                        <div class="grid grid-cols-1 gap-4 md:grid-cols-[1fr_2fr_auto] md:items-end">
+                                {{-- Module List --}}
+                                <div class="space-y-3">
 
-                                            {{-- Module Type --}}
-                                            <div class="space-y-2">
-                                                <label class="{{ $labelClass }}">
-                                                    Module Type
-                                                </label>
+                                    @forelse ($part['modules'] ?? [] as $moduleIndex => $module)
+                                        <div wire:key="module-{{ $partIndex }}-{{ $moduleIndex }}"
+                                            class="rounded-lg border border-gray-800 bg-gray-900/60">
 
-                                                <select
-                                                    wire:model.live="parts.{{ $partIndex }}.modules.{{ $moduleIndex }}.module_type"
-                                                    class="{{ $inputClass }}">
-                                                    <option value="">
-                                                        Select module type
-                                                    </option>
+                                            {{-- Module Main Row --}}
+                                            <div
+                                                class="grid grid-cols-[40px_minmax(160px,1fr)_minmax(240px,2fr)_auto]
+                               items-end gap-3 p-3">
 
-                                                    <option value="paragraph">
-                                                        Paragraph
-                                                    </option>
+                                                {{-- Module Number --}}
+                                                <div
+                                                    class="flex h-10 w-10 items-center justify-center
+                                    rounded-md bg-gray-800
+                                    text-xs font-semibold text-gray-400">
 
-                                                    <option value="media">
-                                                        Media
-                                                    </option>
+                                                    {{ $moduleIndex + 1 }}
 
-                                                    <option value="form">
-                                                        Form
-                                                    </option>
-
-                                                    <option value="checklist">
-                                                        Checklist
-                                                    </option>
-
-                                                    <option value="sop_checklist">
-                                                        SOP Checklist
-                                                    </option>
-
-                                                    <option value="test">
-                                                        Test
-                                                    </option>
-
-                                                    <option value="evaluation">
-                                                        Evaluation
-                                                    </option>
-                                                </select>
-
-                                                @error("parts.$partIndex.modules.$moduleIndex.module_type")
-                                                    <p class="text-sm text-red-400">
-                                                        {{ $message }}
-                                                    </p>
-                                                @enderror
-                                            </div>
+                                                </div>
 
 
-                                            {{-- Existing Module --}}
-                                            <div class="space-y-2">
+                                                {{-- Module Type --}}
+                                                <div class="space-y-1">
 
-                                                <label class="{{ $labelClass }}">
-                                                    Module
-                                                </label>
+                                                    <label
+                                                        class="block text-xs font-medium
+                                       uppercase tracking-wide text-gray-500">
 
-                                                @php
-                                                    $selectedType = $module['module_type'] ?? '';
-
-                                                    $modulesForType = $availableModules[$selectedType] ?? [];
-                                                @endphp
-
-                                                <select
-                                                    wire:model="parts.{{ $partIndex }}.modules.{{ $moduleIndex }}.module_id"
-                                                    class="{{ $inputClass }}" @disabled(!$selectedType)>
-
-                                                    @if (!$selectedType)
-                                                        <option value="">
-                                                            Select a module type first
-                                                        </option>
-                                                    @elseif (empty($modulesForType))
-                                                        <option value="">
-                                                            No modules available
-                                                        </option>
-                                                    @else
-                                                        <option value="">
-                                                            Select module
-                                                        </option>
-
-                                                        @foreach ($modulesForType as $availableModule)
-                                                            <option value="{{ $availableModule['id'] }}">
-                                                                {{ $availableModule['title'] }}
-                                                            </option>
-                                                        @endforeach
-                                                    @endif
-
-                                                </select>
-
-                                                @error("parts.$partIndex.modules.$moduleIndex.module_id")
-                                                    <p class="text-sm text-red-400">
-                                                        {{ $message }}
-                                                    </p>
-                                                @enderror
-                                            </div>
-
-
-                                            {{-- Remove --}}
-                                            <a wire:click="removeModule({{ $partIndex }}, {{ $moduleIndex }})"
-                                                class="px-4 py-2 mb-4
-                                                    bg-slate-700 text-gray-100
-                                                    rounded-md border border-red-500
-                                                    hover:bg-slate-600 hover:border-red-400 cursor-pointer
-                                                    transition inline-block text-center">
-                                                Remove Module
-                                            </a>
-
-                                        </div>
-
-                                        {{-- Required Signatures --}}
-                                        <div class="mt-4 border-t border-gray-700 pt-4">
-
-                                            <div class="mb-3 font-semibold text-gray-200">
-                                                Required Signatures
-                                            </div>
-
-                                            <div class="grid grid-cols-2 gap-3 md:grid-cols-3">
-
-                                                @foreach ($signerRoles as $role => $label)
-                                                    <label class="flex items-center gap-2 text-gray-300">
-
-                                                        <input type="checkbox" value="{{ $role }}"
-                                                            wire:model="parts.{{ $partIndex }}.modules.{{ $moduleIndex }}.signoff_requirements"
-                                                            class="rounded border-gray-600">
-
-                                                        <span>
-                                                            {{ $label }}
-                                                        </span>
+                                                        Module Type
 
                                                     </label>
-                                                @endforeach
 
-                                            </div>
+                                                    <select
+                                                        wire:model.live="parts.{{ $partIndex }}.modules.{{ $moduleIndex }}.module_type"
+                                                        class="{{ $inputClass }}">
 
-                                        </div>
+                                                        <option value="">
+                                                            Select module type
+                                                        </option>
+
+                                                        <option value="paragraph">
+                                                            Paragraph
+                                                        </option>
+
+                                                        <option value="media">
+                                                            Media
+                                                        </option>
+
+                                                        <option value="form">
+                                                            Form
+                                                        </option>
+
+                                                        <option value="checklist">
+                                                            Checklist
+                                                        </option>
+
+                                                        <option value="sop_checklist">
+                                                            SOP Checklist
+                                                        </option>
+
+                                                        <option value="test">
+                                                            Test
+                                                        </option>
+
+                                                        <option value="evaluation">
+                                                            Evaluation
+                                                        </option>
+
+                                                    </select>
+
+                                                    @error("parts.$partIndex.modules.$moduleIndex.module_type")
+                                                        <p class="text-xs text-red-400">
+                                                            {{ $message }}
+                                                        </p>
+                                                    @enderror
+
+                                                </div>
 
 
-                                        {{-- Insert Between Modules --}}
-                                        @unless ($loop->last)
-                                            <div class="flex justify-center border-t border-gray-800 pt-3">
+                                                {{-- Existing Module --}}
+                                                <div class="space-y-1">
 
-                                                <a wire:click="insertModuleAfter({{ $partIndex }}, {{ $moduleIndex }})"
-                                                    class="px-4 py-2
-                                                        bg-slate-700 text-gray-100
-                                                        rounded-md border border-purple-500
-                                                        hover:bg-slate-600 hover:border-purple-400 cursor-pointer
-                                                        transition inline-block text-center">
-                                                    + Insert Module
+                                                    <label
+                                                        class="block text-xs font-medium
+                                       uppercase tracking-wide text-gray-500">
+
+                                                        Module
+
+                                                    </label>
+
+                                                    @php
+                                                        $selectedType = $module['module_type'] ?? '';
+
+                                                        $modulesForType = $availableModules[$selectedType] ?? [];
+                                                    @endphp
+
+                                                    <select
+                                                        wire:model="parts.{{ $partIndex }}.modules.{{ $moduleIndex }}.module_id"
+                                                        class="{{ $inputClass }}" @disabled(!$selectedType)>
+
+                                                        @if (!$selectedType)
+                                                            <option value="">
+                                                                Select a module type first
+                                                            </option>
+                                                        @elseif (empty($modulesForType))
+                                                            <option value="">
+                                                                No modules available
+                                                            </option>
+                                                        @else
+                                                            <option value="">
+                                                                Select module
+                                                            </option>
+
+                                                            @foreach ($modulesForType as $availableModule)
+                                                                <option value="{{ $availableModule['id'] }}">
+                                                                    {{ $availableModule['title'] }}
+                                                                </option>
+                                                            @endforeach
+                                                        @endif
+
+                                                    </select>
+
+                                                    @error("parts.$partIndex.modules.$moduleIndex.module_id")
+                                                        <p class="text-xs text-red-400">
+                                                            {{ $message }}
+                                                        </p>
+                                                    @enderror
+
+                                                </div>
+
+
+                                                {{-- Remove Module --}}
+                                                <a wire:click="removeModule({{ $partIndex }}, {{ $moduleIndex }})"
+                                                    title="Remove Module"
+                                                    class="inline-flex h-10 cursor-pointer
+                                   items-center justify-center
+                                   rounded-md border border-red-500
+                                   bg-slate-700 px-3
+                                   text-sm text-gray-300
+                                   transition
+                                   hover:border-red-400
+                                   hover:bg-red-950/40
+                                   hover:text-white">
+
+                                                    Remove
+
                                                 </a>
 
                                             </div>
-                                        @endunless
 
-                                    </div>
 
-                                @empty
+                                            {{-- Required Signatures --}}
+                                            <div class="border-t border-gray-800 px-3 py-3">
 
-                                    <p
-                                        class="rounded-xl border border-dashed border-gray-700 p-4 text-sm text-gray-400">
-                                        No modules have been added to this part.
-                                    </p>
-                                @endforelse
-                                <a wire:click="addModule({{ $partIndex }})"
-                                    class="px-4 py-2 mb-4
-                                            bg-slate-700 text-gray-100
-                                            rounded-md border border-green-500
-                                            hover:bg-slate-600 hover:border-green-400 cursor-pointer
-                                            transition inline-block text-center">
-                                    Add Module
-                                </a>
+                                                <div class="flex items-start gap-6">
+
+                                                    <div class="shrink-0">
+
+                                                        <div
+                                                            class="text-xs font-semibold
+                                           uppercase tracking-wide
+                                           text-gray-500">
+
+                                                            Required Signatures
+
+                                                        </div>
+
+                                                    </div>
+
+
+                                                    <div class="flex flex-wrap items-center gap-x-6 gap-y-2">
+
+                                                        @foreach ($signerRoles as $role => $label)
+                                                            <label
+                                                                class="flex cursor-pointer
+                                               items-center gap-2
+                                               text-sm text-gray-300">
+
+                                                                <input type="checkbox" value="{{ $role }}"
+                                                                    wire:model="parts.{{ $partIndex }}.modules.{{ $moduleIndex }}.signoff_requirements"
+                                                                    class="h-4 w-4 rounded
+                                                   border-gray-600
+                                                   bg-gray-900">
+
+                                                                <span>
+                                                                    {{ $label }}
+                                                                </span>
+
+                                                            </label>
+                                                        @endforeach
+
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+
+
+                                            {{-- Insert Between Modules --}}
+                                            @unless ($loop->last)
+                                                <div
+                                                    class="flex justify-center
+                                   border-t border-gray-800
+                                   px-3 py-2">
+
+                                                    <a wire:click="insertModuleAfter({{ $partIndex }}, {{ $moduleIndex }})"
+                                                        class="cursor-pointer
+                                       text-xs text-gray-500
+                                       transition
+                                       hover:text-gray-300">
+
+                                                        + Insert Module Below
+
+                                                    </a>
+
+                                                </div>
+                                            @endunless
+
+                                        </div>
+
+                                    @empty
+
+                                        <div
+                                            class="rounded-lg border border-dashed
+                           border-gray-700
+                           px-4 py-6 text-center">
+
+                                            <p class="text-sm text-gray-500">
+                                                No modules have been added to this part.
+                                            </p>
+
+                                            <a wire:click="addModule({{ $partIndex }})"
+                                                class="mt-2 inline-block cursor-pointer
+                               text-sm text-blue-400
+                               hover:text-blue-300">
+
+                                                + Add the first module
+
+                                            </a>
+
+                                        </div>
+                                    @endforelse
+
+                                </div>
+
+
+                                {{-- Bottom Add Module --}}
+                                @if (!empty($part['modules']))
+                                    <a wire:click="addModule({{ $partIndex }})"
+                                        class="block cursor-pointer rounded-md
+                       border border-dashed border-gray-700
+                       bg-transparent px-4 py-2
+                       text-center text-sm text-gray-500
+                       transition
+                       hover:border-gray-600
+                       hover:bg-gray-800/40
+                       hover:text-gray-300">
+
+                                        + Add Another Module
+
+                                    </a>
+                                @endif
+
                             </div>
+
                         </div>
+
                     </details>
 
                     @unless ($loop->last)
