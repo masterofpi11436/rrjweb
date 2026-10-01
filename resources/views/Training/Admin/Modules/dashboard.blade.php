@@ -6,23 +6,25 @@
 
 @section('content')
 
-    <a href="{{ route('training.admin.books.dashboard') }}"
-        class="px-4 py-2 mb-4
-                   bg-slate-700 text-gray-100
-                   rounded-md border border-slate-500
-                   hover:bg-slate-600 hover:border-slate-400
-                   transition inline-block text-center">
-        Back To Dasboard
-    </a>
+    {{-- Top Actions --}}
+    <div class="mb-6 flex flex-wrap items-center gap-3">
 
-    <a href="{{ route('training.admin.modules.categories.index') }}"
-        class="px-4 py-2 mb-4
-           bg-slate-700 text-gray-100
-           rounded-md border border-blue-500
-           hover:bg-slate-600 hover:border-blue-400
-           cursor-pointer transition inline-block text-center">
-        Manage Categories
-    </a>
+        <a href="{{ route('training.admin.books.dashboard') }}"
+            class="inline-flex items-center rounded-md border border-slate-500
+                   bg-slate-700 px-4 py-2 text-sm font-medium text-gray-100
+                   transition hover:border-slate-400 hover:bg-slate-600">
+            Back To Dashboard
+        </a>
+
+        <a href="{{ route('training.admin.modules.categories.index') }}"
+            class="inline-flex items-center rounded-md border border-blue-500
+                   bg-slate-700 px-4 py-2 text-sm font-medium text-gray-100
+                   transition hover:border-blue-400 hover:bg-slate-600">
+            Manage Categories
+        </a>
+
+    </div>
+
 
     {{-- Module Filters --}}
     <div class="mb-6 rounded-xl border border-gray-700 bg-gray-900 p-4">
@@ -33,16 +35,14 @@
             <div class="flex-1">
 
                 <label for="category" class="mb-2 block text-sm font-medium text-gray-200">
-
                     Filter by Category
-
                 </label>
 
                 <select id="category" name="category"
                     class="w-full rounded-lg border border-gray-600
-                       bg-gray-800 px-4 py-2.5 text-white
-                       focus:border-blue-500 focus:outline-none
-                       focus:ring-2 focus:ring-blue-500/30">
+                           bg-gray-800 px-4 py-2.5 text-white
+                           focus:border-blue-500 focus:outline-none
+                           focus:ring-2 focus:ring-blue-500/30">
 
                     <option value="">
                         All Categories
@@ -50,9 +50,7 @@
 
                     @foreach ($categories as $category)
                         <option value="{{ $category->id }}" @selected($selectedCategory == $category->id)>
-
                             {{ $category->name }}
-
                         </option>
                     @endforeach
 
@@ -61,26 +59,19 @@
             </div>
 
             <button type="submit"
-                class="px-4 py-2.5
-                   bg-slate-700 text-gray-100
-                   rounded-md border border-blue-500
-                   hover:bg-slate-600 hover:border-blue-400
-                   cursor-pointer transition">
-
+                class="rounded-md border border-blue-500 bg-slate-700
+                       px-4 py-2.5 text-sm font-medium text-gray-100
+                       transition hover:border-blue-400 hover:bg-slate-600">
                 Apply Filter
-
             </button>
 
             @if ($selectedCategory)
                 <a href="{{ route('training.admin.modules.dashboard') }}"
-                    class="px-4 py-2.5
-                       bg-slate-700 text-gray-100
-                       rounded-md border border-gray-600
-                       hover:bg-slate-600 hover:border-gray-500
-                       cursor-pointer transition inline-block text-center">
-
+                    class="inline-flex items-center justify-center rounded-md
+                           border border-gray-600 bg-slate-700 px-4 py-2.5
+                           text-sm font-medium text-gray-100 transition
+                           hover:border-gray-500 hover:bg-slate-600">
                     Clear Filter
-
                 </a>
             @endif
 
@@ -88,7 +79,9 @@
 
     </div>
 
-    <div class="space-y-8">
+
+    {{-- Module Type Cards --}}
+    <div class="grid grid-cols-1 gap-6 xl:grid-cols-2">
 
         @include('Training.Admin.Modules.partials.module-section', [
             'title' => 'Paragraph Modules',
@@ -159,5 +152,7 @@
             'destroyRouteName' => 'training.admin.modules.tests.destroy',
             'emptyMessage' => 'No test modules have been created.',
         ])
+
     </div>
+
 @endsection
