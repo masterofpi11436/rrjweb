@@ -8,20 +8,11 @@ Camera Schedule:
     4. Add IP rules for camera, encoder, and TSC subnets
 
 Training Tracker:
-    1. Modules
-        a. Need Evaluation module for different HUs
-        b. Paragraph needs alphabetical list. Make paragprapgh section with paragraphs inside and insert/add paragraph buttons
-        c. Checklist need broken down section/grouping with the different line items.
-        d. SOP Checklist needs same breakdown grouping as checklists
+    1.
 
-Policy builder:
-
-    1. Move Create Nested Bullet to the left
-    2. Put Remove Paragraph button above the textarea
-    3. Fix ACA table for pdf creation.
 
 *** Future App Ideas ***
-Simple Inventory App:
+Simple Weapon Inventory App:
 
     1. 1D barcode created for scanning items to conduct a periodic inventory.
     2. 2 tables:
@@ -34,93 +25,3 @@ Down or Out App:
     1. Scan a barcode on ID for logging people who are checked in or Out
     2. Admin perform CRUD on People who can log in or Out
     3. User can edit if person in logged in or out manually
-
-Green button:
-
-class="px-4 py-2
-                   bg-slate-700 text-gray-100
-                   rounded-md border border-green-500
-                   hover:bg-slate-600 hover:border-green-400 cursor-pointer
-                   transition inline-block text-center"
-
-
-Red Button:
-
-class="px-4 py-2
-                   bg-slate-700 text-gray-100
-                   rounded-md border border-red-500
-                   hover:bg-slate-600 hover:border-red-400 cursor-pointer
-                   transition inline-block text-center"
-
-
-Blue Button:
-
-class="px-4 py-2
-                   bg-slate-700 text-gray-100
-                   rounded-md border border-blue-500
-                   hover:bg-slate-600 hover:border-blue-400 cursor-pointer
-                   transition inline-block text-center"
-
-Purple Button:
-
-class="px-4 py-2
-                   bg-slate-700 text-gray-100
-                   rounded-md border border-purple-500
-                   hover:bg-slate-600 hover:border-purple-400 cursor-pointer
-                   transition inline-block text-center"
-
-Flash message:
-
-public ?string $flashMessage = null;
-
-$this->flashMessage = $wasEditing
-            ? 'Paragraph module updated successfully.'
-            : 'Paragraph module created successfully.';
-
-    @if ($flashMessage)
-        <div x-data="{ show: false }" x-init="setTimeout(() => show = true, 50);
-
-        setTimeout(() => {
-            show = false;
-
-            setTimeout(() => {
-                $wire.set('flashMessage', null);
-            }, 300);
-        }, 2000);" x-show="show"
-            x-transition:enter="transition ease-out duration-300" x-transition:enter-start="translate-x-full opacity-0"
-            x-transition:enter-end="translate-x-0 opacity-100" x-transition:leave="transition ease-in duration-300"
-            x-transition:leave-start="translate-x-0 opacity-100" x-transition:leave-end="translate-x-full opacity-0"
-            class="fixed top-5 right-5 z-50 w-full max-w-md
-               rounded-lg border border-green-600
-               bg-gray-900 px-5 py-4 text-sm text-gray-200 shadow-lg">
-            <div class="flex items-center justify-between gap-4">
-
-                <div class="flex items-center gap-3">
-
-                    <div
-                        class="flex h-8 w-8 shrink-0 items-center justify-center
-                            rounded-full bg-green-500/10 text-green-400">
-                        ✓
-                    </div>
-
-                    <div>
-                        <p class="font-semibold text-green-400">
-                            Success
-                        </p>
-
-                        <p class="mt-0.5 text-gray-300">
-                            {{ $flashMessage }}
-                        </p>
-                    </div>
-
-                </div>
-
-                <button type="button" @click="show = false"
-                    class="rounded-md px-2 py-1 text-xl text-gray-400
-                       hover:bg-gray-800 hover:text-white transition">
-                    &times;
-                </button>
-
-            </div>
-        </div>
-    @endif
