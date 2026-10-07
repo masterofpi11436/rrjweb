@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Training\Trainee;
 
 use App\Http\Controllers\Controller;
 use App\Models\Training\TrainingBookAssignment;
+use App\Models\Training\TrainingBookPartModule;
 use Illuminate\Support\Facades\Auth;
 
 class TrainingTraineeBookController extends Controller
@@ -22,7 +23,6 @@ class TrainingTraineeBookController extends Controller
         );
     }
 
-
     public function show(TrainingBookAssignment $assignment)
     {
         abort_unless(
@@ -38,6 +38,28 @@ class TrainingTraineeBookController extends Controller
         return view('Training.Trainee.Book.show', [
             'assignment' => $assignment,
             'book' => $assignment->book,
+        ]);
+    }
+
+    public function showModule(TrainingBookAssignment $assignment, TrainingBookPartModule $bookModule) {
+
+        abort_unless(
+            $assignment->user_id === Auth::id(),
+            403
+        );
+
+
+        abort_unless(
+            $bookModule->bookPart->book_id === $assignment->book_id,
+            404
+        );
+
+        $bookModule->load('module');
+
+        return view('Training.Trainee.Book.show-module', [
+            'assignment' => $assignment,
+            'bookModule' => $bookModule,
+            'module' => $bookModule->module,
         ]);
     }
 

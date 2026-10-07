@@ -48,13 +48,6 @@
                                 {{ $assignment->assigned_at?->format('F j, Y') }}
                             </p>
 
-                            @if ($assignment->due_date)
-                                <p class="mt-1 text-sm text-gray-400">
-                                    Due:
-                                    {{ $assignment->due_date->format('F j, Y') }}
-                                </p>
-                            @endif
-
                         </div>
 
 

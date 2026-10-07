@@ -38,18 +38,6 @@
 
                 </div>
 
-                @if ($assignment->due_date)
-                    <div class="text-sm text-gray-400">
-
-                        Due:
-
-                        <span class="font-medium text-gray-200">
-                            {{ $assignment->due_date->format('F j, Y') }}
-                        </span>
-
-                    </div>
-                @endif
-
             </div>
 
         </div>
@@ -90,10 +78,15 @@
 
                             </div>
 
-                            <div>
-                                <span class="text-sm text-blue-400">
-                                    View Training &rarr;
-                                </span>
+                            <div class="shrink-0">
+                                <a href="{{ route('training.trainee.book.show_module', [
+                                    'assignment' => $assignment->id,
+                                    'bookModule' => $bookModule->id,
+                                ]) }}"
+                                    class="text-sm font-medium text-blue-400
+                                        hover:text-blue-300 transition">
+                                    View Training →
+                                </a>
                             </div>
 
                         </div>

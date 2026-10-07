@@ -65,35 +65,6 @@
 
         </div>
 
-
-        {{-- Current Training --}}
-        <section>
-
-            <div class="mb-4">
-                <h2 class="text-lg font-semibold text-white">
-                    Current Training
-                </h2>
-
-                <p class="mt-1 text-sm text-gray-400">
-                    Your active training assignments.
-                </p>
-            </div>
-
-
-            <div class="overflow-hidden rounded-xl border border-gray-800 bg-gray-900">
-
-                <div class="p-6">
-
-                    <p class="text-sm text-gray-400">
-                        Your assigned training will appear here.
-                    </p>
-
-                </div>
-
-            </div>
-
-        </section>
-
     </div>
 
 @endsection

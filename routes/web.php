@@ -634,6 +634,11 @@ Route::prefix('training')->group(function () use ($traingingLoginClass, $trainin
                     'show'
                 ])->name('training.trainee.book.show');
 
+                Route::get(
+                    '/trainee/book/{assignment}/module/{bookModule}',
+                    [TrainingTraineeBookController::class, 'showModule']
+                )->name('training.trainee.book.show_module');
+
             });
 
 

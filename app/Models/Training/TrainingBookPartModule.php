@@ -4,6 +4,7 @@ namespace App\Models\Training;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class TrainingBookPartModule extends Model
 {
@@ -29,6 +30,14 @@ class TrainingBookPartModule extends Model
     public function module()
     {
         return $this->morphTo();
+    }
+
+    public function bookPart(): BelongsTo
+    {
+        return $this->belongsTo(
+            TrainingBookPart::class,
+            'book_part_id'
+        );
     }
 
     public function signoffRequirements()
