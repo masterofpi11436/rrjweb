@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Oct 05, 2026 at 09:03 PM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- Host: 127.0.0.1
+-- Generation Time: Oct 07, 2026 at 04:54 PM
+-- Server version: 10.4.28-MariaDB
+-- PHP Version: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -1172,10 +1172,10 @@ CREATE TABLE `training_book_part_module_form_documents` (
 --
 
 INSERT INTO `training_book_part_module_form_documents` (`id`, `form_module_id`, `title`, `file_path`, `original_file_name`, `file_size`, `sort_order`, `created_at`, `updated_at`) VALUES
-(1, 1, 'EXPECTATION SPEECH', 'training/forms/tZ8UMhHo6VXLvxprNipiM9qKeh5WItWSKPK8zNE9.pdf', 'EXPECTATION SPEECH.pdf', 273628, 0, '2026-10-05 17:40:28', '2026-10-05 17:40:28'),
-(2, 1, 'f139c', 'training/forms/U11U5DxLiG2KoehhrNSuv9h9g2HWrWm7lPJZRequ.pdf', 'f139c.pdf', 110999, 1, '2026-10-05 17:40:28', '2026-10-05 17:40:28'),
-(3, 1, 'f214', 'training/forms/9V7IoQ6LUieD85p9JultWvTiNLkCx1uJpsSFXTru.pdf', 'f214.pdf', 191822, 2, '2026-10-05 17:40:28', '2026-10-05 17:40:28'),
-(4, 1, 'f270b', 'training/forms/xFlvfxKSVsD6HexvEdA6mdKeLVhKrQwOZtbigkKq.pdf', 'f270b.pdf', 71261, 3, '2026-10-05 17:40:28', '2026-10-05 17:40:28');
+(5, 1, 'EXPECTATION SPEECH', 'training/forms/AtySNp1qrAvgnuidKedR7pi3J8xlNuX2bpLtjzpI.pdf', 'EXPECTATION SPEECH.pdf', 273628, 1, '2026-10-05 19:25:30', '2026-10-05 19:25:30'),
+(6, 1, 'f139c', 'training/forms/y5BO7JukJdOwuoFWsjUGm35PNEEZUFe1kHPHgSf2.pdf', 'f139c.pdf', 110999, 2, '2026-10-05 19:25:30', '2026-10-05 19:25:30'),
+(7, 1, 'f214', 'training/forms/93lR2HG9RWDWBwvbfO2w0het6hMjGevf4hSDZJgD.pdf', 'f214.pdf', 191822, 3, '2026-10-05 19:25:30', '2026-10-05 19:25:30'),
+(8, 1, 'f270b', 'training/forms/keyOrWlWALc4UYGDVm4WS2jj11AOclZrzYznh5Ip.pdf', 'f270b.pdf', 71261, 4, '2026-10-05 19:25:30', '2026-10-05 19:25:30');
 
 -- --------------------------------------------------------
 
@@ -1252,12 +1252,12 @@ CREATE TABLE `training_book_part_module_paragraph_contents` (
 --
 
 INSERT INTO `training_book_part_module_paragraph_contents` (`id`, `section_id`, `content`, `sort_order`, `created_at`, `updated_at`) VALUES
-(1, 1, 'The initial Orientation begins with Human Resources providing and collecting information on\nthe following: Personnel Forms, Job Descriptions and/or Post Orders, taking the Oath of Duties,\nsigning the Code of Ethics, Facility Tour, Staff Identification, and Uniform/Equipment Issue.', 0, '2026-10-05 16:13:56', '2026-10-05 16:13:56'),
-(2, 1, 'A copy of the Employee Handbook will be given to all during the process for all new employees\nand must be completed prior to the officer being assigned to a post. All new employees and\nHuman Resources will sign and date Policy Number 1.18, “Employee Handbook,” on the\nAcceptance and Acknowledgement Form, indicating they have received Orientation. Human\nResources will forward this packet and any additional information to the Training Department.', 1, '2026-10-05 16:13:56', '2026-10-05 16:13:56'),
+(1, 1, 'The initial Orientation begins with Human Resources providing and collecting information on the following: Personnel Forms, Job Descriptions and/or Post Orders, taking the Oath of Duties, signing the Code of Ethics, Facility Tour, Staff Identification, and Uniform/Equipment Issue.', 0, '2026-10-05 16:13:56', '2026-10-06 11:11:05'),
+(2, 1, 'A copy of the Employee Handbook will be given to all during the process for all new employees and must be completed prior to the officer being assigned to a post. All new employees and Human Resources will sign and date Policy Number 1.18, “Employee Handbook,” on the Acceptance and Acknowledgement Form, indicating they have received Orientation. Human Resources will forward this packet and any additional information to the Training Department.', 1, '2026-10-05 16:13:56', '2026-10-06 11:11:05'),
 (3, 1, 'During their first 10 days of employment, Training Staff will discuss Hazardous Materials, Infectious Diseases,  Blood and Bodily Fluid Protection, Rules of Conduct, Sexual Harassment, Cultural Diversity, Ethics in Corrections, and Universal Health Precautions.', 2, '2026-10-05 16:13:56', '2026-10-05 16:13:56'),
 (4, 2, 'Field Training: A structured On-The-Job Training and evaluation for any newly hired or recently transferred employee from another division within the facility.', 0, '2026-10-05 16:13:56', '2026-10-05 16:13:56'),
 (5, 2, 'Field Training Officer: An experienced and qualified Jail Officer assigned to properly train and evaluate Trainees in their newly appointed assignments. The title Field Training Officer (FTO) refers to a designated post assignment within the Riverside Regional Jail and not a rank. Once selected he or she will be referred to as an FTO and will assume an active role only when assigned a Trainee. When a FTO is not currently assigned a Trainee, he or she may retain the title of FTO but shall perform other required duties as assigned.', 1, '2026-10-05 16:13:56', '2026-10-05 16:13:56'),
-(6, 2, 'Trainee: Any newly hired or recently transferred employee requiring On-The-Job Training and\ncurrently assigned to an FTO or Senior Officer.', 2, '2026-10-05 16:13:56', '2026-10-05 16:13:56'),
+(6, 2, 'Trainee: Any newly hired or recently transferred employee requiring On-The-Job Training and currently assigned to an FTO or Senior Officer.', 2, '2026-10-05 16:13:56', '2026-10-06 11:14:39'),
 (7, 2, 'Remedial Training: Any training provided in the form of one-on-one counseling, classroom instruction, and/or field training that is in addition to the regularly scheduled instruction.', 3, '2026-10-05 16:13:56', '2026-10-05 16:13:56'),
 (8, 3, 'The goal of the Field Training Program is to establish a structured On-The-Job Training System. This program will continually provide the Riverside Regional Jail with sufficiently trained employees who can safely and competently perform all assigned duties. Furthermore, it is the goal of the training program that after four to six weeks of field training, the Trainee will be proficient enough to perform the duties of a Jail Officer for the Riverside Regional Jail on his/her own.', 0, '2026-10-05 16:13:56', '2026-10-05 16:13:56'),
 (9, 3, 'All new Jail Officers will be trained in two major steps: Field and Academy Training. Each Trainee will successfully complete minimum standards training (400) hours at a Basic Jailor Academy as mandated by the Department of Criminal Justice Services. Initial Field Training will include (80) hours new employee orientation training in a classroom environment. New Officers will also complete a minimum of (80) hours training in their assigned area for a total of (160) hours.', 1, '2026-10-05 16:13:56', '2026-10-05 16:13:56'),
@@ -2450,7 +2450,7 @@ ALTER TABLE `training_book_part_module_forms`
 -- AUTO_INCREMENT for table `training_book_part_module_form_documents`
 --
 ALTER TABLE `training_book_part_module_form_documents`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `training_book_part_module_media`
