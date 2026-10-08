@@ -1,0 +1,26 @@
+sudo nano /etc/systemd/system/controller.service
+
+Paste in:
+
+[Unit]
+Description=Raspberry Pi Water Valve Controller
+After=multi-user.target
+
+[Service]
+Type=simple
+User=pi
+WorkingDirectory=/home/pi/Desktop
+ExecStart=/usr/bin/python3 -u /home/pi/Desktop/controller.py
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
+
+run these commands:
+sudo systemctl daemon-reload
+sudo systemctl enable controller.service
+sudo systemctl start controller.service
+
+Step 4: Verify that it works
+
