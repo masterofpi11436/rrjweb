@@ -10,7 +10,7 @@
 
         {{-- Back --}}
         <div>
-            <a href="{{ route('training.trainee.book.index', $assignment->id) }}"
+            <a href="{{ route('training.trainee.book.show', $assignment->id) }}"
                 class="px-4 py-2
                        bg-slate-700 text-gray-100
                        rounded-md border border-gray-500
