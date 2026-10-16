@@ -14,10 +14,19 @@ WATER_RUN_TIME = 30
 FLUSH_RUN_TIME = 2
 
 DEFAULT_FLUSH_LIMIT = 3
+DEFAULT_WATER_LIMIT = 4
+
 FLUSH_WINDOW = 60 * 60
+WATER_WINDOW = 60 * 60
 
 cell_1_flush_limit = DEFAULT_FLUSH_LIMIT
 cell_2_flush_limit = DEFAULT_FLUSH_LIMIT
+
+cell_1_hot_limit = DEFAULT_WATER_LIMIT
+cell_1_cold_limit = DEFAULT_WATER_LIMIT
+
+cell_2_hot_limit = DEFAULT_WATER_LIMIT
+cell_2_cold_limit = DEFAULT_WATER_LIMIT
 
 
 # --------------------------------------------------
@@ -115,6 +124,67 @@ for relay in all_relays:
     }
 
 # --------------------------------------------------
+# HOURLY WATER TRACKING
+# --------------------------------------------------
+
+water_history = {
+    1: {
+        "hot": deque(),
+        "cold": deque()
+    },
+    2: {
+        "hot": deque(),
+        "cold": deque()
+    }
+}
+
+water_locks = {
+    1: {
+        "hot": Lock(),
+        "cold": Lock()
+    },
+    2: {
+        "hot": Lock(),
+        "cold": Lock()
+    }
+}
+
+
+def activate_water(cell_number, water_type, relay, enabled, limit):
+
+    if not enabled:
+        print(f"Cell {cell_number} is disabled.")
+        return
+
+    with water_locks[cell_number][water_type]:
+
+        now = monotonic()
+
+        history = water_history[cell_number][water_type]
+
+        # Remove activations older than 60 minutes
+        while history and now - history[0] >= WATER_WINDOW:
+            history.popleft()
+
+        if len(history) >= limit:
+            print(
+                f"Cell {cell_number}: "
+                f"Hourly {water_type} water limit reached."
+            )
+            return
+
+        # Only count when relay successfully activates
+        if activate_relay(relay, WATER_RUN_TIME, enabled):
+
+            history.append(now)
+
+            print(
+                f"Cell {cell_number}: "
+                f"{water_type.capitalize()} water "
+                f"{len(history)}/{limit} activations used."
+            )
+
+# --------------------------------------------------
 # HOURLY FLUSH TRACKING
 # --------------------------------------------------
 
@@ -203,41 +273,27 @@ def activate_relay(relay, duration, cell_enabled):
                 state["active"] = False
             raise
 
-    def stop_relay():
-
-        with state["lock"]:
-            try:
-                relay.off()
-            finally:
-                state["active"] = False
-
-    try:
-        timer = Timer(duration, stop_relay)
-        timer.daemon = True
-        timer.start()
-
-    except Exception:
-        stop_relay()
-        raise
-
-
 # --------------------------------------------------
 # CELL 1
 # --------------------------------------------------
 
 def cell_1_hot():
-    activate_relay(
+    activate_water(
+        1,
+        "hot",
         cell_1_hot_relay,
-        WATER_RUN_TIME,
-        cell_1_enabled
+        cell_1_enabled,
+        cell_1_hot_limit
     )
 
 
 def cell_1_cold():
-    activate_relay(
+    activate_water(
+        1,
+        "cold",
         cell_1_cold_relay,
-        WATER_RUN_TIME,
-        cell_1_enabled
+        cell_1_enabled,
+        cell_1_cold_limit
     )
 
 
@@ -255,18 +311,22 @@ def cell_1_flush():
 # --------------------------------------------------
 
 def cell_2_hot():
-    activate_relay(
+    activate_water(
+        2,
+        "hot",
         cell_2_hot_relay,
-        WATER_RUN_TIME,
-        cell_2_enabled
+        cell_2_enabled,
+        cell_2_hot_limit
     )
 
 
 def cell_2_cold():
-    activate_relay(
+    activate_water(
+        2,
+        "cold",
         cell_2_cold_relay,
-        WATER_RUN_TIME,
-        cell_2_enabled
+        cell_2_enabled,
+        cell_2_cold_limit
     )
 
 
