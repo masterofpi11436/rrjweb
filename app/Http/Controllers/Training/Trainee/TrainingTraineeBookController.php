@@ -54,12 +54,20 @@ class TrainingTraineeBookController extends Controller
             404
         );
 
-        $bookModule->load('module');
+        $bookModule->load([
+            'module.groups.items',
+        ]);
+
+        $assignmentModule = $assignment->modules()
+            ->where('book_part_module_id', $bookModule->id)
+            ->with('items.signoffs.requirement')
+            ->firstOrFail();
 
         return view('Training.Trainee.Book.show-module', [
             'assignment' => $assignment,
             'bookModule' => $bookModule,
             'module' => $bookModule->module,
+            'assignmentModule' => $assignmentModule,
         ]);
     }
 

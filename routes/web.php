@@ -1,67 +1,58 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-
-// Login Controllers
-
-use App\Http\Controllers\Login\VFMLoginController;
-use App\Http\Controllers\Login\BaseLoginController;
-use App\Http\Controllers\Login\AdminLoginController;
-use App\Http\Controllers\Login\PhoneLoginController;
-use App\Http\Controllers\Login\CameraLoginController;
-use App\Http\Controllers\Login\VFMTechLoginController;
-use App\Http\Controllers\Login\PolicyLoginController;
-use App\Http\Controllers\Login\WarehouseLoginController;
-use App\Http\Controllers\Login\JurisdictionLoginController;
-use App\Http\Controllers\Login\TrainingLoginController;
-
-// Class Controllers
-
-use App\Http\Controllers\Navix\NavixSceneController;
-use App\Http\Controllers\VFM\VFMTechVehicleController;
-use App\Http\Controllers\VFM\VFMController;
-use App\Http\Controllers\VFM\VFMTechController;
-use App\Http\Controllers\VFM\VFMVehicleController;
-use App\Http\Controllers\Policy\PolicyController;
+use App\Http\Controllers\Administrator\AdministratorController;
 use App\Http\Controllers\Camera\CameraController;
-use App\Http\Controllers\Policy\BuilderController;
 use App\Http\Controllers\Directory\PhoneDirectoryController;
 use App\Http\Controllers\Jurisdiction\JurisdictionController;
-use App\Http\Controllers\Administrator\AdministratorController;
+use App\Http\Controllers\Login\AdminLoginController;
+use App\Http\Controllers\Login\BaseLoginController;
+use App\Http\Controllers\Login\CameraLoginController;
+use App\Http\Controllers\Login\JurisdictionLoginController;
+use App\Http\Controllers\Login\PhoneLoginController;
+use App\Http\Controllers\Login\PolicyLoginController;
+use App\Http\Controllers\Login\TrainingLoginController;
+use App\Http\Controllers\Login\VFMLoginController;
+use App\Http\Controllers\Login\VFMTechLoginController;
+use App\Http\Controllers\Login\WarehouseLoginController;
+use App\Http\Controllers\Navix\NavixSceneController;
+use App\Http\Controllers\Policy\BuilderController;
+use App\Http\Controllers\Policy\PolicyController;
+use App\Http\Controllers\Training\Admin\TrainingAdminController;
+use App\Http\Controllers\Training\Admin\TrainingAssignmentsController;
+use App\Http\Controllers\Training\Admin\TrainingBookController;
+use App\Http\Controllers\Training\Admin\TrainingChecklistModuleController;
+use App\Http\Controllers\Training\Admin\TrainingEvaluationModuleController;
+use App\Http\Controllers\Training\Admin\TrainingFormModuleController;
+use App\Http\Controllers\Training\Admin\TrainingMediaModuleController;
+use App\Http\Controllers\Training\Admin\TrainingModuleCategoriesController;
+use App\Http\Controllers\Training\Admin\TrainingModuleController;
+use App\Http\Controllers\Training\Admin\TrainingParagraphModuleController;
+use App\Http\Controllers\Training\Admin\TrainingSOPChecklistModuleController;
+use App\Http\Controllers\Training\Admin\TrainingTestModuleController;
+use App\Http\Controllers\Training\Admin\TrainingUserController;
+use App\Http\Controllers\Training\Trainee\TrainingTraineeBookController;
+use App\Http\Controllers\Training\Trainee\TrainingTraineeController;
+use App\Http\Controllers\Training\Trainee\TrainingTraineeSignoffController;
+use App\Http\Controllers\VFM\VFMController;
+use App\Http\Controllers\VFM\VFMTechController;
+use App\Http\Controllers\VFM\VFMTechVehicleController;
+use App\Http\Controllers\VFM\VFMVehicleController;
 use App\Http\Controllers\Warehouse\Property\PropertyController;
 use App\Http\Controllers\Warehouse\Requestor\RequestorController;
 use App\Http\Controllers\Warehouse\Supervisor\SupervisorController;
-use App\Http\Controllers\Warehouse\WarehouseSupervisor\ItemController;
-use App\Http\Controllers\Warehouse\WarehouseSupervisor\UserController;
+use App\Http\Controllers\Warehouse\WarehouseSupervisor\CategoryController;
+use App\Http\Controllers\Warehouse\WarehouseSupervisor\CreateExchangeOrderController;
+use App\Http\Controllers\Warehouse\WarehouseSupervisor\CreateOrderController;
 use App\Http\Controllers\Warehouse\WarehouseSupervisor\HistoryController;
+use App\Http\Controllers\Warehouse\WarehouseSupervisor\InventoryController;
+use App\Http\Controllers\Warehouse\WarehouseSupervisor\ItemController;
+use App\Http\Controllers\Warehouse\WarehouseSupervisor\PendingExchangeOrderController;
+use App\Http\Controllers\Warehouse\WarehouseSupervisor\PendingOrderController;
 use App\Http\Controllers\Warehouse\WarehouseSupervisor\ReportsController;
 use App\Http\Controllers\Warehouse\WarehouseSupervisor\SectionController;
-use App\Http\Controllers\Warehouse\WarehouseSupervisor\CategoryController;
-use App\Http\Controllers\Warehouse\WarehouseSupervisor\InventoryController;
-use App\Http\Controllers\Warehouse\WarehouseSupervisor\CreateOrderController;
-use App\Http\Controllers\Warehouse\WarehouseSupervisor\PendingOrderController;
-use App\Http\Controllers\Warehouse\WarehouseSupervisor\CreateExchangeOrderController;
+use App\Http\Controllers\Warehouse\WarehouseSupervisor\UserController;
 use App\Http\Controllers\Warehouse\WarehouseSupervisor\WarehouseSupervisorController;
-use App\Http\Controllers\Warehouse\WarehouseSupervisor\PendingExchangeOrderController;
-
-// Training Application Admin
-use App\Http\Controllers\Training\Admin\TrainingAdminController;
-use App\Http\Controllers\Training\Admin\TrainingUserController;
-use App\Http\Controllers\Training\Admin\TrainingModuleCategoriesController;
-use App\Http\Controllers\Training\Admin\TrainingAssignmentsController;
-use App\Http\Controllers\Training\Admin\TrainingBookController;
-use App\Http\Controllers\Training\Admin\TrainingModuleController;
-use App\Http\Controllers\Training\Admin\TrainingParagraphModuleController;
-use App\Http\Controllers\Training\Admin\TrainingFormModuleController;
-use App\Http\Controllers\Training\Admin\TrainingMediaModuleController;
-use App\Http\Controllers\Training\Admin\TrainingChecklistModuleController;
-use App\Http\Controllers\Training\Admin\TrainingSOPChecklistModuleController;
-use App\Http\Controllers\Training\Admin\TrainingTestModuleController;
-use App\Http\Controllers\Training\Admin\TrainingEvaluationModuleController;
-
-// Training Application Trainee
-use App\Http\Controllers\Training\Trainee\TrainingTraineeController;
-use App\Http\Controllers\Training\Trainee\TrainingTraineeBookController;
+use Illuminate\Support\Facades\Route;
 
 // Shorthand login Classes
 $baseLoginClass = BaseLoginController::class;
@@ -638,6 +629,11 @@ Route::prefix('training')->group(function () use ($traingingLoginClass, $trainin
                     '/trainee/book/{assignment}/module/{bookModule}',
                     [TrainingTraineeBookController::class, 'showModule']
                 )->name('training.trainee.book.show_module');
+
+                Route::post(
+                    '/book/{assignment}/checklist-item/{item}/sign',
+                    [TrainingTraineeSignoffController::class, 'signChecklistItem']
+                )->name('training.trainee.book.checklist.sign');
 
             });
 
