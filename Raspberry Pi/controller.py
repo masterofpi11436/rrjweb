@@ -75,13 +75,13 @@ cell_2_flush_button = Button(13, pull_up=True, bounce_time=0.05)
 # --------------------------------------------------
 
 cell_2_hot_relay = OutputDevice(
-    19,
+    16,
     active_high=False,
     initial_value=False
 )
 
 cell_2_cold_relay = OutputDevice(
-    26,
+    20,
     active_high=False,
     initial_value=False
 )
