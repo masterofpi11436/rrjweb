@@ -23,6 +23,18 @@
             <div class="divide-y divide-gray-800">
 
                 @forelse ($group->items as $index => $item)
+                    @php
+                        $assignmentItem = $assignmentModule->items->firstWhere('module_item_id', $item->id);
+
+                        $traineeSignoff = $assignmentItem?->signoffs?->first(function ($signoff) {
+                            return $signoff->requirement?->signer_role === 'trainee';
+                        });
+
+                        $ftoSignoff = $assignmentItem?->signoffs?->first(function ($signoff) {
+                            return $signoff->requirement?->signer_role === 'fto';
+                        });
+                    @endphp
+
                     <div class="flex items-start gap-4 px-6 py-5">
 
                         {{-- Item Number --}}
@@ -50,6 +62,7 @@
 
                         </div>
 
+
                         {{-- Trainee Sign Off --}}
                         <div class="min-w-[130px] text-center">
 
@@ -63,9 +76,9 @@
                                 </div>
 
                                 <p class="mt-1 text-xs text-gray-400">
-                                    {{ $traineeSignoff->signed_at->format('m/d/Y h:i A') }}
+                                    {{ $traineeSignoff->signed_at?->format('m/d/Y h:i A') }}
                                 </p>
-                            @else
+                            @elseif ($assignmentItem && $assignment->status !== 'completed')
                                 <form method="POST"
                                     action="{{ route('training.trainee.book.checklist.sign', [
                                         'assignment' => $assignment->id,
@@ -77,17 +90,21 @@
                                     <button type="submit"
                                         onclick="return confirm('Are you sure you want to sign off on this item?')"
                                         class="rounded-md border border-green-500 bg-green-700
-                                                px-4 py-2 text-sm font-medium text-white
-                                                transition hover:bg-green-600">
+                       px-4 py-2 text-sm font-medium text-white
+                       transition hover:bg-green-600">
 
                                         Sign Off
 
                                     </button>
+
                                 </form>
+                            @else
+                                <span class="text-sm text-gray-500">
+                                    Unavailable
+                                </span>
                             @endif
 
                         </div>
-
 
                         {{-- FTO Sign Off --}}
                         <div class="min-w-[130px] text-center">

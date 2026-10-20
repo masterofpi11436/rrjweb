@@ -41,32 +41,83 @@ class TrainingTraineeBookController extends Controller
         ]);
     }
 
-    public function showModule(TrainingBookAssignment $assignment, TrainingBookPartModule $bookModule) {
-
+    public function showModule(
+        TrainingBookAssignment $assignment,
+        TrainingBookPartModule $bookModule
+    ) {
+        // Verify the assignment belongs to the logged-in trainee.
         abort_unless(
-            $assignment->user_id === Auth::id(),
+            (int) $assignment->user_id === (int) Auth::id(),
             403
         );
 
-
+        // Verify the module belongs to the assigned book.
         abort_unless(
-            $bookModule->bookPart->book_id === $assignment->book_id,
+            (int) $bookModule->bookPart->book_id === (int) $assignment->book_id,
             404
         );
 
-        $bookModule->load([
-            'module.groups.items',
-        ]);
+        // Load the actual module model.
+        $bookModule->load('module');
 
+        $module = $bookModule->module;
+
+        abort_unless($module !== null, 404);
+
+        // Define relationships for each module type.
+        $relationships = match ($bookModule->module_type) {
+            'paragraph' => [
+                'sections',
+            ],
+
+            'checklist' => [
+                'groups.items',
+            ],
+
+            'sop_checklist' => [
+                'groups.items',
+            ],
+
+            'form' => [
+                'documents',
+            ],
+
+            'media' => [
+                'files',
+            ],
+
+            'test' => [
+                'questions',
+            ],
+
+            'evaluation' => [
+                'items',
+            ],
+
+            default => abort(404, 'Unsupported training module type.'),
+        };
+
+        // Load only relationships that exist on this module model.
+        foreach ($relationships as $relationship) {
+            $rootRelationship = explode('.', $relationship)[0];
+
+            if (method_exists($module, $rootRelationship)) {
+                $module->load($relationship);
+            }
+        }
+
+        // Load the trainee's assigned module and signatures.
         $assignmentModule = $assignment->modules()
             ->where('book_part_module_id', $bookModule->id)
-            ->with('items.signoffs.requirement')
+            ->with([
+                'items.signoffs.requirement',
+            ])
             ->firstOrFail();
 
         return view('Training.Trainee.Book.show-module', [
             'assignment' => $assignment,
             'bookModule' => $bookModule,
-            'module' => $bookModule->module,
+            'module' => $module,
             'assignmentModule' => $assignmentModule,
         ]);
     }
