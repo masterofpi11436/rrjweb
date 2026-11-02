@@ -32,45 +32,88 @@ class PolicyController extends Controller
 
     public function store(Request $request)
     {
-        // Validate the form inputs
+        // Allow additional processing time for large PDFs
+        set_time_limit(600);
+        ini_set('memory_limit', '1024M');
+
         $request->validate([
-            'pdfs.*' => 'required|mimes:pdf',
+            'pdfs' => 'required|array',
+            'pdfs.*' => 'required|file|mimes:pdf|max:153600',
         ]);
 
         if ($request->hasFile('pdfs')) {
+
             foreach ($request->file('pdfs') as $file) {
+
                 $originalName = $file->getClientOriginalName();
                 $baseName = pathinfo($originalName, PATHINFO_FILENAME);
-                $pdfFilePath = $file->storeAs('policies', $originalName, 'public');
 
-                // Extract text from the uploaded PDF
-                $parser = new Parser();
-                $pdf = $parser->parseFile(storage_path('app/public/' . $pdfFilePath));
-                $extractedText = $pdf->getText();
+                $pdfFilePath = $file->storeAs(
+                    'policies',
+                    $originalName,
+                    'public'
+                );
 
-                // Check for image based PDFs
-                if (strlen(trim($extractedText)) < 50) {
-                    Storage::disk('public')->delete($pdfFilePath);
-                    return redirect()->route('policy.upload')->with('create-edit-delete-message', "{$originalName} is an image-based PDF. Please upload a searchable (text-based) PDF.");
+                try {
+
+                    // Extract text from the uploaded PDF
+                    $parser = new Parser();
+
+                    $pdf = $parser->parseFile(
+                        Storage::disk('public')->path($pdfFilePath)
+                    );
+
+                    $extractedText = $pdf->getText();
+
+                    // Check for image-based PDFs
+                    if (strlen(trim($extractedText)) < 50) {
+
+                        Storage::disk('public')->delete($pdfFilePath);
+
+                        return redirect()
+                            ->route('policy.upload')
+                            ->with(
+                                'create-edit-delete-message',
+                                "{$originalName} is an image-based PDF. Please upload a searchable PDF."
+                            );
+                    }
+
+                    // Save extracted text
+                    $textFilePath = 'policies/text/' . $baseName . '.txt';
+
+                    Storage::disk('public')->put(
+                        $textFilePath,
+                        $extractedText
+                    );
+
+                    // Create policy record
+                    Policy::create([
+                        'title' => $baseName,
+                        'pdf' => $pdfFilePath,
+                        'text' => $textFilePath,
+                    ]);
+
+                } catch (\Throwable $e) {
+
+                    return redirect()
+                        ->route('policy.upload')
+                        ->withErrors([
+                            'pdfs' => "Failed to process {$originalName}."
+                        ]);
                 }
-
-                // Save extracted text to a .txt file
-                $textFilePath = 'policies/text/' . $baseName . '.txt';
-                Storage::disk('public')->put($textFilePath, $extractedText);
-
-                // Create the policy record in the database
-                Policy::create([
-                    'title' => $baseName, // Use the PDF file name (without extension) as the title
-                    'pdf' => $pdfFilePath, // Path to the uploaded PDF
-                    'text' => $textFilePath, // Path to the generated text file
-                ]);
             }
 
-            return redirect()->route('policy.dashboard')->with('create-edit-delete-message', 'PDFs uploaded and text extracted successfully!');
+            return redirect()
+                ->route('policy.dashboard')
+                ->with(
+                    'create-edit-delete-message',
+                    'PDFs uploaded and text extracted successfully!'
+                );
         }
 
-        // Handle the case where no files were uploaded
-        return redirect()->route('policy.dashboard')->withErrors('Failed to upload the PDFs.');
+        return redirect()
+            ->route('policy.dashboard')
+            ->withErrors('Failed to upload the PDFs.');
     }
 
     public function destroy($id)
