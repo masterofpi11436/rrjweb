@@ -62,9 +62,6 @@
 
                         </div>
 
-
-
-
                         {{-- Trainee Sign Off --}}
                         <div class="min-w-[150px] text-center">
 

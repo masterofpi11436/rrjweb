@@ -24,9 +24,14 @@ class TrainingTraineeSignoffController extends Controller
             403
         );
 
-        abort_unless($assignment->status !== 'completed', 403);
-
         DB::transaction(function () use ($assignment, $item) {
+
+            $assignment = TrainingBookAssignment::query()
+                ->whereKey($assignment->id)
+                ->lockForUpdate()
+                ->firstOrFail();
+
+            abort_unless($assignment->status !== 'completed', 403);
 
             $item = TrainingBookAssignmentModuleItem::query()
                 ->whereKey($item->id)
@@ -42,8 +47,8 @@ class TrainingTraineeSignoffController extends Controller
 
             $bookModule = $assignmentModule->bookPartModule;
 
-            // Determine the checklist type and validate the item.
-            $validItem = match ($bookModule->module_type) {
+            // Validate the item belongs to the selected module.
+            $validItem = match ($bookModule->getRawOriginal('module_type')) {
 
                 'checklist' => TrainingBookPartModuleChecklistItem::query()
                     ->whereKey($item->module_item_id)
@@ -55,10 +60,7 @@ class TrainingTraineeSignoffController extends Controller
                 'sop_checklist' => TrainingBookPartModuleSOPChecklistPolicy::query()
                     ->whereKey($item->module_item_id)
                     ->whereHas('group', function ($query) use ($bookModule) {
-                        $query->where(
-                            'sop_checklist_id',
-                            $bookModule->module_id
-                        );
+                        $query->where('sop_checklist_id', $bookModule->module_id);
                     })
                     ->exists(),
 
@@ -67,15 +69,13 @@ class TrainingTraineeSignoffController extends Controller
 
             abort_unless($validItem, 404);
 
-            // Find the trainee item-level signoff requirement.
+            // Find the trainee sign-off requirement.
             $requirement = TrainingBookPartModuleSignoffRequirement::query()
                 ->where('book_part_module_id', $bookModule->id)
                 ->where('signer_role', 'trainee')
                 ->where('scope', 'item')
                 ->firstOrFail();
 
-
-            // Record the trainee's initials and timestamp.
             $user = Auth::user();
 
             $initials = strtoupper(
@@ -83,6 +83,7 @@ class TrainingTraineeSignoffController extends Controller
                 mb_substr($user->last_name, 0, 1)
             );
 
+            // Record trainee signature.
             $item->signoffs()->firstOrCreate(
                 [
                     'signoff_requirement_id' => $requirement->id,
@@ -94,21 +95,31 @@ class TrainingTraineeSignoffController extends Controller
                 ]
             );
 
-            // Determine whether the trainee has signed this item.
-            $traineeSigned = $item->signoffs()
-                ->where('signoff_requirement_id', $requirement->id)
-                ->exists();
+            // Retrieve all required item-level signatures.
+            $requiredSignoffIds = $bookModule->signoffRequirements()
+                ->where('scope', 'item')
+                ->pluck('id');
 
-            // Mark the individual item completed for the trainee.
-            if ($traineeSigned && $item->status !== 'completed') {
-                $item->update([
-                    'status' => 'completed',
-                    'completed_at' => now(),
-                ]);
-            }
+            // Retrieve signatures recorded for this item.
+            $signedRequirementIds = $item->signoffs()
+                ->whereIn('signoff_requirement_id', $requiredSignoffIds)
+                ->pluck('signoff_requirement_id');
 
-            // Check whether every current item has a trainee signature.
-            $moduleItems = match ($bookModule->module_type) {
+            // Item is complete only when every required role has signed.
+            $itemComplete = $requiredSignoffIds->isNotEmpty()
+                && $requiredSignoffIds->diff($signedRequirementIds)->isEmpty();
+
+            $item->update([
+                'status' => $itemComplete ? 'completed' : 'in_progress',
+                'started_at' => $item->started_at ?? now(),
+                'completed_at' => $itemComplete
+                    ? ($item->completed_at ?? now())
+                    : null,
+            ]);
+
+            // Retrieve the current checklist/SOP item IDs.
+            $moduleItemIds = match ($bookModule->getRawOriginal('module_type')) {
+
                 'checklist' => TrainingBookPartModuleChecklistItem::query()
                     ->whereHas('group', function ($query) use ($bookModule) {
                         $query->where('checklist_id', $bookModule->module_id);
@@ -124,41 +135,30 @@ class TrainingTraineeSignoffController extends Controller
                 default => collect(),
             };
 
-            $traineeSignedItemIds = $assignmentModule->items()
-                ->whereIn('module_item_id', $moduleItems)
-                ->whereHas('signoffs', function ($query) use ($requirement) {
-                    $query->where('signoff_requirement_id', $requirement->id);
-                })
+            // Count completed current items.
+            $completedItemIds = $assignmentModule->items()
+                ->whereIn('module_item_id', $moduleItemIds)
+                ->where('status', 'completed')
                 ->pluck('module_item_id');
 
-            $moduleComplete = $moduleItems->isNotEmpty()
-                && $moduleItems->diff($traineeSignedItemIds)->isEmpty();
+            $moduleComplete = $moduleItemIds->isNotEmpty()
+                && $moduleItemIds->diff($completedItemIds)->isEmpty();
 
-            if ($moduleComplete) {
+            $assignmentModule->update([
+                'status' => $moduleComplete ? 'completed' : 'in_progress',
+                'started_at' => $assignmentModule->started_at ?? now(),
+                'completed_at' => $moduleComplete
+                    ? ($assignmentModule->completed_at ?? now())
+                    : null,
+            ]);
 
-                $assignmentModule->update([
-                    'status' => 'completed',
-                    'started_at' => $assignmentModule->started_at ?? now(),
-                    'completed_at' => $assignmentModule->completed_at ?? now(),
-                ]);
-
-            } else {
-
-                $assignmentModule->update([
-                    'status' => 'in_progress',
-                    'started_at' => $assignmentModule->started_at ?? now(),
-                    'completed_at' => null,
-                ]);
-            }
-
-            // Mark the assigned training book as started.
+            // Mark the assignment as started.
             if ($assignment->status === 'assigned') {
                 $assignment->update([
                     'status' => 'in_progress',
                     'started_at' => $assignment->started_at ?? now(),
                 ]);
             }
-
         });
 
         return back()->with(

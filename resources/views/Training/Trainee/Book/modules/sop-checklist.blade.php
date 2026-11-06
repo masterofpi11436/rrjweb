@@ -93,7 +93,7 @@
 
                             @if ($traineeSignoff)
                                 <div class="font-semibold text-green-400">
-                                    {{ $traineeSignoff->signer?->initials ?? 'Signed' }}
+                                    {{ $traineeSignoff->initials ?? 'Signed' }}
                                 </div>
 
                                 <p class="mt-1 text-xs text-gray-400">
@@ -127,31 +127,6 @@
                             @endif
 
                         </div>
-
-                        {{-- FTO Sign Off --}}
-                        <div class="min-w-[130px] text-center">
-
-                            <p class="mb-2 text-xs font-semibold text-gray-400">
-                                FTO
-                            </p>
-
-                            @if ($ftoSignoff)
-                                <div class="font-semibold text-green-400">
-                                    Signed
-                                </div>
-
-                                <p class="mt-1 text-xs text-gray-400">
-                                    {{ $ftoSignoff->signed_at?->format('m/d/Y h:i A') }}
-                                </p>
-                            @else
-                                <span class="text-sm text-yellow-400">
-                                    Pending
-                                </span>
-                            @endif
-
-                        </div>
-
-
                     </div>
 
                 @empty
