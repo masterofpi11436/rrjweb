@@ -14,26 +14,33 @@ return new class extends Migration
         Schema::create('training_book_part_module_signoff_requirements', function (Blueprint $table) {
             $table->id();
 
-            $table->unsignedBigInteger('book_part_module_id');
+            $table->foreignId('book_part_module_id')
+                ->constrained('training_book_part_modules')
+                ->cascadeOnDelete();
 
-            $table->string('signer_role');
+            $table->enum('signer_role', [
+                'trainee',
+                'fto',
+                'sergeant',
+                'supervisor',
+                'unit',
+                'director',
+                'admin',
+            ]);
 
             $table->enum('scope', [
                 'module',
                 'item',
-            ])->default('module');
+            ]);
 
             $table->unsignedInteger('sort_order')->default(0);
 
             $table->timestamps();
 
-            $table->foreign(
-                'book_part_module_id',
-                'signoff_req_module_fk'
-            )
-                ->references('id')
-                ->on('training_book_part_modules')
-                ->cascadeOnDelete();
+            $table->unique(
+                ['book_part_module_id', 'signer_role', 'scope'],
+                'module_signoff_requirement_unique'
+            );
         });
     }
 

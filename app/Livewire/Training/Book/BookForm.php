@@ -371,6 +371,11 @@ class BookForm extends Component
                         'sort_order' => $moduleIndex,
                     ]);
 
+                    $scope = match ($moduleData['module_type']) {
+                        'checklist', 'sop_checklist' => 'item',
+                        default => 'module',
+                    };
+
                     foreach (
                         $moduleData['signoff_requirements'] ?? []
                         as $signoffIndex => $signerRole
@@ -378,10 +383,11 @@ class BookForm extends Component
                         TrainingBookPartModuleSignoffRequirement::create([
                             'book_part_module_id' => $bookPartModule->id,
                             'signer_role' => $signerRole,
-                            'scope' => 'module',
+                            'scope' => $scope,
                             'sort_order' => $signoffIndex,
                         ]);
                     }
+
                 }
             }
         });
