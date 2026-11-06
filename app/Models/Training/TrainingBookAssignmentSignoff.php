@@ -18,6 +18,7 @@ class TrainingBookAssignmentSignoff extends Model
         'signable_id',
         'signoff_requirement_id',
         'signed_by',
+        'initials',
         'signed_at',
     ];
 

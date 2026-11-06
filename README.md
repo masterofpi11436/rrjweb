@@ -16,6 +16,8 @@ php artisan db:seed
 php artisan migrate:refresh --seed
 php artisan migrate --path=database/migrations/Training
 
+
+
 # Admin Dashboard
 Dashboard for the IT administrator to manage all users and all applications.
 

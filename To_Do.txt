@@ -8,7 +8,7 @@ Camera Schedule:
     4. Add IP rules for camera, encoder, and TSC subnets
 
 Training Tracker:
-    1.
+    1. Add signature and initial once sign off logic is complete
 
 
 *** Future App Ideas ***

@@ -24,6 +24,7 @@ return new class extends Migration
             ])->default('not_started');
 
             $table->timestamp('started_at')->nullable();
+            $table->timestamp('viewed_at')->nullable();
             $table->timestamp('completed_at')->nullable();
 
             $table->timestamps();

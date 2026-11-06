@@ -74,8 +74,8 @@ class TrainingTraineeBookController extends Controller
                 'groups.items',
             ],
 
-            'sop_checklist' => [
-                'groups.items',
+           'sop_checklist' => [
+                'groups.policies',
             ],
 
             'form' => [
@@ -113,6 +113,67 @@ class TrainingTraineeBookController extends Controller
                 'items.signoffs.requirement',
             ])
             ->firstOrFail();
+
+        // Synchronize checklist and SOP checklist assignment items.
+        if (in_array($bookModule->module_type, [
+            'checklist',
+            'sop_checklist',
+        ], true)) {
+
+            $moduleItemIds = match ($bookModule->module_type) {
+
+                'checklist' => $module->groups
+                    ->flatMap(fn ($group) => $group->items)
+                    ->pluck('id'),
+
+                'sop_checklist' => $module->groups
+                    ->flatMap(fn ($group) => $group->policies)
+                    ->pluck('id'),
+
+            };
+
+            foreach ($moduleItemIds as $moduleItemId) {
+
+                $assignmentModule->items()->firstOrCreate(
+                    [
+                        'module_item_id' => $moduleItemId,
+                    ],
+                    [
+                        'status' => 'not_started',
+                    ]
+                );
+            }
+
+            // Reload items and their existing signatures.
+            $assignmentModule->load('items.signoffs.requirement');
+        }
+
+        // Automatically complete modules that only require viewing.
+        if (in_array($bookModule->module_type, [
+            'paragraph',
+            'form',
+            'media',
+        ], true)) {
+
+            if ($assignmentModule->status !== 'completed') {
+
+                $now = now();
+
+                $assignmentModule->update([
+                    'status' => 'completed',
+                    'started_at' => $assignmentModule->started_at ?? $now,
+                    'completed_at' => $now,
+                ]);
+
+                // Mark the training book as in progress.
+                if ($assignment->status === 'assigned') {
+                    $assignment->update([
+                        'status' => 'in_progress',
+                        'started_at' => $assignment->started_at ?? $now,
+                    ]);
+                }
+            }
+        }
 
         return view('Training.Trainee.Book.show-module', [
             'assignment' => $assignment,

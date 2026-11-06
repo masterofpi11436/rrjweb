@@ -63,16 +63,18 @@
                         </div>
 
 
+
+
                         {{-- Trainee Sign Off --}}
-                        <div class="min-w-[130px] text-center">
+                        <div class="min-w-[150px] text-center">
 
                             <p class="mb-2 text-xs font-semibold text-gray-400">
                                 Trainee
                             </p>
 
                             @if ($traineeSignoff)
-                                <div class="text-sm font-medium text-green-400">
-                                    Signed
+                                <div class="font-semibold text-green-400">
+                                    {{ $traineeSignoff->initials ?? 'Signed' }}
                                 </div>
 
                                 <p class="mt-1 text-xs text-gray-400">
@@ -88,12 +90,13 @@
                                     @csrf
 
                                     <button type="submit"
-                                        onclick="return confirm('Are you sure you want to sign off on this item?')"
-                                        class="rounded-md border border-green-500 bg-green-700
-                       px-4 py-2 text-sm font-medium text-white
-                       transition hover:bg-green-600">
+                                        onclick="return confirm('Sign your initials for this checklist item?')"
+                                        class="rounded-md border border-green-500
+                                                bg-green-700 px-4 py-2 text-sm
+                                                font-medium text-white
+                                                transition hover:bg-green-600">
 
-                                        Sign Off
+                                        Sign Initials
 
                                     </button>
 

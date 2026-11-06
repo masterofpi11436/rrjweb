@@ -600,47 +600,19 @@ Route::prefix('training')->group(function () use ($traingingLoginClass, $trainin
             });
         });
 
-        // Trainee
-        Route::prefix('trainee')
-            ->middleware(['trainingTrainee', 'cache'])
-            ->group(function () use ($trainingTraineeClass, $trainingTraineeBookClass) {
+    // Trainee
+    Route::prefix('trainee')->middleware(['trainingTrainee', 'cache'])->group(function () use ($trainingTraineeClass, $trainingTraineeBookClass) {
 
-                Route::get('/dashboard', [
-                    $trainingTraineeClass,
-                    'dashboard'
-                ])->name('training.trainee.dashboard');
-
-                Route::get('/books', [
-                    $trainingTraineeBookClass,
-                    'index'
-                ])->name('training.trainee.book.index');
-
-                Route::get('/books/completed', [
-                    $trainingTraineeBookClass,
-                    'completed'
-                ])->name('training.trainee.book.completed');
-
-                Route::get('/book/{assignment}', [
-                    $trainingTraineeBookClass,
-                    'show'
-                ])->name('training.trainee.book.show');
-
-                Route::get(
-                    '/trainee/book/{assignment}/module/{bookModule}',
-                    [TrainingTraineeBookController::class, 'showModule']
-                )->name('training.trainee.book.show_module');
-
-                Route::post(
-                    '/book/{assignment}/checklist-item/{item}/sign',
-                    [TrainingTraineeSignoffController::class, 'signChecklistItem']
-                )->name('training.trainee.book.checklist.sign');
-
-            });
-
-
-        // FTO
-        // Sergeant
-        // Supervisor
-        // Unit Manager
-        // Director of Operations
+        Route::get('/dashboard', [$trainingTraineeClass, 'dashboard'])->name('training.trainee.dashboard');
+        Route::get('/books', [$trainingTraineeBookClass, 'index'])->name('training.trainee.book.index');
+        Route::get('/books/completed', [$trainingTraineeBookClass, 'completed'])->name('training.trainee.book.completed');
+        Route::get('/book/{assignment}', [$trainingTraineeBookClass, 'show'])->name('training.trainee.book.show');
+        Route::get('/trainee/book/{assignment}/module/{bookModule}', [TrainingTraineeBookController::class, 'showModule'])->name('training.trainee.book.show_module');
+        Route::post('/book/{assignment}/checklist-item/{item}/sign', [TrainingTraineeSignoffController::class, 'signChecklistItem'])->name('training.trainee.book.checklist.sign');
     });
+    // FTO
+    // Sergeant
+    // Supervisor
+    // Unit Manager
+    // Director of Operations
+});

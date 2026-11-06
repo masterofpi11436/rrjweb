@@ -41,6 +41,17 @@
             <div class="divide-y divide-gray-800">
 
                 @forelse ($group->policies as $policy)
+                    @php
+                        $assignmentItem = $assignmentModule->items->firstWhere('module_item_id', $policy->id);
+
+                        $traineeSignoff = $assignmentItem?->signoffs?->first(
+                            fn($signoff) => $signoff->requirement?->signer_role === 'trainee',
+                        );
+
+                        $ftoSignoff = $assignmentItem?->signoffs?->first(
+                            fn($signoff) => $signoff->requirement?->signer_role === 'fto',
+                        );
+                    @endphp
                     <div
                         class="flex flex-col gap-3 px-6 py-5
                                 sm:flex-row sm:items-start sm:gap-6">
@@ -71,6 +82,75 @@
                             </p>
 
                         </div>
+
+
+                        {{-- Trainee Sign Off --}}
+                        <div class="min-w-[150px] text-center">
+
+                            <p class="mb-2 text-xs font-semibold text-gray-400">
+                                Trainee
+                            </p>
+
+                            @if ($traineeSignoff)
+                                <div class="font-semibold text-green-400">
+                                    {{ $traineeSignoff->signer?->initials ?? 'Signed' }}
+                                </div>
+
+                                <p class="mt-1 text-xs text-gray-400">
+                                    {{ $traineeSignoff->signed_at?->format('m/d/Y h:i A') }}
+                                </p>
+                            @elseif ($assignmentItem && $assignment->status !== 'completed')
+                                <form method="POST"
+                                    action="{{ route('training.trainee.book.checklist.sign', [
+                                        'assignment' => $assignment->id,
+                                        'item' => $assignmentItem->id,
+                                    ]) }}">
+
+                                    @csrf
+
+                                    <button type="submit"
+                                        onclick="return confirm('Sign your initials for this SOP policy?')"
+                                        class="rounded-md border border-green-500
+                                                bg-green-700 px-4 py-2 text-sm
+                                                font-medium text-white
+                                                transition hover:bg-green-600">
+
+                                        Sign Initials
+
+                                    </button>
+
+                                </form>
+                            @else
+                                <span class="text-sm text-gray-500">
+                                    Unavailable
+                                </span>
+                            @endif
+
+                        </div>
+
+                        {{-- FTO Sign Off --}}
+                        <div class="min-w-[130px] text-center">
+
+                            <p class="mb-2 text-xs font-semibold text-gray-400">
+                                FTO
+                            </p>
+
+                            @if ($ftoSignoff)
+                                <div class="font-semibold text-green-400">
+                                    Signed
+                                </div>
+
+                                <p class="mt-1 text-xs text-gray-400">
+                                    {{ $ftoSignoff->signed_at?->format('m/d/Y h:i A') }}
+                                </p>
+                            @else
+                                <span class="text-sm text-yellow-400">
+                                    Pending
+                                </span>
+                            @endif
+
+                        </div>
+
 
                     </div>
 

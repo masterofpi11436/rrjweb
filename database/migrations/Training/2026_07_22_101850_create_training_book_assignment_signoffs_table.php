@@ -19,6 +19,7 @@ return new class extends Migration
 
             $table->unsignedBigInteger('signoff_requirement_id');
             $table->unsignedBigInteger('signed_by');
+            $table->string('initials', 10)->nullable();
 
             $table->timestamp('signed_at');
 
