@@ -4,6 +4,7 @@ namespace App\Models\Training;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class TrainingBookAssignmentModuleItem extends Model
@@ -16,14 +17,16 @@ class TrainingBookAssignmentModuleItem extends Model
         'assignment_module_id',
         'module_item_id',
         'status',
+        'started_at',
         'completed_at',
     ];
 
     protected $casts = [
+        'started_at' => 'datetime',
         'completed_at' => 'datetime',
     ];
 
-    public function assignmentModule()
+    public function assignmentModule(): BelongsTo
     {
         return $this->belongsTo(
             TrainingBookAssignmentModule::class,

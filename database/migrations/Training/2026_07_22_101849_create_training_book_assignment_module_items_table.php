@@ -14,8 +14,11 @@ return new class extends Migration
         Schema::create('training_book_assignment_module_items', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignId('assignment_module_id')
-                ->constrained('training_book_assignment_modules')
+            $table->unsignedBigInteger('assignment_module_id');
+
+            $table->foreign('assignment_module_id', 'tbami_module_fk')
+                ->references('id')
+                ->on('training_book_assignment_modules')
                 ->cascadeOnDelete();
 
             $table->unsignedBigInteger('module_item_id');
@@ -33,7 +36,7 @@ return new class extends Migration
 
             $table->unique(
                 ['assignment_module_id', 'module_item_id'],
-                'assignment_module_item_unique'
+                'tbami_module_item_unique'
             );
         });
     }

@@ -14,14 +14,20 @@ return new class extends Migration
         Schema::create('training_book_assignment_signoffs', function (Blueprint $table) {
             $table->id();
 
-            $table->morphs('signable');
+            $table->morphs('signable', 'tbas_signable_idx');
 
-            $table->foreignId('signoff_requirement_id')
-                ->constrained('training_book_part_module_signoff_requirements')
-                ->restrictOnDelete();
+            $table->unsignedBigInteger('signoff_requirement_id');
 
-            $table->foreignId('signed_by')
-                ->constrained('users')
+            $table->foreign('signoff_requirement_id', 'tbas_requirement_fk')
+                ->references('id')
+                ->on('training_book_part_module_signoff_requirements')
+                ->cascadeOnDelete();
+
+            $table->unsignedBigInteger('signed_by');
+
+            $table->foreign('signed_by', 'tbas_signed_by_fk')
+                ->references('id')
+                ->on('users')
                 ->restrictOnDelete();
 
             $table->string('initials', 10);
@@ -32,7 +38,7 @@ return new class extends Migration
 
             $table->unique(
                 ['signable_type', 'signable_id', 'signoff_requirement_id'],
-                'assignment_signoff_unique'
+                'tbas_signable_requirement_unique'
             );
         });
     }

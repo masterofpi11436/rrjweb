@@ -5,6 +5,7 @@ namespace App\Models\Training;
 use App\Models\Login\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 class TrainingBookAssignmentSignoff extends Model
@@ -31,7 +32,7 @@ class TrainingBookAssignmentSignoff extends Model
         return $this->morphTo();
     }
 
-    public function requirement()
+    public function requirement(): BelongsTo
     {
         return $this->belongsTo(
             TrainingBookPartModuleSignoffRequirement::class,
@@ -39,7 +40,7 @@ class TrainingBookAssignmentSignoff extends Model
         );
     }
 
-    public function signer()
+    public function signer(): BelongsTo
     {
         return $this->belongsTo(
             User::class,

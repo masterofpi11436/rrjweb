@@ -5,6 +5,8 @@ namespace App\Models\Training;
 use App\Models\Login\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class TrainingBookAssignment extends Model
 {
@@ -27,7 +29,7 @@ class TrainingBookAssignment extends Model
         'completed_at' => 'datetime',
     ];
 
-    public function user()
+    public function user(): BelongsTo
     {
         return $this->belongsTo(
             User::class,
@@ -35,7 +37,7 @@ class TrainingBookAssignment extends Model
         );
     }
 
-    public function book()
+    public function book(): BelongsTo
     {
         return $this->belongsTo(
             TrainingBook::class,
@@ -43,7 +45,7 @@ class TrainingBookAssignment extends Model
         );
     }
 
-    public function modules()
+    public function modules(): HasMany
     {
         return $this->hasMany(
             TrainingBookAssignmentModule::class,

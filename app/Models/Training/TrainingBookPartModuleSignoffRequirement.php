@@ -4,6 +4,8 @@ namespace App\Models\Training;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class TrainingBookPartModuleSignoffRequirement extends Model
 {
@@ -18,7 +20,11 @@ class TrainingBookPartModuleSignoffRequirement extends Model
         'sort_order',
     ];
 
-    public function bookPartModule()
+    protected $casts = [
+        'sort_order' => 'integer',
+    ];
+
+    public function bookPartModule(): BelongsTo
     {
         return $this->belongsTo(
             TrainingBookPartModule::class,
@@ -26,7 +32,7 @@ class TrainingBookPartModuleSignoffRequirement extends Model
         );
     }
 
-    public function signoffs()
+    public function signoffs(): HasMany
     {
         return $this->hasMany(
             TrainingBookAssignmentSignoff::class,

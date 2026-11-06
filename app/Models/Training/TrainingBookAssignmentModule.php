@@ -4,6 +4,9 @@ namespace App\Models\Training;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class TrainingBookAssignmentModule extends Model
@@ -16,24 +19,18 @@ class TrainingBookAssignmentModule extends Model
         'assignment_id',
         'book_part_module_id',
         'status',
+        'viewed_at',
         'started_at',
         'completed_at',
     ];
 
     protected $casts = [
+        'viewed_at' => 'datetime',
         'started_at' => 'datetime',
         'completed_at' => 'datetime',
     ];
 
-    public function evaluation()
-    {
-        return $this->hasOne(
-            TrainingBookAssignmentEvaluation::class,
-            'assignment_module_id'
-        );
-    }
-
-    public function assignment()
+    public function assignment(): BelongsTo
     {
         return $this->belongsTo(
             TrainingBookAssignment::class,
@@ -41,7 +38,7 @@ class TrainingBookAssignmentModule extends Model
         );
     }
 
-    public function bookPartModule()
+    public function bookPartModule(): BelongsTo
     {
         return $this->belongsTo(
             TrainingBookPartModule::class,
@@ -49,7 +46,7 @@ class TrainingBookAssignmentModule extends Model
         );
     }
 
-    public function items()
+    public function items(): HasMany
     {
         return $this->hasMany(
             TrainingBookAssignmentModuleItem::class,
@@ -62,6 +59,14 @@ class TrainingBookAssignmentModule extends Model
         return $this->morphMany(
             TrainingBookAssignmentSignoff::class,
             'signable'
+        );
+    }
+
+    public function evaluation(): HasOne
+    {
+        return $this->hasOne(
+            TrainingBookAssignmentEvaluation::class,
+            'assignment_module_id'
         );
     }
 }

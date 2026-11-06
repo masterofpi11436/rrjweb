@@ -7,11 +7,11 @@
 @section('content')
 
     <div class="mb-6">
-        <a href="{{ route('training.admin.modules.dashboard') }}"
+        <a href="{{ url()->previous() }}"
             class="inline-block cursor-pointer rounded-md border border-slate-500
                    bg-slate-700 px-4 py-2 text-center text-gray-100
                    transition hover:border-slate-400 hover:bg-slate-600">
-            Back To Modules
+            Back
         </a>
     </div>
 

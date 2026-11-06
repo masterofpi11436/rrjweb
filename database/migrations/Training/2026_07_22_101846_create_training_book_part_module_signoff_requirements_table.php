@@ -14,8 +14,11 @@ return new class extends Migration
         Schema::create('training_book_part_module_signoff_requirements', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignId('book_part_module_id')
-                ->constrained('training_book_part_modules')
+            $table->unsignedBigInteger('book_part_module_id');
+
+            $table->foreign('book_part_module_id', 'tbpmsr_module_fk')
+                ->references('id')
+                ->on('training_book_part_modules')
                 ->cascadeOnDelete();
 
             $table->enum('signer_role', [

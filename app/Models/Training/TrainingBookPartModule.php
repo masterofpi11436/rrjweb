@@ -5,6 +5,8 @@ namespace App\Models\Training;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 class TrainingBookPartModule extends Model
 {
@@ -19,17 +21,16 @@ class TrainingBookPartModule extends Model
         'sort_order',
     ];
 
-    public function part()
+    protected $casts = [
+        'sort_order' => 'integer',
+    ];
+
+    public function part(): BelongsTo
     {
         return $this->belongsTo(
             TrainingBookPart::class,
             'book_part_id'
         );
-    }
-
-    public function module()
-    {
-        return $this->morphTo();
     }
 
     public function bookPart(): BelongsTo
@@ -40,7 +41,12 @@ class TrainingBookPartModule extends Model
         );
     }
 
-    public function signoffRequirements()
+    public function module(): MorphTo
+    {
+        return $this->morphTo();
+    }
+
+    public function signoffRequirements(): HasMany
     {
         return $this->hasMany(
             TrainingBookPartModuleSignoffRequirement::class,
@@ -48,7 +54,7 @@ class TrainingBookPartModule extends Model
         )->orderBy('sort_order');
     }
 
-    public function assignmentModules()
+    public function assignmentModules(): HasMany
     {
         return $this->hasMany(
             TrainingBookAssignmentModule::class,
