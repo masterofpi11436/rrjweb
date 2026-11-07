@@ -1,6 +1,7 @@
 <?php
 
 use App\Enums\TrainingUser;
+use App\Enums\CellFlowUser;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -31,6 +32,7 @@ return new class extends Migration
             $table->boolean('jurisdiction')->default(false);
             $table->boolean('camera')->default(false);
             $table->enum('training_role', TrainingUser::values())->default(NULL)->nullable();
+            $table->enum('cellflow_role', CellFlowUser::values())->default(NULL)->nullable();
             $table->timestamps();
         });
 

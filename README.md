@@ -15,6 +15,7 @@ php artisan migrate:refresh
 php artisan db:seed
 php artisan migrate:refresh --seed
 php artisan migrate --path=database/migrations/Training
+php artisan migrate --path=database/migrations/CellFlow
 
 
 
@@ -31,12 +32,6 @@ Has a policy builder that allows admins to create policies to the current format
 
 # VFM (Vehicle Fleet Maintenance)
 Maintenance departments online vehicle repair tracker. There is a VFM admin and tech version. Admin can edit and delete whereas Tech cannot
-
-# Tablet
-List of inmates who are restricted from getting tablets. List is maintained by ICS staff and the mailroom, OPR, and Command Staff
-
-# Mailroom
-Just a list of names to check against incoming mail to be forwarded to OPR
 
 # Warehouse Store
 Users can submit orders to the warehouse for delivery. Users are managed by the warehouse manager but can be managed by the IT Administrator.
@@ -56,8 +51,11 @@ Used in place of camera schedule and the camera status. Allows technicians to vi
 # Navix 
 Experimental 3D search tool to find assets located within a building.
 
-# Training
+# Training Tracker
+This is a digital replacement for the physical books that are used by new staff to complete training.
 
+# CellFlow
+Water control system to communicate with Raspberry Pis to control water at the inmate cell level
 
 # Logging
 Time and date of when a user logs in to any application is logged.

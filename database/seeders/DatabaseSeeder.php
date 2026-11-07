@@ -30,6 +30,7 @@ class DatabaseSeeder extends Seeder
                 'jurisdiction' => false,
                 'camera' => false,
                 'training_role' => 'admin',
+                'cellflow_role' => 'admin',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],

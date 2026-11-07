@@ -15,9 +15,13 @@ use App\Http\Middleware\Auth\Warehouse\Property;
 use App\Http\Middleware\Auth\Warehouse\Requestor;
 use App\Http\Middleware\Auth\Warehouse\Supervisor;
 use App\Http\Middleware\Auth\Warehouse\WarehouseSupervisor;
+use App\Http\Middleware\Auth\CellFlow\Admin as CellFlowAdmin;
+
 use App\Http\Middleware\Auth\Warehouse\WarehouseTechnician;
 use App\Http\Middleware\ClearCache;
 use App\Http\Middleware\ClearCart;
+
+// Mapping Routes
 use App\Models\Training\TrainingBookPartModuleChecklist;
 use App\Models\Training\TrainingBookPartModuleEvaluation;
 use App\Models\Training\TrainingBookPartModuleForm;
@@ -60,6 +64,9 @@ class AppServiceProvider extends ServiceProvider
 
         $router->aliasMiddleware('trainingAdmin', TrainingAdmin::class);
         $router->aliasMiddleware('trainingTrainee', TrainingTrainee::class);
+
+        $router->aliasMiddleware('cellflowAdmin', CellFlowAdmin::class);
+
         $router->aliasMiddleware('cache', ClearCache::class);
         $router->aliasMiddleware('clear-cart', ClearCart::class);
 

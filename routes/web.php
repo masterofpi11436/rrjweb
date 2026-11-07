@@ -1,9 +1,6 @@
 <?php
 
-use App\Http\Controllers\Administrator\AdministratorController;
-use App\Http\Controllers\Camera\CameraController;
-use App\Http\Controllers\Directory\PhoneDirectoryController;
-use App\Http\Controllers\Jurisdiction\JurisdictionController;
+// Login Controllers
 use App\Http\Controllers\Login\AdminLoginController;
 use App\Http\Controllers\Login\BaseLoginController;
 use App\Http\Controllers\Login\CameraLoginController;
@@ -14,9 +11,44 @@ use App\Http\Controllers\Login\TrainingLoginController;
 use App\Http\Controllers\Login\VFMLoginController;
 use App\Http\Controllers\Login\VFMTechLoginController;
 use App\Http\Controllers\Login\WarehouseLoginController;
+use App\Http\Controllers\Login\CellFlowLoginController;
+
+// Whole App Controllers
+use App\Http\Controllers\Administrator\AdministratorController;
+use App\Http\Controllers\Camera\CameraController;
+use App\Http\Controllers\Directory\PhoneDirectoryController;
+use App\Http\Controllers\Jurisdiction\JurisdictionController;
 use App\Http\Controllers\Navix\NavixSceneController;
 use App\Http\Controllers\Policy\BuilderController;
 use App\Http\Controllers\Policy\PolicyController;
+
+// VFM Controllers
+use App\Http\Controllers\VFM\VFMController;
+use App\Http\Controllers\VFM\VFMTechController;
+use App\Http\Controllers\VFM\VFMTechVehicleController;
+use App\Http\Controllers\VFM\VFMVehicleController;
+
+// Warehouse Controllers
+use App\Http\Controllers\Warehouse\Property\PropertyController;
+
+use App\Http\Controllers\Warehouse\Requestor\RequestorController;
+
+use App\Http\Controllers\Warehouse\Supervisor\SupervisorController;
+
+use App\Http\Controllers\Warehouse\WarehouseSupervisor\CategoryController;
+use App\Http\Controllers\Warehouse\WarehouseSupervisor\CreateExchangeOrderController;
+use App\Http\Controllers\Warehouse\WarehouseSupervisor\CreateOrderController;
+use App\Http\Controllers\Warehouse\WarehouseSupervisor\HistoryController;
+use App\Http\Controllers\Warehouse\WarehouseSupervisor\InventoryController;
+use App\Http\Controllers\Warehouse\WarehouseSupervisor\ItemController;
+use App\Http\Controllers\Warehouse\WarehouseSupervisor\PendingExchangeOrderController;
+use App\Http\Controllers\Warehouse\WarehouseSupervisor\PendingOrderController;
+use App\Http\Controllers\Warehouse\WarehouseSupervisor\ReportsController;
+use App\Http\Controllers\Warehouse\WarehouseSupervisor\SectionController;
+use App\Http\Controllers\Warehouse\WarehouseSupervisor\UserController;
+use App\Http\Controllers\Warehouse\WarehouseSupervisor\WarehouseSupervisorController;
+
+// Trainig Tracker Controllers
 use App\Http\Controllers\Training\Admin\TrainingAdminController;
 use App\Http\Controllers\Training\Admin\TrainingAssignmentsController;
 use App\Http\Controllers\Training\Admin\TrainingBookController;
@@ -30,28 +62,14 @@ use App\Http\Controllers\Training\Admin\TrainingParagraphModuleController;
 use App\Http\Controllers\Training\Admin\TrainingSOPChecklistModuleController;
 use App\Http\Controllers\Training\Admin\TrainingTestModuleController;
 use App\Http\Controllers\Training\Admin\TrainingUserController;
+
 use App\Http\Controllers\Training\Trainee\TrainingTraineeBookController;
 use App\Http\Controllers\Training\Trainee\TrainingTraineeController;
 use App\Http\Controllers\Training\Trainee\TrainingTraineeSignoffController;
-use App\Http\Controllers\VFM\VFMController;
-use App\Http\Controllers\VFM\VFMTechController;
-use App\Http\Controllers\VFM\VFMTechVehicleController;
-use App\Http\Controllers\VFM\VFMVehicleController;
-use App\Http\Controllers\Warehouse\Property\PropertyController;
-use App\Http\Controllers\Warehouse\Requestor\RequestorController;
-use App\Http\Controllers\Warehouse\Supervisor\SupervisorController;
-use App\Http\Controllers\Warehouse\WarehouseSupervisor\CategoryController;
-use App\Http\Controllers\Warehouse\WarehouseSupervisor\CreateExchangeOrderController;
-use App\Http\Controllers\Warehouse\WarehouseSupervisor\CreateOrderController;
-use App\Http\Controllers\Warehouse\WarehouseSupervisor\HistoryController;
-use App\Http\Controllers\Warehouse\WarehouseSupervisor\InventoryController;
-use App\Http\Controllers\Warehouse\WarehouseSupervisor\ItemController;
-use App\Http\Controllers\Warehouse\WarehouseSupervisor\PendingExchangeOrderController;
-use App\Http\Controllers\Warehouse\WarehouseSupervisor\PendingOrderController;
-use App\Http\Controllers\Warehouse\WarehouseSupervisor\ReportsController;
-use App\Http\Controllers\Warehouse\WarehouseSupervisor\SectionController;
-use App\Http\Controllers\Warehouse\WarehouseSupervisor\UserController;
-use App\Http\Controllers\Warehouse\WarehouseSupervisor\WarehouseSupervisorController;
+
+//CellFlow Controllers
+use App\Http\Controllers\CellFlow\CellFlowController;
+
 use Illuminate\Support\Facades\Route;
 
 // Shorthand login Classes
@@ -65,8 +83,9 @@ $cameraLoginClass = CameraLoginController::class;
 $warehouseLoginClass = WarehouseLoginController::class;
 $jurisdictionLoginClass = JurisdictionLoginController::class;
 $traingingLoginClass = TrainingLoginController::class;
+$cellflowLoginClass = CellFlowLoginController::class;
 
-// Shorthand Controller Classes
+// Shorthand Whole Controller Classes
 $navixClass = NavixSceneController::class;
 $adminClass = AdministratorController::class;
 $phoneClass = PhoneDirectoryController::class;
@@ -78,11 +97,13 @@ $policyClass = PolicyController::class;
 $cameraClass = CameraController::class;
 $buildClass = BuilderController::class;
 $jurisdictionClass = JurisdictionController::class;
+$userClass = UserController::class;
+
+// Warehouse Shorthand classes
 $warehouseSupervisorClass = WarehouseSupervisorController::class;
 $itemClass = ItemController::class;
 $categoryClass = CategoryController::class;
 $sectionClass = SectionController::class;
-$userClass = UserController::class;
 $createOrderClass = CreateOrderController::class;
 $createExchangeClass = CreateExchangeOrderController::class;
 $pendingOrderClass = PendingOrderController::class;
@@ -101,8 +122,10 @@ $trainingUserClass = TrainingUserController::class;
 $trainingBookClass = TrainingBookController::class;
 $trainingAssignmentsClass = TrainingAssignmentsController::class;
 $trainingModuleClass = TrainingModuleController::class;
-
 $trainingTraineeBookClass = TrainingTraineeBookController::class;
+
+// CellFlow Application
+
 
 // Forgot password link for all applications
 Route::get('forgot', [$baseLoginClass, 'showForgotPasswordForm'])->name('login.forgot');
@@ -615,4 +638,24 @@ Route::prefix('training')->group(function () use ($traingingLoginClass, $trainin
     // Supervisor
     // Unit Manager
     // Director of Operations
+});
+
+Route::prefix('cellflow')->group(function () use ($cellflowLoginClass) {
+
+        // Routes without middleware
+        Route::get('/login', [$cellflowLoginClass, 'cellflowLoginForm'])->name('cellflow.login');
+        Route::post('/login', [$cellflowLoginClass, 'login']);
+        Route::get('/forgot', [$cellflowLoginClass, 'cellflowForgotPasswordForm'])->name('cellflow.forgot.form');
+        Route::post('/forgot', [$cellflowLoginClass, 'forgotPassword'])->name('cellflow.forgot.form.submit');
+        Route::post('/logout', [$cellflowLoginClass, 'logout'])->name('cellflow.logout');
+
+// Admin Routes
+Route::prefix('admin')
+    ->middleware(['auth', 'cellflowAdmin', 'cache'])
+    ->group(function () {
+
+        Route::get('/dashboard', [CellFlowController::class, 'dashboard'])
+            ->name('cellflow.admin.dashboard');
+
+    });
 });

@@ -3,6 +3,7 @@
 namespace App\Models\Login;
 
 use App\Enums\TrainingUser;
+use App\Enums\CellFlowUser;
 use App\Models\Training\TrainingBookAssignment;
 use App\Models\Training\TrainingBookAssignmentSignoff;
 use App\Models\Warehouse\Order;
@@ -20,11 +21,12 @@ class User extends Authenticatable
     // Define mass-assignable fields
     protected $fillable = [
         'first_name', 'last_name', 'email', 'password',
-        'admin', 'phone', 'vfm', 'vfm-tech', 'ics', 'policy', 'warehouse_role', 'jurisdiction', 'camera', 'training_role'
+        'admin', 'phone', 'vfm', 'vfm-tech', 'ics', 'policy', 'warehouse_role', 'jurisdiction', 'camera', 'training_role', 'cellflow_role'
     ];
 
     protected $casts = [
         'training_role' => TrainingUser::class,
+        'cellflow_role' => CellFlowUser::class,
     ];
 
     // Define fields hidden from serialization (e.g., in JSON responses)
